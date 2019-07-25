@@ -1,4 +1,5 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const Instagram = require('passport-instagram');
 const mongoose = require('mongoose');
 const keys = require('./keys');
 
@@ -26,6 +27,10 @@ module.exports = function(passport) {
         email: profile.emails[0].value,
         image: image
       }
+
+    // new InstagramStrategy ({
+
+    // })
 
       //check for existing user
       User.findOne({
