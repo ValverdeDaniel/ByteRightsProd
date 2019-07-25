@@ -1,0 +1,38 @@
+<h1>Welcome {{user.firstName}}</h1>
+
+<h4>Your Proposals</h4>
+
+{{#if proposals}}
+  <table class="striped">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>URL</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>vote</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each proposals}}
+      <tr>
+        <td><img src="https://via.placeholder.com/75"></td>
+        <td><a href="/proposals/show/{{id}}">{{url}}</a></td>
+        <td>{{formatDate data 'MMMM do YYYY'}}</td>
+        <td><span class = "dash-satus">{{status}}</span></td>
+        <td>this is where the vote will go</td>
+        <td>
+          <a class="btn left-align" href="/proposals/edit/{{id}}"><i class="fa fa-pencil"></i> Edit</a>
+          <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
+            <input type="hidden" name="_method" value ="DELETE">
+            <button type="submit" class="btn red"><i class="fa fa-remove"></i>Delete</button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <p>You have not created any proposals yet</p>
+{{/if}}

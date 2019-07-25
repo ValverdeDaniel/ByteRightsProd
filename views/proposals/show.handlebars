@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col s12 m8">
+    <h3>{{proposal.url}}
+      <small>{{{editIcon proposal.user.id user.id proposal.id false}}}</small>
+    </h3>
+
+    <div class="card horizontal">
+      <div class="card-image">
+        <img src="https://via.placeholder.com/150">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love this photo you posted! We’d be willing to compensate you with {{proposal.compensation}} for the rights to use it in our future campaigns. If you’re interested, follow this link to see the full details of our offer: byterights.com/proposals/show/{{proposal.id}}</p>
+        </div>
+        <div class="card-action">
+          compensation: {{{proposal.compensation}}}
+          <span>{{formatDate proposal.date 'MMMM Do YYYY'}}</span>
+        </div>
+      </div>
+    </div>
+
+    {{#if proposal.allowComments}}
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Comments</span>
+          {{#if user}}        
+            <form method="post" action="/proposals/comment/{{proposal.id}}">
+              <div class="input-field">
+                <textarea name="commentBody" class="materialize-textarea"></textarea>
+                <label>Add Comment</label>
+              </div>
+              <input type="submit" value="Submit" class="btn">
+            </form>
+          {{else}}
+            <p>Please <a href="/auth/google">login</a> to leave a comment</p>
+          {{/if}}
+        </div>
+      </div>
+      {{#each proposal.comments}}
+        <div class="card">
+          <div class="card-content">
+            <h5>{{commentBody}}</h5>
+            <div class="chip">
+              <img src="{{commentUser.image}}">
+              <a href= "/proposals/user/{{commentUser.id}}">{{commentUser.firstName}} {{commentUser.lastName}}</a>
+            </div>
+            <br>
+            <small>Posted: {{formatDate commentDate 'MMMM Do YYYY, h:mm'}} </small>
+          </div>
+        </div>
+      {{/each}}
+    {{/if}}
+  </div>
+  <div class="col s12 m4">
+    <div class="card center-align">
+      <div class="card-content">
+        <span class="card-title">{{proposal.user.firstName}} {{proposal.user.lastName}}</span>
+        <img src="{{proposal.user.image}}" class="circle responsive-img">
+      </div>
+      <div class="card-action"> 
+        <a href="/proposals/user/{{proposal.user.id}}">More From {{proposal.user.firstName}}</a>
+      </div>
+    </div>
+  </div>
+</div>

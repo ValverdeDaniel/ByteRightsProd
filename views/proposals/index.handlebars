@@ -1,0 +1,31 @@
+<h1>Proposals</h1>
+<div class="row">
+  {{#each proposals}}
+    <div class="col s12 m4">
+      <div class="card">
+        <div class="card-image">
+          {{#if user}}
+            {{{editIcon user.id ../user.id id}}}
+          {{/if}}
+        </div>
+        <div class="card-content center-align">
+          <h5>{{url}}</h5>
+          {{!-- you don't use parenthesis for our arguments you just use spaces in handlebars unless you want to use more than one helper --}}
+          <p class="proposal-text">{{stripTags (truncate compensation 150)}}</p>
+          <br>
+          <div class="chip">
+              <div class="chip">
+                <img src="{{user.image}}">
+                <a href= "/proposals/user/{{user.id}}">{{user.firstName}} {{user.lastName}}</a>
+              </div>
+          </div>
+          <div class="card-action center-align">
+            <a class="btn grey" href="/proposals/show/{{id}}">Read More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{else}}
+    <p>No proposals found</p>
+  {{/each }}
+</div>

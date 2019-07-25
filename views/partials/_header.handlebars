@@ -1,0 +1,40 @@
+<nav class="grey darken-3">
+  <div class="container">
+    <div class="nav-wrapper">
+      <a href="/proposals" class="brand-logo center">ByteRights</a>
+      <a href="#" data-target="main-menu" class="sidenav-trigger show-on-large"><i class="fa fa-bars"></i></a>
+
+      {{!-- Right Nav --}}
+      <ul class="right hide-on-small-only">
+        {{#if user}}
+          <li><a href="/">Welcome {{user.firstName}}</a></li>
+          <li><a href="/auth/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+        {{else}}
+          <li><a href="/proposals"><i class = "fa fa-book"></i> Public Proposals</a></li>
+        {{/if}}
+      </ul>
+
+      {{!-- side menu --}}
+      <ul class="sidenav" id="main-menu">        
+        {{#if user}}
+
+        {{else}}
+          <li>
+            <a class = "btn red darken-1" href="/auth/google">
+            <i class="fa fa-google left"> </i>Login With Google
+            </a>
+          </li>
+          
+        {{/if}}
+
+        <li><a href="/proposals"><i class = "fa fa-book"></i>Public Proposals</a></li>
+        {{#if user}}
+          <li class="divider"></li>
+          <li><a href="/dashboard"><i class = "fa fa-cog"></i>Dashboard</a></li>
+          <li><a href="/proposals/my"><i class = "fa fa-user"></i>My Proposals</a></li>
+          <li><a href="/auth/logout"><i class = "fa fa-sign-out"></i>Logout</a></li>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
+</nav>
