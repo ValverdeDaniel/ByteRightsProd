@@ -1,5 +1,5 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const Instagram = require('passport-instagram');
+const InstagramStrategy = require('passport-instagram').Strategy;
 const mongoose = require('mongoose');
 const keys = require('./keys');
 
@@ -28,6 +28,8 @@ module.exports = function(passport) {
         image: image
       }
 
+    
+
     // new InstagramStrategy ({
 
     // })
@@ -48,6 +50,38 @@ module.exports = function(passport) {
       })
     })
   );
+
+  passport.use(new InstagramStrategy({
+    clientID: keys.instagramClientID,
+    clientSecret: keys.instagramClientSecret,
+    callbackURL: '/auth/instagram/callback',
+    proxy: true
+  }, (accessToken, refreshToken, profile, done) => {
+     console.log(accessToken);
+    // console.log(profile);
+    //User.findOrCreate({ instagramId: profile.id }, function (err, user) {
+      return done(err, user);
+    //});
+  }
+  ));
+
+  // passport.use(new InstagramStrategy({
+  //   clientID: keys.instagramClientID,
+  //   clientSecret: keys.instagramClientSecret,
+  //   callbackURL: '/auth/instagram/callback',
+  // },
+  // function(accessToken, refreshToken, profile, done) {
+  //   // asynchronous verification, for effect...
+  //   process.nextTick(function () {
+  //     console.log(accessToken);
+  //     // To keep the example simple, the user's Instagram profile is returned to
+  //     // represent the logged-in user.  In a typical application, you would want
+  //     // to associate the Instagram account with a user record in your database,
+  //     // and return that user instead.
+  //     return done(null, profile);
+  //   });
+  // }
+  // ));
 
   passport.serializeUser((user, done) => {
     done(null, user.id);

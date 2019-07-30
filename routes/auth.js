@@ -24,4 +24,14 @@ router.get('/google/callback',
     res.redirect('/');
   });
 
+
+
+//within the google passport.authenticate after instagram, they have scope {"profile", "email"}
+router.get('/instagram', passport.authenticate('instagram'))
+
+router.get('/instagram/callback', 
+  passport.authenticate('instagram', { failureRedirect: '/' }),(req, res) => {
+    res.redirect('/dashboard');
+  });
+
 module.exports = router;
