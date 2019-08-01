@@ -10,22 +10,7 @@ router.get('/google/callback',
     res.redirect('/dashboard');
   });
 
-  router.get('/verify', (req, res) => {
-    if(req.user) {
-      console.log(req.user);
-    } else {
-      console.log('not auth');
-      res.redirect('/');
-    }
-  });
-
-  router.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
-  });
-
-
-
+//passport-instagram routes
 //within the google passport.authenticate after instagram, they have scope {"profile", "email"}
 router.get('/instagram', passport.authenticate('instagram'))
 
@@ -33,5 +18,21 @@ router.get('/instagram/callback',
   passport.authenticate('instagram', { failureRedirect: '/' }),(req, res) => {
     res.redirect('/dashboard');
   });
+
+//verification routes
+router.get('/verify', (req, res) => {
+  if(req.user) {
+    console.log(req.user);
+  } else {
+    console.log('not auth');
+    res.redirect('/');
+  }
+});
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
 
 module.exports = router;

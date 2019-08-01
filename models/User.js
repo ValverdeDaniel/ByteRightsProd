@@ -4,10 +4,14 @@ const Schema = mongoose.Schema;
 //create Schema
 const UserSchema = new Schema({
   googleID: {
-    type: String,
-    required: true
-
+    type: String
   }, 
+  instagramID: {
+    type: String
+  },
+  instagramDisplayName: {
+    type: String
+  },
   email: {
     type: String,
     required: true

@@ -20,19 +20,13 @@ module.exports = function(passport) {
       //api changed since vid was made and we no longer need to remove ?sz=50
       const image = profile.photos[0].value;
 
-      const newUser = {
+      let newUser = {
         googleID: profile.id,
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
         email: profile.emails[0].value,
         image: image
       }
-
-    
-
-    // new InstagramStrategy ({
-
-    // })
 
       //check for existing user
       User.findOne({
@@ -54,14 +48,36 @@ module.exports = function(passport) {
   passport.use(new InstagramStrategy({
     clientID: keys.instagramClientID,
     clientSecret: keys.instagramClientSecret,
-    callbackURL: '/auth/instagram/callback',
-    proxy: true
-  }, (accessToken, refreshToken, profile, done) => {
-     console.log(accessToken);
-    // console.log(profile);
+    callbackURL: '/auth/instagram/callback'
+    // proxy: true
+  }, function(accessToken, refreshToken, profile, done) {
+      console.log(accessToken);
+      console.log(profile);
     //User.findOrCreate({ instagramId: profile.id }, function (err, user) {
-      return done(err, user);
+      //return done(null, profile);
     //});
+      let newUser = {
+      instgramDisplayName: profile.displayName,
+      email: profile.email,
+      image: profile._json.data.profile_picture
+      //user.bio = profile._json.data.bio;
+      //user.media = `https://api.instagram.com/v1/users/${profile.id}/media/recent/?access_token=${accessToken}&count=8`
+      }
+
+      //check for existing user
+      User.findOne({
+        instagramID: profile.id
+      }).then(user => {
+        if(user) {
+          //return user
+          done(null, user);
+        } else {
+          //create user
+          new User(newUser)
+            .save()
+            .then(user => done(null, user));
+        }
+      })
   }
   ));
 
@@ -92,3 +108,6 @@ module.exports = function(passport) {
     .then(user => done(null, user));
   });
 }
+
+
+//https://stackoverflow.com/questions/57278266/failed-to-retrieve-accesstoken-from-instagram-with-passportjs
