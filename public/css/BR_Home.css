@@ -1,0 +1,101 @@
+html{
+  height:100%;
+}
+
+body{
+  font-family: 'Raleway', sans-serif;
+}
+
+#menu_logo {
+  height: 40px;
+  top: 50%;
+  margin-top: -3px;
+}
+
+#hero {
+  /* text-align:center; */
+  background-image: url("Images/UGC_Collage_2.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  position: relative;
+}
+
+#hero-center{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: block;
+}
+
+#hero-text{
+  background-color:rgba(255, 255, 255, 0.9);
+  /* text-shadow: 0px 4px 3px rgba(0,0,0,0.5),
+               0px 8px 13px rgba(0,0,0,0.2),
+               0px 18px 23px rgba(0,0,0,0.2); */
+}
+
+.img-fluid{
+  max-width: 100%;
+  height: auto;
+}
+
+.clear{
+  padding-top:15px;
+}
+
+.Footer{
+  background-color:rgb(223, 223, 223)
+}
+
+#social{
+  font-size:2rem;
+  padding:5px;
+  color:rgb(189, 16, 224);   
+}
+
+#social:hover {
+  color:rgb(80,227,194); 
+}
+
+#social:active:focus{
+  color:#fff;
+}
+
+.btn-custom1 {
+  color: #fff;
+  background-color: rgb(189, 16, 224);
+  border-color: rgb(189, 16, 224);
+}
+
+.btn-custom1:hover {
+  color: #fff;
+  background-color: rgb(80,227,194);
+  border-color: rgb(80,227,194);
+}
+
+.btn-custom1:active:focus {
+  color: rgb(189, 16, 224);
+  background-color: rgb(80,227,194);
+  border-color: rgb(189, 16, 224);
+}
+
+.btn-customoutline-primary {
+  color: rgb(189, 16, 224);
+  border-color: rgb(189, 16, 224);
+}
+
+.btn-customoutline-primary:hover {
+  color: #fff;
+  background-color: rgb(80,227,194);
+  border-color: rgb(80,227,194);
+}
+
+.btn-customoutline-primary:active:focus {
+  color: rgb(189, 16, 224);
+  background-color: rgb(80,227,194);
+  border-color: rgb(189, 16, 224);
+}

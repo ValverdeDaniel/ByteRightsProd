@@ -1,3 +1,311 @@
-<h1>about</h1>
-<p>Version 1.0.0</p>
-<p>ByteRights is an app to track UGC</p>
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133185934-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'UA-133185934-1');
+	</script>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	 crossorigin="anonymous">
+
+	<!-- MyCSS -->
+	<link rel="stylesheet" type="text/css" href="../../public/css/BR_Home.css">
+
+	<!-- FontAwesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+	 crossorigin="anonymous">
+
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
+	<link rel="shortcut icon" href="favicon.ico">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style.css">
+	<title>Byte Rights</title>
+
+	<!--TypeForm PopUp-->
+	<!-- <a class="typeform-share button" href="https://byterights.typeform.com/to/ZVaiDP" data-mode="popup" data-auto-open=true data-submit-close-delay="5" target="_blank"> </a> <script> (function() { var qs,js,q,s,d=document, gi=d.getElementById, ce=d.createElement, gt=d.getElementsByTagName, id="typef_orm_share", b="https://embed.typeform.com/"; if(!gi.call(d,id)){ js=ce.call(d,"script"); js.id=id; js.src=b+"embed.js"; q=gt.call(d,"script")[0]; q.parentNode.insertBefore(js,q) } })() </script> -->
+
+	<!-- Mailchimp Connector -->
+	<!-- <script id="mcjs">!function (c, h, i, m, p) { m = c.createElement(h), p = c.getElementsByTagName(h)[0], m.async = 1, m.src = i, p.parentNode.insertBefore(m, p) }(document, "script", "https://chimpstatic.com/mcjs-connected/js/users/58d639c5919c6ebc69c5aed19/3e7a6b662de600948e55be5fd.js");</script> -->
+</head>
+
+<body>
+
+	<!-- NAV BAR -->
+	{{!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="index.html"><img id="menu_logo" class="img-fluid" src="Images/SidebySide_Black.png"></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+		 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto"> --}}
+				<!-- <li class="nav-item active">
+					<a class="nav-link" href="#">Pricing <span class="sr-only">(current)</span></a>
+				</li> -->
+				<!-- <li class="nav-item active">
+					<a class="nav-link" href="AboutUs.html">About Us <span class="sr-only">(current)</span></a>
+				</li> -->
+				<!-- <li class="nav-item">
+					<a class="nav-link" href="#">About Us</a>
+				</li> -->
+				<!-- <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					 aria-haspopup="true" aria-expanded="false">
+						Dropdown
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+				</li> -->
+			{{!-- </ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="nav-item active">
+					<!-- <button type="button" class="btn btn-outline-primary" href="SignUp_Newsletter.html">SIGN UP</button> -->
+					<a class="btn btn-customoutline-primary" href="SignUp_Newsletter.html" role="button" >Sign Up <span class="sr-only">(current)</span></a>
+				</li>
+			</ul>
+		</div>
+	</nav> --}}
+	<!-- HERO JUMBOTRON -->
+	<div class="jumbotron jumbotron-fluid mb-0 mx-auto" id="hero">
+		<div class="container text-center" id="hero-center">
+			<div class="p-5" id="hero-text">
+				<h1 class="display-4">Licensing Made Easy</h1>
+				</br>
+				<p class="lead">Get the rights to use images, video, music, and art you find on any platform.</p>
+				<br/>
+          <a class = "btn red darken-1" href="/auth/google">
+            <i class="fa fa-google left"></i> Login With Google
+          </a>
+    	</div>
+		</div>
+	</div>
+
+	<!-- What can you license? -->
+	<div class="bg-light">
+		<div class="container">
+					<h3 class="text-center pt-3">Get your rights on any platform</h3>
+					<p class="text-center pt-3">
+					Rather than search endlessly on stock image websites, or royalty free music libraries, why not search the places that all the best creators are already posting their content and interacting with their followers. 
+					<br/>
+					<br/>
+					That's right. We're talking <b>Instagram, Youtube, Soundcloud, Vimeo, Twitter, you name it.</b> As long as you can message the creator, ByteRights can help you.
+					<br/>
+					<br/>
+					<!-- Whether you're looking for customer photos of your product on Instagram, or looking for the perfect song for your new video on Soundcloud, Byte Rights can help you get the rights to use any type of media under the sun. It all starts with a proposal. 
+					<br/> 
+					<br/>
+					Find any piece of content you like and use our proposal tool to share some details about how you want to use it and whether you'd be willing to compensate the creator for it.
+					<br/>
+					<br/>
+					No need to understand copyright law or how to draft a contract. We'll do all the heavy lifting. Just decide on a few details and we'll simultaneaously draft a message and create a link for you to send to the creator. 
+					<br/>
+					<br/>
+					Once you've messaged the owner on Instagram, Youtube, Soundcloud, or even over email, you can continue the rest of your conversation right here on the platform. This way, making any necessary changes to your agreement is a breeze.
+					<br/>
+					<br/>
+					When you're both happy with the details, we'll help make the exchange smooth by making sure you receive the file before releasing any sort of compensation to the owner. No need for paypal, venmo, or cashapp excahnges.</p>
+					<br/> -->
+		</div>
+	</div>
+
+	<!-- Who are creators?
+	<div class="bg-light mt-0 py-5">
+			<div class="container px-5">
+				<h2 class="text-center">Who are creators?</h2>
+				<p class="lead text-center px-5">Creators are photographers, videographers, influencers, musicians, artists, and even businesses and their customers. </p>
+			</div>
+		</div>
+	<hr class="my-4"> -->
+
+	<!-- Ask for permission -->
+		<div class="container">
+				<div class="row">
+          <div class="col-lg-12 col-md-12">
+						<div class="mt-3">
+							<img class="img-fluid" src="Images/Proposal_Macbook.png">
+						</div>
+					</div>
+					<div class="col-lg-12 col-md-12">
+						<h4>Ask for Permission, not Forgiveness</h4>
+						<p class="pt-3 ">Find any piece of content you like and use our proposal tool to share some details about how you want to use it with the owner.
+							<br/>
+							<br/>
+							<b>We'll create an easy to share message, link, and page that you can share.</b>
+							<br/>
+							<br/>
+							All the creator has to do is hit <b>Accept</b> and you'll be on your way towards creating an awesome collaboration together.
+							<br/>
+							<br/>
+							If they're not convinced, you can message and negotiate the terms of your agreement right on the platform.</p>
+					</div>
+				</div>
+			</div>
+		<!-- Compensate Your Collaborators -->
+		<div class="container">
+				<div class="row">
+					{{!-- <div class="col-lg-6 col-md-6">
+						<div class="mt-1">
+							<img class="img-fluid" src="Images/EricKarbelingArt.png">
+						</div>
+					</div> --}}
+					<div class="col-lg-12 col-md-12">
+						<h4>Compensate Your Contributors</h4>
+						<p class="pt-3">
+							<b>Art doesn’t create itself.</b>
+							<br/>
+							<br/>
+							Whether it’s an everyday camera-phone photographer or a professional with a DSLR, people are making beautiful content and that’s not easy.
+							<br/>
+							<br/>
+							Agree on crediting each other's work when uploading to various platforms and mentioning each other on social media so as to bolster each other's fanbases.
+							<br/>
+							<br/>
+							Consider compensating your partners with money, gift
+							cards, free stuff, or anything else your imagination can come up with. It’s not only a nice thing
+							to do, but it will <b>also strengthen your reputation.</b>
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- Manage your Library -->
+		<div class="container">
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						<h4>Manage your library</h4>
+						<p class="pt-3 ">As you collect the rights, or give out rights to all types of content, we'll keep all your agreements organized.
+							<br/>
+							<br/>
+							See how your media has been used by others and share how you've used content with their owners too.
+							<br/>
+							<br/>
+							Download full contracts for any of your agreements if the need arises.
+							<br/>
+							<br/>
+							Our APIs will allow other platforms to see your ByteRights automatically to make things much easier.</p>
+					</div>
+					<div class="col-lg-12 col-md-12">
+						<div class="mt-3">
+							<img class="img-fluid" src="Images/Hero_Licensing.png">
+						</div>
+					</div>
+				</div>
+			</div>
+
+				<!-- Free to Use -->
+	<div class="bg-light mt-5 py-5">
+			<h2 class="text-center">Free-to-Use</h2>
+			<p class="lead text-center">Because we don't want to get in the way of collaboration</p>
+		</div>
+	<!-- UGC is the future -->
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-lg-12 col-md-12">
+				<h3>User Generated Content is now</h3>
+				<br/>
+				<p class="pt-3 ">We want to make your business's content creation easier and more valuable by leveraging your best brand reps… <br/>
+					<br/>
+					<b>Your Customers!</b>
+					<br/>
+					<br/>
+					UGC is already being leveraged by industry leaders across the globe, but we believe businesses of any size should be able to utilize the same strategy. 
+					<br/>
+					<br/>
+					Our digital media licensing tool will provide the business and creator with the legal documentation needed.</p>
+			</div>
+			<div class="col-lg-6 col-md-6">
+				<div class="mt-3">
+					<img class="img-fluid" src="Images/iRockerPaddleboards.png">
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	{{!-- <!-- Footer -->
+	<footer class="p-5 bg-dark text-light">
+		<!-- Begin Mailchimp Signup Form -->
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="form-group">
+						<form action="https://byterights.us20.list-manage.com/subscribe/post?u=58d639c5919c6ebc69c5aed19&amp;id=d230ab6da8"
+						 method="post" id="mc-embedded-subscribe-form" name="footer-subscribe-form" class="validate" target="_blank"
+						 novalidate>
+							<div id="mc_embed_signup_scroll">
+								<h4>Subscribe to our mailing list</h4>
+								<div class="mc-field-group">
+									<input type="email" value="" name="EMAIL" class="form-control" id="mce-EMAIL" placeholder="Enter email">
+								</div>
+								<div id="mce-responses" class="clear">
+									<div class="response" id="mce-error-response" style="display:none"></div>
+									<div class="response" id="mce-success-response" style="display:none"></div>
+								</div>
+								<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+								<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_58d639c5919c6ebc69c5aed19_d230ab6da8"
+									 tabindex="-1" value=""></div>
+								<div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-custom1"></div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<!-- <h4>Links</h4> -->
+				</div>
+				<div class="col-lg-4">
+					<h4>Social</h4>
+					<div>
+						<a id="social" href="https://instagram.com/byterights"><i class="fab fa-instagram"></i></a>
+						<a id="social" href="https://twitter.com/byterights"><i class="fab fa-twitter"></i></a>
+						<a id="social" href="https://fb.me/byterights"><i class="fab fa-facebook"></i></a>
+						<a id="social" href="https://linkedin.com/company/byterights"><i class="fab fa-linkedin"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</footer> --}}
+
+
+	<!--End mc_embed_signup-->
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	 crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+	 crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+	 crossorigin="anonymous"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+</body>
+
+</html>
