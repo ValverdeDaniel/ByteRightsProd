@@ -1,30 +1,75 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: row;
+}
 
-  body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
+main {
+  flex: 1 0 auto;
+  width: calc(100% - 125px);
+}
 
-  main {
-    flex: 1 0 auto;
-  }
+.nav-wrapper .fa-bars {
+  font-size: 25px;
+}
 
-  .nav-wrapper .fa-bars{
-    font-size:25px;
-  }
+footer {
+  margin-top: 20px;
+}
 
-  footer{
-    margin-top:20px;
-  }
+.dash-status {
+  text-transform: capitalize;
+}
 
-  .proposal-text{
-    height:120px;
-  }
+#delete-form {
+  display: inline;
+}
 
-  .dash-status{
-    text-transform: capitalize;
-  }
+.br_container {
+  padding: 0;
+}
+.br_tabs .tab a {
+  color: #000;
+}
+.br_tabs .tab a.active {
+  color: #000;
+  border-bottom: 4px solid #5B8CED;
+}
 
-  #delete-form{
-    display: inline;
-  }
+.proposal_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.proposal_topbar {
+  display: flex;
+  padding: 20px 0 0;
+}
+.proposal_filter {
+  background-color: #f3f3f3;
+}
+.proposal_item {
+  display: flex;
+  align-items: center;
+}
+.proposal_title {
+  font-size: 35px;
+  line-height: 37px;
+  font-weight: 600;
+  margin: 0;
+}
+.proposal p {
+  margin: 0;
+}
+
+.nav-horizontal {
+  height: 100vh;
+  width: 125px;
+  background-color: #000C4A;
+  padding: 25px 0;
+}
+
+.primary {
+  background-color: #5B8CED !important;
+}
+
+/*# sourceMappingURL=style.css.map */
