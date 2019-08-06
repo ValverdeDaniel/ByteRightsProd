@@ -18,6 +18,14 @@
         </div>
       </div>
     </div>
+    {{#if user}}
+    <form method ="post" action="/proposals/vote/{{proposal.id}}">
+      <div>
+        <input name = "voteBody" type="submit" value="Accept" class="btn green lighten-1">
+        <input name = "voteBody" type="submit" value="Decline" class="btn red lighten-1">
+      </div>
+    </form>
+    {{/if}}
 
     {{#if proposal.allowComments}}
       <div class="card">
@@ -32,23 +40,25 @@
               <input type="submit" value="Submit" class="btn">
             </form>
           {{else}}
-            <p>Please <a href="/auth/google">login</a> to leave a comment</p>
+            <p>Please <a href="/auth/google">login</a> if you would like to leave a comment or accept/decline the offer.</p>
           {{/if}}
         </div>
       </div>
-      {{#each proposal.comments}}
         <div class="card">
           <div class="card-content">
-            <h5>{{commentBody}}</h5>
+            {{#each proposal.comments}}
+            <br>
             <div class="chip">
               <img src="{{commentUser.image}}">
               <a href= "/proposals/user/{{commentUser.id}}">{{commentUser.firstName}} {{commentUser.lastName}}</a>
             </div>
-            <br>
+            <p>{{commentBody}}</p>
             <small>Posted: {{formatDate commentDate 'MMMM Do YYYY, h:mm'}} </small>
+            <br>
+            {{/each}}
           </div>
         </div>
-      {{/each}}
+
     {{/if}}
   </div>
   <div class="col s12 m4">
@@ -57,8 +67,25 @@
         <span class="card-title">{{proposal.user.firstName}} {{proposal.user.lastName}}</span>
         <img src="{{proposal.user.image}}" class="circle responsive-img">
       </div>
-      <div class="card-action"> 
+      {{!-- <div class="card-action"> 
         <a href="/proposals/user/{{proposal.user.id}}">More From {{proposal.user.firstName}}</a>
+      </div> --}}
+    </div>
+  </div>
+  <div class="col s12 m4">
+    <div class="card">
+      <div class="card-content">
+        <h4>Proposal Vote Status: </h4>
+        {{#each proposal.votes}}
+          <br>
+          <div class="chip">
+            <img src="{{voteUser.image}}">
+            <a href= "/proposals/user/{{voteUser.id}}">{{voteUser.firstName}} {{voteUser.lastName}}</a>
+          </div>
+          <p style = "font-size:20px;" >{{voteBody}}</p>
+          <small>Posted: {{formatDate voteDate 'MMMM Do YYYY, h:mm'}} </small>
+          <br>
+        {{/each}}
       </div>
     </div>
   </div>

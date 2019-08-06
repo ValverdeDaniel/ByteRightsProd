@@ -22,7 +22,7 @@ const ProposalSchema = new Schema({
   status: {
     type: String,
     default: 'public'
-
+  
   },
   allowComments: {
     type: Boolean,
@@ -43,21 +43,23 @@ const ProposalSchema = new Schema({
       ref: 'users'
     }
   }],
+  votes: [{
+    voteBody: {
+      type: String
+    },
+    voteDate: {
+      type: Date,
+      default: Date.now
+    },
+    voteUser: {
+      type: Schema.Types.ObjectId,
+      ref: 'users'
+    }
+  }],
 
   igProfile: {
     type: String
   },
-  votes: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
-      },
-      userSay: {
-        type: String
-      }
-    }
-  ],
   date:{
     type: Date,
     default: Date.now
