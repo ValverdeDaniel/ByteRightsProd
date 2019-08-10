@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const Proposal = mongoose.model('proposals');
 const user = mongoose.model('users');
 const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
+const axios = require('axios');
+
 
 // proposals index
 router.get('/', (req, res) => {
@@ -24,6 +26,7 @@ router.get('/show/:id', (req, res) => {
     _id: req.params.id
   })
     .populate('user')
+    .populate('votes.voteUser')
     .populate('comments.commentUser')
     .then(proposal => {
       if(proposal.status == 'public') {
@@ -143,12 +146,73 @@ router.put('/:id', (req, res) => {
   });
 });
 
+//vote on proposal
+// router.put('/:id/vote', async (req, res) => {
+//   try {
+//     const errors = {};
+//     let proposal = await Proposal.findOne({ _id: req.params.id })
+//     if (!proposal) {
+//       throw new Error('Proposal not found');
+//     }
+//     let votes = proposal.votes || [];
+//     let existingVote = votes.find(vote => vote.user.toString() === req.user._id.toString())
+//     if (existingVote) {
+//       existingVote.userSay = req.body.userSay;
+//     } else {
+//       votes.push({user: req.user._id, userSay: req.body.userSay});
+//     }
+//     proposal.votes = votes;
+//     await proposal.save();
+//     res.json(proposal)
+//   } catch (error) {
+//     res.status(404).json(error)
+//   }
+// });
+
+// //add this part to the show proposals part. or something like that.
+// export const voteProposal = (id, data) => (dispatch) => {
+//   dispatch(setProposalSaving());
+//   console.log('voteProposal ', id, data)
+//   axios
+//     .put(`/api/proposal/${id}/vote`, data)
+//     .then(res => dispatch({
+//       type: VOTE_CONTRACT,
+//       payload: res.data,
+//     }))
+//     .catch(err => dispatch({
+//       type: VOTE_CONTRACT,
+//       payload: null,
+//     }));
+// };
+
 //delete Proposal
 router.delete('/:id', (req, res) => {
   Proposal.remove({_id: req.params.id})
     .then(() => {
       res.redirect('/dashboard');
     })
+});
+
+//add vote
+router.post('/vote/:id', (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+  .then(proposal => {
+    const newVote = {
+      voteBody: req.body.voteBody,
+      voteUser: req.user.id
+    }
+
+    //push to votes array
+    //unshift adds it to the beginning
+    proposal.votes.unshift(newVote);
+
+    proposal.save()
+      .then(proposal => {
+        res.redirect(`/proposals/show/${proposal.id}`);
+      })
+  });
 });
 
 //add comment

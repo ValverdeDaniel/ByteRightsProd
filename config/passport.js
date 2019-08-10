@@ -16,7 +16,7 @@ module.exports = function(passport) {
       proxy: true
     }, (accessToken, refreshToken, profile, cb) => {
       console.log(accessToken);
-      // console.log(profile);
+      console.log(profile);
       //api changed since vid was made and we no longer need to remove ?sz=50
       const image = profile.photos[0].value;
 

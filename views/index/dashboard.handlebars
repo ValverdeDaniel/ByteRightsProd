@@ -21,7 +21,7 @@
         <td><a href="/proposals/show/{{id}}">{{url}}</a></td>
         <td>{{formatDate data 'MMMM do YYYY'}}</td>
         <td><span class = "dash-satus">{{status}}</span></td>
-        <td>this is where the vote will go</td>
+        <td>{{votes.[0].voteBody}}</td>
         <td>
           <a class="btn left-align" href="/proposals/edit/{{id}}"><i class="fa fa-pencil"></i> Edit</a>
           <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
