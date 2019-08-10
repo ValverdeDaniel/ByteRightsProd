@@ -59,12 +59,16 @@ footer{
   &_item {
     display: flex;
     align-items: center;
+    position: relative;
   }
   &_title {
     font-size: 35px;
     line-height: 37px;
     font-weight: 600;
     margin: 0; 
+  }
+  &_image {
+    max-width: 67px;
   }
   p{
     margin: 0;

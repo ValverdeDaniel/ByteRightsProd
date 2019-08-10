@@ -50,12 +50,16 @@ footer {
 .proposal_item {
   display: flex;
   align-items: center;
+  position: relative;
 }
 .proposal_title {
   font-size: 35px;
   line-height: 37px;
   font-weight: 600;
   margin: 0;
+}
+.proposal_image {
+  max-width: 67px;
 }
 .proposal p {
   margin: 0;

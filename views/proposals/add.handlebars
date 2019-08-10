@@ -1,39 +1,51 @@
-<h1>add proposals</h1>
-<div class="row">
-  <form action="/proposals" method="post" class="col s12">
-    <div class="row">
-      <div class="input-field">
-        <input type="text" name="url">
-        <label for="url">url</label>
-      </div>
-    </div>
+<div class="proposal_wrapper--add"> 
+  <div class="row"> 
+    <div class="proposal_topbar"> 
+      <div class="col s12">        
+        <h1 class="proposal_title">Create New Proposal</h1> 
+      </div> 
+    </div> 
+  </div>
+  <div class="row">
+    <form action="/proposals" method="post">
+      <div class="col s12">
+    
+        <div class="row">
+          <div class="input-field">
+            <input type="text" name="url">
+            <label for="url">url</label>
+          </div>
+        </div>
 
-    <div class="row">
-      <div class="input-field">
-        <select name="status">
-            <option value="public" selected>Public</option>
-            <option value="private">Private</option>
-            <option value="unpublished">Unpublished</option>
-        </select>
-        <label for="status">Status</label>
-      </div>
-    </div>
-    <div class="row">
-      <p>
-        <label for="allowComments">
-          <input type="checkbox" id="allowComments" name="allowComments" />
-          <span>Allow Comments</span>
-        </label>
-      </p>
-    </div>
+        <div class="row">
+          <div class="input-field">
+            <select name="status">
+                <option value="public" selected>Public</option>
+                <option value="private">Private</option>
+                <option value="unpublished">Unpublished</option>
+            </select>
+            <label for="status">Status</label>
+          </div>
+        </div>
+        <div class="row">
+          <p>
+            <label for="allowComments">
+              <input type="checkbox" id="allowComments" name="allowComments" />
+              <span>Allow Comments</span>
+            </label>
+          </p>
+        </div>
 
-    <div class="row">
-      <div class="input-field">
-        <h5>Compensation</h5>
-        <textarea name="compensation"></textarea>
-      </div>
-    </div>
+        <div class="row">
+          <div class="input-field">
+            <h5>Compensation</h5>
+            <textarea name="compensation"></textarea>
+          </div>
+        </div>
 
-    <input type="submit" value="Save" class="btn">
-  </form>
-</div>
+        <input type="submit" value="Save" class="btn">
+      </div>
+
+    </form>
+  </div>
+</div> 

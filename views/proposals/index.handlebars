@@ -16,7 +16,7 @@
         </div> 
         <div class="col s3">       
           <div class="proposal_title-wrapper">
-            <a class="btn primary" href="/proposals/show/{{id}}">+ New Proposal</a>
+            <a class="btn primary" href="/proposals/add">+ New Proposal</a>
           </div>
         </div>  
       </div>
@@ -58,7 +58,7 @@
             {{#if user}}
               {{{editIcon user.id ../user.id id}}}
             {{/if}} 
-            <img src="{{user.image}}" width="100%">
+            <img src="{{user.image}}" width="100%" class="proposal_image">
           </div> 
           <div class="col s2"> 
             <p><a href= "/proposals/user/{{user.id}}">{{user.firstName}} {{user.lastName}}</a></p>
