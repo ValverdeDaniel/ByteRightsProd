@@ -1,0 +1,45 @@
+/proposals/add
+	1. remove number of uses
+	2. remove start date
+	3. remove length of time
+	4. remove one of the Public statuses
+	5. remove compensation type
+	6. add recipient to proposal.js model
+	7. can't add a proposal? (compensation is required)
+
+/proposals/edit/{{id}}
+	1. make edit fields match add fields
+
+/navbar
+1. add /myproposals or /dashboard
+2. byterights should take you to /dashboard or /myproposals or idk but not public proposals which is where it currently goes lets discuss which route we want to keep
+3. add create new proposal button
+
+/proposals/my
+1. remove (created date, length, platform)
+2. add vote status
+3. add delete button
+3a. the edit button is on top of the view proposal button, maybe change to [VIEW]
+4. last activity (how we doing that?)
+5. remove countered
+6. filter for accepted declined null (this is minimal priority for me)
+	6a. but if we don't have it we should hide it
+7. add image for the proposal instagram oembed image
+
+/show/{{id}}
+1. add vote status area
+2. maybe up top
+
+
+a. merge our branches
+b. add instagram authentication
+c. add facebook authentication
+d. make api call and check username from instagram for the image when we fill out and submit add form.
+10. check that the person authenticated with the platform we are requesting rights from and make sure that the vote matches both users
+
+
+
+
+
+
+

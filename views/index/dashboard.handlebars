@@ -19,7 +19,8 @@
       <tr>
         <td><img src="https://via.placeholder.com/75"></td>
         <td><a href="/proposals/show/{{id}}">{{url}}</a></td>
-        <td>{{formatDate data 'MMMM do YYYY'}}</td>
+        {{!-- bug gotta fix this date thing --}}
+        <td>{{formatDate proposal.date 'MMMM Do YYYY'}}</td>
         <td><span class = "dash-satus">{{status}}</span></td>
         <td>{{votes.[0].voteBody}}</td>
         <td>
