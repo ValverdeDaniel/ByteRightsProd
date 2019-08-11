@@ -9,20 +9,21 @@ const ProposalSchema = new Schema({
   },
   url: {
     type: String,
-    required: true
-
+    required: true 
   }, 
   imageUrl: {
     type: String,
   },
   compensation: {
+    type: String
+  },
+  recipient: {
     type: String,
     required: true
   },
   status: {
     type: String,
-    default: 'public'
-  
+    default: 'public' 
   },
   allowComments: {
     type: Boolean,

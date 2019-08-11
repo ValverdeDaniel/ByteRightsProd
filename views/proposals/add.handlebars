@@ -11,14 +11,7 @@
     <div class="col s12">  
       <form class="proposal_add-wrapper" action="/proposals" method="post">
         <div class="col s6"> 
-          <div class="input-field">
-            <select name="template">
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-              <option value="unpublished">Unpublished</option>
-            </select>
-            <label for="template">Select Proposal Template</label>
-          </div> 
+
           <div class="input-field">
             <input type="text" name="url">
             <label for="url">Image Link</label>
@@ -27,36 +20,6 @@
             <input type="text" name="name">
             <label for="name">Recipient Name</label>
           </div>  
-          <div class="input-field">
-            <select name="imagefor">
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-              <option value="unpublished">Unpublished</option>
-            </select>
-            <label for="imagefor">Use Image For</label>
-          </div>   
-          <div class="input-field">
-            <select name="uses">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-            <label for="uses">Number of Uses</label>
-          </div>   
-
-          <div class="input-field"> 
-            <input id="date_range" type="date" class="validate">
-            <label for="date_range">Start Date</label> 
-          </div>   
-
-          <div class="input-field">
-            <select name="length">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-            <label for="length">Length of Time</label>
-          </div>   
 
           <div class="input-field">
             <select name="status">
@@ -66,23 +29,16 @@
             </select>
             <label for="status">Status</label>
           </div> 
+
           {{!-- <p>
             <label for="allowComments">
               <input type="checkbox" id="allowComments" name="allowComments" />
               <span>Allow Comments</span>
             </label>
           </p>  --}}
-
+    
           <div class="input-field">
-            <select name="compensationtype">
-              <option value="cash">Cash</option>
-              <option value="credit">Credit</option>
-              <option value="check">Check</option>
-            </select>
-            <label for="compensationtype">Compensation Type</label>
-          </div>             
-          <div class="input-field">
-            <input type="text" name="name">
+            <input type="text" name="compensation">
             <label for="compensation">Amount/Description</label>
           </div> 
           <input type="submit" value="Create Proposal" class="btn primary"> 
