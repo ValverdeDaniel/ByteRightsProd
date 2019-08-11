@@ -1,39 +1,49 @@
-<h1>add proposals</h1>
-<div class="row">
-  <form action="/proposals" method="post" class="col s12">
-    <div class="row">
-      <div class="input-field">
-        <input type="text" name="url">
-        <label for="url">url</label>
+<div class="proposal_wrapper--add"> 
+  <div class="row"> 
+    <div class="col s12">
+      <div class="proposal_topbar"> 
+        <div class="col s6  pull-s6">        
+          <h1 class="proposal_title">Create New Proposal</h1> 
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.</p>
+        </div>   
       </div>
-    </div>
+    </div>     
+    <div class="col s12">  
+      <form class="proposal_add-wrapper" action="/proposals" method="post">
+        <div class="col s6"> 
 
-    <div class="row">
-      <div class="input-field">
-        <select name="status">
-            <option value="public" selected>Public</option>
-            <option value="private">Private</option>
-            <option value="unpublished">Unpublished</option>
-        </select>
-        <label for="status">Status</label>
-      </div>
-    </div>
-    <div class="row">
-      <p>
-        <label for="allowComments">
-          <input type="checkbox" id="allowComments" name="allowComments" />
-          <span>Allow Comments</span>
-        </label>
-      </p>
-    </div>
+          <div class="input-field">
+            <input type="text" name="url">
+            <label for="url">Image Link</label>
+          </div>  
+          <div class="input-field">
+            <input type="text" name="name">
+            <label for="name">Recipient Name</label>
+          </div>  
 
-    <div class="row">
-      <div class="input-field">
-        <h5>Compensation</h5>
-        <textarea name="compensation"></textarea>
-      </div>
-    </div>
+          <div class="input-field">
+            <select name="status">
+              <option value="public" selected>Public</option>
+              <option value="private">Private</option>
+              <option value="unpublished">Unpublished</option>
+            </select>
+            <label for="status">Status</label>
+          </div> 
 
-    <input type="submit" value="Save" class="btn">
-  </form>
-</div>
+          {{!-- <p>
+            <label for="allowComments">
+              <input type="checkbox" id="allowComments" name="allowComments" />
+              <span>Allow Comments</span>
+            </label>
+          </p>  --}}
+    
+          <div class="input-field">
+            <input type="text" name="compensation">
+            <label for="compensation">Amount/Description</label>
+          </div> 
+          <input type="submit" value="Create Proposal" class="btn primary"> 
+        </div>
+      </form>  
+    </div>
+  </div>
+</div> 

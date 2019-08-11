@@ -1,31 +1,91 @@
-<h1>Proposals</h1>
-<div class="row">
-  {{#each proposals}}
-    <div class="col s12 m4">
-      <div class="card">
-        <div class="card-image">
-          {{#if user}}
-            {{{editIcon user.id ../user.id id}}}
-          {{/if}}
+<div class="proposal_wrapper"> 
+  <div class="row">
+    <div class="col s12">
+      <div class="proposal_topbar"> 
+        <div class="col s2">        
+          <h1 class="proposal_title">Proposals</h1> 
         </div>
-        <div class="card-content center-align">
-          <h5>{{url}}</h5>
-          {{!-- you don't use parenthesis for our arguments you just use spaces in handlebars unless you want to use more than one helper --}}
-          <p class="proposal-text">{{stripTags (truncate compensation 150)}}</p>
-          <br>
-          <div class="chip">
-              <div class="chip">
-                <img src="{{user.image}}">
-                <a href= "/proposals/user/{{user.id}}">{{user.firstName}} {{user.lastName}}</a>
-              </div>
+        <div class="col s7">  
+          <ul class="br_tabs tabs">
+            <li class="tab col s2"><a href="#test1">All</a></li>
+            <li class="tab col s2"><a class="active" href="#test2">Sent</a></li>
+            <li class="tab col s3"><a href="#test3">Countered</a></li>
+            <li class="tab col s3"><a href="#test4">Accepted</a></li>
+            <li class="tab col s2"><a href="#test5">Declined</a></li>
+          </ul>
+        </div> 
+        <div class="col s3">       
+          <div class="proposal_title-wrapper">
+            <a class="btn primary pull-right" href="/proposals/add">+ New Proposal</a>
           </div>
-          <div class="card-action center-align">
-            <a class="btn grey" href="/proposals/show/{{id}}">Read More</a>
+        </div>  
+      </div>
+    </div>    
+    <div class="col s12">
+      <div class="row">
+        <div class="proposal_filter"> 
+          <div class="col s1">
+          </div> 
+          <div class="col s2"> 
+            <p>Recipient</p>
           </div>
-        </div>
+          <div class="col s1"> 
+            <p>Last Activity</p>
+          </div>
+          <div class="col s2">
+            <p>Created Date</p> 
+          </div>
+          <div class="col s1">
+            <p>Length</p>
+          </div>
+          <div class="col s1">
+            <p>Platform</p>
+          </div>
+          <div class="col s2">
+            <p>Amount</p>
+          </div>
+          <div class="col s2">
+            <p></p>
+          </div>  
+        </div>  
       </div>
     </div>
-  {{else}}
-    <p>No proposals found</p>
-  {{/each }}
+    {{#each proposals}}
+    <div class="col s12">
+      <div class="row">
+        <div class="proposal_item">
+          <div class="col s1">
+            {{#if user}}
+              {{{editIcon user.id ../user.id id}}}
+            {{/if}} 
+            <img src="{{user.image}}" width="100%" class="proposal_image">
+          </div> 
+          <div class="col s2"> 
+            <p><a href= "/proposals/user/{{user.id}}">{{user.firstName}} {{user.lastName}}</a></p>
+          </div>
+          <div class="col s1"> 
+            <p>2 days ago</p>
+          </div>
+          <div class="col s2">
+            <p>Created Date</p> 
+          </div>
+          <div class="col s1">
+            <p>12 Months</p>
+          </div>
+          <div class="col s1">
+            <p>Instagram</p>
+          </div>
+          <div class="col s2">
+            <p class="proposal-text">{{stripTags (truncate compensation 150)}}</p>
+          </div>
+          <div class="col s2">
+            <p><a class="btn grey" href="/proposals/show/{{id}}">View Proposal</a></p>
+          </div> 
+        </div> 
+      </div>
+    </div>
+    {{else}}
+      <p>No proposals found</p>
+    {{/each }}
+  </div>
 </div>

@@ -9,8 +9,7 @@ const ProposalSchema = new Schema({
   },
   url: {
     type: String,
-    required: true
-
+    required: true 
   }, 
   imageUrl: {
     type: String,
@@ -19,13 +18,11 @@ const ProposalSchema = new Schema({
     type: String
   },
   compensation: {
-    type: String,
-    required: true
-  },
+    type: String
+  }, 
   status: {
     type: String,
-    default: 'public'
-  
+    default: 'public' 
   },
   allowComments: {
     type: Boolean,
