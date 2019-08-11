@@ -112,7 +112,8 @@ footer{
     padding: 0 0 10px;
   }
   &_image {
-    max-width: 67px;
+    max-width: 87px; 
+    min-width: 87px; 
   }
   &_add {
     &-wrapper{
@@ -150,4 +151,9 @@ footer{
 }
 .no-margin--bottom {
   margin-bottom: 0 !important;
+}
+
+//Hide edit button. remove later
+.btn-floating.halfway-fab.red {
+  display: none;
 }

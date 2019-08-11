@@ -1,21 +1,29 @@
-  <h3 class="display-4">Licensing Made Easy</h3>
-  </br>
-  <p class="lead">Get the rights to use images, video, music, and art you find on any platform.</p>
-  <br/>
-{{#if user}}
-
-{{else}}
-<ul>
-  <li>
-    <a class = "btn red darken-1" href="/auth/google">
-      <i class="fa fa-google left"></i> Login With Google
-    </a>
-  </li>
-    <br>
-  {{!-- <li>
-    <a class = "btn blue darken-1" href="/auth/instagram">
-      <i class="fa fa-instagram left"></i> Login With Instagram
-    </a>
-  </li> --}}
-</ul>
-{{/if}}
+<div class="proposal_wrapper"> 
+  <div class="row">
+    <div class="proposal_topbar"> 
+      <div class="col s12">
+        <h1 class="proposal_title">Licensing Made Easy</h1> 
+      <div class="col s12">
+        <p class="lead">Get the rights to use images, video, music, and art you find on any platform.</p>
+      </div>
+      <div class="col s12">
+        {{#if user}} 
+        {{else}}
+        <ul>
+          <li>
+            <a class = "btn red darken-1" href="/auth/google">
+              <i class="fa fa-google left"></i> Login With Google
+            </a>
+          </li>
+            <br>
+          {{!-- <li>
+            <a class = "btn blue darken-1" href="/auth/instagram">
+              <i class="fa fa-instagram left"></i> Login With Instagram
+            </a>
+          </li> --}}
+        </ul>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div> 
