@@ -95,7 +95,8 @@ footer {
   padding: 0 0 10px;
 }
 .proposal_image {
-  max-width: 67px;
+  max-width: 87px;
+  min-width: 87px;
 }
 .proposal_add-wrapper {
   margin: 20px 0 0;
@@ -129,6 +130,10 @@ footer {
 
 .no-margin--bottom {
   margin-bottom: 0 !important;
+}
+
+.btn-floating.halfway-fab.red {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
