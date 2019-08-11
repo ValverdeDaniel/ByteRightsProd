@@ -2,17 +2,19 @@
   <div class="row"> 
     <div class="col s12">
       <ul>
-        <li><a href="/proposals" class=""><img src="/images/logo.png" width="74" height="38"/></a></li>
+        <li><a href="/proposals/my" class=""><img src="/images/logo.png" width="74" height="38"/></a></li>
         <li><a href="#" data-target="main-menu" class="sidenav-trigger show-on-small"><i class="fa fa-bars"></i></a></li>
       </ul> 
       
-      {{!-- Right Nav --}}
+      {{!-- Left Nav --}}
       <ul class="hide-on-small-only">
         {{#if user}}
           <li><a href="/">Welcome {{user.firstName}}</a></li>
+          <li><a href="/proposals/my" class="active">Proposals</a></li>
           <li><a href="/auth/logout">Logout</a></li>
+          <li><a href="/about" class="active">About</a></li>
         {{else}}
-          <li><a href="/proposals" class="active">Proposals</a></li>
+          <li><a href="/about" class="active">About</a></li>
         {{/if}}
       </ul>
 

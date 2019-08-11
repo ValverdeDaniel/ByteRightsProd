@@ -141,7 +141,7 @@ router.put('/:id', (req, res) => {
 
     proposal.save()
       .then(proposal => {
-        res.redirect('/dashboard');
+        res.redirect('/proposals/my');
       });
   });
 });
@@ -189,7 +189,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   Proposal.remove({_id: req.params.id})
     .then(() => {
-      res.redirect('/dashboard');
+      res.redirect('/proposals/my');
     })
 });
 
