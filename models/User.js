@@ -6,12 +6,6 @@ const UserSchema = new Schema({
   googleID: {
     type: String
   }, 
-  instagramID: {
-    type: String
-  },
-  instagramDisplayName: {
-    type: String
-  },
   email: {
     type: String,
     required: true

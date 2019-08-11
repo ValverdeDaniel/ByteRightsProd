@@ -1,5 +1,5 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const InstagramStrategy = require('passport-instagram').Strategy;
+// const InstagramStrategy = require('passport-instagram').Strategy;
 const mongoose = require('mongoose');
 const keys = require('./keys');
 
@@ -45,41 +45,41 @@ module.exports = function(passport) {
     })
   );
 
-  passport.use(new InstagramStrategy({
-    clientID: keys.instagramClientID,
-    clientSecret: keys.instagramClientSecret,
-    callbackURL: '/auth/instagram/callback'
-    // proxy: true
-  }, function(accessToken, refreshToken, profile, done) {
-      console.log(accessToken);
-      console.log(profile);
-    //User.findOrCreate({ instagramId: profile.id }, function (err, user) {
-      //return done(null, profile);
-    //});
-      let newUser = {
-      instgramDisplayName: profile.displayName,
-      email: profile.email,
-      image: profile._json.data.profile_picture
-      //user.bio = profile._json.data.bio;
-      //user.media = `https://api.instagram.com/v1/users/${profile.id}/media/recent/?access_token=${accessToken}&count=8`
-      }
+  // passport.use(new InstagramStrategy({
+  //   clientID: keys.instagramClientID,
+  //   clientSecret: keys.instagramClientSecret,
+  //   callbackURL: '/auth/instagram/callback'
+  //   // proxy: true
+  // }, function(accessToken, refreshToken, profile, done) {
+  //     console.log(accessToken);
+  //     console.log(profile);
+  //   //User.findOrCreate({ instagramId: profile.id }, function (err, user) {
+  //     //return done(null, profile);
+  //   //});
+  //     let newUser = {
+  //     instgramDisplayName: profile.displayName,
+  //     email: profile.email,
+  //     image: profile._json.data.profile_picture
+  //     //user.bio = profile._json.data.bio;
+  //     //user.media = `https://api.instagram.com/v1/users/${profile.id}/media/recent/?access_token=${accessToken}&count=8`
+  //     }
 
-      //check for existing user
-      User.findOne({
-        instagramID: profile.id
-      }).then(user => {
-        if(user) {
-          //return user
-          done(null, user);
-        } else {
-          //create user
-          new User(newUser)
-            .save()
-            .then(user => done(null, user));
-        }
-      })
-  }
-  ));
+  //     //check for existing user
+  //     User.findOne({
+  //       instagramID: profile.id
+  //     }).then(user => {
+  //       if(user) {
+  //         //return user
+  //         done(null, user);
+  //       } else {
+  //         //create user
+  //         new User(newUser)
+  //           .save()
+  //           .then(user => done(null, user));
+  //       }
+  //     })
+  // }
+  // ));
 
   // passport.use(new InstagramStrategy({
   //   clientID: keys.instagramClientID,
