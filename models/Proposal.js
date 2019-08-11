@@ -19,11 +19,7 @@ const ProposalSchema = new Schema({
   },
   compensation: {
     type: String
-  },
-  recipient: {
-    type: String,
-    required: true
-  },
+  }, 
   status: {
     type: String,
     default: 'public' 

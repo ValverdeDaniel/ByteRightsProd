@@ -1,4 +1,4 @@
-<div class="proposal-show">
+<div class="proposal_wrapper--add">
   <div class="row">
     <div class="proposal_show-topbar">
       <div class="col s12">
@@ -69,6 +69,22 @@
           </div> 
           {{/if}}
         {{/if}}
+ 
+        <div class="card">
+          <div class="card-content">
+            <h4>Proposal Vote Status: </h4>
+            {{#each proposal.votes}}
+              <br>
+              <div class="chip">
+                <img src="{{voteUser.image}}">
+                <a href= "/proposals/user/{{voteUser.id}}">{{voteUser.firstName}} {{voteUser.lastName}}</a>
+              </div>
+              <p style = "font-size:20px;" >{{voteBody}}</p>
+              <small>Posted: {{formatDate voteDate 'MMMM Do YYYY, h:mm'}} </small>
+              <br>
+            {{/each}}
+          </div>
+        </div> 
       </div>
       <div class="col s6">
         {{!-- the div below this is carries the embed code for the instagram post --}}
@@ -86,22 +102,6 @@
         </div>
       </div>
     </div> --}}
-    {{!-- <div class="col s12">
-      <div class="card">
-        <div class="card-content">
-          <h4>Proposal Vote Status: </h4>
-          {{#each proposal.votes}}
-            <br>
-            <div class="chip">
-              <img src="{{voteUser.image}}">
-              <a href= "/proposals/user/{{voteUser.id}}">{{voteUser.firstName}} {{voteUser.lastName}}</a>
-            </div>
-            <p style = "font-size:20px;" >{{voteBody}}</p>
-            <small>Posted: {{formatDate voteDate 'MMMM Do YYYY, h:mm'}} </small>
-            <br>
-          {{/each}}
-        </div>
-      </div>
-    </div> --}}
+
   </div> 
 </div>
