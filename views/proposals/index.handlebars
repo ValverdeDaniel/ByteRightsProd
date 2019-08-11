@@ -29,7 +29,7 @@
             <p>Recipient</p>
           </div>
           <div class="col s2"> 
-            <p>Last Activity</p>
+            <p>Last Comment</p>
           </div>   
           <div class="col s1"> 
             <p>Vote</p>
@@ -58,7 +58,11 @@
             <p><a href= "/proposals/user/{{recipient}}">{{recipient}}</a></p>
           </div>
           <div class="col s2"> 
-            <p>2 days ago</p>
+            <p>
+            {{#if comments.[0].commentDate}}
+              {{formatDate comments.[0].commentDate 'MMMM Do YYYY, h:mm'}}
+            {{/if}}
+            </p>
           </div> 
           <div class="col s1"> 
             <p>{{votes.[0].voteBody}}</p>

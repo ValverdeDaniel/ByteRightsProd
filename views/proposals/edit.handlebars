@@ -15,12 +15,10 @@
             <input type="text" name="url" value = "{{proposal.url}}">
             <label for="url">Image Link</label> 
           </div>
-          {{#if proposal.recipient}}
           <div class="input-field">
-            <input type="text" name="name" value="{{proposal.recipient}}">
-            <label for="name">Recipient Name</label>
-          </div>  
-          {{/if}}
+            <input type="text" name="recipient" value="{{proposal.recipient}}">
+            <label for="recipient">Recipient Name</label>
+          </div>   
           <div class="input-field">
             <select name="status">
               {{#select proposal.status}}
