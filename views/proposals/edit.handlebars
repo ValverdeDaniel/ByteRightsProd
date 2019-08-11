@@ -1,42 +1,44 @@
-<h1>Edit Proposal</h1>
-<div class="row">
-  <form action="/proposals/{{proposal.id}}?_method=PUT" method="post" class="col s12">
-    <input type="hidden" name="_method" value="PUT">
-    <div class="row">
-      <div class="input-field">
-        <input type="text" name="url" value = "{{proposal.url}}">
-        <label for="url">url</label>
+<div class="proposal-edit">
+  <h1>Edit Proposal</h1>
+  <div class="row">
+    <form action="/proposals/{{proposal.id}}?_method=PUT" method="post" class="col s12">
+      <input type="hidden" name="_method" value="PUT">
+      <div class="row">
+        <div class="input-field">
+          <input type="text" name="url" value = "{{proposal.url}}">
+          <label for="url">url</label>
+        </div>
       </div>
-    </div>
 
-    <div class="row">
-      <div class="input-field">
-        <select name="status">
-            {{#select proposal.status}}
-              <option value="public" selected>Public</option>
-              <option value="private">Private</option>
-              <option value="unpublished">Unpublished</option>
-            {{/select}}
-        </select>
-        <label for="status">Status</label>
+      <div class="row">
+        <div class="input-field">
+          <select name="status">
+              {{#select proposal.status}}
+                <option value="public" selected>Public</option>
+                <option value="private">Private</option>
+                <option value="unpublished">Unpublished</option>
+              {{/select}}
+          </select>
+          <label for="status">Status</label>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <p>
-        <label for="allowComments">
-          <input type="checkbox" name="allowComments" class="filled-in" id="allowComments" {{#if proposal.allowComments}} checked="checked" {{/if}} />
-          <span>Allow Comments</span>
-        </label>
-      </p>
-    </div>
-
-    <div class="row">
-      <div class="input-field">
-        <h5>Compensation:</h5>
-        <textarea name="compensation">{{proposal.compensation}}</textarea>
+      <div class="row">
+        <p>
+          <label for="allowComments">
+            <input type="checkbox" name="allowComments" class="filled-in" id="allowComments" {{#if proposal.allowComments}} checked="checked" {{/if}} />
+            <span>Allow Comments</span>
+          </label>
+        </p>
       </div>
-    </div>
 
-    <input type="submit" value="Save" class="btn">
-  </form>
+      <div class="row">
+        <div class="input-field">
+          <h5>Compensation:</h5>
+          <textarea name="compensation">{{proposal.compensation}}</textarea>
+        </div>
+      </div>
+
+      <input type="submit" value="Save" class="btn">
+    </form>
+  </div>
 </div>
