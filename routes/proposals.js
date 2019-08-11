@@ -106,9 +106,10 @@ router.post('/', (req, res) => {
 
   const newProposal = {
     url: req.body.url,
+    recipient: req.body.recipient,
     compensation: req.body.compensation,
     status: req.body.status,
-    allowCcomments: allowComments,
+    allowComments: allowComments,
     user: req.user.id
   }
 
@@ -135,6 +136,7 @@ router.put('/:id', (req, res) => {
 
     //new values
     proposal.url = req.body.url;
+    proposal.recipient = req.body.recipient;
     proposal.compensation = req.body.compensation;
     proposal.status = req.body.status;
     proposal.allowComments = allowComments;

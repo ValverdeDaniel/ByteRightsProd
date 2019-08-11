@@ -28,13 +28,16 @@
           <div class="col s2"> 
             <p>Recipient</p>
           </div>
-          <div class="col s24"> 
+          <div class="col s2"> 
             <p>Last Activity</p>
+          </div>   
+          <div class="col s1"> 
+            <p>Vote</p>
           </div>   
           <div class="col s2">
             <p>Amount</p>
           </div>
-          <div class="col s5">
+          <div class="col s4">
             <p></p>
           </div>  
         </div>  
@@ -52,16 +55,19 @@
             {{/if}} 
           </div> 
           <div class="col s2"> 
-            <p><a href= "/proposals/user/{{proposal.recipient}}">{{proposal.recipient}}</a></p>
+            <p><a href= "/proposals/user/{{recipient}}">{{recipient}}</a></p>
           </div>
           <div class="col s2"> 
             <p>2 days ago</p>
           </div> 
+          <div class="col s1"> 
+            <p>{{votes.[0].voteBody}}</p>
+          </div> 
           <div class="col s2">
             <p class="proposal-text">{{stripTags (truncate compensation 150)}}</p>
           </div>
-          <div class="col s5 push-right">
-            <div class="row">
+          <div class="col s4">
+            <div class="row pull-right">
               <div class="col">
                 <a class="btn grey" href="/proposals/show/{{id}}">View</a>
               </div>
