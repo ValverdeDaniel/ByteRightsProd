@@ -15,6 +15,9 @@ const ProposalSchema = new Schema({
   imageUrl: {
     type: String,
   },
+  recipient: {
+    type: String
+  },
   compensation: {
     type: String,
     required: true

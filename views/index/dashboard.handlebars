@@ -17,7 +17,7 @@
     <tbody>
       {{#each proposals}}
       <tr>
-        <td><img src="https://via.placeholder.com/75"></td>
+        <td><a href="{{url}}media/?size=t"><img src="{{url}}media/?size=t" alt=""/></a></td>
         <td><a href="/proposals/show/{{id}}">{{url}}</a></td>
         {{!-- bug gotta fix this date thing --}}
         <td>{{formatDate proposal.date 'MMMM Do YYYY'}}</td>
