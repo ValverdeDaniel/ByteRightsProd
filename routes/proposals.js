@@ -7,18 +7,18 @@ const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
 const axios = require('axios');
 
 
-// proposals index
-router.get('/', (req, res) => {
-  Proposal.find({status: 'public'})
-    .populate('user')
-    .sort({date:'desc'})
-    .then(proposals => {
-      res.render('proposals/index', {
-        proposals: proposals
-      });
-    });
+// proposals index (all public proposals route) 
+// router.get('/', (req, res) => {
+//   Proposal.find({status: 'public'})
+//     .populate('user')
+//     .sort({date:'desc'})
+//     .then(proposals => {
+//       res.render('proposals/index', {
+//         proposals: proposals
+//       });
+//     });
   
-})
+// })
 
 //show single proposal
 router.get('/show/:id', (req, res) => {
@@ -41,10 +41,10 @@ router.get('/show/:id', (req, res) => {
               proposal:proposal
             });
           } else {
-            res.redirect('/proposals');
+            res.redirect('/proposals/my');
           }
         } else {
-          res.redirect('/proposals');
+          res.redirect('/proposals/my');
         }
       }
     })
@@ -85,7 +85,7 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
   })
     .then(proposal => {
       if(proposal.user != req.user.id){
-        res.redirect('/proposals')
+        res.redirect('/proposals/my')
       } else {
         res.render('proposals/edit', {
           proposal: proposal
