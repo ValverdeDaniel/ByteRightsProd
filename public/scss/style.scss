@@ -22,6 +22,9 @@ body {
         }
       }
     }    
+    .row {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -52,6 +55,7 @@ footer{
     padding: 0;
     display: flex;
     flex-direction: column;    
+    height: 100%;
     h1 {
       font-size: 35px;
       line-height: 37px;
@@ -67,6 +71,87 @@ footer{
           color: #000;
           border-bottom: 4px solid #5B8CED;
         }
+      }
+    }
+  }
+}
+
+
+.home {
+  &_welcome {
+    flex-direction: column;
+    .nav-horizontal {
+      width: 100%;
+      ul li a {
+        padding: 0 15px;
+      }
+    }
+    .home_wrapper {
+      max-width: 100%;
+      width: 100%;
+      height: calc(100vh - 90px);
+    }
+    main {
+      width: 100%; 
+    }
+    .nav_wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  &_wrapper {
+    display: flex;
+    flex-direction: column;
+    background-image: url('/images/UGC_Collage_2.png');
+    height: 100%;
+  }
+  &_container {
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    max-width: 1140px;
+    margin: auto;
+  }
+  .row {
+    margin-bottom: 0;
+  }
+  &_content {
+    display: flex;
+    flex-direction: column;
+    &-header {
+      text-align: center; 
+      padding: 40px 20px;
+      width: 75%;
+      margin: 0 auto;
+      h2 {
+        font-size: 31px;
+        line-height: 33px;
+        font-weight: 600;
+        margin: 0;
+        padding-bottom: 15px;
+      }
+      p {
+        margin: 0;
+        padding-bottom: 15px;
+      }
+    }
+    &-wrapper {
+      max-width: 1140px;
+      margin: 35px auto;
+      .row {
+        display: flex;
+        align-items: flex-start;
+      }
+      h3 { 
+        font-size: 26px;
+        line-height: 28px;
+        font-weight: 600;
+        margin: 0;
+        padding-bottom: 15px;
       }
     }
   }
@@ -141,6 +226,10 @@ footer{
 .alternate {
   background-color: #F3F3F3 !important;
 }
+.grey-1 {
+  background-color: #f8f9fa !important;
+}
+
 
 //Helpers
 .no-margin {
@@ -151,6 +240,10 @@ footer{
 }
 .no-margin--bottom {
   margin-bottom: 0 !important;
+}
+.img-fluid {
+  max-width: 100%;
+  height: auto;
 }
 
 //Hide edit button. remove later
