@@ -17,6 +17,9 @@ body {
   line-height: 1;
   padding-bottom: 30px;
 }
+.nav-horizontal .row {
+  margin-bottom: 0;
+}
 
 main {
   flex: 1 0 auto;
@@ -43,6 +46,7 @@ footer {
   padding: 0;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 .br_container h1 {
   font-size: 35px;
@@ -56,6 +60,84 @@ footer {
 .br_tabs .tab a.active {
   color: #000;
   border-bottom: 4px solid #5B8CED;
+}
+
+.home_welcome {
+  flex-direction: column;
+}
+.home_welcome .nav-horizontal {
+  width: 100%;
+}
+.home_welcome .nav-horizontal ul li a {
+  padding: 0 15px;
+}
+.home_welcome .home_wrapper {
+  max-width: 100%;
+  width: 100%;
+  height: calc(100vh - 90px);
+}
+.home_welcome main {
+  width: 100%;
+}
+.home_welcome .nav_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.home_wrapper {
+  display: flex;
+  flex-direction: column;
+  background-image: url("/images/UGC_Collage_2.png");
+  height: 100%;
+}
+.home_container {
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 1140px;
+  margin: auto;
+}
+.home .row {
+  margin-bottom: 0;
+}
+.home_content {
+  display: flex;
+  flex-direction: column;
+}
+.home_content-header {
+  text-align: center;
+  padding: 40px 20px;
+  width: 75%;
+  margin: 0 auto;
+}
+.home_content-header h2 {
+  font-size: 31px;
+  line-height: 33px;
+  font-weight: 600;
+  margin: 0;
+  padding-bottom: 15px;
+}
+.home_content-header p {
+  margin: 0;
+  padding-bottom: 15px;
+}
+.home_content-wrapper {
+  max-width: 1140px;
+  margin: 35px auto;
+}
+.home_content-wrapper .row {
+  display: flex;
+  align-items: flex-start;
+}
+.home_content-wrapper h3 {
+  font-size: 26px;
+  line-height: 28px;
+  font-weight: 600;
+  margin: 0;
+  padding-bottom: 15px;
 }
 
 .proposal_wrapper {
@@ -120,6 +202,10 @@ footer {
   background-color: #F3F3F3 !important;
 }
 
+.grey-1 {
+  background-color: #f8f9fa !important;
+}
+
 .no-margin {
   margin: 0 !important;
 }
@@ -130,6 +216,11 @@ footer {
 
 .no-margin--bottom {
   margin-bottom: 0 !important;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
 }
 
 .btn-floating.halfway-fab.red {
