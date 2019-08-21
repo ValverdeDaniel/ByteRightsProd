@@ -12,7 +12,10 @@ proposal_url: {{proposal.url}}
 <br>
 proposal_id: {{proposal.id}}
 <br>
-last vote date: {{formatDate proposal.votes.[0].voteDate 'MMMM Do YYYY'}}
+last vote date: 
+{{#if proposal.comments.[0].commentDate}}
+    {{formatDate proposal.votes.[0].voteDate 'MMMM Do YYYY'}}
+{{/if}}
 <br> 
 last comment date: 
   {{#if proposal.comments.[0].commentDate}}
