@@ -50,6 +50,22 @@ router.get('/show/:id', (req, res) => {
     })
 })
 
+//display terms per proposal
+router.get('/terms/:id', (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .populate('user')
+    .populate('votes.voteUser')
+    .populate('comments.commentUser')
+    .then(proposal => {
+      res.render('proposals/terms', {
+        proposal: proposal
+      });
+  })
+});
+
+
 //list proposals from a user
 router.get('/user/:userId', (req, res) => {
   Proposal.find({user: req.params.userId, status: 'public'})
