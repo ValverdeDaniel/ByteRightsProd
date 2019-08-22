@@ -3,6 +3,9 @@ body {
   min-height: 100vh;
   flex-direction: row;
   overflow-y: auto;
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+  }
 }
 
 .nav {
@@ -13,17 +16,33 @@ body {
     width: 125px;
     background-color: #000C4A;
     padding: 25px 0;
-
+    @media only screen and (max-width: 600px) {
+      width: 100%;
+      padding: 25px 0 15px;
+    }
     ul {
       li {
-        a {
+        div {
           line-height: 1;
           padding-bottom: 30px;
+          @media only screen and (max-width: 600px) {
+            line-height: inherit;
+            padding: 25px 32px 20px;
+          }          
         }
       }
     }    
     .row {
       margin-bottom: 0;
+    }
+    .logo-mobile {
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+      background-color: #000C4A;
+      a {
+        padding: 32px;
+        line-height: 1;
+        height: auto;
+      }
     }
   }
 }
@@ -31,6 +50,9 @@ body {
 main {
   flex: 1 0 auto;
   width: calc(100% - 125px);
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }  
 }
 
 .nav-wrapper .fa-bars{
@@ -143,8 +165,8 @@ footer{
       max-width: 1140px;
       margin: 35px auto;
       .row {
-        display: flex;
-        align-items: flex-start;
+        // display: flex;
+        // align-items: flex-start;
       }
       h3 { 
         font-size: 26px;
@@ -168,12 +190,17 @@ footer{
   &_topbar {
     display: flex;
     padding: 20px 0 0;
-    
+    @media only screen and (max-width: 600px) {
+      flex-direction: column;
+    }
   }
   &_filter {
     display: flex;
     align-items: center;    
     background-color: #f3f3f3;
+    @media only screen and (max-width: 600px) {
+      flex-direction: column;
+    }    
     .row {
       margin-bottom: 0;
     }
@@ -184,7 +211,9 @@ footer{
     position: relative;
     border-bottom: 1px solid #E2E2E2;
     padding: 10px 0 8px;
-
+    @media only screen and (max-width: 600px) {
+      flex-direction: column;
+    }
     .btn-floating {
       bottom: 20px;
     }
@@ -195,10 +224,17 @@ footer{
     font-weight: 600;
     margin: 0; 
     padding: 0 0 10px;
+    @media only screen and (max-width: 600px) {
+      padding: 10px 0 0;
+    }    
   }
   &_image {
     max-width: 87px; 
     min-width: 87px; 
+    @media only screen and (max-width: 600px) {
+      max-width: 100%; 
+      min-width: 100%; 
+    }
   }
   &_add {
     &-wrapper{
@@ -212,6 +248,9 @@ footer{
     &-content {
       display: flex;
       padding: 20px 0;
+      @media only screen and (max-width: 600px) {
+        flex-direction: column;
+      }      
     }
   }
   p{
@@ -244,6 +283,32 @@ footer{
 .img-fluid {
   max-width: 100%;
   height: auto;
+}
+.word-break {
+  word-break: break-word;
+}
+.pull-right-sm {
+  @media only screen and (max-width: 600px) {
+    float: right;
+  }  
+}
+.pull-right-md {
+  @media only screen and (min-width: 601px) {
+    float: right;
+  }    
+}
+.group:before,
+.group:after {
+  content: "";
+  display: table;
+} 
+.group:after {
+  clear: both;
+}
+.row .col.m-auto {
+  @media only screen and (min-width: 601px) {  
+    width: auto;
+  }
 }
 
 //Hide edit button. remove later

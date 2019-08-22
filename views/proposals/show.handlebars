@@ -9,7 +9,7 @@
   </div>
   <div class="row no-margin--bottom">
     <div class="proposal_show-content alternate"> 
-      <div class="col s6">
+      <div class="col m6 s12">
         <div class="card horizontal">
           {{!-- <div class="card-image">
             <img src="https://via.placeholder.com/150">
@@ -17,7 +17,7 @@
           <div class="card-stacked">
             <div class="card-content">
               <p>{{{editIcon proposal.user.id user.id proposal.id false}}}</p>
-              <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love this photo you posted! We’d be willing to compensate you with {{proposal.compensation}} for the rights to use it in our future campaigns. If you’re interested, follow this link to see the full details of our offer: <a href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+              <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love this photo you posted! We’d be willing to compensate you with {{proposal.compensation}} for the rights to use it in our future campaigns. If you’re interested, follow this link to see the full details of our offer: <a href="{{proposal.id}}" target="_blank" class="word-break">byterights.com/proposals/show/{{proposal.id}}</a></p>
               {{#if user}}
               <form class="proposal_add-wrapper" method ="post" action="/proposals/vote/{{proposal.id}}">
                 <div>
@@ -76,14 +76,14 @@
         {{/if}}
  
       </div>
-      <div class="col s6">
+      <div class="col m6 s12">
         {{!-- the div below this is carries the embed code for the instagram post --}}
         <div class="card">
           <div class="card-image">
             <a href="{{proposal.url}}media/?size=l"><img src="{{proposal.url}}media/?size=l" alt=""/></a>
           </div>
         </div>
-        <p>{{proposal.url}}</p>
+        <p class="word-break">{{proposal.url}}</p>
         <div class="card">
           <div class="card-content">
             <span class="card-title">Proposal Vote Status</span>
