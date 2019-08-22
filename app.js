@@ -31,7 +31,9 @@ const {
   stripTags,
   formatDate,
   select,
-  editIcon
+  editIcon,
+  ifLoggedUserEqProposalUser,
+  ifCompensationEqBlank
 }= require('./helpers/hbs');
 
 //map global promises
@@ -60,7 +62,9 @@ app.engine('handlebars', exphbs({
     stripTags: stripTags,
     formatDate: formatDate,
     select: select,
-    editIcon: editIcon
+    editIcon: editIcon,
+    ifLoggedUserEqProposalUser: ifLoggedUserEqProposalUser,
+    ifCompensationEqBlank: ifCompensationEqBlank
   },
   defaultLayout: 'main'
 }));

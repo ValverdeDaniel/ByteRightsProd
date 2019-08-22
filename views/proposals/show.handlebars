@@ -17,7 +17,19 @@
           <div class="card-stacked">
             <div class="card-content">
               <p>{{{editIcon proposal.user.id user.id proposal.id false}}}</p>
-              <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love this photo you posted! We’d be willing to compensate you with {{proposal.compensation}} for the rights to use it in our future campaigns. If you’re interested, follow this link to see the full details of our offer: <a href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+              {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}
+                {{#ifCompensationEqBlank proposal.compensation}}
+                  <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love this photo you posted! We'd love it if you allowed us to use the attached image in our future campaigns. If you’re interested, follow this link to find out more about our offer: <a href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                {{else}}
+                  <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love this photo you posted! We’d be willing to compensate you with {{proposal.compensation}} for the rights to use it in our future campaigns. If you’re interested, follow this link to see the full details of our offer: <a href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                {{/ifCompensationEqBlank}}
+              {{else}}
+                {{#ifCompensationEqBlank proposal.compensation}}
+                  <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love this photo you posted! We'd love it if you allowed us to use the attached image in our future campaigns. If you’re interested, 1.please login, 2. return to this page and accept or decline the offer.</p>
+                {{else}}
+                  <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love this photo you posted! We’d be willing to compensate you with {{proposal.compensation}} for the rights to use it in our future campaigns. If you’re interested, 1.please login, 2. return to this page and accept or decline the offer.</p>
+                {{/ifCompensationEqBlank}}
+              {{/ifLoggedUserEqProposalUser}}
               {{#if user}}
               <form class="proposal_add-wrapper" method ="post" action="/proposals/vote/{{proposal.id}}">
                 <div>
@@ -57,6 +69,8 @@
               {{else}}
                 <p>Please <a href="/auth/google">login</a> if you would like to leave a comment or accept/decline the offer.</p>
               {{/if}}
+            {{!-- {{else}}
+            <p>Please <a href="/auth/google">login</a> if you would like to accept/decline the offer.</p> --}}
             </div>
             {{#if proposal.comments}} 
               <div class="card-content">
