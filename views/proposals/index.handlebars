@@ -22,7 +22,11 @@
     </div>    
     <div class="col s12">
       <div class="row">
-        <div class="proposal_filter"> 
+        <div class="proposal_filter">
+          {{!-- testing created addon --}}
+          {{!-- <div class="col s5">
+            <p>created</p>
+          </div>    --}}
           <div class="col s1">
           </div> 
           <div class="col s2"> 
@@ -39,7 +43,8 @@
           </div>
           <div class="col s4">
             <p></p>
-          </div>  
+          </div>
+
         </div>  
       </div>
     </div>
@@ -47,6 +52,10 @@
     <div class="col s12">
       <div class="row">
         <div class="proposal_item">
+          {{!-- created date for sorting check --}}
+          {{!-- <div class="col s5">  
+            <td>{{formatDate date 'MMMM Do YYYY'}}</td>
+          </div>  --}}
           <div class="col s1">  
             {{#if url}}
               <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt=""/>
