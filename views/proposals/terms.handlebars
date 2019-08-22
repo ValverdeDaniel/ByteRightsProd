@@ -1,4 +1,4 @@
-welcome to terms these are some data points you have access to that might be useful
+{{!-- welcome to terms these are some data points you have access to that might be useful
 <p>
 user first: {{proposal.user.firstName}}
 <br>
@@ -26,32 +26,21 @@ created date: {{formatDate proposal.date 'MMMM Do YYYY'}}
 </p>
 
 image: 
-{{!-- change size to (t, m, l)(thumbnail, medium, large) --}}
+ change size to (t, m, l)(thumbnail, medium, large)
 <div style="width:300px;height:400px;">
   <a href="{{proposal.url}}media/?size=m"><img src="{{proposal.url}}media/?size=m" alt=""/></a>
-</div>
-
+</div> --}}
+<body>
+<div style="padding: 25px;">
 {{!-- beginning of contract --}}
     <div align="center">
         <table border="0" cellspacing="4" cellpadding="0" width="635">
             <tbody>
                 <tr>
-                    <td width="50%" valign="bottom">
-                        <p>
-                            State of Florida
-                        </p>
-                    </td>
-                    <td width="50%">
-                        <p align="right">
-                            Rev. 133EE2D
-                        </p>
-                    </td>
-                </tr>
-                <tr>
                     <td width="637" colspan="2" valign="bottom">
                         <p align="center">
                             <strong>
-                                PHOTO LICENSING (LICENSE) AGREEMENT
+                                PHOTO LICENSING AGREEMENT
                             </strong>
                         </p>
                     </td>
@@ -60,18 +49,19 @@ image:
         </table>
     </div>
     <p>
-        This Photo License Agreement (this “Agreement”) is made as of this 03
-        day of December, 2018 (the “Effective Date”) by and between Carlos
-        (“Photographer”) and Adrianna (“Client”). The parties agree as follows:
+        This Photo License Agreement (this “Agreement”) is made as of <b>{{formatDate proposal.date 'MMMM Do YYYY'}}</b> (the “Effective Date”) by and between <b>{{proposal.recipient}}</b>
+        (“Photographer”) and <b>{{proposal.user.firstName}} {{proposal.user.lastName}}</b> (“Client”). The parties agree as follows:
     </p>
     <p>
         <strong>1. License. </strong>
-        Photographer hereby grants to Client an exclusive/non-exclusive,
+        Photographer hereby grants to Client a non-exclusive,
         limited license to use the following work (the “Photos”):
     </p>
-    <p>
-        (A). Christmas Tree - Centered tree photo
-    </p>
+    <div>
+        <div align="center" >
+        <a href="{{proposal.url}}media/?size=m"><img src="{{proposal.url}}media/?size=m" alt=""/></a>
+        </div>
+    </div>
     <p>
         Client is authorized to use the Photos worldwide (the "Territory").
     </p>
@@ -86,17 +76,6 @@ image:
     </p>
     <p>
         <strong>3. Fee. </strong>
-        Client shall pay a fee in the amount of $15.00 in consideration for the
-        rights and licenses granted herein.
-    </p>
-    <p>
-        Payment shall be made within five (5) days of the due date. In the
-        event any payment is collected at law or through an attorney-at-law, or
-        under advice therefrom, or through a collection agency, Client agrees
-        to pay all costs of collection, including, without limitation, all
-        court costs and reasonable attorney’s fees.
-    </p>
-    <p>
         Client will not pay a fee in consideration for the rights and licenses
         granted herein.
     </p>
@@ -104,37 +83,32 @@ image:
         <strong>4. Restrictions on Use. </strong>
         Client will not use the Photos for any of the following purposes:
     </p>
-    <p>
-        (A). No Unlawful Use. Client will not use the Photos in any unlawful
-        manner, such as pornography or defamation.
-    </p>
-    <p>
-        (B). No Standalone File Use. Client will not use the Photos in any way
-        that allows a standalone file or content file to be downloaded,
-        extracted, or redistributed by others.
-    </p>
-    <p>
-        (C). No Use in Trademark or Logo. Client will not use the Photos in any
-        trademark, design, logo or other mark.
-    </p>
-    <p>
-        (D). No Products for Resale. Client will not use the Photos in any
-        goods or products where the Photos are the primary value.
-    </p>
-    <p>
-        (E). No Alterations. Client will not alter the Photos without the prior
-        written permission of Photographer.
-    </p>
-    <p>
-        (F). No Sublicenses. Client will not sublicense the Photos without the
-        prior written permission of Photographer.
-    </p>
+    <div style="padding-left:25px;">
+        <ul>
+            <li>
+                (A). No Unlawful Use. Client will not use the Photos in any unlawful manner, such as pornography or defamation.
+            </li>
+            <li>
+                (B). No Standalone File Use. Client will not use the Photos in any way that allows a standalone file or content file to be downloaded, extracted, or redistributed by others.  
+            </li>
+            <li>
+                (C). No Use in Trademark or Logo. Client will not use the Photos in any trademark, design, logo or other mark.
+            </li>
+            <li>
+                (D). No Products for Resale. Client will not use the Photos in any goods or products where the Photos are the primary value.
+            </li>
+            <li>
+                (E). No Alterations. Client will not alter the Photos without the prior
+                written permission of Photographer.
+            </li>
+            <li>
+                (F). No Sublicenses. Client will not sublicense the Photos without the
+                prior written permission of Photographer.
+            </li>
+        </ul>
+    </div>
     <p>
         <strong>5. Photo Notice and Markings. </strong>
-        Client must include a photo credit or copyright notice on the photo(s)
-        or post(s) by tagging their chosen social media account
-    </p>
-    <p>
         Client does not need to include a photo credit or copyright notice on
         the Photos unless specifically requested by the Photographer.
     </p>
@@ -191,8 +165,8 @@ image:
         which most nearly puts into effect the intent of the parties.
     </p>
     <p>
-        <strong>12. No Waiver</strong>
-        . This Agreement may not be altered, modified, or amended in any way
+        <strong>12. No Waiver.</strong>
+        This Agreement may not be altered, modified, or amended in any way
         except in writing signed by both parties. The failure of a party to
         enforce any provision of the Agreement will not be construed to be a
         waiver of the right of such party to thereafter enforce that provision
@@ -236,231 +210,5 @@ image:
         <strong>IN WITNESS WHEREOF, </strong>
         the Parties have entered into this Agreement as of the Effective Date.
     </p>
-    <div align="center">
-        <table border="0" cellspacing="4" cellpadding="0" width="100%">
-            <tbody>
-                <tr>
-                    <td width="273" valign="bottom">
-                    </td>
-                    <td width="41" valign="bottom">
-                    </td>
-                    <td width="273" valign="bottom">
-                        <p align="center">
-                            Carlos
-                        </p>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="273" valign="top">
-                        <p align="center">
-                            <strong>Photographer</strong>
-                            Signature
-                        </p>
-                    </td>
-                    <td width="41" valign="top">
-                    </td>
-                    <td width="273" valign="top">
-                        <p align="center">
-                            <strong>Photographer</strong>
-                            Full Name
-                        </p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div align="center">
-        <table border="0" cellspacing="4" cellpadding="0" width="100%">
-            <tbody>
-                <tr>
-                    <td width="273" valign="bottom">
-                    </td>
-                    <td width="41" valign="bottom">
-                    </td>
-                    <td width="273" valign="bottom">
-                        <p align="center">
-                            Adrianna
-                        </p>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="273" valign="top">
-                        <p align="center">
-                            <strong>Client</strong>
-                            Signature
-                        </p>
-                    </td>
-                    <td width="41" valign="top">
-                    </td>
-                    <td width="273" valign="top">
-                        <p align="center">
-                            <strong>Client</strong>
-                            Full Name
-                        </p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <br clear="all"/>
-    <p align="center">
-        <strong><u>Exhibit A</u></strong>
-    </p>
 </div>
-<br clear="all"/>
-<div>
-    <p align="center">
-        <a name="_SubDocumentEnd0"></a>
-        This page intentionally left blank.
-    </p>
-</div>
-<br clear="all"/>
-<table border="0" cellspacing="4" cellpadding="0" width="100%">
-    <tbody>
-        <tr>
-            <td width="47%" valign="top">
-                <p>
-                    <strong>GENERAL INSTRUCTIONS</strong>
-                </p>
-                <p>
-                    <strong>What is a Photo License Agreement?</strong>
-                </p>
-                <p>
-                    A photo license agreement is a legal contract where the
-                    owner of a photo licenses the use of the image to a person
-                    or company. The original owner retains the copyright of the
-                    image. The contract stipulates the terms on how, when, and
-                    where the licensee can use that photograph. In the photo
-                    licensing agreement, the licensor is the person who owns
-                    the copyrights or is licensing rights to use the image. The
-                    licensee is the person who is gaining the rights to use the
-                    image.
-                </p>
-                <p>
-                    In a photo license agreement, the copyright is not being
-                    sold -- the licensee is essentially licensing the right to
-                    use it, not own it. If you're an independent photographer,
-                    the copyright for an image belongs to you as soon as you
-                    take the picture. However, if a photographer is working
-                    through a company in a work for hire arrangement, the
-                    copyright may belong to the company.
-                </p>
-                <p>
-                    In short, you need to hold the copyright in order to
-                    license the work to another party.
-                </p>
-                <p>
-                    <strong>When Do I Need One?</strong>
-                </p>
-                <p>
-                    Holding a copyright to a photograph doesn't produce any
-                    income in itself. A photographer may charge a session fee
-                    or other fees associated with a shoot. If a photographer
-                    takes photos where they retain the copyright, developing a
-                    photo licensing agreement to sell usage to clients becomes
-                    an excellent way to earn revenue from the work.
-                </p>
-                <p>
-                    A photo license agreement protects both the copyright
-                    holder and the person who wishes to publish or use the
-                    image. This contract stipulates what the image is, how it
-                    can be used, and whether the licensee can manipulate the
-                    image.
-                </p>
-                <p>
-                    An agreement is generally discussed prior to the sale of
-                    the licensing rights. There are different terms and
-                    conditions which may be applicable. Both the licensor and
-                    licensee should be in agreement on the scope of the
-                    agreement.
-                </p>
-                <p>
-                    The copyright owner will often set the price for the
-                    licensing based on the parameters of the agreement. For
-                    instance, for an exclusive license where the licensee is
-                    the only person allowed to use that work,
-                </p>
-            </td>
-            <td width="6%" valign="top">
-            </td>
-            <td width="47%" valign="top">
-                <p>
-                    the price may be set far higher. In comparison, a
-                    non-exclusive license where the copyright holder might
-                    license the same work to multiple parties can produce more
-                    sales and be priced more moderately.
-                </p>
-                <p>
-                    <strong>The Consequences of Not Having One</strong>
-                </p>
-                <p>
-                    A photo usage license agreement protects both the copyright
-                    holder and the person licensing the work.
-                </p>
-                <p>
-                    Here are a few consequences that can arise for the
-                    copyright holder without a photo licensing agreement:
-                </p>
-                <p>
-                    - Lack of revenue
-                </p>
-                <p>
-                    - Lack of control
-                </p>
-                <p>
-                    Possible consequences for the licensee include the
-                    following:
-                </p>
-                <p>
-                    - Inability to use the image
-                </p>
-                <p>
-                    - Inability to keep others from using the image
-                </p>
-                <p>
-                    <strong>The Most Common Uses</strong>
-                </p>
-                <p>
-                    A photo licensing agreement is generally used when a
-                    photographer wants to license his or her work for use
-                    without selling the copyright to the image. In this way,
-                    the photographer still gets credit for the image and they
-                    will get paid for its use.
-                </p>
-                <p>
-                    <strong>What Should Be Included?</strong>
-                </p>
-                <p>
-                    Depending on the scenario, a photo usage licensing
-                    agreement might be very simple or it can contain elaborate
-                    terms and restrictions. Here are some of the things that
-                    should be included in the agreement:
-                </p>
-                <p>
-                    - The parties
-                </p>
-                <p>
-                    - Exclusive or non-exclusive
-                </p>
-                <p>
-                    - The fee or payment
-                </p>
-                <p>
-                    - Permissions
-                </p>
-                <p>
-                    - License period
-                </p>
-                <p>
-                    - Limitations
-                </p>
-                <p>
-                    A photo licensing agreement allows the copyright holder and
-                    licensee to clearly define the ways in which an image can
-                    be used. This protects both parties and allows for a
-                    mutually beneficial professional relationship.
-                </p>
-            </td>
-        </tr>
-    </tbody>
-</table>
+</body>
