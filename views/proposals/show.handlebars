@@ -1,15 +1,14 @@
 <div class="proposal_wrapper--add">
-  <div class="row">
-    <div class="proposal_show-topbar">
-      <div class="col s12">
-
+  <div class="row no-margin--bottom">
+    <div class="proposal_topbar">
+      <div class="col s12"> 
         <h1 class="proposal_title">{{proposal.user.firstName}} {{proposal.user.lastName}}</h1> 
       </div>
     </div>
   </div>
   <div class="row no-margin--bottom">
     <div class="proposal_show-content alternate"> 
-      <div class="col s6">
+      <div class="col m6 s12">
         <div class="card horizontal">
           {{!-- <div class="card-image">
             <img src="https://via.placeholder.com/150">
@@ -42,7 +41,7 @@
                 <div>
                   <a class="btn green lighten-1" href="../../">Accept</a>
                   <a class="btn red lighten-1" href="../../">Decline</a>
-                  <a href="/proposals/terms/{{proposal.id}}" target = "_blank">Terms and Conditions</a>
+                  <a  href="/proposals/terms/{{proposal.id}}" target = "_blank">Terms and Conditions</a>
                 </div>
               {{/if}}
             </div>
@@ -90,14 +89,14 @@
         {{/if}}
  
       </div>
-      <div class="col s6">
+      <div class="col m6 s12">
         {{!-- the div below this is carries the embed code for the instagram post --}}
         <div class="card">
           <div class="card-image">
             <a href="{{proposal.url}}media/?size=l"><img src="{{proposal.url}}media/?size=l" alt=""/></a>
           </div>
         </div>
-        <p>{{proposal.url}}</p>
+        <p class="word-break">{{proposal.url}}</p>
         <div class="card">
           <div class="card-content">
             <span class="card-title">Proposal Vote Status</span>
