@@ -3,16 +3,16 @@
     <div class="col s12">
       <div class="nav_wrapper">
         <ul class="group">
-          <li><a href="/proposals/my" class="logo"><img src="/images/logo.png" width="74" height="38"/></a></li>
+          <li><a href="/proposals/my" class="logo"><img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/></a></li>
           <li class="pull-right-sm"><a href="#" data-target="main-menu" class="sidenav-trigger show-on-small"><i class="fa fa-bars"></i></a></li>
         </ul>  
         {{!-- Left Nav --}}
         <ul class="hide-on-small-only">
           {{#if user}} 
-            <li><a href="/">Welcome {{user.firstName}}</a></li>
+            <li><a href="/dashboard">Welcome {{user.firstName}}</a></li>
             <li><a href="/proposals/my" class="active">Proposals</a></li>
-            <li><a href="/auth/logout">Logout</a></li>
             <li><a href="/about" class="active">About</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
           {{else}} 
           {{/if}}
         </ul>
@@ -30,11 +30,11 @@
             
           {{/if}}
           {{#if user}}
-            <li class="logo-mobile"><div><img src="/images/logo.png" width="74" height="38"/></div></li>
-            <li><a href="/">Welcome {{user.firstName}}</a></li>
+            <li class="logo-mobile"><div><img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/></div></li>
+            <li><a href="/dashboard">Welcome {{user.firstName}}</a></li>
             <li><a href="/proposals/my" class="active">Proposals</a></li>
-            <li><a href="/auth/logout">Logout</a></li>
             <li><a href="/about" class="active">About</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
           {{else}} 
           {{/if}}
         </ul> 
