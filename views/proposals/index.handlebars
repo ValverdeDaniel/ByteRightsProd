@@ -6,12 +6,24 @@
           <h1 class="proposal_title">Proposals</h1> 
         </div>
         <div class="col m7 s12">  
-          <ul class="br_tabs tabs">
+          <ul class="br_tabs tabs hide-on-small-only ">
             <li class="tab col m2 s12"><a href="#test1">All</a></li>
             <li class="tab col m2 s12"><a class="active" href="#test2">Sent</a></li> 
             <li class="tab col m3 s12"><a href="#test4">Accepted</a></li>
             <li class="tab col m2 s12"><a href="#test5">Declined</a></li>
           </ul>
+            <!-- Dropdown Trigger -->
+          <div class="hide-on-med-and-up">
+            <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Filter</a>
+
+            <!-- Dropdown Structure -->
+            <ul id='dropdown1' class='dropdown-content'>
+              <li><a href="#!">All</a></li>
+              <li><a href="#!">Sent</a></li> 
+              <li><a href="#!">Accepted</a></li> 
+              <li><a href="#!">Declined</a></li> 
+            </ul>
+          </div>
         </div> 
         <div class="col m3 s12">       
           <div class="proposal_title-wrapper">
@@ -20,7 +32,7 @@
         </div>  
       </div>
     </div>    
-    <div class="col s12">
+    <div class="col s12 hide-on-small-only">
       <div class="row">
         <div class="proposal_filter"> 
           <div class="col m1 s12">
@@ -55,9 +67,11 @@
             {{/if}} 
           </div> 
           <div class="col m2 s12"> 
+            <p class="proposal-label hide-on-med-and-up">Recipient</p>
             <p>{{recipient}}</p>
           </div>
           <div class="col m2 s12"> 
+            <p class="proposal-label hide-on-med-and-up">Last Comment</p>
             <p>
             {{#if comments.[0].commentDate}}
               {{formatDate comments.[0].commentDate 'MMMM Do YYYY, h:mm'}}
@@ -65,23 +79,25 @@
             </p>
           </div> 
           <div class="col m1 s12"> 
+            <p class="proposal-label hide-on-med-and-up">Vote</p>
             <p>{{votes.[0].voteBody}}</p>
           </div> 
           <div class="col m2 s12">
+            <p class="proposal-label hide-on-med-and-up">Amount</p>
             <p class="proposal-text">{{stripTags (truncate compensation 150)}}</p>
           </div>
           <div class="col m4 s12">
             <div class="row pull-right-md">
               <div class="col m-auto s4">
-                <a class="btn grey" href="/proposals/show/{{id}}">View</a>
+                <a class="proposal-btn btn grey" href="/proposals/show/{{id}}">View</a>
               </div>
               <div class="col m-auto s4">
-                <a class="btn left-align" href="/proposals/edit/{{id}}"><i class="fa fa-pencil"></i> Edit</a>
+                <a class="proposal-btn btn left-align" href="/proposals/edit/{{id}}"><i class="fa fa-pencil"></i> Edit</a>
               </div>
               <div class="col m-auto s4">
                 <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
                   <input type="hidden" name="_method" value ="DELETE">
-                  <button type="submit" class="btn red"><i class="fa fa-remove"></i>Delete</button>
+                  <button type="submit" class="proposal-btn btn red"><i class="fa fa-remove"></i>Delete</button>
                 </form>
               </div>
             </div>

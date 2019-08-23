@@ -26,8 +26,8 @@ body {
           line-height: 1;
           padding-bottom: 30px;
           @media only screen and (max-width: 600px) {
-            line-height: inherit;
-            padding: 25px 32px 20px;
+            line-height: 1;
+            padding: 25px 25px 32px;
           }          
         }
       }
@@ -44,6 +44,14 @@ body {
         height: auto;
       }
     }
+    .nav_wrapper {
+      ul li a.logo {
+        @media only screen and (max-width: 600px) {
+          padding: 0 15px; 
+          line-height: 1;
+        }
+      }
+    }
   }
 }
 
@@ -55,8 +63,12 @@ main {
   }  
 }
 
-.nav-wrapper .fa-bars{
+.nav_wrapper .fa-bars{
   font-size: 25px;
+}
+
+.nav_wrapper .group{
+  width: 100%
 }
 
 footer{
@@ -104,9 +116,6 @@ footer{
     flex-direction: column;
     .nav-horizontal {
       width: 100%;
-      ul li a {
-        padding: 0 15px;
-      }
     }
     .home_wrapper {
       max-width: 100%;
@@ -149,6 +158,9 @@ footer{
       padding: 40px 20px;
       width: 75%;
       margin: 0 auto;
+      @media only screen and (max-width: 600px) {
+        width: 100%;
+      }
       h2 {
         font-size: 31px;
         line-height: 33px;
@@ -175,6 +187,14 @@ footer{
         margin: 0;
         padding-bottom: 15px;
       }
+    }
+  }
+  &_copy {
+    @media only screen and (max-width: 600px) {
+      width: 100%;
+      text-align: center; 
+      padding: 20px;
+      margin: 0 auto;        
     }
   }
 }
@@ -212,6 +232,7 @@ footer{
     border-bottom: 1px solid #E2E2E2;
     padding: 10px 0 8px;
     @media only screen and (max-width: 600px) {
+      padding: 20px 0 18px;
       flex-direction: column;
     }
     .btn-floating {
@@ -225,7 +246,7 @@ footer{
     margin: 0; 
     padding: 0 0 10px;
     @media only screen and (max-width: 600px) {
-      padding: 10px 0 0;
+      padding: 0 0 10px;
     }    
   }
   &_image {
@@ -249,8 +270,20 @@ footer{
       display: flex;
       padding: 20px 0;
       @media only screen and (max-width: 600px) {
-        flex-direction: column;
+        //flex-direction: column;
+        flex-direction: column-reverse
       }      
+    }
+  }
+  &-label {
+    padding: 0;
+    margin: 0 0 -15px;
+    font-weight: 600;
+    font-style: italic;
+  }
+  &-btn {
+    @media only screen and (max-width: 600px) {
+      width: 100%; 
     }
   }
   p{

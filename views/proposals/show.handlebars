@@ -1,8 +1,7 @@
 <div class="proposal_wrapper--add">
-  <div class="row">
-    <div class="proposal_show-topbar">
-      <div class="col s12">
-
+  <div class="row no-margin--bottom">
+    <div class="proposal_topbar">
+      <div class="col s12"> 
         <h1 class="proposal_title">{{proposal.user.firstName}} {{proposal.user.lastName}}</h1> 
       </div>
     </div>
@@ -30,7 +29,7 @@
                 <div>
                   <a class="btn green lighten-1" href="../../">Accept</a>
                   <a class="btn red lighten-1" href="../../">Decline</a>
-                  <a href="/proposals/terms/{{proposal.id}}" target = "_blank">Terms and Conditions</a>
+                  <a  href="/proposals/terms/{{proposal.id}}" target = "_blank">Terms and Conditions</a>
                 </div>
               {{/if}}
             </div>

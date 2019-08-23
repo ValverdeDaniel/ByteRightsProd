@@ -30,8 +30,8 @@ body {
 }
 @media only screen and (max-width: 600px) {
   .nav-horizontal ul li div {
-    line-height: inherit;
-    padding: 25px 32px 20px;
+    line-height: 1;
+    padding: 25px 25px 32px;
   }
 }
 .nav-horizontal .row {
@@ -46,6 +46,12 @@ body {
   line-height: 1;
   height: auto;
 }
+@media only screen and (max-width: 600px) {
+  .nav-horizontal .nav_wrapper ul li a.logo {
+    padding: 0 15px;
+    line-height: 1;
+  }
+}
 
 main {
   flex: 1 0 auto;
@@ -57,8 +63,12 @@ main {
   }
 }
 
-.nav-wrapper .fa-bars {
+.nav_wrapper .fa-bars {
   font-size: 25px;
+}
+
+.nav_wrapper .group {
+  width: 100%;
 }
 
 footer {
@@ -98,9 +108,6 @@ footer {
 }
 .home_welcome .nav-horizontal {
   width: 100%;
-}
-.home_welcome .nav-horizontal ul li a {
-  padding: 0 15px;
 }
 .home_welcome .home_wrapper {
   max-width: 100%;
@@ -144,6 +151,11 @@ footer {
   width: 75%;
   margin: 0 auto;
 }
+@media only screen and (max-width: 600px) {
+  .home_content-header {
+    width: 100%;
+  }
+}
 .home_content-header h2 {
   font-size: 31px;
   line-height: 33px;
@@ -165,6 +177,14 @@ footer {
   font-weight: 600;
   margin: 0;
   padding-bottom: 15px;
+}
+@media only screen and (max-width: 600px) {
+  .home_copy {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    margin: 0 auto;
+  }
 }
 
 .proposal_wrapper {
@@ -205,6 +225,7 @@ footer {
 }
 @media only screen and (max-width: 600px) {
   .proposal_item {
+    padding: 20px 0 18px;
     flex-direction: column;
   }
 }
@@ -220,7 +241,7 @@ footer {
 }
 @media only screen and (max-width: 600px) {
   .proposal_title {
-    padding: 10px 0 0;
+    padding: 0 0 10px;
   }
 }
 .proposal_image {
@@ -245,7 +266,18 @@ footer {
 }
 @media only screen and (max-width: 600px) {
   .proposal_show-content {
-    flex-direction: column;
+    flex-direction: column-reverse;
+  }
+}
+.proposal-label {
+  padding: 0;
+  margin: 0 0 -15px;
+  font-weight: 600;
+  font-style: italic;
+}
+@media only screen and (max-width: 600px) {
+  .proposal-btn {
+    width: 100%;
   }
 }
 .proposal p {
