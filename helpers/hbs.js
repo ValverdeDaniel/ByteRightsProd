@@ -31,5 +31,20 @@ module.exports = {
     } else {
       return '';
     }
+  },
+  //building an if == helper in handlebars
+  ifLoggedUserEqProposalUser: function(proposalUser, loggedUser, opts) {
+    if(proposalUser == loggedUser){ // Or === depending on your needs
+        return opts.fn(this);
+    } else {
+        return opts.inverse(this);
+    }
+  },
+  ifCompensationEqBlank: function(proposalCompensation, opts){
+    if(proposalCompensation == "") {
+      return opts.fn(this);
+    } else {
+      return opts.inverse(this);
+    }
   }
 }
