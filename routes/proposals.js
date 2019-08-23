@@ -81,7 +81,6 @@ router.get('/user/:userId', (req, res) => {
 router.get('/my', ensureAuthenticated, (req, res) => {
   Proposal.find({user: req.user.id})
     .populate('user')
-    .sort({date: -1})
     .then(proposals => {
       res.render('proposals/index', {
         proposals: proposals
@@ -160,7 +159,7 @@ router.put('/:id', (req, res) => {
 
     proposal.save()
       .then(proposal => {
-        res.redirect('/proposals/my');
+        res.redirect(`/proposals/show/${proposal.id}`);
       });
   });
 });

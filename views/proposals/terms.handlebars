@@ -76,8 +76,13 @@ image:
     </p>
     <p>
         <strong>3. Fee. </strong>
-        Client will not pay a fee in consideration for the rights and licenses
-        granted herein.
+        {{#ifCompensationEqBlank proposal.compensation}}
+            Client will not pay a fee in consideration for the rights and licenses
+            granted herein.
+        {{else}}
+            Client will pay in the form of {{proposal.compensation}} in consideration for the rights and licenses
+            granted herein.
+        {{/ifCompensationEqBlank}}
     </p>
     <p>
         <strong>4. Restrictions on Use. </strong>
