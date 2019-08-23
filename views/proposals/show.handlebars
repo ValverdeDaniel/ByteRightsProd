@@ -18,9 +18,9 @@
               
               {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}
                 {{#ifCompensationEqBlank proposal.compensation}}
-                  <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love this photo you posted! We'd love it if you allowed us to use the attached image in our future campaigns. If you’re interested, follow this link to find out more about our offer: <a href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                  <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love this photo you posted! We'd love it if you allowed us to use the attached image in our future campaigns. If you’re interested, follow this link to find out more about our offer: <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
                 {{else}}
-                  <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love this photo you posted! We’d be willing to compensate you with {{proposal.compensation}} for the rights to use it in our future campaigns. If you’re interested, follow this link to see the full details of our offer: <a href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                  <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love this photo you posted! We’d be willing to compensate you with {{proposal.compensation}} for the rights to use it in our future campaigns. If you’re interested, follow this link to see the full details of our offer: <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
                 {{/ifCompensationEqBlank}}
               {{else}}
                 {{#ifCompensationEqBlank proposal.compensation}}
