@@ -7,6 +7,11 @@ const ProposalSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
+  // this is where i am trying to generate a random number for the pin
+  proposalPin: {
+    type: Number,
+    default : Math.floor(Math.random()*900000000300000000000) + 1000000000000000
+  },
   url: {
     type: String,
     required: true 
