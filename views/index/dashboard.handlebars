@@ -1,39 +1,81 @@
-<h1>Welcome {{user.firstName}}</h1>
 
-<h4>Your Proposals</h4>
-
-{{#if proposals}}
-  <table class="striped">
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>URL</th>
-        <th>Date</th>
-        <th>Status</th>
-        <th>vote</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each proposals}}
-      <tr>
-        <td><a href="{{url}}media/?size=t"><img src="{{url}}media/?size=t" alt=""/></a></td>
-        <td><a href="/proposals/show/{{id}}">{{url}}</a></td>
-        {{!-- bug gotta fix this date thing --}}
-        <td>{{formatDate proposal.date 'MMMM Do YYYY'}}</td>
-        <td><span class = "dash-satus">{{status}}</span></td>
-        <td>{{votes.[0].voteBody}}</td>
-        <td>
-          <a class="btn left-align" href="/proposals/edit/{{id}}"><i class="fa fa-pencil"></i> Edit</a>
-          <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
-            <input type="hidden" name="_method" value ="DELETE">
-            <button type="submit" class="btn red"><i class="fa fa-remove"></i>Delete</button>
-          </form>
-        </td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
-{{else}}
-  <p>You have not created any proposals yet</p>
-{{/if}}
+  <div class="home">
+    <div class="row"> 
+      <div class="col s12">
+        <h1 class="proposal_title">Welcome {{user.firstName}}</h1> 
+      </div>
+      <div class="col s12">
+        <p class="lead">Thank you for being one of our early Beta users. Here's a quick guide to get you started down your Byte Rights journey.</p>
+      </div>
+    </div>
+  </div>
+<div class="home_content">
+  <div class="grey-1">
+    <div class="row"> 
+      <div class="col m12 s12">
+        <div class="home_content-header">
+          <h2>Get Started</h2>
+          <p>Go on Instagram and find yourself some pictures you'd love the rights to use. Come back here when you've found one.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="home_content-wrapper">
+    <div class="row"> 
+      <div class="col m6 s12">
+        <div class="home_copy">
+          <h3>It all starts with a Proposal</h3>
+          <p>Go to the Proposals tab and hit the + New Proposal button in the top right.</p>
+          <p>Paste in the link to the instagram picture you're interested in.</p>
+          <p>Fill out some details like whether you'd like to compensate the creator of the picture.</p>
+          <p>Hit Save and you're ready to share your proposal!</p>
+        </div>
+      </div>
+      <div class="col m6 s12">
+        <img class="img-fluid" src="/images/Proposal_Macbook.png">
+      </div>
+    </div>
+  </div>
+  <div class="home_content-wrapper">
+    <div class="row"> 
+      <div class="col m6 s12">
+        <img class="img-fluid" src="/images/EricKarbelingArt.png">
+      </div>
+      <div class="col m6 s12">
+        <div class="home_copy">
+          <h3>Share your message</h3>
+          <p>Because Instagram doesn't let you direct message from a desktop web browser, you have to use the Instagram app whether on Windows or your phone.</p>
+          <p>Hit the Copy button to save your pre-written message to your clipboard.</p>
+          <p>Click the link to the post to open Instagram and land on the desired post.</p>
+          <p>Open up a Direct Message to the creator, hit paste, and send. Now we wait!</p>
+        </div>
+      </div>
+    </div>  
+  </div>  
+  <div class="home_content-wrapper">
+    <div class="row"> 
+      <div class="col m6 s12">
+        <div class="home_copy">
+          <h3>Track your progress</h3>
+          <p>Once you've sent out some proposals, you can see their status at a glance on the Proposals tab.</p>
+          <p>Hit View to open up any single proposal and see any comments or responses.</p>
+          <p>We encourage you to utilize the comments section so that all your conversations are on the same platform rather than needing to remember where certain things were said.</p>
+          <p>Once the creator has responded with an approval, simply right click on the image and "Save Image As".</p>
+        </div>
+      </div>
+      <div class="col m6 s12">
+        <img class="img-fluid" src="/images/Hero_Licensing.png">
+      </div>
+    </div>
+  </div>
+  <div class="grey-1">
+    <div class="row"> 
+      <div class="col s12">  
+        <div class="home_content-header">
+          <h2>Free-to-Use</h2>
+          <p>Because we don't want to get in the way of collaboration</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
