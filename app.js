@@ -33,8 +33,7 @@ const {
   select,
   editIcon,
   ifLoggedUserEqProposalUser,
-  ifCompensationEqBlank,
-  ifVoteEmailEqBlank
+  ifCompensationEqBlank
 }= require('./helpers/hbs');
 
 //map global promises
@@ -65,8 +64,7 @@ app.engine('handlebars', exphbs({
     select: select,
     editIcon: editIcon,
     ifLoggedUserEqProposalUser: ifLoggedUserEqProposalUser,
-    ifCompensationEqBlank: ifCompensationEqBlank,
-    ifVoteEmailEqBlank: ifVoteEmailEqBlank
+    ifCompensationEqBlank: ifCompensationEqBlank
   },
   defaultLayout: 'main'
 }));
