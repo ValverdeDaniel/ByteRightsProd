@@ -42,8 +42,8 @@
               {{/ifCompensationEqBlank}}
               {{/ifLoggedUserEqProposalUser}}
               {{#if user}}
-              <button class="btn white darekn-1">{{{editIcon proposal.user.id user.id proposal.id false}}}</button>
-              <button class="copyBtn btn grey lighten-1"><i class="fa fa-clipboard"></i></button>
+              <button class="btn white darekn-1 waves-effect">{{{editIcon proposal.user.id user.id proposal.id false}}}</button>
+              <button class="copyBtn btn grey lighten-1 waves-effect"><i class="fa fa-clipboard"></i></button>
               <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
                 <div>
                   <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1">
