@@ -212,15 +212,15 @@ router.delete('/:id', (req, res) => {
     })
 });
 
-//add vote
-router.post('/vote/:id', (req, res) => {
+//add user vote
+router.post('/voteUser/:id', (req, res) => {
   Proposal.findOne({
     _id: req.params.id
   })
   .then(proposal => {
     const newVote = {
       voteBody: req.body.voteBody,
-      // voteEmail: req.body.voteEmail
+
       voteUser: req.user.id
     }
 
@@ -234,6 +234,29 @@ router.post('/vote/:id', (req, res) => {
       })
   });
 });
+
+//add guest vote
+router.post('/voteGuest/:id', (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+  .then(proposal => {
+    const newVote = {
+      voteBody: req.body.voteBody,
+      voteEmail: req.body.voteEmail
+    }
+
+    //push to votes array
+    //unshift adds it to the beginning
+    proposal.votes.unshift(newVote);
+
+    proposal.save()
+      .then(proposal => {
+        res.redirect(`/proposals/show/${proposal.id}`);
+      })
+  });
+});
+
 
 //add comment
 router.post('/comment/:id', (req, res) => {
