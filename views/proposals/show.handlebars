@@ -15,8 +15,9 @@
           </div> --}}
           <div class="card-stacked">
             <div class="card-content">
-              <SPAN class="copyText">
+              
               {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}  
+              <SPAN class="copyText">
                 {{#ifCompensationEqBlank proposal.compensation}}
               <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love
                 this photo you posted! We'd love it if you allowed us to use the attached image in our future campaigns. The password to accept this proposal is and enter your the password <strong>Daycation2019</strong>.
@@ -28,12 +29,13 @@
                 to use it in our future campaigns. The password to accept this proposal is and enter your the password <strong>Daycation2019</strong>. If you’re interested, follow this link to see the full details of our
                 offer: <a href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
               {{/ifCompensationEqBlank}}
+              </SPAN>
               {{else}}
               {{#ifCompensationEqBlank proposal.compensation}}
               <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love
                 this photo you posted! We'd love it if you allowed us to use the attached image in our future campaigns.
                 Please let us know what you think by entering your email and the proposal password to accept or decline the offer.</p>
-              </SPAN>
+              
               {{else}}
               <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love
                 this photo you posted! We’d be willing to compensate you with {{proposal.compensation}} for the rights
@@ -41,8 +43,6 @@
               {{/ifCompensationEqBlank}}
               {{/ifLoggedUserEqProposalUser}}
               {{#if user}}
-              <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
-              <div>
               <button class="btn white darekn-1">{{{editIcon proposal.user.id user.id proposal.id false}}}</button>
               <button class="copyBtn btn grey lighten-1"><i class="fa fa-clipboard"></i></button>
               <form class="proposal_add-wrapper" method ="post" action="/proposals/vote/{{proposal.id}}">
@@ -169,7 +169,7 @@
 
 <script>
 function validatePass() {
-    if (document.getElementById('password').value == "rightsbeta2019") {
+    if (document.getElementById('password').value == "Daycation2019") {
       return true;
     } else {
       alert('You have entered an incorrect password Please reference your direct message to get the proper password');
