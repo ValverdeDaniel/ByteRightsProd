@@ -17,6 +17,7 @@
             <div class="card-content">
 
               {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}
+              <SPAN class="copyText">
               {{#ifCompensationEqBlank proposal.compensation}}
               <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love
                 this photo you posted! We'd love it if you allowed us to use the attached image in our future campaigns. The password to accept this proposal is and enter your the password <strong>Daycation2019</strong>.
@@ -28,6 +29,7 @@
                 to use it in our future campaigns. The password to accept this proposal is and enter your the password <strong>Daycation2019</strong>. If you’re interested, follow this link to see the full details of our
                 offer: <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
               {{/ifCompensationEqBlank}}
+              </SPAN>
               {{else}}
               {{#ifCompensationEqBlank proposal.compensation}}
               <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love
@@ -40,9 +42,10 @@
               {{/ifCompensationEqBlank}}
               {{/ifLoggedUserEqProposalUser}}
               {{#if user}}
+              <button class="btn white darekn-1">{{{editIcon proposal.user.id user.id proposal.id false}}}</button>
+              <button class="copyBtn btn grey lighten-1"><i class="fa fa-clipboard"></i></button>
               <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
                 <div>
-                  {{{editIcon proposal.user.id user.id proposal.id false}}} &nbsp
                   <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1">
                   <input name="voteBody" type="submit" value="Decline" class="btn red lighten-1">
                   <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
@@ -165,11 +168,29 @@
 
 <script>
   function validatePass() {
-    if (document.getElementById('password').value == "rightsbeta2019") {
+    if (document.getElementById('password').value == "Daycation2019") {
       return true;
     } else {
       alert('You have entered an incorrect password Please reference your direct message to get the proper password');
       return false;
     }
   }
+
+var copyBtn = document.querySelector('.copyBtn');
+copyBtn.addEventListener('click', function(event) {
+  // Select the email link anchor text
+  var copyText = document.querySelector('.copyText');
+  var range = document.createRange();
+  range.selectNode(copyText);
+  window.getSelection().addRange(range);
+
+  try {
+    // Now that we've selected the anchor text, execute the copy command
+    var successful = document.execCommand('copy');
+    var msg = successful ? 'successful' : 'unsuccessful';
+    console.log('Copy email command was ' + msg);
+  } catch(err) {
+    console.log('Oops, unable to copy');
+  }
+});
 </script>
