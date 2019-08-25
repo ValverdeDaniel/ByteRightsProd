@@ -46,12 +46,5 @@ module.exports = {
     } else {
       return opts.inverse(this);
     }
-  },
-  ifVoteEmailEqBlank: function(voteEmail, opts) {
-    if(voteEmail == "") {
-      return opts.fn(this);
-    } else {
-      return opts.inverse(this);
-    }
   }
 }
