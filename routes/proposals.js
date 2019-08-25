@@ -220,6 +220,7 @@ router.post('/vote/:id', (req, res) => {
   .then(proposal => {
     const newVote = {
       voteBody: req.body.voteBody,
+      // voteEmail: req.body.voteEmail
       voteUser: req.user.id
     }
 

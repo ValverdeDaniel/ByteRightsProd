@@ -52,6 +52,9 @@ const ProposalSchema = new Schema({
     voteBody: {
       type: String
     },
+    voteEmail: {
+      type: String
+    },
     voteDate: {
       type: Date,
       default: Date.now
