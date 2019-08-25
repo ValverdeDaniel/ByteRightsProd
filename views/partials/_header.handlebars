@@ -4,7 +4,17 @@
       <div class="nav_wrapper">
         <ul class="group">
           <li><a href="/proposals/my" class="logo"><img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/></a></li>
-          <li class="pull-right-sm"><a href="#" data-target="main-menu" class="sidenav-trigger show-on-small"><i class="fa fa-bars"></i></a></li>
+            {{#if user}}
+            <li class="pull-right-sm"><a href="#" data-target="main-menu" class="sidenav-trigger show-on-small"><i class="fa fa-bars"></i></a></li>
+            {{else}}
+              <li class="pull-right-sm">
+                <a class = "btn red darken-1" href="/auth/google">
+                <i class="fa fa-google left"></i>Login
+                </a>
+              </li>
+              
+            {{/if}}
+          
         </ul>  
         {{!-- Left Nav --}}
         <ul class="hide-on-small-only">
