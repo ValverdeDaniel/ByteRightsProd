@@ -20,25 +20,23 @@
               <SPAN class="copyText">
               {{#ifCompensationEqBlank proposal.compensation}}
               <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love
-                this photo you posted! We'd love it if you allowed us to use the attached image in our future campaigns. The password to accept this proposal is and enter your the password <strong>Daycation2019</strong>.
-                If you’re interested, follow this link to find out more about our offer: <a class="word-break" href="{{proposal.id}}" 
+                this photo you posted! Would you allow us to use it sometime in the future? To respond, follow the link and enter <strong>Daycation2019</strong>. <a class="word-break" href="{{proposal.id}}" 
                   target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
               {{else}}
               <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love
                 this photo you posted! We’d be willing to compensate you with {{proposal.compensation}} for the rights
-                to use it in our future campaigns. The password to accept this proposal is and enter your the password <strong>Daycation2019</strong>. If you’re interested, follow this link to see the full details of our
-                offer: <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                to use it in the future. If you're interested, follow the link and enter <strong>Daycation2019</strong>. <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
               {{/ifCompensationEqBlank}}
               </SPAN>
               {{else}}
               {{#ifCompensationEqBlank proposal.compensation}}
               <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love
-                this photo you posted! We'd love it if you allowed us to use the attached image in our future campaigns.
+                this photo you posted! Would you allow us to use it sometime in the future?
                 Please let us know what you think by entering your email and the proposal password to accept or decline the offer.</p>
               {{else}}
               <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I’m reaching out because we love
                 this photo you posted! We’d be willing to compensate you with {{proposal.compensation}} for the rights
-                to use it in our future campaigns. Please let us know what you think by entering your email and the proposal password to accept or decline the offer.</p>
+                to use it in the future. Please let us know what you think by entering your email and the proposal password to accept or decline the offer.</p>
               {{/ifCompensationEqBlank}}
               {{/ifLoggedUserEqProposalUser}}
               {{#if user}}
