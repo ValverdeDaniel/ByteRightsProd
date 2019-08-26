@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Proposal = mongoose.model('proposals');
 const user = mongoose.model('users');
 const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
+const {ensureLoggedIn} = require('connect-ensure-login');
 const axios = require('axios');
 
 
@@ -38,6 +39,36 @@ router.get('/show/:id', (req, res) => {
         if(req.user){
           if(req.user.id == proposal.user._id){
             res.render('proposals/show', {
+              proposal:proposal
+            });
+          } else {
+            res.redirect('/proposals/my');
+          }
+        } else {
+          res.redirect('/proposals/my');
+        }
+      }
+    })
+})
+
+//show single proposal for guest
+router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .populate('user')
+    .populate('votes.voteUser')
+    .populate('comments.commentUser')
+    .then(proposal => {
+      if(proposal.status == 'public') {
+        res.render('proposals/showClient', {
+          proposal:proposal
+        });
+
+      } else {
+        if(req.user){
+          if(req.user.id == proposal.user._id){
+            res.render('proposals/showClient', {
               proposal:proposal
             });
           } else {
