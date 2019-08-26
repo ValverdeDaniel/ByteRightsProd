@@ -5,11 +5,18 @@ const axios = require('axios');
 
 router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
+//OG login route
+// router.get('/google/callback', 
+//   passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+//     // Successful authentication, redirect dashboard.
+//     res.redirect('/proposals/my');
+//   });
+
+//jared hansons connect-ensure-login redirect
 router.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-    // Successful authentication, redirect dashboard.
-    res.redirect('/proposals/my');
-  });
+  passport.authenticate('google', { successReturnToOrRedirect: '/proposals/my', failureRedirect: '/' })
+);
+  
 
 //passport-instagram routes
 //within the google passport.authenticate after instagram, they have scope {"profile", "email"}
