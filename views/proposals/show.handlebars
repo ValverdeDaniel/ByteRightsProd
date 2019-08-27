@@ -29,11 +29,11 @@
               </SPAN>
               {{else}}
               {{#ifCompensationEqBlank proposal.compensation}}
-              {{!-- message for client if compensation = blank --}}
-              <p>To allow us to use your photo simply press "Accept" after entering your email address or logging in (this let's us keep track of who accepts). Please also enter the code we sent you on Instagram for verification purposes. Thank You</p>
+              {{!-- message for client before logging in if compensation = blank --}}
+              <p>For us to use your photo, simply login or enter your email and the code we sent you (this informs us of who has responded). Then, press "Accept".</p>
               {{else}}
-              {{!-- message for client if compensation is not = blank --}}
-              <p>If you allow us to use your photo we'd like to compensate you with {{proposal.compensation}}. Simply press "Accept" after entering your email address or logging in (this let's us keep track of who accepts). Please also enter the code we sent you on Instagram for verification purposes.</p>
+              {{!-- message for client before logging in if compensation is not = blank --}}
+              <p>We'd like to compensate you with {{proposal.compensation}} for your photo. Simply login or enter your email and the code we sent you (this informs us of who has responded). Then, press "Accept".</p>
               {{/ifCompensationEqBlank}}
               {{/ifLoggedUserEqProposalUser}}
               {{#if user}}
@@ -47,9 +47,15 @@
                 </div>
               </form>
               {{else}}
+              {{!-- somewhere around here place the google login redirect --}}
+                <h6>To respond:</h6>
+                <a class = "btn red darken-1" href="/proposals/showClient/{{proposal.id}}">
+                <i class="fa fa-google left"></i>Login with Google
+                </a>
                 <form class="proposal_add-wrapper" method="post" action="/proposals/voteGuest/{{proposal.id}}">
                   <div>
                     {{!-- <div class='card'> --}}
+                      <h6>Or Enter:</h6>
                       <div class="input-field">
                         <input type="text" name="voteEmail">
                         <label for="voteEmail">Email</label>
