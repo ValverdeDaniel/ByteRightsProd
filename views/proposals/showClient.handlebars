@@ -29,24 +29,6 @@
               </SPAN>
               <button class="btn white darekn-1 waves-effect">{{{editIcon proposal.user.id user.id proposal.id false}}}</button>
               <button class="copyBtn btn grey lighten-1 waves-effect"><i class="fa fa-clipboard"></i></button>
-              {{else}}
-              {{#ifCompensationEqBlank proposal.compensation}}
-              {{!-- message for client before logging in if compensation = blank --}}
-              <p>For us to use your photo, simply login or enter your email and the code we sent you (this informs us of who has responded). Then, press "Accept".</p>
-              {{else}}
-              {{!-- message for client before logging in if compensation is not = blank --}}
-              <p>We'd like to compensate you with {{proposal.compensation}} for your photo. Simply login or enter your email and the code we sent you (this informs us of who has responded). Then, press "Accept".</p>
-              {{/ifCompensationEqBlank}}
-              {{/ifLoggedUserEqProposalUser}}
-              {{#if user}}
-              {{!-- {{#ifLoggedUserEqProposalUser}}
-              <div>
-                <button class="btn white darekn-1 waves-effect">{{{editIcon proposal.user.id user.id proposal.id false}}}</button>
-                <button class="copyBtn btn grey lighten-1 waves-effect"><i class="fa fa-clipboard"></i></button>
-              </div>
-              {{else}}
-              <div></div>
-              {{/ifLoggedUserEqProposalUser}} --}}
               <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
                 <div>
                   <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1">
@@ -55,7 +37,29 @@
                 </div>
               </form>
               {{else}}
-              {{!-- somewhere around here place the google login redirect --}}
+              {{#if user}}
+              {{#ifCompensationEqBlank proposal.compensation}}
+              {{!-- message for client before logging in if compensation = blank --}}
+              <p>To give us permission to use your photo, simply press "Accept".</p>
+              {{else}}
+              {{!-- message for client before logging in if compensation is not = blank --}}
+              <p>We'd like to compensate you with {{proposal.compensation}} for your photo. If you agree, simply press "Accept".</p>
+              {{/ifCompensationEqBlank}}
+              <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
+                <div>
+                  <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1">
+                  <input name="voteBody" type="submit" value="Decline" class="btn red lighten-1">
+                  <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
+                </div>
+              </form>
+              {{else}}
+              {{#ifCompensationEqBlank proposal.compensation}}
+              {{!-- message for client before logging in if compensation = blank --}}
+              <p>For us to use your photo, simply login or enter your email and the code we sent you (this informs us of who has responded). Then, press "Accept".</p>
+              {{else}}
+              {{!-- message for client before logging in if compensation is not = blank --}}
+              <p>We'd like to compensate you with {{proposal.compensation}} for your photo. Simply login or enter your email and the code we sent you (this informs us of who has responded). Then, press "Accept".</p>
+              {{/ifCompensationEqBlank}}
                 <h6>To respond:</h6>
                 <a class = "btn red darken-1" href="/proposals/showClient/{{proposal.id}}">
                 <i class="fa fa-google left"></i>Login with Google
@@ -83,6 +87,7 @@
                   <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
                 </div>
               {{/if}}
+              {{/ifLoggedUserEqProposalUser}}
             </div>
             {{!-- <div class="card-action">
               <p>compensation: {{{proposal.compensation}}}</p>
