@@ -1,0 +1,55 @@
+<div class="proposal_wrapper--add">
+  <div class="row"> 
+    <div class="col s12">
+      <div class="proposal_topbar"> 
+        <div class="col m6 pull-m6 s12">        
+          <h1 class="proposal_title">Update Profile</h1>
+        </div>   
+      </div>
+    </div> 
+    <div class="col s12">
+      <form class="proposal_add-wrapper" action="/updateProfile?_method=POST" method="post">
+        <div class="col m6 s12">
+          <input type="hidden" name="_method" value="POST"> 
+          <div class="input-field">
+            <input type="text" name="business" value = "{{user.business}}">
+            <label for="business">Business Name</label> 
+          </div>
+          {{!-- <div class="input-field">
+            <input type="text" name="recipient" value="{{proposal.recipient}}">
+            <label for="recipient">Recipient Name</label>
+          </div>    --}}
+          {{!-- <div class="input-field">
+            <select name="status">
+              {{#select proposal.status}}
+                <option value="public" selected>Public</option>
+                <option value="private">Private</option>
+                <option value="unpublished">Unpublished</option>
+              {{/select}}
+            </select>
+            <label for="status">Status</label>
+          </div>   --}}
+          {{!-- <div class="input-field">
+            <p>
+              <label for="allowComments">
+                <input type="checkbox" name="allowComments" class="filled-in" id="allowComments" {{#if proposal.allowComments}} checked="checked" {{/if}} />
+                <span>Allow Comments</span>
+              </label>
+            </p> 
+          </div>
+          <div class="input-field">
+            <input type="text" name="compensation" value="{{proposal.compensation}}"> 
+            <label for="compensation">Amount/Description</label>
+          </div>  --}}
+        {{!-- text area input-field --}}
+          {{!-- <div class="input-field col s12">
+            <textarea id="textarea1" class="materialize-textarea"></textarea>
+            <label for="offerMessage">Textarea</label>
+          </div> --}}
+        {{!-- text area end input field --}}
+          <input type="submit" value="Save" class="btn primary">
+        </div>
+      </form>
+    </div>    
+  </div>   
+</div>
