@@ -9,15 +9,25 @@
       </div>
     </div>
   </div>
-<div class="home_content">
+<div class="home_content-wrapper">
   <div class="grey-1">
-    <div class="row"> 
-      <div class="col m12 s12">
-        <div class="home_content-header">
-          <h2>Get Started</h2>
-          <p>Go on Instagram and find yourself some pictures you'd love the rights to use. Come back here when you've found one.</p>
-        </div>
+    <div class="row">
+      <div class="home_copy">
+        <h3>User Details</h3>
       </div>
+      <div class="col m6 s12">
+        <h6><strong>First Name</strong></h6>
+        <p>{{user.firstName}}</p>
+        <h6><strong>Last Name</strong></h6>
+        <p>{{user.lastName}}</p>
+      </div>
+      <div class="col m6 s12">
+        <h6><strong>Company Name</strong></h6>
+        <p>{{user.companyName}}</p>
+      </div>
+    </div>
+    <div>
+      <a class="btn blue" href="dashboard/edit">Edit</a>
     </div>
   </div>
   <div class="home_content-wrapper">

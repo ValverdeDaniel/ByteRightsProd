@@ -20,6 +20,7 @@ require('./config/passport')(passport);
 //load routes
 const index = require('./routes/index');
 const auth = require('./routes/auth');
+const dashboard = require('./routes/dashboard');
 const proposals = require('./routes/proposals');
 
 //load keys file
@@ -94,6 +95,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 //use routes
 app.use('/', index);
 app.use('/auth', auth)
+app.use ('/dashboard', dashboard)
 app.use ('/proposals', proposals)
 
 const port = process.env.PORT || 5000;

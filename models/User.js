@@ -20,6 +20,9 @@ const UserSchema = new Schema({
   },
   image: {
     type: String
+  },
+  companyName:{
+    type: String
   }
 });
 

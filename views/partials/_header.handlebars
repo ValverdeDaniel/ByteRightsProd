@@ -19,7 +19,7 @@
         {{!-- Left Nav --}}
         <ul class="hide-on-small-only">
           {{#if user}} 
-            <li><a href="/dashboard">Welcome {{user.firstName}}</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
             <li><a href="/proposals/my" class="active">Proposals</a></li>
             <li><a href="/about" class="active">About</a></li>
             <li><a href="/auth/logout">Logout</a></li>
@@ -41,7 +41,7 @@
           {{/if}}
           {{#if user}}
             <li class="logo-mobile"><div><img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/></div></li>
-            <li><a href="/dashboard">Welcome {{user.firstName}}</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
             <li><a href="/proposals/my" class="active">Proposals</a></li>
             <li><a href="/about" class="active">About</a></li>
             <li><a href="/auth/logout">Logout</a></li>

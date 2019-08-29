@@ -1,0 +1,20 @@
+
+    <div class="grey-1">
+        <h3>User Details</h3>
+        <form class="proposal_add-wrapper" action="/dashboard/update/{{user.id}}?_method=PUT" method="post">
+          <input type="hidden" name="_method" value="PUT"> 
+          <div class="input-field">
+            <input type="text" name="firstName" value = "{{user.firstName}}">
+            <label for="url">First Name</label> 
+          </div>
+          <div class="input-field">
+            <input type="text" name="lastName" value="{{user.lastName}}">
+            <label for="recipient">Last Name</label>
+          </div>
+          <div class="input-field">
+            <input type="text" name="companyName" value="{{user.companyName}}">
+            <label for="recipient">Company Name</label>
+          </div>
+        <input type="submit" value="Save" class="btn primary">
+        </form>
+    </div>
