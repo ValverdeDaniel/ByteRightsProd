@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Proposal = mongoose.model('proposals');
-const User = mongoose.model('users');
+const user = mongoose.model('users');
 const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
 
 router.get('/', ensureGuest, (req, res) => {
@@ -33,7 +33,7 @@ router.get('/profile', ensureAuthenticated, (req, res) => {
 });
 
 //update profile form
-router.get('/updateProfile', ensureAuthenticated, (req, res) => {
+router.get('/updateProfile/:id', ensureAuthenticated, (req, res) => {
   res.render('index/updateProfile');
 })
 
@@ -56,11 +56,13 @@ router.get('/updateProfile', ensureAuthenticated, (req, res) => {
 // });
 
 //got ti working to the point where the only issue was user not defined??
-router.post('/updateProfile', (req, res) => {
+router.put('/updateProfile/:id', (req, res, next) => {
   console.log('1')
-  console.log(req.user.id)
-  User.find({
-    user: req.user.id
+  console.log("user" + req.user.id)
+  console.log("params" + req.params.id)
+  user.findOne({
+    // user: req.user.id
+    _id: req.params.id
   })
   // let user = {}
   console.log('business: ' + req.body.business)
@@ -73,6 +75,7 @@ router.post('/updateProfile', (req, res) => {
       user.save()
       res.redirect('/profile');
     });
+
 });
 
 //12:37

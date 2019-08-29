@@ -8,9 +8,9 @@
       </div>
     </div> 
     <div class="col s12">
-      <form class="proposal_add-wrapper" action="/updateProfile?_method=POST" method="post">
+      <form class="proposal_add-wrapper" action="/updateProfile/{{user.id}}?_method=PUT" method="post">
         <div class="col m6 s12">
-          <input type="hidden" name="_method" value="POST"> 
+          <input type="hidden" name="_method" value="PUT"> 
           <div class="input-field">
             <input type="text" name="business" value = "{{user.business}}">
             <label for="business">Business Name</label> 
