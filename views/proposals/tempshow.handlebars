@@ -15,32 +15,19 @@
           </div> --}}
           <div class="card-stacked">
             <div class="card-content">
-              {{!-- start ifLoggedUserEqProposalUser --}}
+
               {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}
               <SPAN class="copyText">
               {{#ifCompensationEqBlank proposal.compensation}}
               {{#ifCompanyNameEqBlank user.companyName}}
-              {{!-- message ifCompensationEqBlank and if CompanyNameEqBlank --}}
-              <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love a photo you posted! Would you allow us to use it sometime in the future? To accept, follow the link and enter the code: <strong>31415</strong>. <a class="word-break" href="{{proposal.id}}" 
-              target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-              {{!-- else for ifCompanyNameEqBlank --}}      
               {{else}}
-              {{!-- message if compensationEqBlank but CompanyName does not Equal Blank --}}
+              {{!-- message for ProposalCreator to send if compensation = blank --}}
               <p>Hi, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love a photo you posted! Would you allow us to use it sometime in the future? To accept, follow the link and enter the code: <strong>31415</strong>. <a class="word-break" href="{{proposal.id}}" 
-              target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-              {{/ifCompanyNameEqBlank}}
-              {{!-- else for ifCompanesationEqBlank --}}
+                  target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
               {{else}}
-              {{#ifCompanyNameEqBlank user.companyName}}
-              {{!-- message if compensation not equal blank and company name equals blank --}}
-              <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love a photo you posted! Would you allow us to use it sometime in the future. In exchange we would be willing to compensate you with {{proposal.compensation}}. To accept, follow the link and enter the code: <strong>31415</strong>. <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-              {{!-- else for second ifCompensationEqBlank --}}
-              {{else}}
-              {{!-- message if compensation not equal blank and company name does not equal blank --}}
+              {{!-- message for proposalCreator to send if they are compensating --}}
               <p>Hi, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love a photo you posted! Would you allow us to use it sometime in the future. In exchange we would be willing to compensate you with {{proposal.compensation}}. To accept, follow the link and enter the code: <strong>31415</strong>. <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
               {{/ifCompanyNameEqBlank}}
-              {{!-- message for proposalCreator to send if they are compensating --}}
-
               {{/ifCompensationEqBlank}}
               </SPAN>
               <button class="btn white darekn-1 waves-effect">{{{editIcon proposal.user.id user.id proposal.id false}}}</button>
@@ -52,13 +39,11 @@
                   <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
                 </div>
               </form>
-              {{!-- else ifLoggedUserEqProposalUser --}}
               {{else}}
               {{#if user}}
               {{#ifCompensationEqBlank proposal.compensation}}
               {{!-- message for client before logging in if compensation = blank --}}
               <p>To give us permission to use your photo, simply press "Accept".</p>
-              {{!-- else for ifCompensationEqBlank --}}
               {{else}}
               {{!-- message for client before logging in if compensation is not = blank --}}
               <p>We'd like to compensate you with {{proposal.compensation}} for your photo. If you agree, simply press "Accept".</p>
@@ -70,12 +55,10 @@
                   <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
                 </div>
               </form>
-              {{!-- else for if user --}}
               {{else}}
               {{#ifCompensationEqBlank proposal.compensation}}
               {{!-- message for client before logging in if compensation = blank --}}
               <p>For us to use your photo, simply login or enter your email and the code we sent you (this informs us of who has responded). Then, press "Accept".</p>
-              {{!-- else for ifCompensationEqBlank --}}
               {{else}}
               {{!-- message for client before logging in if compensation is not = blank --}}
               <p>We'd like to compensate you with {{proposal.compensation}} for your photo. Simply login or enter your email and the code we sent you (this informs us of who has responded). Then, press "Accept".</p>
@@ -106,7 +89,6 @@
                 <div>
                   <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
                 </div>
-              {{!-- end if user --}}
               {{/if}}
               {{/ifLoggedUserEqProposalUser}}
             </div>

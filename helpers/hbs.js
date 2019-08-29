@@ -46,5 +46,12 @@ module.exports = {
     } else {
       return opts.inverse(this);
     }
+  },
+  ifCompanyNameEqBlank: function(userCompanyName, opts){
+    if(userCompanyName == "") {
+      return opts.fn(this);
+    } else {
+      return opts.inverse(this);
+    }
   }
 }
