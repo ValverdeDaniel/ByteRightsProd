@@ -32,6 +32,12 @@ router.put('/update/:id', (req, res) => {
       user.firstName = req.body.firstName;
       user.lastName = req.body.lastName;
       user.companyName = req.body.companyName;
+      user.instagram = req.body.instagram;
+      user.facebook = req.body.facebook;
+      user.twitter = req.body.twitter;
+      user.website = req.body.website;
+      user.soundcloud = req.body.soundcloud;
+      user.youtube = req.body.youtube;
 
       console.log('Company Name'+ user.companyName);
   

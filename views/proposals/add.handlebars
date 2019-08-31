@@ -1,49 +1,51 @@
 <div class="proposal_wrapper--add"> 
-  <div class="row"> 
-    <div class="col s12">
-      <div class="proposal_topbar"> 
-        <div class="col m6 pull-m6 s12">        
-          <h1 class="proposal_title">Create New Proposal</h1> 
-          <p>This is a sample offer message: Hi, my name is {{user.firstName}} {{user.lastName}}. I’m reaching out because we love this photo you posted! We’d be willing to compensate you with --amount/description will go here-- {{req.body.compensation}} for the rights to use it in our future campaigns. If you’re interested, follow this link to see the full details of our offer: <a href="#" class="word-break" target="_blank">byterights.com/proposals/show/uniqueProposalIdentifier</a></p>
-        </div>   
-      </div>
-    </div>     
-    <div class="col s12">  
-      <form class="proposal_add-wrapper" action="/proposals" method="post">
-        <div class="col m6 s12"> 
-
-          <div class="input-field">
-            <input type="text" name="url">
-            <label for="url">Image Link</label>
-          </div>  
-          <div class="input-field">
-            <input type="text" name="recipient">
-            <label for="recipient">Recipient Name</label>
-          </div>  
-
-          {{!-- <div class="input-field">
-            <select name="status">
-              <option value="public" selected>Public</option>
-              <option value="private">Private</option>
-              <option value="unpublished">Unpublished</option>
-            </select>
-            <label for="status">Status</label>
-          </div>  --}}
-
-          <p>
-            <label for="allowComments">
-              <input type="checkbox" id="allowComments" name="allowComments" />
-              <span>Allow Comments</span>
-            </label>
-          </p> 
-    
-          <div class="input-field">
-            <input type="text" name="compensation">
-            <label for="compensation">Amount/Description</label>
-          </div> 
-          <input type="submit" value="Create Proposal" class="btn primary"> 
+    <div class="row"> 
+      <div class="col s12">
+        <div class="proposal_topbar"> 
+          <div class="col m6 pull-m6 s12">        
+            <h1 class="proposal_title">Create New Proposal</h1> 
+            <!-- <p>This is a sample offer message: Hi, my name is {{user.firstName}} {{user.lastName}}. I’m reaching out because we love this photo you posted! We’d be willing to compensate you with --amount/description will go here-- {{req.body.compensation}} for the rights to use it in our future campaigns. If you’re interested, follow this link to see the full details of our offer: <a href="#" class="word-break" target="_blank">byterights.com/proposals/show/uniqueProposalIdentifier</a></p> -->
+          </div>   
         </div>
-      </form>  
+      </div>     
+      <div class="col s12">  
+        <form class="proposal_add-wrapper" action="/proposals" method="post">
+          <div class="col m6 s12"> 
+            <p>Start by pasting the URL for the Instagram image you wish to request rights for. It should be https://www.instagram.com/p/<strong>(unique ID of the photo)</strong>/</p>
+            <div class="input-field">
+              <input type="text" name="url">
+              <label for="url">Image Link</label>
+            </div>
+            <p>Next, write the name of the recipient you'll be sending the request to.</p> 
+            <div class="input-field">
+              <input type="text" name="recipient">
+              <label for="recipient">Recipient Name</label>
+            </div>  
+  
+            {{!-- <div class="input-field">
+              <select name="status">
+                <option value="public" selected>Public</option>
+                <option value="private">Private</option>
+                <option value="unpublished">Unpublished</option>
+              </select>
+              <label for="status">Status</label>
+            </div>  --}}
+            
+            <p>
+                <p>Decide whether or not you'd like to allow the recipient to send you messages about the proposal.</p>
+              <label for="allowComments">
+                <input type="checkbox" id="allowComments" name="allowComments" />
+                <span>Allow Comments</span>
+              </label>
+            </p> 
+            <p>Lastly, you may offer any form of compensation. If left blank, we won't mention it in your proposal.</p>
+            <div class="input-field">
+              <input type="text" name="compensation">
+              <label for="compensation">Amount/Description</label>
+            </div> 
+            <input type="submit" value="Create Proposal" class="btn primary"> 
+          </div>
+        </form>  
+      </div>
     </div>
-  </div>
-</div> 
+  </div> 
