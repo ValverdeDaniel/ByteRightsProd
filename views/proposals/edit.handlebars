@@ -12,11 +12,11 @@
         <div class="col m6 s12">
           <input type="hidden" name="_method" value="PUT"> 
           <div class="input-field">
-            <input type="text" name="url" value = "{{proposal.url}}">
+            <input type="text" name="url" value = "{{proposal.url}}" required>
             <label for="url">Image Link</label> 
           </div>
           <div class="input-field">
-            <input type="text" name="recipient" value="{{proposal.recipient}}">
+            <input type="text" name="recipient" value="{{proposal.recipient}}" required>
             <label for="recipient">Recipient Name</label>
           </div>   
           {{!-- <div class="input-field">

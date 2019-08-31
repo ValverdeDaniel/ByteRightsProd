@@ -21,6 +21,24 @@ const UserSchema = new Schema({
   image: {
     type: String
   },
+  website: {
+    type: String
+  },
+  instagram: {
+    type: String
+  },
+  facebook: {
+    type: String
+  },
+  twitter: {
+    type: String
+  },
+  youtube: {
+    type: String
+  },
+  soundcloud: {
+    type: String
+  },
   companyName:{
     type: String
   }
