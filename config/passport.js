@@ -1,4 +1,5 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 // const InstagramStrategy = require('passport-instagram').Strategy;
 const mongoose = require('mongoose');
 const keys = require('./keys');
@@ -44,6 +45,21 @@ module.exports = function(passport) {
       })
     })
   );
+
+  passport.use(
+    new FacebookStrategy ({
+      clientID: keys.facebookClientID,
+      clientSecret: keys.facebookClientSecret,
+      callbackURL: '/auth/facebook/callback',
+      profileFields: ['id', 'displayName', 'email'],
+      proxy: true
+    }, (accessToken, refreshToken, profile, cb) => {
+      console.log(accessToken);
+      console.log(profile);
+      // console.log(email);
+      // console.log(displayName);
+      })
+  )
 
   // passport.use(new InstagramStrategy({
   //   clientID: keys.instagramClientID,
