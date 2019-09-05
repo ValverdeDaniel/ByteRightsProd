@@ -56,6 +56,7 @@ module.exports = function(passport) {
     }, (accessToken, refreshToken, profile, cb) => {
       console.log(accessToken);
       console.log(profile);
+      // console.log(data)
       // console.log(email);
       // console.log(displayName);
       
