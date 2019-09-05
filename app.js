@@ -1,7 +1,7 @@
 require('https').globalAgent.options.rejectUnauthorized = false;
 const express = require('express');
 const path = require('path');
-const exphbs= require('express-handlebars');
+const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
@@ -13,6 +13,7 @@ const passport = require('passport');
 //load Models
 require('./models/User');
 require('./models/Proposal');
+require('./models/Tag');
 
 //passport config
 require('./config/passport')(passport);
@@ -36,7 +37,7 @@ const {
   ifLoggedUserEqProposalUser,
   ifCompensationEqBlank,
   ifCompanyNameEqBlank
-}= require('./helpers/hbs');
+} = require('./helpers/hbs');
 
 //map global promises
 mongoose.Promise = global.Promise;
@@ -97,8 +98,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 //use routes
 app.use('/', index);
 app.use('/auth', auth)
-app.use ('/dashboard', dashboard)
-app.use ('/proposals', proposals)
+app.use('/dashboard', dashboard)
+app.use('/proposals', proposals)
 
 const port = process.env.PORT || 5000;
 

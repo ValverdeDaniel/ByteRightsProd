@@ -1,24 +1,25 @@
 <div class="proposal_wrapper--add">
-  <div class="row"> 
+  <div class="row">
     <div class="col s12">
-      <div class="proposal_topbar"> 
-        <div class="col m6 pull-m6 s12">        
+      <div class="proposal_topbar">
+        <div class="col m6 pull-m6 s12">
           <h1 class="proposal_title">Edit Proposal</h1>
-        </div>   
+        </div>
       </div>
-    </div> 
+    </div>
     <div class="col s12">
-      <form class="proposal_add-wrapper" action="/proposals/{{proposal.id}}?_method=PUT" method="post">
+      <form class="proposal_add-wrapper" action="/proposals/{{proposal.id}}?_method=PUT" method="post"
+        id="editproposal">
         <div class="col m6 s12">
-          <input type="hidden" name="_method" value="PUT"> 
+          <input type="hidden" name="_method" value="PUT">
           <div class="input-field">
-            <input type="text" name="url" value = "{{proposal.url}}" required>
-            <label for="url">Image Link</label> 
+            <input type="text" name="url" value="{{proposal.url}}" required>
+            <label for="url">Image Link</label>
           </div>
           <div class="input-field">
             <input type="text" name="recipient" value="{{proposal.recipient}}" required>
             <label for="recipient">Recipient Name</label>
-          </div>   
+          </div>
           {{!-- <div class="input-field">
             <select name="status">
               {{#select proposal.status}}
@@ -32,24 +33,29 @@
           <div class="input-field">
             <p>
               <label for="allowComments">
-                <input type="checkbox" name="allowComments" class="filled-in" id="allowComments" {{#if proposal.allowComments}} checked="checked" {{/if}} />
+                <input type="checkbox" name="allowComments" class="filled-in" id="allowComments"
+                  {{#if proposal.allowComments}} checked="checked" {{/if}} />
                 <span>Allow Comments</span>
               </label>
-            </p> 
+            </p>
           </div>
           <div class="input-field">
-            <input type="text" name="compensation" value="{{proposal.compensation}}"> 
+            <input type="text" name="compensation" value="{{proposal.compensation}}">
             <label for="compensation">Amount/Description</label>
-          </div> 
-        {{!-- text area input-field --}}
+          </div>
+          <div class="input-field">
+            <input type="text" data-role="materialtags" name="tags" value="{{tag}}" id="tags">
+            {{!-- <label for="tags">Tags</label> --}}
+          </div>
+          {{!-- text area input-field --}}
           {{!-- <div class="input-field col s12">
             <textarea id="textarea1" class="materialize-textarea"></textarea>
             <label for="offerMessage">Textarea</label>
           </div> --}}
-        {{!-- text area end input field --}}
-          <input type="submit" value="Save" class="btn primary">
+          {{!-- text area end input field --}}
+          <input type="button" value="Save" class="btn primary" onclick="$('#editproposal').submit()">
         </div>
       </form>
-    </div>    
-  </div>   
+    </div>
+  </div>
 </div>

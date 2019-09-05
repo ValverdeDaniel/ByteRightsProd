@@ -3,19 +3,19 @@ const Schema = mongoose.Schema;
 
 //create Schema
 const ProposalSchema = new Schema({
-  user: {      
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
   // this is where i am trying to generate a random number for the pin
   proposalPin: {
     type: Number,
-    default : Math.floor(Math.random()*900000000300000000000) + 1000000000000000
+    default: Math.floor(Math.random() * 900000000300000000000) + 1000000000000000
   },
   url: {
     type: String,
-    required: true 
-  }, 
+    required: true
+  },
   imageUrl: {
     type: String,
   },
@@ -24,26 +24,36 @@ const ProposalSchema = new Schema({
   },
   compensation: {
     type: String
-  }, 
+  },
   status: {
     type: String,
-    default: 'public' 
+    default: 'public'
   },
   allowComments: {
     type: Boolean,
     default: true
 
   },
+  tag: [{
+    text: {
+      type: String,
+      required: true
+    },
+    tagDate: {
+      type: Date,
+      default: Date.now
+    }
+  }],
   comments: [{
     commentBody: {
       type: String,
-      required: true 
+      required: true
     },
     commentDate: {
       type: Date,
       default: Date.now
     },
-    commentUser:{
+    commentUser: {
       type: Schema.Types.ObjectId,
       ref: 'users'
     }
@@ -68,7 +78,7 @@ const ProposalSchema = new Schema({
   igProfile: {
     type: String
   },
-  date:{
+  date: {
     type: Date,
     default: Date.now
   }
