@@ -19,12 +19,17 @@ router.get('/google/callback',
 
 router.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
 
-router.get('/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => {
-    // Successful authentication, redirect home.
-    res.redirect('/proposals/my');
-  });
-  
+//OG Facebook login route
+// router.get('/facebook/callback',
+//   passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => {
+//     // Successful authentication, redirect home.
+//     res.redirect('/proposals/my');
+//   });
+
+//jared hansons connect-ensure-login redirect
+router.get('/facebook/callback', 
+  passport.authenticate('facebook', { successReturnToOrRedirect: '/proposals/my', failureRedirect: '/' })
+);
 
 //passport-instagram routes
 //within the google passport.authenticate after instagram, they have scope {"profile", "email"}

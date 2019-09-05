@@ -58,8 +58,30 @@ module.exports = function(passport) {
       console.log(profile);
       // console.log(email);
       // console.log(displayName);
+      
+      let newUser = {
+        facebookID: profile.id,
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        email: profile.emails[0].value,
+        facebookDisplayName: profile.displayName
+      }
+
+      //check for existing user
+      User.findOne({
+        facebookID: profile.id
+      }).then(user => {
+        if(user) {
+          return cb(null, user);
+        } else {
+          //create user
+          new User(newUser)
+          .save()
+          .then(user => { return cb(null, user)});
+        }
       })
-  )
+    })
+  );
 
   // passport.use(new InstagramStrategy({
   //   clientID: keys.instagramClientID,

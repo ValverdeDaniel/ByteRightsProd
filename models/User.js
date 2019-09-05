@@ -7,8 +7,7 @@ const UserSchema = new Schema({
     type: String
   }, 
   email: {
-    type: String,
-    required: true
+    type: String
   },
   firstName: {
     type: String
@@ -22,6 +21,12 @@ const UserSchema = new Schema({
     type: String
   },
   website: {
+    type: String
+  },
+  facebookID: {
+    type: String
+  },
+  facebookDisplayName: {
     type: String
   },
   instagram: {
