@@ -8,6 +8,13 @@ body {
   body {
     flex-direction: column;
   }
+  .gridonmobile {
+    display: grid;
+  }
+}
+
+.select2-selection {
+  height: 36px !important;
 }
 
 .nav-horizontal {

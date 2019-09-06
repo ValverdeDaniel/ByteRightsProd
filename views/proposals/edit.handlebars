@@ -45,7 +45,21 @@
           </div>
           <div class="input-field">
             <input type="text" data-role="materialtags" name="tags" value="{{tag}}" id="tags">
-            {{!-- <label for="tags">Tags</label> --}}
+            <label for="tags">Tags</label>
+            <div id="suggesstion-box" style="border: 1px solid black;
+                    padding: 9px 10px 4px;
+                    margin-bottom: 15px;
+                    display:none"><span id="suggesstion-inner"></span></div>
+            {{#if tags}}
+            Recent tags: <br />
+            {{/if}}
+            {{#each tags}}
+            {{#if this}}
+            <div class="chip recenttags" for="tags" style="cursor: pointer">
+              {{this}}
+            </div>
+            {{/if}}
+            {{/each}}
           </div>
           {{!-- text area input-field --}}
           {{!-- <div class="input-field col s12">

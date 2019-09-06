@@ -5,7 +5,7 @@
         <div class="col m2 s12">
           <h1 class="proposal_title">Proposals </h1>
         </div>
-        <div class="col m7 s12">
+        <div class="col m6 s12" style="display: grid">
           <ul class="br_tabs tabs hide-on-small-only ">
             <li class="tab col m2 s12"><a class="active" href="#test1">All</a></li>
             <li class="tab col m2 s12"><a href="#test2">Sent</a></li>
@@ -13,7 +13,7 @@
             <li class="tab col m2 s12"><a href="#test5">Declined</a></li>
           </ul>
           <!-- Dropdown Trigger -->
-          <div class="hide-on-med-and-up">
+          <div class="hide-on-med-and-up" style="display: grid;">
             <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Filter</a>
 
             <!-- Dropdown Structure -->
@@ -25,11 +25,28 @@
             </ul>
           </div>
         </div>
-        <div class="col m3 s12">
-          <div class="proposal_title-wrapper">
-            <a class="btn primary pull-right-md" href="/proposals/add">+ New Proposal</a>
+
+        <div class="col m2 s12 gridonmobile">
+          <div id='card' class="card" style="height: fit-content;margin: 0px !important">
+            <select id="filterproposals" multiple class="select1 browser-default">
+              {{#each tags}}
+              <option value="{{this}}">{{this}}</option>
+              {{/each}}
+            </select>
           </div>
         </div>
+
+        <div class="col m2 s12" style="display: grid">
+          <div class="proposal_title-wrapper">
+            <a class="btn primary pull-right-md" style="display: grid;" href="/proposals/add">+ New Proposal</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col m12 s12">
+
       </div>
     </div>
     <div class="col s12 hide-on-small-only">
@@ -41,7 +58,7 @@
           </div>    --}}
           <div class="col m1 s12">
           </div>
-          <div class="col m2 s12">
+          <div class="col m1 s12">
             <p>Recipient</p>
           </div>
           <div class="col m2 s12">
@@ -53,20 +70,15 @@
           <div class="col m1 s12">
             <p>Vote</p>
           </div>
-          <div class="col m2 s12">
+          <div class="col m1 s12">
             <p>Amount</p>
           </div>
           <div class="col m2 s12">
-            <div class="input-field col s12">
-              <select multiple id="filterproposals">
-                {{#each tags}}
-                <option value="{{this}}">{{this}}</option>
-                {{/each}}
-              </select>
-              <label>Filter By Tags</label>
-            </div>
+            Tags
           </div>
-
+          <div class="col m2 s12">
+            Actions
+          </div>
         </div>
       </div>
     </div>
@@ -86,7 +98,7 @@
               <img src="{{user.image}}" width="100%" class="proposal_image">
               {{/if}}
             </div>
-            <div class="col m2 s12">
+            <div class="col m1 s12">
               <p class="proposal-label hide-on-med-and-up">Recipient</p>
               <p>{{recipient}}</p>
             </div>
@@ -108,27 +120,35 @@
               <p class="proposal-label hide-on-med-and-up">Vote</p>
               <p>{{votes.[0].voteBody}}</p>
             </div>
-            <div class="col m2 s12">
+            <div class="col m1 s12">
               <p class="proposal-label hide-on-med-and-up">Amount</p>
-              <p class="proposal-text">{{stripTags (truncate compensation 150)}}</p>
+              <p class="proposal-text"></p>
             </div>
-            <div class="col m4 s12">
-              <div class="row pull-right-md">
+            <div class="col m2 s12">
+              <p class="proposal-label hide-on-med-and-up">Tags</p>
+              <p class="proposal-text">
+                {{#each tag}}
+                <div class="chip">
+                  {{this.text}}
+                </div>
+                {{/each}}
+              </p>
+            </div>
+            <div class="col m2 s12">
+              <div class="row">
                 <div class="col m-auto s4">
-                  <a class="proposal-btn btn grey" href="/proposals/show/{{id}}">View</a>
+                  <a class="proposal-btn btn grey" href="/proposals/show/{{id}}"><i class="fa fa-eye"></i></a>
                 </div>
                 <div class="col m-auto s4">
-                  <a class="proposal-btn btn left-align" href="/proposals/edit/{{id}}"><i class="fa fa-pencil"></i>
-                    Edit</a>
+                  <a class="proposal-btn btn left-align" href="/proposals/edit/{{id}}"><i class="fa fa-pencil"></i></a>
                 </div>
-                <div class="col m-auto s4">
+                {{!-- <div class="col m-auto s4">
                   <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" class="proposal-btn btn red"><i class="fa fa-remove"></i></button>
                   </form>
-                </div>
+                </div> --}}
               </div>
-
             </div>
           </div>
         </div>
