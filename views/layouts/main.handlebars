@@ -63,6 +63,10 @@
     .materialize-tags {
       padding-top: 10px;
     }
+
+    .select2-selection {
+      height: 43px !important;
+    }
   </style>
 
   <title>ByteRights</title>
@@ -96,6 +100,7 @@
   <script>
     $(document).ready(function () {
       $('.select1').select2({
+        closeOnSelect: false,
         placeholder: 'Filter by tags'
       });
     })
