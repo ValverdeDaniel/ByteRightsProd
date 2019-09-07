@@ -8,7 +8,11 @@ body {
   body {
     flex-direction: column;
   }
+  .gridonmobile {
+    display: grid;
+  }
 }
+
 
 .nav-horizontal {
   overflow-y: auto;

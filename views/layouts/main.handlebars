@@ -1,41 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  
+
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/select2-materialize.css">
+  <link rel="stylesheet" href="/css/materialize-tags.js">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  {{!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" /> --}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.10.6/jquery.typeahead.min.css">
 
   <script>
-  window['_fs_debug'] = false;
-  window['_fs_host'] = 'fullstory.com';
-  window['_fs_org'] = 'NSAQZ';
-  window['_fs_namespace'] = 'FS';
-  (function(m,n,e,t,l,o,g,y){
-      if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
-      g=m[e]=function(a,b,s){g.q?g.q.push([a,b,s]):g._api(a,b,s);};g.q=[];
-      o=n.createElement(t);o.async=1;o.crossOrigin='anonymous';o.src='https://'+_fs_host+'/s/fs.js';
-      y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
-      g.identify=function(i,v,s){g(l,{uid:i},s);if(v)g(l,v,s)};g.setUserVars=function(v,s){g(l,v,s)};g.event=function(i,v,s){g('event',{n:i,p:v},s)};
-      g.shutdown=function(){g("rec",!1)};g.restart=function(){g("rec",!0)};
-      g.log = function(a,b) { g("log", [a,b]) };
-      g.consent=function(a){g("consent",!arguments.length||a)};
-      g.identifyAccount=function(i,v){o='account';v=v||{};v.acctId=i;g(o,v)};
-      g.clearUserCookie=function(){};
-  })(window,document,window['_fs_namespace'],'script','user');
+    window['_fs_debug'] = false;
+    window['_fs_host'] = 'fullstory.com';
+    window['_fs_org'] = 'NSAQZ';
+    window['_fs_namespace'] = 'FS';
+    (function (m, n, e, t, l, o, g, y) {
+      if (e in m) { if (m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'); } return; }
+      g = m[e] = function (a, b, s) { g.q ? g.q.push([a, b, s]) : g._api(a, b, s); }; g.q = [];
+      o = n.createElement(t); o.async = 1; o.crossOrigin = 'anonymous'; o.src = 'https://' + _fs_host + '/s/fs.js';
+      y = n.getElementsByTagName(t)[0]; y.parentNode.insertBefore(o, y);
+      g.identify = function (i, v, s) { g(l, { uid: i }, s); if (v) g(l, v, s) }; g.setUserVars = function (v, s) { g(l, v, s) }; g.event = function (i, v, s) { g('event', { n: i, p: v }, s) };
+      g.shutdown = function () { g("rec", !1) }; g.restart = function () { g("rec", !0) };
+      g.log = function (a, b) { g("log", [a, b]) };
+      g.consent = function (a) { g("consent", !arguments.length || a) };
+      g.identifyAccount = function (i, v) { o = 'account'; v = v || {}; v.acctId = i; g(o, v) };
+      g.clearUserCookie = function () { };
+    })(window, document, window['_fs_namespace'], 'script', 'user');
   </script>
+
+  <style>
+    .select2-selection__rendered {
+      height: -webkit-fill-available;
+    }
+
+    .chip {
+      height: 27px;
+      font-size: 13px;
+      line-height: 26px;
+      padding: 0 10px;
+    }
+
+    .material-icons {
+      font-size: 13px;
+    }
+
+    .select-wrapper {
+      display: none;
+    }
+
+    .select2-container {
+      margin: 0 0 0px 0;
+    }
+
+    .proposal_image {
+      min-width: 50px !important;
+    }
+
+    .materialize-tags {
+      padding-top: 10px;
+    }
+
+    .select2-selection {}
+  </style>
 
   <title>ByteRights</title>
 </head>
+
 <body class="{{#if user}}{{else}}home_welcome{{/if}}">
   {{> _header}}
 
   {{#if user}}
-    {{> _add-btn}}
+  {{> _add-btn}}
   {{/if}}
   <main>
     <div class="br_container">
@@ -44,23 +87,163 @@
   </main>
 
   {{!-- {{> _footer}} --}}
-<script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
-<script src="/js/main.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/1.7.2/moment.min.js"></script>
+  <script src="/js/materialize-tags.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.10.6/jquery.typeahead.min.js"></script>
+  {{!-- <script src="/js/select2-materialize.js"></script> --}}
 
-<script>
-  $(document).ready(() => {
-    $('.sidenav').sidenav();
-    $('select').formSelect();
-  });
-//potential body -> compensation
-  CKEDITOR.replace('body', {
-    plugins: 'wysiwygarea,toolbar,basicstyles,link'
-  });
-</script>
+
+  <script>
+    $(document).ready(function () {
+      $('.select1').select2({
+        closeOnSelect: false,
+        placeholder: 'Filter by tags'
+      });
+    })
+    $(document).ready(function () {
+      $("#filterproposals").on('change', function () {
+        if ($("#filterproposals").val().length < 1 || $("#filterproposals").val() == "") {
+          location.reload();
+        }
+        $.ajax({
+          type: 'POST',
+          data: { data: JSON.stringify($("#filterproposals").val()) },
+          url: "/proposals/filter",
+          success: function (data) {
+            console.log(data);
+
+
+            let html = '';
+
+            if (data.length > 0) {
+              data.forEach(item => {
+                html += '<div class="col s12"> \
+                        <div class="row">\
+                          <div class="proposal_item">\
+                            <div class="col m1 s12">';
+                if (item.url) {
+                  html += '<img src="' + item.url + 'media/?size=l" class="proposal_image" width="100%" alt="" />';
+                } else {
+                  html += '<img src="' + item.user.image + '" width="100%" class="proposal_image">';
+                }
+                html += '</div > \
+                              <div class="col m1 s12"> \
+                                <p class="proposal-label hide-on-med-and-up">Recipient</p>\
+                                <p>'+ item.recipient + '</p> \
+                              </div> \
+                              <div class="col m2 s12"> \
+                                <p class="proposal-label hide-on-med-and-up">Created Date</p> \
+                                <p>'+ moment(item.date).format('MMMM Do YYYY, h:mm') + '</p>\
+                              </div > \
+                              <div class="col m2 s12" >\
+                            <p class="proposal-label hide-on-med-and-up">Last Comment</p> \
+                              <p>';
+                if (item.comments.length > 0 && item.comments[0].commentDate) {
+                  html += moment(item.comments[0].commentDate).format('MMMM Do YYYY, h:mm');
+                }
+                html += '</p >\
+                              </div >\
+                  <div class="col m1 s12" >\
+                <p class="proposal-label hide-on-med-and-up">Vote</p>\
+                <p>';
+                html += (item.votes.length > 0
+                  && item.votes[0]
+                  && item.votes.voteBody) ? item.votes[0].voteBody : '';
+                html += '</p ></div>\
+                <div class="col m1 s12">\
+                                <p class="proposal-label hide-on-med-and-up">Amount</p>\
+                                <p class="proposal-text"></p> \
+                              </div>';
+                html += '<div class="col m2 s12">\
+                                <p class="proposal-label hide-on-med-and-up">Amount</p>\
+                                <p class="proposal-text">';
+                if (item.tag && item.tag.length > 0) {
+                  item.tag.forEach(chip => {
+                    html += '<div class="chip">' + chip.text + '</div>';
+                  })
+                }
+                html += '</p> \
+                              </div>\
+                <div class="col m2 s12">\
+                                <div class="row pull-right-md">\
+                                  <div class="col m-auto s4">\
+                                    <a class="proposal-btn btn grey" href="/proposals/show/';
+                html += item._id;
+                html += '"><i class="fa fa-eye"></i></a>\
+                                </div>\
+                                <div class="col m-auto s4">\
+                                  <a class="proposal-btn btn left-align" href="/proposals/edit/';
+                html += item._id;
+                html += '"><i class="fa fa-pencil"></i></a>\
+                                </div>';
+                html += '              </div>';
+                html += '             </div >';
+                html += '          </div >';
+                html += '  </div >';
+                html += '</div > ';
+              })
+            }
+            $('#proposalTable').html(html);
+            console.log(html, ' html');
+          }
+
+
+        });
+      });
+    });
+    $(document).ready(() => {
+      $('.sidenav').sidenav();
+      $('select').formSelect();
+    });
+    //potential body -> compensation
+    CKEDITOR.replace('body', {
+      plugins: 'wysiwygarea,toolbar,basicstyles,link'
+    });
+
+    $(document).on('keyup', '.n-tag', function (e) {
+      $.ajax({
+        type: "POST",
+        url: "/proposals/tags",
+        data: 'keyword=' + $(this).val(),
+        success: function (data) {
+          console.log(data);
+          var d = '';
+          if (data.length > 0) {
+            data.forEach(item => {
+              d += '<div class="chip recenttags" for="tags" style="cursor: pointer">' + item + '</div>';
+            });
+            $("#suggesstion-box").show();
+          } else {
+            $("#suggesstion-box").hide();
+          }
+
+          $("#suggesstion-inner").html(d);
+        }
+      });
+    });
+
+    $(document).on('click', '.recenttags', function (e) {
+      var $this = $(this);
+      var data = $('#tags').val();
+      if (data.length > 0) {
+        data += ',' + $this[0].innerText;
+      } else {
+        data = $this[0].innerText;
+      }
+      console.log(data);
+      document.getElementById("tags").focus();
+      $('#tags').materialtags('add', data);
+      $('#tags').focus();
+      $('#tags').addClass('active');
+    });
+  </script>
+
 </body>
+
 </html>
