@@ -141,6 +141,7 @@
 }
 
 .chip {
+    cursor: pointer;
     margin-top: 15px;
     margin-bottom: 0px;
     min-width: fit-content;

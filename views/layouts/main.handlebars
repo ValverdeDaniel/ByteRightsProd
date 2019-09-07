@@ -37,6 +37,10 @@
   </script>
 
   <style>
+    .select2-selection__rendered {
+      height: -webkit-fill-available;
+    }
+
     .chip {
       height: 27px;
       font-size: 13px;
@@ -64,9 +68,7 @@
       padding-top: 10px;
     }
 
-    .select2-selection {
-      height: 43px !important;
-    }
+    .select2-selection {}
   </style>
 
   <title>ByteRights</title>
@@ -173,22 +175,13 @@
                                   <div class="col m-auto s4">\
                                     <a class="proposal-btn btn grey" href="/proposals/show/';
                 html += item._id;
-                html += '">View</a>\
+                html += '"><i class="fa fa-eye"></i></a>\
                                 </div>\
                                 <div class="col m-auto s4">\
                                   <a class="proposal-btn btn left-align" href="/proposals/edit/';
                 html += item._id;
-                html += '"><i class="fa fa-pencil"></i>\
-                                    Edit</a>\
-                                </div>\
-                                <div class="col m-auto s4">\
-                                  <form action="/proposals/';
-                html += item._id;
-                html += '?_method=DELETE" method="post" id="delete-form">';
-                html += '<input type="hidden" name="_method" value="DELETE">'
-                html += '<button type="submit" class="proposal-btn btn red"><i class="fa fa-remove"></i></button>';
-                html += '</form>';
-                html += '          </div>';
+                html += '"><i class="fa fa-pencil"></i></a>\
+                                </div>';
                 html += '              </div>';
                 html += '             </div >';
                 html += '          </div >';
