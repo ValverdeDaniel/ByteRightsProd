@@ -8,7 +8,11 @@ body {
   body {
     flex-direction: column;
   }
+  .gridonmobile {
+    display: grid;
+  }
 }
+
 
 .nav-horizontal {
   overflow-y: auto;
@@ -257,6 +261,7 @@ footer {
 .proposal_add-wrapper {
   margin: 20px 0 0;
 }
+
 .proposal_show-topbar {
   margin-bottom: 0;
 }
@@ -327,6 +332,9 @@ footer {
   .pull-right-md {
     float: right;
   }
+  /* .select2-selection__rendered {
+    height: 35px !important;
+  } */
 }
 
 .group:before,

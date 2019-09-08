@@ -3,8 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Proposal = mongoose.model('proposals');
 const user = mongoose.model('users');
-const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
-const {ensureLoggedIn} = require('connect-ensure-login');
+const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
+const { ensureLoggedIn } = require('connect-ensure-login');
 const axios = require('axios');
 
 
@@ -18,8 +18,27 @@ const axios = require('axios');
 //         proposals: proposals
 //       });
 //     });
-  
+
 // })
+
+router.post('/filter', (req, res) => {
+  console.log(JSON.parse(req.body.data));
+  let data = [];
+  JSON.parse(req.body.data).forEach(item => {
+    console.log(item);
+    var r = new RegExp(item, 'i');
+    data.push(r);
+    console.log(r);
+  })
+
+  // Proposal.find({ user: req.user.id })
+
+  Proposal.find({ user: req.user.id, tag: { $elemMatch: { text: { "$in": data } } } })
+    .populate('user')
+    .then(proposal => {
+      res.json(proposal);
+    })
+})
 
 //show single proposal
 router.get('/show/:id', (req, res) => {
@@ -30,16 +49,17 @@ router.get('/show/:id', (req, res) => {
     .populate('votes.voteUser')
     .populate('comments.commentUser')
     .then(proposal => {
-      if(proposal.status == 'public') {
+      console.log(proposal);
+      if (proposal.status == 'public') {
         res.render('proposals/show', {
-          proposal:proposal
+          proposal: proposal
         });
 
       } else {
-        if(req.user){
-          if(req.user.id == proposal.user._id){
+        if (req.user) {
+          if (req.user.id == proposal.user._id) {
             res.render('proposals/show', {
-              proposal:proposal
+              proposal: proposal
             });
           } else {
             res.redirect('/proposals/my');
@@ -60,16 +80,16 @@ router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
     .populate('votes.voteUser')
     .populate('comments.commentUser')
     .then(proposal => {
-      if(proposal.status == 'public') {
+      if (proposal.status == 'public') {
         res.render('proposals/showClient', {
-          proposal:proposal
+          proposal: proposal
         });
 
       } else {
-        if(req.user){
-          if(req.user.id == proposal.user._id){
+        if (req.user) {
+          if (req.user.id == proposal.user._id) {
             res.render('proposals/showClient', {
-              proposal:proposal
+              proposal: proposal
             });
           } else {
             res.redirect('/proposals/my');
@@ -123,13 +143,13 @@ router.get('/terms/:id', (req, res) => {
       res.render('proposals/terms', {
         proposal: proposal
       });
-  })
+    })
 });
 
 
 //list proposals from a user
 router.get('/user/:userId', (req, res) => {
-  Proposal.find({user: req.params.userId, status: 'public'})
+  Proposal.find({ user: req.params.userId, status: 'public' })
     .populate('user')
     .then(proposals => {
       res.render('proposals/index', {
@@ -140,49 +160,192 @@ router.get('/user/:userId', (req, res) => {
 
 //logged in Users proposals
 router.get('/my', ensureAuthenticated, (req, res) => {
-  Proposal.find({user: req.user.id})
-    .populate('user')
-    .sort({date: -1})
-    .then(proposals => {
-      res.render('proposals/index', {
-        proposals: proposals
-      });
-    });
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+
+      console.log(tags);
+
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      console.log(result);
+
+      if (tags.length > 0) {
+        Proposal.find({ user: req.user.id })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/index', {
+              proposals: proposals,
+              tags: result
+            });
+          });
+      } else {
+        Proposal.find({ user: req.user.id })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/index', {
+              proposals: proposals,
+              tags: []
+            });
+          });
+      }
+    })
 });
 
+router.post('/tags', ensureAuthenticated, (req, res) => {
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      var PATTERN = new RegExp(req.body.keyword, 'i');
+      console.log(PATTERN);
+      var filtered = result.filter(function (str) { return PATTERN.test(str); });
+      res.json((req.body.keyword == "" || req.body.keyword == null) ? [] : filtered);
+    })
+});
 
 //add proposal form
 router.get('/add', ensureAuthenticated, (req, res) => {
-  res.render('proposals/add');
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      let t = [];
+      let count = 0;
+      for (var i = result.length; i >= 0; i--) {
+        t.push(result[i]);
+        if (count > 10) {
+          break;
+        }
+        count++;
+      }
+      res.render('proposals/add', {
+        tags: t
+      });
+    })
 })
 
 //edit proposal form
 router.get('/edit/:id', ensureAuthenticated, (req, res) => {
-  Proposal.findOne({
-    _id: req.params.id
-  })
-    .then(proposal => {
-      if(proposal.user != req.user.id){
-        res.redirect('/proposals/my')
-      } else {
-        res.render('proposals/edit', {
-          proposal: proposal
-        });
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
       }
-    });
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      let t = [];
+      let count = 0;
+      for (var i = result.length; i >= 0; i--) {
+        t.push(result[i]);
+        if (count > 10) {
+          break;
+        }
+        count++;
+      }
+
+      Proposal.findOne({
+        _id: req.params.id
+      })
+        .then(proposal => {
+          let tag = "";
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              // console.log(item.text);
+              tag = tag + item.text.toLowerCase() + ',';
+            })
+            tag = tag.slice(0, -1);
+          }
+          if (proposal.user != req.user.id) {
+            res.redirect('/proposals/my')
+          } else {
+            res.render('proposals/edit', {
+              proposal: proposal,
+              tag: tag,
+              tags: t
+            });
+          }
+        });
+    })
+
 });
 
 //process add proposal
-router.post('/', (req, res) => {
+router.post('/', ensureAuthenticated, (req, res) => {
   let allowComments;
 
-  if(req.body.allowComments){
+  if (req.body.allowComments) {
     allowComments = true;
   } else {
     allowComments = false;
   }
 
-  const newProposal = {
+  let newProposal = {
     url: req.body.url,
     recipient: req.body.recipient,
     compensation: req.body.compensation,
@@ -190,6 +353,19 @@ router.post('/', (req, res) => {
     allowComments: allowComments,
     user: req.user.id
   }
+
+  let tagIDs = [];
+  if (req.body.tags.length > 0) {
+    let tagsArr = req.body.tags.split(',');
+    tagsArr.forEach(item => {
+      tagIDs.push({ text: item.toLowerCase() });
+    });
+
+    newProposal.tag = tagIDs;
+  }
+
+  // console.log(newProposal);
+  // return;
 
   //create proposal
   new Proposal(newProposal)
@@ -204,26 +380,36 @@ router.put('/:id', (req, res) => {
   Proposal.findOne({
     _id: req.params.id
   })
-  .then(proposal => {
-    let allowComments;
-    if(req.body.allowComments){
-      allowComments = true;
-    } else {
-      allowComments = false;
-    }
+    .then(proposal => {
+      let allowComments;
+      if (req.body.allowComments) {
+        allowComments = true;
+      } else {
+        allowComments = false;
+      }
 
-    //new values
-    proposal.url = req.body.url;
-    proposal.recipient = req.body.recipient;
-    proposal.compensation = req.body.compensation;
-    proposal.status = req.body.status;
-    proposal.allowComments = allowComments;
+      //new values
+      proposal.url = req.body.url;
+      proposal.recipient = req.body.recipient;
+      proposal.compensation = req.body.compensation;
+      proposal.status = req.body.status;
+      proposal.allowComments = allowComments;
 
-    proposal.save()
-      .then(proposal => {
-        res.redirect(`/proposals/show/${proposal.id}`);
-      });
-  });
+      let tagIDs = [];
+      if (req.body.tags.length > 0) {
+        let tagsArr = req.body.tags.split(',');
+        tagsArr.forEach(item => {
+          tagIDs.push({ text: item });
+        });
+
+        proposal.tag = tagIDs;
+      }
+
+      proposal.save()
+        .then(proposal => {
+          res.redirect(`/proposals/show/${proposal.id}`);
+        });
+    });
 });
 
 //vote on proposal
@@ -267,7 +453,7 @@ router.put('/:id', (req, res) => {
 
 //delete Proposal
 router.delete('/:id', (req, res) => {
-  Proposal.remove({_id: req.params.id})
+  Proposal.remove({ _id: req.params.id })
     .then(() => {
       res.redirect('/proposals/my');
     })
@@ -278,22 +464,22 @@ router.post('/voteUser/:id', (req, res) => {
   Proposal.findOne({
     _id: req.params.id
   })
-  .then(proposal => {
-    const newVote = {
-      voteBody: req.body.voteBody,
+    .then(proposal => {
+      const newVote = {
+        voteBody: req.body.voteBody,
 
-      voteUser: req.user.id
-    }
+        voteUser: req.user.id
+      }
 
-    //push to votes array
-    //unshift adds it to the beginning
-    proposal.votes.unshift(newVote);
+      //push to votes array
+      //unshift adds it to the beginning
+      proposal.votes.unshift(newVote);
 
-    proposal.save()
-      .then(proposal => {
-        res.redirect(`/proposals/show/${proposal.id}`);
-      })
-  });
+      proposal.save()
+        .then(proposal => {
+          res.redirect(`/proposals/show/${proposal.id}`);
+        })
+    });
 });
 
 //add guest vote
@@ -301,21 +487,21 @@ router.post('/voteGuest/:id', (req, res) => {
   Proposal.findOne({
     _id: req.params.id
   })
-  .then(proposal => {
-    const newVote = {
-      voteBody: req.body.voteBody,
-      voteEmail: req.body.voteEmail
-    }
+    .then(proposal => {
+      const newVote = {
+        voteBody: req.body.voteBody,
+        voteEmail: req.body.voteEmail
+      }
 
-    //push to votes array
-    //unshift adds it to the beginning
-    proposal.votes.unshift(newVote);
+      //push to votes array
+      //unshift adds it to the beginning
+      proposal.votes.unshift(newVote);
 
-    proposal.save()
-      .then(proposal => {
-        res.redirect(`/proposals/show/${proposal.id}`);
-      })
-  });
+      proposal.save()
+        .then(proposal => {
+          res.redirect(`/proposals/show/${proposal.id}`);
+        })
+    });
 });
 
 //add comment
@@ -323,21 +509,21 @@ router.post('/comment/:id', (req, res) => {
   Proposal.findOne({
     _id: req.params.id
   })
-  .then(proposal => {
-    const newComment = {
-      commentBody: req.body.commentBody,
-      commentUser: req.user.id
-    }
+    .then(proposal => {
+      const newComment = {
+        commentBody: req.body.commentBody,
+        commentUser: req.user.id
+      }
 
-    //push to comments array
-    //unshift adds it to the beginning
-    proposal.comments.unshift(newComment);
+      //push to comments array
+      //unshift adds it to the beginning
+      proposal.comments.unshift(newComment);
 
-    proposal.save()
-      .then(proposal => {
-        res.redirect(`/proposals/show/${proposal.id}`);
-      })
-  });
+      proposal.save()
+        .then(proposal => {
+          res.redirect(`/proposals/show/${proposal.id}`);
+        })
+    });
 });
 
 module.exports = router;
