@@ -12,13 +12,15 @@
         id="editproposal">
         <div class="col m6 s12">
           <input type="hidden" name="_method" value="PUT">
+          <label>Image Link</label>
           <div class="input-field">
             <input type="text" name="url" value="{{proposal.url}}" required>
-            <label for="url">Image Link</label>
+            
           </div>
+          <label>Recipient Name</label>
           <div class="input-field">
             <input type="text" name="recipient" value="{{proposal.recipient}}" required>
-            <label for="recipient">Recipient Name</label>
+            
           </div>
           {{!-- <div class="input-field">
             <select name="status">
@@ -30,7 +32,18 @@
             </select>
             <label for="status">Status</label>
           </div>   --}}
-          <div class="input-field">
+          <p>
+          <label>Comments</label>
+          <div class="switch">
+            <label>
+            Off
+            <input type="checkbox" name="allowComments" id="allowComments" {{#if proposal.allowComments}} checked="checked" {{/if}}>
+            <span class="lever"></span>
+            On
+            </label>
+          </div>
+          </p>
+          {{!-- <div class="input-field">
             <p>
               <label for="allowComments">
                 <input type="checkbox" name="allowComments" class="filled-in" id="allowComments"
@@ -38,12 +51,13 @@
                 <span>Allow Comments</span>
               </label>
             </p>
-          </div>
+          </div> --}}
+          <label for="compensation">Compensation</label>
           <div class="input-field">
             <input type="text" name="compensation" value="{{proposal.compensation}}">
-            <label for="compensation">Amount/Description</label>
+            
           </div>
-          <p>Tags</p>
+          <label>Tags</label>
           <div class="input-field">
             <input type="text" data-role="materialtags" name="tags" value="{{tag}}" id="tags">
             {{!-- <label for="tags">Tags</label> --}}
