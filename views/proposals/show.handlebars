@@ -264,6 +264,13 @@
   </div>
 </div>
 
+{{!-- testing substring --}}
+<p id="demo"></p>
+<button onclick="myFunction()">Try it</button>
+<br>
+<br>
+{{!-- end substring test --}}
+
 <script>
 //modal logic materialize 
   document.addEventListener('DOMContentLoaded', function() {
@@ -300,4 +307,22 @@
       console.log('Oops, unable to copy');
     }
   });
+</script>
+
+
+<script>
+function myFunction() {
+  
+  console.log('substring1');
+  var str = 'Hello World'
+  //testing id substring
+  //var str = req.params.id;
+  //console.log ("str: " + str);
+  
+  var res = str.substring(3, 7);
+  console.log('substring2');
+  console.log('res' + res);
+  document.getElementById("demo").innerHTML = res;
+  console.log('substring3');
+}
 </script>
