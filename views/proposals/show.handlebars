@@ -1,3 +1,4 @@
+
 <div class="proposal_wrapper--add">
   <div class="row no-margin--bottom">
     <div class="proposal_topbar">
@@ -96,7 +97,6 @@
               <p>We'd like to compensate you with {{proposal.compensation}} for your photo. Simply login or enter your
                 email and the code we sent you (this informs us of who has responded). Then, press "Accept".</p>
               {{/ifCompensationEqBlank}}
-<<<<<<< HEAD
                 <h6>To respond:</h6>
                 <a class = "btn red darken-1" href="/proposals/showClient/{{proposal.id}}">
                   <i class="fa fa-google left"></i>Login with Google
@@ -123,24 +123,6 @@
                     {{!-- </div> --}}
                   </div>
                 </form>
-                <div>
-                  {{!-- <div class='card'> --}}
-                  <h6>Or Enter:</h6>
-                  <div class="input-field">
-                    <input type="text" name="voteEmail">
-                    <label for="voteEmail">Email</label>
-                  </div>
-                  <div class="input-field">
-                    <input id='code' type='text' />
-                    <label for="code">Code</label>
-                  </div>
-                  <input name="voteBody" type="submit" value="Accept" onclick="javascript:return validatePass()"
-                    class="btn green lighten-1">
-                  <input name="voteBody" type="submit" value="Decline" onclick="javascript:return validatePass()"
-                    class="btn red lighten-1">
-                  {{!-- </div> --}}
-                </div>
-              </form>
               <div>
                 <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
               </div>
@@ -247,6 +229,35 @@
 </div>
 <br>
 <br>
+<!-- Modal Trigger -->
+<button data-target="modalLogin" class="btn blue darken-2 modal-trigger">Login</button>
+
+  <!-- Modal Structure-->
+  <div id="modalLogin" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <nav class="nav-horizontal">
+          <div class="row"> 
+            <div class="col s12">
+              <div class="nav_wrapper">
+                <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <h4>Please Login</h4>
+        <a class = "btn red darken-1" href="/proposals/showClient/{{proposal.id}}">
+          <i class="fa fa-google left"></i>Login with Google
+        </a>
+        <a class = "btn blue darken-1" href="/proposals/showFBClient/{{proposal.id}}">
+          <i class="fa fa-facebook left"></i>Login with Facebook
+        </a>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
 
 <script>
   function validatePass() {
@@ -274,5 +285,13 @@
     } catch (err) {
       console.log('Oops, unable to copy');
     }
+  });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    console.log('1');
+    var elems = document.querySelectorAll('.modal');
+    //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
+    var instances = M.Modal.init(elems);
+
   });
 </script>
