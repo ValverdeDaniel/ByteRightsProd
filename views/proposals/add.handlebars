@@ -34,17 +34,25 @@
 
           <p>
             <p>Decide whether or not you'd like to allow the recipient to send you messages about the proposal.</p>
-            <label for="allowComments">
-              <input type="checkbox" id="allowComments" name="allowComments" />
-              <span>Allow Comments</span>
+            <p>
+          <label>Comments</label>
+          <div class="switch">
+            <label>
+            Off
+            <input type="checkbox" name="allowComments" id="allowComments" checked="checked">
+            <span class="lever"></span>
+            On
             </label>
+          </div>
           </p>
-          <p>Lastly, you may offer any form of compensation. If left blank, we won't mention it in your proposal.</p>
+          </p>
+          <p>You may offer any form of compensation. If left blank, we won't mention it in your proposal.</p>
           <div class="input-field">
             <input type="text" name="compensation">
             <label for="compensation">Amount/Description</label>
           </div>
-          <p>Tags</p>
+          <p>Lastly, to help keep your proposals organized, add any relevant tags.</p>
+          <label>Tags</label>
           <div class="input-field">
             <input type="text" class="tags tagskeyup" data-role="materialtags" name="tags" id="tags">
             {{!-- <label for="tags">Tags</label> --}}
