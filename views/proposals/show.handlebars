@@ -311,18 +311,18 @@
 
 
 <script>
-//const mongoose = require('mongoose');
-//const Proposal = mongoose.model('proposals');
+const mongoose = require('mongoose');
+const Proposal = mongoose.model('proposals');
 function myFunction() {
-  //Proposal.findOne({
-  //  _id: req.params.id
-  //})
-  //console.log('id: ' + _id)
+  Proposal.findOne({
+    _id: req.params.id
+  })
+  console.log('id: ' + _id)
   console.log('substring1');
   var str = 'Hello World'
   //testing id substring
-  //var str = req.params.id;
-  //console.log ("str: " + str);
+  var str = req.params.id;
+  console.log ("str: " + str);
   
   var res = str.substring(3, 7);
   console.log('substring2');
