@@ -71,7 +71,7 @@ router.get('/show/:id', (req, res) => {
     })
 })
 
-//show single proposal for guest
+// show single proposal for guest OG ensureLoggedin /auth/google
 router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
   Proposal.findOne({
     _id: req.params.id
@@ -90,6 +90,36 @@ router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
           if (req.user.id == proposal.user._id) {
             res.render('proposals/showClient', {
               proposal: proposal
+            });
+          } else {
+            res.redirect('/proposals/my');
+          }
+        } else {
+          res.redirect('/proposals/my');
+        }
+      }
+    })
+})
+
+//testing if function for ensureLoggedIn
+router.get('/showFBClient/:id', ensureLoggedIn('/auth/facebook'), (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .populate('user')
+    .populate('votes.voteUser')
+    .populate('comments.commentUser')
+    .then(proposal => {
+      if(proposal.status == 'public') {
+        res.render('proposals/showClient', {
+          proposal:proposal
+        });
+
+      } else {
+        if(req.user){
+          if(req.user.id == proposal.user._id){
+            res.render('proposals/showClient', {
+              proposal:proposal
             });
           } else {
             res.redirect('/proposals/my');

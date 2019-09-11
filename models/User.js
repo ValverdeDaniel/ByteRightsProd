@@ -7,8 +7,7 @@ const UserSchema = new Schema({
     type: String
   }, 
   email: {
-    type: String,
-    required: true
+    type: String
   },
   firstName: {
     type: String
@@ -22,25 +21,38 @@ const UserSchema = new Schema({
     type: String
   },
   website: {
+    type: String,
+    default: ""
+  },
+  facebookID: {
+    type: String
+  },
+  facebookDisplayName: {
     type: String
   },
   instagram: {
-    type: String
+    type: String,
+    default: ""
   },
   facebook: {
-    type: String
+    type: String,
+    default: ""
   },
   twitter: {
-    type: String
+    type: String,
+    default: ""
   },
   youtube: {
-    type: String
+    type: String,
+    default: ""
   },
   soundcloud: {
-    type: String
+    type: String,
+    default: ""
   },
   companyName:{
-    type: String
+    type: String,
+    default: ""
   }
 });
 
