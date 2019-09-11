@@ -51,7 +51,7 @@ module.exports = function(passport) {
       clientID: keys.facebookClientID,
       clientSecret: keys.facebookClientSecret,
       callbackURL: '/auth/facebook/callback',
-      profileFields: ['id', 'displayName', 'email'],
+      profileFields: ['id', 'displayName', 'email', 'name'],
       proxy: true
     }, (accessToken, refreshToken, profile, cb) => {
       console.log(accessToken);
