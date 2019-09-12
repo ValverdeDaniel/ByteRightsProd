@@ -351,6 +351,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
     compensation: req.body.compensation,
     status: req.body.status,
     allowComments: allowComments,
+    randomPin: req.body.randomPin,
     user: req.user.id
   }
 
@@ -394,6 +395,7 @@ router.put('/:id', (req, res) => {
       proposal.compensation = req.body.compensation;
       proposal.status = req.body.status;
       proposal.allowComments = allowComments;
+      proposal.randomPin = req.body.randomPin;
 
       let tagIDs = [];
       if (req.body.tags.length > 0) {

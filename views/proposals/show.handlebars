@@ -25,14 +25,14 @@
                 {{!-- message ifCompensationEqBlank and if CompanyNameEqBlank --}}
                 <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love a photo you posted!
                   Would you allow us to use it sometime in the future? To accept, follow the link and enter the code:
-                  <strong>31415</strong>. <a class="word-break" href="{{proposal.id}}"
+                  <strong>{{proposal.randomPin}}</strong>. <a class="word-break" href="{{proposal.id}}"
                     target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
                 {{!-- else for ifCompanyNameEqBlank --}}
                 {{else}}
                 {{!-- message if compensationEqBlank but CompanyName does not Equal Blank --}}
                 <p>Hi, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love a photo you
                   posted! Would you allow us to use it sometime in the future? To accept, follow the link and enter the
-                  code: <strong>31415</strong>. <a class="word-break" href="{{proposal.id}}"
+                  code: <strong>{{proposal.randomPin}}</strong>. <a class="word-break" href="{{proposal.id}}"
                     target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
                 {{/ifCompanyNameEqBlank}}
                 {{!-- else for ifCompanesationEqBlank --}}
@@ -41,7 +41,7 @@
                 {{!-- message if compensation not equal blank and company name equals blank --}}
                 <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love a photo you posted!
                   Would you allow us to use it sometime in the future. In exchange we would be willing to compensate you
-                  with {{proposal.compensation}}. To accept, follow the link and enter the code: <strong>31415</strong>.
+                  with {{proposal.compensation}}. To accept, follow the link and enter the code: <strong>{{proposal.randomPin}}</strong>.
                   <a class="word-break" href="{{proposal.id}}"
                     target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
                 {{!-- else for second ifCompensationEqBlank --}}
@@ -50,7 +50,7 @@
                 <p>Hi, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love a photo you
                   posted! Would you allow us to use it sometime in the future. In exchange we would be willing to
                   compensate you with {{proposal.compensation}}. To accept, follow the link and enter the code:
-                  <strong>31415</strong>. <a class="word-break" href="{{proposal.id}}"
+                  <strong>{{proposal.randomPin}}</strong>. <a class="word-break" href="{{proposal.id}}"
                     target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
                 {{/ifCompanyNameEqBlank}}
                 {{!-- message for proposalCreator to send if they are compensating --}}
@@ -312,17 +312,11 @@
 
 
 <script>
-const mongoose = require('mongoose');
-const Proposal = mongoose.model('proposals');
-function myFunction() {
-  Proposal.findOne({
-    _id: req.params.id
-  })
   console.log('id: ' + _id)
   console.log('substring1');
+  console.log('req' + req.params.id)
   var str = 'Hello World'
   //testing id substring
-  var str = req.params.id;
   console.log ("str: " + str);
   
   var res = str.substring(3, 7);
@@ -330,5 +324,13 @@ function myFunction() {
   console.log('res' + res);
   document.getElementById("demo").innerHTML = res;
   console.log('substring3');
-}
+
+//const mongoose = require('mongoose');
+//const Proposal = mongoose.model('proposals');
+//Proposal.init().then(function(Proposal) {
+  // You can also use `Event.on('index')` if you prefer event emitters
+  // over promises.
+  //console.log('Proposal is done building');
+//});
+
 </script>

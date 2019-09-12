@@ -51,6 +51,12 @@
             <input type="text" name="compensation">
             <label for="compensation">Amount/Description</label>
           </div>
+          {{!-- <p>randomPin</p> --}}
+          {{!-- <div> --}}
+            {{!-- add type="hidden" to make this field invisible --}}
+            <input type="hidden"id="randomPin" name="randomPin"/>
+          {{!-- </div> --}}
+
           <p>Lastly, to help keep your proposals organized, add any relevant tags.</p>
           <label>Tags</label>
           <div class="input-field">
@@ -78,3 +84,13 @@
     </div>
   </div>
 </div>
+<br>
+
+
+<script>
+  function randomPinGen(){
+    document.getElementById("randomPin").value =
+    Math.floor(Math.random()*9000) + 1000;
+  }
+  window.onload = randomPinGen();
+</script>
