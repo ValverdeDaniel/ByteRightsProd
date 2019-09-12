@@ -17,7 +17,7 @@ router.get('/google/callback',
   passport.authenticate('google', { successReturnToOrRedirect: '/proposals/my', failureRedirect: '/' })
 );
 
-router.get('/facebook', passport.authenticate('facebook', {scope: ['public_profile', 'email' , 'instagram_basic']}));
+router.get('/facebook', passport.authenticate('facebook', {scope: ['public_profile', 'email']}));
 
 //OG Facebook login route
 // router.get('/facebook/callback',
