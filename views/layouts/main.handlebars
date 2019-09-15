@@ -257,9 +257,14 @@
     }
 
     $(".toggleRowClick").click(function (e) {
-      var $this = $(this).attr('href');
+      var $activeTitle = $(this);
+      var $activeTab = $(this).attr('href');
+      
+      $(".toggleRowClick").removeClass("active");
+      $($activeTitle).addClass('active');
+
       $(".proposal-row").removeClass("active");
-      $($this).addClass('active');
+      $($activeTab).addClass('active');
     });
 
   </script>
