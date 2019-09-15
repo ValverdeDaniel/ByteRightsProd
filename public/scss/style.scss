@@ -344,6 +344,14 @@ footer{
   }
 }
 
+.proposal-row {
+  display: none;
+}
+
+.proposal-row.active {
+  display: block;
+}
+
 //Hide edit button. remove later
 .btn-floating.halfway-fab.red {
   display: none;

@@ -199,7 +199,7 @@ router.get('/my', ensureAuthenticated, (req, res) => {
       } else {
         Proposal.find({ user: req.user.id })
           .populate('user')
-          .sort('votes.[0].voteBody')  
+          .sort('votes.[0].voteBody')
           .then(proposals => {
             res.render('proposals/index', {
               proposals: proposals,

@@ -244,6 +244,24 @@
       $('#tags').addClass('active');
     });
 
+   function toggleRow(e) {
+      var $this = $(this);
+      
+
+      $this.click(function(){
+        var id = $this.attr('href');
+        $(".proposal-row").removeClass("active");
+        $('#' + id).addClass('active');
+        console.log(id);
+      });
+    }
+
+    $(".toggleRowClick").click(function (e) {
+      var $this = $(this).attr('href');
+      $(".proposal-row").removeClass("active");
+      $($this).addClass('active');
+    });
+
   </script>
 
 </body>
