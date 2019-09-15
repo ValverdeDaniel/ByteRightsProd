@@ -1,51 +1,47 @@
 <div class="proposal_wrapper">
   <div class="row">
-    <div class="col">
-      <div class="">
-        <div class="proposal_topbar">
-          <div class="col m2 s12">
-            <h1 class="proposal_title">Proposals </h1>
-          </div>
-          <div class="col m8 s12" style="display: grid">
-            <ul class="br_tabs tabs hide-on-small-only ">
-              <li class="tab col m2 s12"><a class="active" href="#test1">All</a></li>
-              <li class="tab col m2 s12"><a href="#test2">Sent</a></li>
-              <li class="tab col m3 s12"><a href="#test4">Accepted</a></li>
-              <li class="tab col m2 s12"><a href="#test5">Declined</a></li>
+    <div class="col"> 
+      <div class="proposal_topbar">
+        <div class="col m10 s12">
+          <h1 class="proposal_title">Proposals </h1>
+        </div>
+        {{!-- <div class="col m8 s12" style="display: grid">
+          <ul class="br_tabs tabs hide-on-small-only ">
+            <li class="tab col m2 s12"><a class="active" href="#test1">All</a></li>
+            <li class="tab col m2 s12"><a href="#test2">Sent</a></li>
+            <li class="tab col m3 s12"><a href="#test4">Accepted</a></li>
+            <li class="tab col m2 s12"><a href="#test5">Declined</a></li>
+          </ul>
+          <!-- Dropdown Trigger -->
+          <div class="hide-on-med-and-up" style="display: grid;">
+            <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Filter</a>
+
+            <!-- Dropdown Structure -->
+            <ul id='dropdown1' class='dropdown-content'>
+              <li><a href="#!">All</a></li>
+              <li><a href="#!">Sent</a></li>
+              <li><a href="#!">Accepted</a></li>
+              <li><a href="#!">Declined</a></li>
             </ul>
-            <!-- Dropdown Trigger -->
-            <div class="hide-on-med-and-up" style="display: grid;">
-              <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Filter</a>
-
-              <!-- Dropdown Structure -->
-              <ul id='dropdown1' class='dropdown-content'>
-                <li><a href="#!">All</a></li>
-                <li><a href="#!">Sent</a></li>
-                <li><a href="#!">Accepted</a></li>
-                <li><a href="#!">Declined</a></li>
-              </ul>
-            </div>
           </div>
+        </div> --}}
 
-          <div class="col m2 s12" style="display: grid">
-            <div class="proposal_title-wrapper">
-              <a class="btn primary pull-right-md" style="display: grid;" href="/proposals/add">+ New Proposal</a>
-            </div>
+        <div class="col m2 s12" style="display: grid">
+          <div class="proposal_title-wrapper">
+            <a class="btn primary pull-right-md" style="display: grid;" href="/proposals/add">+ New Proposal</a>
           </div>
         </div>
-      </div>
-
-      <div class="">
-        <div class="col m12 s12 gridonmobile">
-          <div id='card' class="card" style="height: fit-content;margin: 0px !important">
-            <select id="filterproposals" multiple class="select1 browser-default">
-              {{#each tags}}
-              <option value="{{this}}">{{this}}</option>
-              {{/each}}
-            </select>
-          </div>
+      </div> 
+ 
+      <div class="col m12 s12 gridonmobile">
+        <div id='card' class="card" style="height: fit-content;margin: 0px !important">
+          <select id="filterproposals" multiple class="select1 browser-default">
+            {{#each tags}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+          </select>
         </div>
-      </div>
+      </div> 
       <div class="col s12 hide-on-small-only">
         <div class="">
           <div class="proposal_filter">
@@ -80,80 +76,236 @@
         </div>
       </div>
       <span id="proposalTable">
-        {{#each proposals}}
-          <div class="col s12">
-            <div class="">
-              <div class="proposal_item">
-                {{!-- created date for sorting check --}}
-                {{!-- <div class="col s5">  
-              <td>{{formatDate date 'MMMM Do YYYY'}}</td>
-            </div>  --}}
-                <div class="col m1 s12">
-                  {{#if url}}
-                  <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
-                  {{else}}
-                  <img src="{{user.image}}" width="100%" class="proposal_image">
-                  {{/if}}
-                </div>
-                <div class="col m1 s12">
-                  <p class="proposal-label hide-on-med-and-up">Recipient</p>
-                  <p>{{recipient}}</p>
-                </div>
-                <div class="col m2 s12">
-                  <p class="proposal-label hide-on-med-and-up">Created Date</p>
-                  <p>
-                    {{formatDate date 'MMMM Do YYYY, h:mm'}}
-                  </p>
-                </div>
-                <div class="col m2 s12">
-                  <p class="proposal-label hide-on-med-and-up">Last Comment</p>
-                  <p>
-                    {{#if comments.[0].commentDate}}
-                    {{formatDate comments.[0].commentDate 'MMMM Do YYYY, h:mm'}}
-                    {{/if}}
-                  </p>
-                </div>
-                <div class="col m1 s12">
-                  <p class="proposal-label hide-on-med-and-up">Vote</p>
-                  <p>{{votes.[0].voteBody}}</p>
-                </div>
-                <div class="col m1 s12">
-                  <p class="proposal-label hide-on-med-and-up">Amount</p>
-                  <p class="proposal-text"></p>
-                </div>
-                <div class="col m2 s12">
-                  <p class="proposal-label hide-on-med-and-up">Tags</p>
-                  <p class="proposal-text">
-                    {{#each tag}}
-                    <div class="chip">
-                      {{this.text}}
+        <div class="row">
+          {{#each proposals}}
+            {{#ifEquals votes.[0].voteBody "Accept"}}
+              <div class="col s12">
+                <div class="">
+                  <div class="proposal_item">
+                    {{!-- created date for sorting check --}}
+                    {{!-- <div class="col s5">  
+                  <td>{{formatDate date 'MMMM Do YYYY'}}</td>
+                </div>  --}}
+                    <div class="col m1 s12">
+                      {{#if url}}
+                      <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
+                      {{else}}
+                      <img src="{{user.image}}" width="100%" class="proposal_image">
+                      {{/if}}
                     </div>
-                    {{/each}}
-                  </p>
-                </div>
-                <div class="col m2 s12">
-                  <div class="row">
-                    <div class="col m-auto s4">
-                      <a class="proposal-btn btn grey" href="/proposals/show/{{id}}"><i class="fa fa-eye"></i></a>
+                    <div class="col m1 s12">
+                      <p class="proposal-label hide-on-med-and-up">Recipient</p>
+                      <p>{{recipient}}</p>
                     </div>
-                    <div class="col m-auto s4">
-                      <a class="proposal-btn btn left-align" href="/proposals/edit/{{id}}"><i
-                          class="fa fa-pencil"></i></a>
+                    <div class="col m2 s12">
+                      <p class="proposal-label hide-on-med-and-up">Created Date</p>
+                      <p>
+                        {{formatDate date 'MMMM Do YYYY, h:mm'}}
+                      </p>
                     </div>
-                    {{!-- <div class="col m-auto s4">
-                    <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
-                      <input type="hidden" name="_method" value="DELETE">
-                      <button type="submit" class="proposal-btn btn red"><i class="fa fa-remove"></i></button>
-                    </form>
-                  </div> --}}
+                    <div class="col m2 s12">
+                      <p class="proposal-label hide-on-med-and-up">Last Comment</p>
+                      <p>
+                        {{#if comments.[0].commentDate}}
+                        {{formatDate comments.[0].commentDate 'MMMM Do YYYY, h:mm'}}
+                        {{/if}}
+                      </p>
+                    </div>
+                    <div class="col m1 s12">
+                      <p class="proposal-label hide-on-med-and-up">Vote</p>
+                      <p>{{votes.[0].voteBody}}</p>
+                    </div>
+                    <div class="col m1 s12">
+                      <p class="proposal-label hide-on-med-and-up">Amount</p>
+                      <p class="proposal-text"></p>
+                    </div>
+                    <div class="col m2 s12">
+                      <p class="proposal-label hide-on-med-and-up">Tags</p>
+                      <p class="proposal-text">
+                        {{#each tag}}
+                        <div class="chip">
+                          {{this.text}}
+                        </div>
+                        {{/each}}
+                      </p>
+                    </div>
+                    <div class="col m2 s12">
+                      <div class="row">
+                        <div class="col m-auto s4">
+                          <a class="proposal-btn btn grey" href="/proposals/show/{{id}}"><i class="fa fa-eye"></i></a>
+                        </div>
+                        <div class="col m-auto s4">
+                          <a class="proposal-btn btn left-align" href="/proposals/edit/{{id}}"><i
+                              class="fa fa-pencil"></i></a>
+                        </div>
+                        {{!-- <div class="col m-auto s4">
+                        <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
+                          <input type="hidden" name="_method" value="DELETE">
+                          <button type="submit" class="proposal-btn btn red"><i class="fa fa-remove"></i></button>
+                        </form>
+                      </div> --}}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          {{else}}
-          <p>No proposals found</p>
-        {{/each }}
+            {{/ifEquals}} 
+          {{/each }} 
+        </div> 
+        <div class="row">
+          {{#each proposals}}
+            {{#ifEquals votes.[0].voteBody "Decline"}}
+              <div class="col s12">
+                <div class="">
+                  <div class="proposal_item">
+                    {{!-- created date for sorting check --}}
+                    {{!-- <div class="col s5">  
+                  <td>{{formatDate date 'MMMM Do YYYY'}}</td>
+                </div>  --}}
+                    <div class="col m1 s12">
+                      {{#if url}}
+                      <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
+                      {{else}}
+                      <img src="{{user.image}}" width="100%" class="proposal_image">
+                      {{/if}}
+                    </div>
+                    <div class="col m1 s12">
+                      <p class="proposal-label hide-on-med-and-up">Recipient</p>
+                      <p>{{recipient}}</p>
+                    </div>
+                    <div class="col m2 s12">
+                      <p class="proposal-label hide-on-med-and-up">Created Date</p>
+                      <p>
+                        {{formatDate date 'MMMM Do YYYY, h:mm'}}
+                      </p>
+                    </div>
+                    <div class="col m2 s12">
+                      <p class="proposal-label hide-on-med-and-up">Last Comment</p>
+                      <p>
+                        {{#if comments.[0].commentDate}}
+                        {{formatDate comments.[0].commentDate 'MMMM Do YYYY, h:mm'}}
+                        {{/if}}
+                      </p>
+                    </div>
+                    <div class="col m1 s12">
+                      <p class="proposal-label hide-on-med-and-up">Vote</p>
+                      <p>{{votes.[0].voteBody}}</p>
+                    </div>
+                    <div class="col m1 s12">
+                      <p class="proposal-label hide-on-med-and-up">Amount</p>
+                      <p class="proposal-text"></p>
+                    </div>
+                    <div class="col m2 s12">
+                      <p class="proposal-label hide-on-med-and-up">Tags</p>
+                      <p class="proposal-text">
+                        {{#each tag}}
+                        <div class="chip">
+                          {{this.text}}
+                        </div>
+                        {{/each}}
+                      </p>
+                    </div>
+                    <div class="col m2 s12">
+                      <div class="row">
+                        <div class="col m-auto s4">
+                          <a class="proposal-btn btn grey" href="/proposals/show/{{id}}"><i class="fa fa-eye"></i></a>
+                        </div>
+                        <div class="col m-auto s4">
+                          <a class="proposal-btn btn left-align" href="/proposals/edit/{{id}}"><i
+                              class="fa fa-pencil"></i></a>
+                        </div>
+                        {{!-- <div class="col m-auto s4">
+                        <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
+                          <input type="hidden" name="_method" value="DELETE">
+                          <button type="submit" class="proposal-btn btn red"><i class="fa fa-remove"></i></button>
+                        </form>
+                      </div> --}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {{/ifEquals}} 
+          {{/each }} 
+        </div> 
+        <div class="row">
+          {{#each proposals}}
+            {{#ifEquals votes.[0].voteBody null}}
+              <div class="col s12">
+                <div class="">
+                  <div class="proposal_item">
+                    {{!-- created date for sorting check --}}
+                    {{!-- <div class="col s5">  
+                  <td>{{formatDate date 'MMMM Do YYYY'}}</td>
+                </div>  --}}
+                    <div class="col m1 s12">
+                      {{#if url}}
+                      <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
+                      {{else}}
+                      <img src="{{user.image}}" width="100%" class="proposal_image">
+                      {{/if}}
+                    </div>
+                    <div class="col m1 s12">
+                      <p class="proposal-label hide-on-med-and-up">Recipient</p>
+                      <p>{{recipient}}</p>
+                    </div>
+                    <div class="col m2 s12">
+                      <p class="proposal-label hide-on-med-and-up">Created Date</p>
+                      <p>
+                        {{formatDate date 'MMMM Do YYYY, h:mm'}}
+                      </p>
+                    </div>
+                    <div class="col m2 s12">
+                      <p class="proposal-label hide-on-med-and-up">Last Comment</p>
+                      <p>
+                        {{#if comments.[0].commentDate}}
+                        {{formatDate comments.[0].commentDate 'MMMM Do YYYY, h:mm'}}
+                        {{/if}}
+                      </p>
+                    </div>
+                    <div class="col m1 s12">
+                      <p class="proposal-label hide-on-med-and-up">Vote</p>
+                      <p>{{votes.[0].voteBody}}</p>
+                    </div>
+                    <div class="col m1 s12">
+                      <p class="proposal-label hide-on-med-and-up">Amount</p>
+                      <p class="proposal-text"></p>
+                    </div>
+                    <div class="col m2 s12">
+                      <p class="proposal-label hide-on-med-and-up">Tags</p>
+                      <p class="proposal-text">
+                        {{#each tag}}
+                        <div class="chip">
+                          {{this.text}}
+                        </div>
+                        {{/each}}
+                      </p>
+                    </div>
+                    <div class="col m2 s12">
+                      <div class="row">
+                        <div class="col m-auto s4">
+                          <a class="proposal-btn btn grey" href="/proposals/show/{{id}}"><i class="fa fa-eye"></i></a>
+                        </div>
+                        <div class="col m-auto s4">
+                          <a class="proposal-btn btn left-align" href="/proposals/edit/{{id}}"><i
+                              class="fa fa-pencil"></i></a>
+                        </div>
+                        {{!-- <div class="col m-auto s4">
+                        <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
+                          <input type="hidden" name="_method" value="DELETE">
+                          <button type="submit" class="proposal-btn btn red"><i class="fa fa-remove"></i></button>
+                        </form>
+                      </div> --}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {{/ifEquals}}
+            {{else}}
+            <p>No proposals found</p>
+          {{/each }} 
+        </div> 
       </span>
     </div>
   </div>

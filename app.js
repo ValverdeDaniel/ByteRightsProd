@@ -35,7 +35,8 @@ const {
   editIcon,
   ifLoggedUserEqProposalUser,
   ifCompensationEqBlank,
-  ifCompanyNameEqBlank
+  ifCompanyNameEqBlank,
+  ifEquals
 } = require('./helpers/hbs');
 
 //map global promises
@@ -67,7 +68,8 @@ app.engine('handlebars', exphbs({
     editIcon: editIcon,
     ifLoggedUserEqProposalUser: ifLoggedUserEqProposalUser,
     ifCompensationEqBlank: ifCompensationEqBlank,
-    ifCompanyNameEqBlank: ifCompanyNameEqBlank
+    ifCompanyNameEqBlank: ifCompanyNameEqBlank,
+    ifEquals: ifEquals
   },
   defaultLayout: 'main'
 }));
