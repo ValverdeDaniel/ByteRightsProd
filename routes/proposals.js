@@ -210,6 +210,7 @@ router.get('/my', ensureAuthenticated, (req, res) => {
     })
 });
 
+//display tags per proposal
 router.post('/tags', ensureAuthenticated, (req, res) => {
   Proposal.find({ user: req.user.id }, { tag: true })
     .then(p => {
