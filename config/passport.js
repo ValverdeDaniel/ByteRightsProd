@@ -1,7 +1,9 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 // const InstagramStrategy = require('passport-instagram').Strategy;
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const keys = require('./keys');
 
 //load user model
@@ -83,6 +85,27 @@ module.exports = function(passport) {
       })
     })
   );
+
+  passport.use(new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
+    // match user
+    User.findOne({
+      email: email
+    }).then(user => {
+      if(!user){
+        return done(null, false, {message: 'No User Found'});
+      }
+
+      //match password
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if(err) throw err;
+        if(isMatch) {
+          return done(null, user);
+        } else {
+          return done(null, false, {message: 'Password Incorrect'});
+        }
+      })
+    })
+  }));
 
   // passport.use(new InstagramStrategy({
   //   clientID: keys.instagramClientID,
