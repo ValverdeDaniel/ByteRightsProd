@@ -189,7 +189,7 @@ router.get('/my', ensureAuthenticated, (req, res) => {
       if (tags.length > 0) {
         Proposal.find({ user: req.user.id })
           .populate('user')
-          .sort('votes.[0].voteBody') 
+          .sort({ date: -1 })
           .then(proposals => {
             res.render('proposals/index', {
               proposals: proposals,
@@ -199,7 +199,7 @@ router.get('/my', ensureAuthenticated, (req, res) => {
       } else {
         Proposal.find({ user: req.user.id })
           .populate('user')
-          .sort('votes.[0].voteBody')
+          .sort({ date: -1 })
           .then(proposals => {
             res.render('proposals/index', {
               proposals: proposals,
@@ -210,7 +210,6 @@ router.get('/my', ensureAuthenticated, (req, res) => {
     })
 });
 
-//display tags per proposal
 router.post('/tags', ensureAuthenticated, (req, res) => {
   Proposal.find({ user: req.user.id }, { tag: true })
     .then(p => {

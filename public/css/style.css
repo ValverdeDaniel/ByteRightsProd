@@ -1,11 +1,11 @@
-body {
+.body {
   display: flex;
   min-height: 100vh;
   flex-direction: row;
   overflow-y: auto;
 }
 @media only screen and (max-width: 600px) {
-  body {
+  .body {
     flex-direction: column;
   }
 }
@@ -296,6 +296,10 @@ footer {
   background-color: #f8f9fa !important;
 }
 
+.no-padding {
+  padding: 0 !important;
+}
+
 .no-margin {
   margin: 0 !important;
 }
@@ -355,6 +359,11 @@ footer {
 
 .btn-floating.halfway-fab.red {
   display: none;
+}
+
+.page-footer {
+  margin: 0;
+  padding: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

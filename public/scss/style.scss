@@ -1,4 +1,4 @@
-body {
+.body {
   display: flex;
   min-height: 100vh;
   flex-direction: row;
@@ -304,6 +304,9 @@ footer{
 
 
 //Helpers
+.no-padding {
+  padding: 0 !important;
+}
 .no-margin {
   margin: 0 !important;
 }
@@ -355,4 +358,9 @@ footer{
 //Hide edit button. remove later
 .btn-floating.halfway-fab.red {
   display: none;
+}
+
+.page-footer {
+  margin: 0;
+  padding: 0;
 }
