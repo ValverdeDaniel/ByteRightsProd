@@ -6,6 +6,9 @@
         <h1 class="proposal_title">{{proposal.user.firstName}} {{proposal.user.lastName}}</h1>
           Company: <a href="{{proposal.user.website}}" target="_blank">{{proposal.user.companyName}}</a>
       </div>
+      {{!-- <div class="col s12">
+        <p>Proposal #: {{proposal.id}}</p>
+      </div> --}}
     </div>
   </div>
   <div class="row no-margin--bottom">
@@ -141,7 +144,7 @@
         </div>
         <div class="card">
           <div class="card-content">
-            <span class="card-title">Acceptance Status</span>
+            <span class="card-title">Contract Status</span>
             {{#each proposal.votes}}
             <br>
             <div class="chip">
