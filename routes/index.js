@@ -22,4 +22,12 @@ router.get('/about', (req, res) => {
   res.render('index/about');
 });
 
+router.get('/termsofuse', (req, res) =>{
+  res.render('index/termsofuse');
+});
+
+router.get('/privacypolicy', (req, res) =>{
+  res.render('index/privacypolicy');
+});
+
 module.exports = router;

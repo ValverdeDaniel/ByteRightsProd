@@ -76,18 +76,19 @@
 </head>
 
 <body class="{{#if user}}{{else}}home_welcome{{/if}}">
-  {{> _header}}
+  <div class="body">
+    {{> _header}}
 
-  {{#if user}}
-  {{> _add-btn}}
-  {{/if}}
-  <main>
-    <div class="br_container">
-      {{{body}}}
-    </div>
-  </main>
-
-  {{!-- {{> _footer}} --}}
+    {{#if user}}
+    {{> _add-btn}}
+    {{/if}}
+    <main>
+      <div class="br_container">
+        {{{body}}}
+      </div>
+    </main>
+  </div>
+  {{> _footer}}
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -155,11 +156,11 @@
                 <p>';
                 html += (item.votes.length > 0
                   && item.votes[0]
-                  && item.votes.voteBody) ? item.votes[0].voteBody : '';
+                  && item.votes[0].voteBody) ? item.votes[0].voteBody : '';
                 html += '</p ></div>\
                 <div class="col m1 s12">\
                                 <p class="proposal-label hide-on-med-and-up">Amount</p>\
-                                <p class="proposal-text"></p> \
+                                <p class="proposal-text">'+ item.compensation+ '</p> \
                               </div>';
                 html += '<div class="col m2 s12">\
                                 <p class="proposal-label hide-on-med-and-up">Amount</p>\
@@ -243,6 +244,31 @@
       $('#tags').focus();
       $('#tags').addClass('active');
     });
+
+   function toggleRow(e) {
+      var $this = $(this);
+      
+
+      $this.click(function(){
+        var id = $this.attr('href');
+        $(".proposal-row").removeClass("active");
+        $('#' + id).addClass('active');
+        console.log(id);
+      });
+    }
+
+    $(".toggleRowClick").click(function (e) {
+      e.preventDefault();
+      var $activeTitle = $(this);
+      var $activeTab = $(this).attr('href');
+      
+      $(".toggleRowClick").removeClass("active");
+      $($activeTitle).addClass('active');
+
+      $(".proposal-row").removeClass("active");
+      $($activeTab).addClass('active');
+    });
+
   </script>
 
 </body>
