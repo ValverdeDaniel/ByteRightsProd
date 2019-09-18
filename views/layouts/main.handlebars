@@ -75,8 +75,8 @@
   <title>ByteRights</title>
 </head>
 
-<body class="{{#if user}}{{else}}home_welcome{{/if}}">
-  <div class="body">
+<body>
+  <div class="body {{#if user}}{{else}}home_welcome{{/if}}">
     {{> _header}}
 
     {{#if user}}
