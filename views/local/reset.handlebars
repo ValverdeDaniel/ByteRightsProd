@@ -1,0 +1,19 @@
+<p>reset token: {{req.params.token}}</p>
+<div class="row">
+  <div class="col-md-6">
+    {{!-- <div class="card card-body"> --}}
+      <h3 class="text-center">Account Register</h3>
+      <form action="/auth/reset" method="post">
+        <div class="input-field">
+          <label for="password">New Password</label>
+          <input type="text" class="form-control" required name="password" value="{{password}}">
+        </div>
+        <div class="input-field">
+          <label for="password2">Confirm Password</label>
+          <input type="text" class="form-control" required name="password2" value="{{password2}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Update Password</button>
+      </form>
+    {{!-- </div> --}}
+  </div>
+</div>

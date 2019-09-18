@@ -20,6 +20,12 @@ const UserSchema = new Schema({
   password: {
     type: String
   },
+  resetPasswordToken: {
+    type: String
+  },
+  resetPasswordExpires: {
+    type: Date
+  },
   image: {
     type: String
   },
