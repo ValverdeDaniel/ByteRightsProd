@@ -344,9 +344,12 @@ router.post('/', ensureAuthenticated, (req, res) => {
   } else {
     allowComments = false;
   }
+  var url = req.body.url;
+  var n = url.indexOf('?');
+  url = url.substring(0, n != -1 ? n : url.length);
 
   let newProposal = {
-    url: req.body.url,
+    url: url,
     recipient: req.body.recipient,
     compensation: req.body.compensation,
     status: req.body.status,
@@ -388,8 +391,12 @@ router.put('/:id', (req, res) => {
         allowComments = false;
       }
 
+      var url = req.body.url;
+      var n = url.indexOf('?');
+      url = url.substring(0, n != -1 ? n : url.length);
+
       //new values
-      proposal.url = req.body.url;
+      proposal.url = url;
       proposal.recipient = req.body.recipient;
       proposal.compensation = req.body.compensation;
       proposal.status = req.body.status;
