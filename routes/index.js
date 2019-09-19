@@ -22,6 +22,10 @@ router.get('/about', (req, res) => {
   res.render('index/about');
 });
 
+router.get('/support', (req, res) => {
+  res.render('index/support');
+});
+
 router.get('/termsofuse', (req, res) =>{
   res.render('index/termsofuse');
 });
