@@ -261,12 +261,17 @@
       e.preventDefault();
       var $activeTitle = $(this);
       var $activeTab = $(this).attr('href');
+
+      var $activeFilter = $(this).html(); 
+      
+      var mobileFilterButton = $("#mobileFilter").html();
+      $("#mobileFilter").text($activeFilter);
       
       $(".toggleRowClick").removeClass("active");
       $($activeTitle).addClass('active');
 
       $(".proposal-row").removeClass("active");
-      $($activeTab).addClass('active');
+      $($activeTab).addClass('active'); 
     });
 
   </script>
