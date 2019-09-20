@@ -80,15 +80,18 @@
 </div>
 
 
-  <!-- Begin Modal Loader Structure-->
-<div id="modalLoader" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      
-    </div>
-      <div class= "center-align">
-      {{!-- <h4>Loader Text Here</h4> --}}
-        <div>
+<!-- Trigger/Open The Modal -->
+<button id="myBtn" onclick="timedModal()">Open Modal</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modalLoader1">
+
+  <!-- Modal content -->
+  <div class="modalLoader1-content">
+    <span class="close">&times;</span>
+    <p>Your Contract is getting passed through the wormhole</p>
+    <br>
+            <div>
           <div class="socket">
           <div class="gel center-gel">
             <div class="hex-brick h1"></div>
@@ -279,32 +282,45 @@
           </div>
         </div>
     </div>
+    <div>
+      {{!-- begin hex --}}
 
+      {{!-- end hex --}}
     </div>
+
   </div>
+
 </div>
-{{!-- end modalLoader --}}
 
-{{!-- <body onload="myFunction()" style="margin:0;">
-<p class="text-align:center">The cave men are carving your contract in stone</p>
-<div id="loader"></div> --}}
-<button data-target="modalLoader" class="btn blue darken-2 modal-trigger">Loader</button>
 <script>
-//modal logic materialize 
-document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('.modal');
-  //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
-  var instances = M.Modal.init(elems);
-});
+// Get the modal
+  var modalLoader1 = document.getElementById("myModal");
 
-var myVar;
+  // Get the button that opens the modal
+  var btn = document.getElementById("myBtn");
 
-function myFunction() {
-  myVar = setTimeout(showPage, 2000);
-}
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
 
-function showPage() {
-  document.getElementById("loader").style.display = "none";
-  document.getElementById("myDiv").style.display = "block";
-}
+  // When the user clicks the button, open the modal 
+  btn.onclick = function() {
+    modalLoader1.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modalLoader1.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modalLoader1, close it
+  window.onclick = function(event) {
+    if (event.target == modalLoader1) {
+      modalLoader1.style.display = "none";
+    }
+  }
+  setTimeout(function(){
+    $(myModal).close();
+}, 1000);
 </script>
+
+
