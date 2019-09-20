@@ -435,7 +435,7 @@
     <div class="modal-footer">
       <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
         <div>
-          <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1">
+          <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1" onclick="myFunction()" style="margin:0;">
           <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
         </div>
       </form>
@@ -443,6 +443,8 @@
     </div>
   </div>
 <br>
+
+
 
 <script>
 //modal logic materialize 
