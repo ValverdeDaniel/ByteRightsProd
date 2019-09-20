@@ -51,6 +51,12 @@ router.get('/show/:id', (req, res) => {
     .then(proposal => {
       console.log(proposal);
       if (proposal.status == 'public') {
+        //messing with metaTags
+        res.locals.metaTags = { 
+          title: "Handlebars Demo metaTest", 
+          description: "Handlebars description demo for your page",   
+          image: proposal.url 
+         } 
         res.render('proposals/show', {
           proposal: proposal
         });
