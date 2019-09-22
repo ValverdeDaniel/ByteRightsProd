@@ -537,10 +537,14 @@ router.post('/comment/:id', (req, res) => {
         commentUser: req.user.id,
         touchedBy: req.user.id
       }
+      const newTouch = {
+        touchedByUser: req.user.id
+      }
 
       //push to comments array
       //unshift adds it to the beginning
       proposal.comments.unshift(newComment);
+      proposal.touchedBy.unshift(newTouch);
 
       proposal.save()
         .then(proposal => {
