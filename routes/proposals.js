@@ -48,6 +48,7 @@ router.get('/show/:id', (req, res) => {
     .populate('user')
     .populate('votes.voteUser')
     .populate('comments.commentUser')
+    .populate('touchedBy.touchedByUser')
     .then(proposal => {
       console.log(proposal);
       if (proposal.status == 'public') {
@@ -480,13 +481,21 @@ router.post('/voteUser/:id', (req, res) => {
     .then(proposal => {
       const newVote = {
         voteBody: req.body.voteBody,
-
         voteUser: req.user.id
       }
-
+      const newTouch = {
+        touchedByUser: req.user.id
+      }
+      // voteBody= req.body.voteBody,
+      // voteUser= req.user.id,
+      // touchedBy= req.user.id
+      // console.log('voteBody1: '+voteBody)
+      // console.log('voteUser1: '+voteUser)
+      // console.log('touchedByUser1: '+touchedBy)
       //push to votes array
       //unshift adds it to the beginning
       proposal.votes.unshift(newVote);
+      proposal.touchedBy.unshift(newTouch);
 
       proposal.save()
         .then(proposal => {
@@ -525,7 +534,8 @@ router.post('/comment/:id', (req, res) => {
     .then(proposal => {
       const newComment = {
         commentBody: req.body.commentBody,
-        commentUser: req.user.id
+        commentUser: req.user.id,
+        touchedBy: req.user.id
       }
 
       //push to comments array

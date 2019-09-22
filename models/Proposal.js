@@ -41,8 +41,11 @@ const ProposalSchema = new Schema({
     }
   }],
   touchedBy:[{
-    touchedByUser: Schema.Types.ObjectId,
-    unique: true
+    touchedByUser: {
+      type: Schema.Types.ObjectId,
+      ref: 'users',
+      unique: true
+    }
   }],
   comments: [{
     commentBody: {
