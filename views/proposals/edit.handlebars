@@ -5,6 +5,10 @@
         <div class="col m6 pull-m6 s12">
           <h1 class="proposal_title">Edit Proposal</h1>
         </div>
+          <form action="/proposals/{{proposal.id}}?_method=DELETE" method="post" id="delete-form">
+            <input type="hidden" name="_method" value ="DELETE">
+            <button type="submit" class="btn red"><i class="fa fa-remove"></i>Delete</button>
+          </form>
       </div>
     </div>
     <div class="col s12">
@@ -85,6 +89,7 @@
           <input type="button" value="Save" class="btn primary" onclick="$('#editproposal').submit()">
         </div>
       </form>
+      {{!-- delete button --}}
     </div>
   </div>
 </div>
