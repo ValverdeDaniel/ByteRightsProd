@@ -7,4 +7,4 @@ just trying to get you up and running so currently the keys are public and all y
 
 live site https://desolate-sierra-72554.herokuapp.com/
 
-authRedirect test 3
+receivedView1
