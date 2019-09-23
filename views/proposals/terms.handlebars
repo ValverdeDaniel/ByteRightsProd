@@ -1,35 +1,3 @@
-{{!-- welcome to terms these are some data points you have access to that might be useful
-<p>
-user first: {{proposal.user.firstName}}
-<br>
-user last: {{proposal.user.lastName}}
-<br>
-recipient: {{proposal.recipient}}
-<br>
-compensation: {{proposal.compensation}}
-<br>
-proposal_url: {{proposal.url}}
-<br>
-proposal_id: {{proposal.id}}
-<br>
-last vote date: 
-{{#if proposal.comments.[0].commentDate}}
-    {{formatDate proposal.votes.[0].voteDate 'MMMM Do YYYY'}}
-{{/if}}
-<br> 
-last comment date: 
-  {{#if proposal.comments.[0].commentDate}}
-    {{formatDate proposal.comments.[0].commentDate 'MMMM Do YYYY, h:mm'}}
-  {{/if}}
-<br>
-created date: {{formatDate proposal.date 'MMMM Do YYYY'}}
-</p>
-
-image: 
- change size to (t, m, l)(thumbnail, medium, large)
-<div style="width:300px;height:400px;">
-  <a href="{{proposal.url}}media/?size=m"><img src="{{proposal.url}}media/?size=m" alt=""/></a>
-</div> --}}
 <body>
 <div style="padding: 25px;">
 {{!-- beginning of contract --}}
@@ -126,6 +94,9 @@ image:
         in the event that any claims, demands, causes of action, judgments, or
         expenses arose out of willful misconduct, gross negligence, or bad
         faith by Photographer.
+        </br>
+        </br>
+        Both parties will indemnify and hold us (including our affiliates and subsidiaries, as well as our and their respective officers, directors, employees, agents) harmless from any claim or demand, including reasonable legal fees, made by any third party due to or arising out of your breach of this Licensing Agreement, your improper use of Byte Rights's Services or your breach of any law or the rights of a third party.
     </p>
     <p>
         <strong>7. Limitations of Liability. </strong>
