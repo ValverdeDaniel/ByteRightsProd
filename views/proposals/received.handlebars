@@ -3,14 +3,14 @@
     <div class="col"> 
       <div class="row proposal_topbar">
         <div class="col m2 s12">
-          <h1 class="proposal_title">Created Proposals </h1>
+          <h1 class="proposal_title">Received Proposals</h1>
         </div>
         <div class="col m8 s12" style="display: grid">
           <ul class="br_tabs tabs hide-on-small-only "> 
             <li class="tab col m2 s12"><a class="toggleRowClick active" href="#all">All</a></li>
             <li class="tab col m3 s12"><a class="toggleRowClick" href="#accepted">Accepted</a></li>
             <li class="tab col m2 s12"><a class="toggleRowClick" href="#declined">Declined</a></li>
-            <li class="tab col m2 s12"><a href="/proposals/received">Received</a></li>
+            <li class="tab col m2 s12"><a href="/proposals/my">Sent</a></li>
           </ul>
           <!-- Dropdown Trigger -->
           <div class="hide-on-med-and-up" style="display: grid;">
@@ -52,7 +52,7 @@
               <div class="col m1 s12">
               </div>
               <div class="col m1 s12">
-                <p>Recipient</p>
+                <p>Sender</p>
               </div>
               <div class="col m2 s12">
                 <p>Created Date</p>
@@ -95,8 +95,8 @@
                       {{/if}}
                     </div>
                     <div class="col m1 s12">
-                      <p class="proposal-label hide-on-med-and-up">Recipient</p>
-                      <p>{{recipient}}</p>
+                      <p class="proposal-label hide-on-med-and-up">Sender</p>
+                      <p>{{user.firstName}} {{user.lastName}}</p>
                     </div>
                     <div class="col m2 s12">
                       <p class="proposal-label hide-on-med-and-up">Created Date</p>
@@ -171,8 +171,8 @@
                       {{/if}}
                     </div>
                     <div class="col m1 s12">
-                      <p class="proposal-label hide-on-med-and-up">Recipient</p>
-                      <p>{{recipient}}</p>
+                      <p class="proposal-label hide-on-med-and-up">Sender</p>
+                      <p>{{user.firstName}} {{user.lastName}}</p>
                     </div>
                     <div class="col m2 s12">
                       <p class="proposal-label hide-on-med-and-up">Created Date</p>
@@ -246,8 +246,8 @@
                     {{/if}}
                   </div>
                   <div class="col m1 s12">
-                    <p class="proposal-label hide-on-med-and-up">Recipient</p>
-                    <p>{{recipient}}</p>
+                    <p class="proposal-label hide-on-med-and-up">Sender</p>
+                    <p>{{user.firstName}} {{user.lastName}}</p>
                   </div>
                   <div class="col m2 s12">
                     <p class="proposal-label hide-on-med-and-up">Created Date</p>

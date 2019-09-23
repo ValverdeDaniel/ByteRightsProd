@@ -217,6 +217,59 @@ router.get('/my', ensureAuthenticated, (req, res) => {
     })
 });
 
+//Received proposals
+router.get('/received', ensureAuthenticated, (req, res) => {
+  Proposal.find({ 'touchedBy.touchedByUser': req.user.id, user: {$ne:req.user.id} }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+
+      console.log(tags);
+
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      console.log(result);
+
+      if (tags.length > 0) {
+        Proposal.find({ 'touchedBy.touchedByUser': req.user.id, user: {$ne:req.user.id}  })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/received', {
+              proposals: proposals,
+              tags: result
+            });
+          });
+      } else {
+        Proposal.find({ 'touchedBy.touchedByUser': req.user.id, user: {$ne:req.user.id} })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/received', {
+              proposals: proposals,
+              tags: []
+            });
+          });
+      }
+    })
+});
+
+
 router.post('/tags', ensureAuthenticated, (req, res) => {
   Proposal.find({ user: req.user.id }, { tag: true })
     .then(p => {
