@@ -48,6 +48,7 @@ router.get('/show/:id', (req, res) => {
     .populate('user')
     .populate('votes.voteUser')
     .populate('comments.commentUser')
+    .populate('touchedBy.touchedByUser')
     .then(proposal => {
       console.log(proposal);
       if (proposal.status == 'public') {
@@ -215,6 +216,59 @@ router.get('/my', ensureAuthenticated, (req, res) => {
       }
     })
 });
+
+//Received proposals
+router.get('/received', ensureAuthenticated, (req, res) => {
+  Proposal.find({ 'touchedBy.touchedByUser': req.user.id, user: {$ne:req.user.id} }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+
+      console.log(tags);
+
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      console.log(result);
+
+      if (tags.length > 0) {
+        Proposal.find({ 'touchedBy.touchedByUser': req.user.id, user: {$ne:req.user.id}  })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/received', {
+              proposals: proposals,
+              tags: result
+            });
+          });
+      } else {
+        Proposal.find({ 'touchedBy.touchedByUser': req.user.id, user: {$ne:req.user.id} })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/received', {
+              proposals: proposals,
+              tags: []
+            });
+          });
+      }
+    })
+});
+
 
 router.post('/tags', ensureAuthenticated, (req, res) => {
   Proposal.find({ user: req.user.id }, { tag: true })
@@ -480,13 +534,21 @@ router.post('/voteUser/:id', (req, res) => {
     .then(proposal => {
       const newVote = {
         voteBody: req.body.voteBody,
-
         voteUser: req.user.id
       }
-
+      const newTouch = {
+        touchedByUser: req.user.id
+      }
+      // voteBody= req.body.voteBody,
+      // voteUser= req.user.id,
+      // touchedBy= req.user.id
+      // console.log('voteBody1: '+voteBody)
+      // console.log('voteUser1: '+voteUser)
+      // console.log('touchedByUser1: '+touchedBy)
       //push to votes array
       //unshift adds it to the beginning
       proposal.votes.unshift(newVote);
+      proposal.touchedBy.unshift(newTouch);
 
       proposal.save()
         .then(proposal => {
@@ -525,12 +587,17 @@ router.post('/comment/:id', (req, res) => {
     .then(proposal => {
       const newComment = {
         commentBody: req.body.commentBody,
-        commentUser: req.user.id
+        commentUser: req.user.id,
+        touchedBy: req.user.id
+      }
+      const newTouch = {
+        touchedByUser: req.user.id
       }
 
       //push to comments array
       //unshift adds it to the beginning
       proposal.comments.unshift(newComment);
+      proposal.touchedBy.unshift(newTouch);
 
       proposal.save()
         .then(proposal => {
