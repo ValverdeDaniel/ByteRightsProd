@@ -6,6 +6,9 @@ const UserSchema = new Schema({
   googleID: {
     type: String
   }, 
+  stripeAccountId: {
+    type: String
+  },
   email: {
     type: String
   },

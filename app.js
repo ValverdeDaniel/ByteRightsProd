@@ -22,6 +22,7 @@ const index = require('./routes/index');
 const auth = require('./routes/auth');
 const dashboard = require('./routes/dashboard');
 const proposals = require('./routes/proposals');
+const stripe = require('./routes/stripe');
 
 //load keys file
 const keys = require('./config/keys');
@@ -101,6 +102,7 @@ app.use('/', index);
 app.use('/auth', auth)
 app.use('/dashboard', dashboard)
 app.use('/proposals', proposals)
+app.use('/stripe', stripe)
 
 const port = process.env.PORT || 5000;
 
