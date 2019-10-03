@@ -31,7 +31,7 @@
         </div>
     </div>
     <p>
-        Client is authorized to use the Photos worldwide (the "Territory").
+        Client is authorized to use the Photos worldwide (the "Territory") in the following capacity: <strong>{{proposal.usage}}</strong>
     </p>
     <p>
         <strong>2. Ownership of Photos. </strong>
@@ -82,8 +82,12 @@
     </div>
     <p>
         <strong>5. Photo Notice and Markings. </strong>
-        Client does not need to include a photo credit or copyright notice on
-        the Photos unless specifically requested by the Photographer.
+        {{#if proposal.credit}}
+        <p>Client must include a photo credit or copyright notice on the photos when used.</p>
+        {{else}}
+        <p>Client does not need to include a photo credit or copyright notice on
+        the Photos unless specifically requested by the Photographer.</p>
+        {{/if}}
     </p>
     <p>
         <strong>6. Indemnification. </strong>
