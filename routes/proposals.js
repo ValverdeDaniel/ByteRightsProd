@@ -398,11 +398,16 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 //process add proposal
 router.post('/', ensureAuthenticated, (req, res) => {
   let allowComments;
-
   if (req.body.allowComments) {
     allowComments = true;
   } else {
     allowComments = false;
+  }
+  let credit;
+  if(req.body.credit){
+    credit = true;
+  }else{
+    credit = false;
   }
   var url = req.body.url;
   var n = url.indexOf('?');
@@ -412,6 +417,8 @@ router.post('/', ensureAuthenticated, (req, res) => {
     url: url,
     recipient: req.body.recipient,
     compensation: req.body.compensation,
+    usage: req.body.usage,
+    credit: credit,
     status: req.body.status,
     allowComments: allowComments,
     user: req.user.id
@@ -450,6 +457,12 @@ router.put('/:id', (req, res) => {
       } else {
         allowComments = false;
       }
+      let credit;
+      if (req.body.credit) {
+        credit = true;
+      } else {
+        credit = false;
+      }
 
       var url = req.body.url;
       var n = url.indexOf('?');
@@ -459,6 +472,8 @@ router.put('/:id', (req, res) => {
       proposal.url = url;
       proposal.recipient = req.body.recipient;
       proposal.compensation = req.body.compensation;
+      proposal.usage = req.body.usage;
+      proposal.credit = credit;
       proposal.status = req.body.status;
       proposal.allowComments = allowComments;
 

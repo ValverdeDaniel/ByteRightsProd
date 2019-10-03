@@ -17,10 +17,14 @@
             <input type="text" name="url">
             <label for="url">Instagram Image Link</label>
           </div>
-          <p>Next, write the name of the recipient you'll be sending the request to.</p>
+          <p>Next, write the name or username of the recipient you'll be sending the request to.</p>
           <div class="input-field">
             <input type="text" name="recipient">
             <label for="recipient">Recipient Name</label>
+          </div>
+          <p>Describe how and where you plan to use the photo.</p>
+          <div class="input-field">
+            <input type="text" name="usage" placeholder="i.e. Instagram, Website, Print, etc.">
           </div>
 
           {{!-- <div class="input-field">
@@ -31,7 +35,20 @@
               </select>
               <label for="status">Status</label>
             </div>  --}}
-
+          <p>
+            <p>Specify whether or not you will credit the creator when using the requested photo. (We recommend you do unless you're offering sufficient compensation.)</p>
+            <p>
+          <label>Credit</label>
+          <div class="switch">
+            <label>
+            No
+            <input type="checkbox" name="credit" id="credit" checked="checked">
+            <span class="lever"></span>
+            Yes
+            </label>
+          </div>
+          </p>
+          </p>
           <p>
             <p>Decide whether or not you'd like to allow the recipient to send you messages about the proposal.</p>
             <p>

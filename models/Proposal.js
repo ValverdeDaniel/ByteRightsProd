@@ -21,6 +21,13 @@ const ProposalSchema = new Schema({
   compensation: {
     type: String
   },
+  usage: {
+    type: String
+  },
+  credit: {
+    type: Boolean,
+    default: true
+  },
   status: {
     type: String,
     default: 'public'
