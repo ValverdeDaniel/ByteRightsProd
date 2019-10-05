@@ -11,11 +11,12 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Proposal = mongoose.model('proposals');
 const user = mongoose.model('users');
+const stripeTransaction = mongoose.model('stripeTransaction');
 const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
 
 
 router.get('/stripeTest', (req, res) => {
-  res.send('stripeTest');
+  res.render('dashboard/stripeTest');
 })
 
 
@@ -182,6 +183,63 @@ router.post('/payout', ensureAuthenticated, async (req, res) => {
     );
   } catch (err) {
     console.log(err);
+  }
+  res.redirect('/pilots/dashboard');
+});
+
+
+//generate a payment
+router.post('/stripeTransaction', ensureAuthenticated, async (req, res, next) => {
+  console.log('reached stripeTransaction');
+  // const sender = req.user;
+  // // Find a random passenger
+  // const sender = await Sender.getRandom();
+  // Create a new ride for the pilot and this random passenger
+  console.log('receiver: ' + req.body.receiver);
+  console.log('sender: '+ req.user.id);
+  console.log('amount: '+ req.body.amount);
+  let newStripeTransaction = new stripeTransaction({
+    receiver: req.body.receiver,
+    sender: req.user.id,
+    // Generate a random amount between $10 and $100 for this ride
+    amount: req.body.amount
+  });
+  console.log('made it through newStripeTransaction')
+  // Save the ride
+  await stripeTransaction(newStripeTransaction).save();
+  try {
+    // Get a test source, using the given testing behavior
+    let source;
+    if (req.body.immediate_balance) {
+      source = getTestSource('immediate_balance');
+    } else if (req.body.payout_limit) {
+      source = getTestSource('payout_limit');
+    }
+    // Create a charge and set its destination to the pilot's account
+    const charge = await stripe.charges.create({
+      source: source,
+      amount: stripeTransaction.amount,
+      currency: stripeTransaction.currency,
+      description: config.appName,
+      statement_descriptor: config.appName,
+      // The destination parameter directs the transfer of funds from platform to pilot
+      transfer_data: {
+        // Send the amount for the pilot after collecting a 20% platform fee:
+        // the `amountForPilot` method simply computes `ride.amount * 0.8`
+        amount: stripeTransaction.amount,
+        // The destination of this charge is the pilot's Stripe account
+        destination: receiver.stripeAccountId,
+      },
+    });
+    console.log('made it through charge')
+    // Add the Stripe charge reference to the ride and save it
+    stripeTransaction.stripeChargeId = charge.id;
+    stripeTransaction.save();
+  } catch (err) {
+    console.log(err);
+    // Return a 402 Payment Required error code
+    res.sendStatus(402);
+    next(`Error adding token to customer: ${err.message}`);
   }
   res.redirect('/pilots/dashboard');
 });

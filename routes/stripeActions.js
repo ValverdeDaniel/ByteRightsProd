@@ -1,11 +1,17 @@
 'use strict';
 
-const config = require('../../config');
+const config = require('../config/stripe');
 const stripe = require('stripe')(config.stripe.secretKey);
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const Proposal = mongoose.model('proposals');
+const user = mongoose.model('users');
+const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
+//these shouldn't be here when i'm done
 const Pilot = require('../../models/pilot');
 const Ride = require('../../models/ride');
 const Passenger = require('../../models/passenger');
@@ -27,14 +33,14 @@ function pilotRequired(req, res, next) {
  * Use the `pilotRequired` middleware to ensure that only logged-in
  * pilots can access this route.
  */
-router.get('/dashboard', pilotRequired, async (req, res) => {
-  const pilot = req.user;
+router.get('/dashboard', ensureAuthenticated, async (req, res) => {
+  const user = req.user;
   // Retrieve the balance from Stripe
   const balance = await stripe.balance.retrieve({
-    stripe_account: pilot.stripeAccountId,
+    stripe_account: user.stripeAccountId,
   });
-  // Fetch the pilot's recent rides
-  const rides = await pilot.listRecentRides();
+  // Fetch the user's recent rides
+  const rides = await user.listRecentRides();
   const ridesTotalAmount = rides.reduce((a, b) => {
     return a + b.amountForPilot();
   }, 0);
@@ -42,7 +48,7 @@ router.get('/dashboard', pilotRequired, async (req, res) => {
   // There is one balance for each currencies used: as this 
   // demo app only uses USD we'll just use the first object
   res.render('dashboard', {
-    pilot: pilot,
+    user: user,
     balanceAvailable: balance.available[0].amount,
     balancePending: balance.pending[0].amount,
     ridesTotalAmount: ridesTotalAmount,

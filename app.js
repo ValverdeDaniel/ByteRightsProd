@@ -13,6 +13,7 @@ const passport = require('passport');
 //load Models
 require('./models/User');
 require('./models/Proposal');
+require('./models/StripeTransaction')
 
 //passport config
 require('./config/passport')(passport);

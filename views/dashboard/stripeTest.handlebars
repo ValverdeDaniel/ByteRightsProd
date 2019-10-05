@@ -1,0 +1,22 @@
+<div class="col s12">
+      <form action="/stripe/stripeTransaction" method="post" id="newStripeTransaction">
+        <div class="col m6 s12">
+          <div class="input-field">
+            <input type="text" name="receiver">
+            <label for="receiver">stripeAccountId</label>
+          </div>
+          <div class="input-field">
+            <input type="text" name="amount">
+            <label for="amount">Amount/Description</label>
+          </div>
+          <input type="button" value="Create Transaction" class="btn primary" onclick="$('#newStripeTransaction').submit()">
+        </div>
+      </form>
+    </div>
+
+{{!-- 
+      <form class="proposal_add-wrapper" action="/proposals" method="post" id="newproposal">
+        <div>
+          <input type="button" value="Create Proposal" class="btn primary" onclick="$('#newproposal').submit()">
+        </div>
+      </form> --}}
