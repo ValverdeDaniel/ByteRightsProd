@@ -244,4 +244,50 @@ router.post('/stripeTransaction', ensureAuthenticated, async (req, res, next) =>
   res.redirect('/pilots/dashboard');
 });
 
+//the start of payment authentication using Fiverr Strategy
+const fee = 3.15;
+
+router.get('/checkout/single_proposal/:id', (req, res, next) => {
+  Proposal.findOne({_id: req.params.id }, function(err, proposal) {
+    var totalPrice = proposal.price + fee;
+    req.session.proposal = proposal;
+    req.session.price = totalPrice;
+    res.render('checkout/single_proposal', {
+      proposal: proposal, 
+      totalPrice: totalPrice
+    })
+  })
+})
+
+router.route('/payment')
+  .get((req, res, next) => {
+    res.render('checkout/payment');
+  })
+  .post((req, res, next) => {
+// Create a new customer and then a new charge for that customer:
+  var gig = req.session  
+    stripe.customers
+      .create({
+        email: 'foo-customer@example.com',
+      })
+      .then((customer) => {
+        return stripe.customers.createSource(customer.id, {
+          source: req.body.stripeToken
+        });
+      })
+      .then((source) => {
+        return stripe.charges.create({
+          amount: 1600,
+          currency: 'usd',
+          customer: source.customer,
+        });
+      })
+      .then((charge) => {
+        // New charge created on a new customer
+      })
+      .catch((err) => {
+        // Deal with an error
+      });
+  })
+
 module.exports = router;

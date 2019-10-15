@@ -21,6 +21,9 @@ const ProposalSchema = new Schema({
   compensation: {
     type: String
   },
+  price: {
+    type: Number
+  },
   status: {
     type: String,
     default: 'public'
