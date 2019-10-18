@@ -412,6 +412,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
     url: url,
     recipient: req.body.recipient,
     compensation: req.body.compensation,
+    price: req.body.price,
     status: req.body.status,
     allowComments: allowComments,
     user: req.user.id

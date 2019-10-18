@@ -7,6 +7,7 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 
 
@@ -17,6 +18,8 @@ require('./models/StripeTransaction')
 
 //passport config
 require('./config/passport')(passport);
+
+//const sessionStore = new MongoStore({ url: keys.mongoURI, autoReconnect: true });
 
 //load routes
 const index = require('./routes/index');
@@ -56,6 +59,14 @@ const app = express();
 //body Parser middleware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+//session middleware
+app.use(session({
+  secret: 'sessionTesting',
+  resave: true,
+  saveUninitialized: true,
+  store: new MongoStore({ url: keys.mongoURI, autoReconnect: true })
+}));
 
 //method override middleware
 app.use(methodOverride('_method'));

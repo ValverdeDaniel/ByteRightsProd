@@ -248,42 +248,69 @@ router.post('/stripeTransaction', ensureAuthenticated, async (req, res, next) =>
 const fee = 3.15;
 
 router.get('/checkout/single_proposal/:id', (req, res, next) => {
+  console.log('checkout/single_proposal/:id')
   Proposal.findOne({_id: req.params.id }, function(err, proposal) {
-    var totalPrice = proposal.price + fee;
-    req.session.proposal = proposal;
-    req.session.price = totalPrice;
-    res.render('checkout/single_proposal', {
-      proposal: proposal, 
-      totalPrice: totalPrice
-    })
-  })
-})
+    //console.log('proposal.price: ' + proposal.price)
+    try{
+      var price = proposal.price
+      var totalPrice = price + fee;
+      //proposal = proposal;
+      //proposal.price = totalPrice;
+      req.session.proposal = proposal;
+      req.session.price = totalPrice;
+      console.log('proposal: ' + req.session.proposal)
+      console.log('price: ' + req.session.price)
+      res.render('checkout/single_proposal', {
+        proposal: proposal, 
+        totalPrice: totalPrice
+      
+      })
+    } catch(e) {
+      console.log(e)
+      //we are currently hitting this because price is undefined???
+      console.log('something went wrong');
+    }
+  });
+});
+
 
 router.route('/payment')
   .get((req, res, next) => {
     res.render('checkout/payment');
+    console.log('.get /checkout/payment')
   })
   .post((req, res, next) => {
+    console.log('.post /checkout/payment')
 // Create a new customer and then a new charge for that customer:
-  var gig = req.session  
+  var proposal = req.session.proposal
+  var price = req.session.price
+  console.log('payment proposal:' + proposal)
+  console.log('payment price: ' + price)
+  price*=100
+  //stops somewhere around here
+  console.log('before stripe.customers')
     stripe.customers
       .create({
-        email: 'foo-customer@example.com',
+        email: req.user.email,
       })
       .then((customer) => {
         return stripe.customers.createSource(customer.id, {
           source: req.body.stripeToken
         });
+        console.log('customer')
       })
       .then((source) => {
         return stripe.charges.create({
-          amount: 1600,
+          amount: price,
           currency: 'usd',
           customer: source.customer,
         });
+        console.log('source')
       })
       .then((charge) => {
+        console.log('charge')
         // New charge created on a new customer
+        res.redirect('/');
       })
       .catch((err) => {
         // Deal with an error

@@ -13,6 +13,19 @@
                 <p>single_proposal</p>
               </div>
               <hr>
+              <div class="input-group promocode">
+                <input type="text" class="form-control" placeholder="Enter Promo Code" id="code">
+                <span class="input-group-btn">
+                  <button class="btn btn-success btn-block" id="promocodeButton">Apply</button>
+                </span>
+                <p class="text-center" id="promoCodeResponse"></p>
+              </div>
+              <hr>
+              <div>
+                <h4><span>Fee: $3.15</span></h4>
+                <h3>SubTotal: ${{proposal.price}}</h3>
+              </div>
+              <a href="/stripe/payment" class="btn btn-success btn-lg proceed-btn">Proceed To Payment</a>
             </div>
           </div>
         </div>
