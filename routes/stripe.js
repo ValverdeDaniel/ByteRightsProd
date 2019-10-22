@@ -252,13 +252,14 @@ router.get('/checkout/single_proposal/:id', (req, res, next) => {
   Proposal.findOne({_id: req.params.id }, function(err, proposal) {
     //console.log('proposal.price: ' + proposal.price)
     try{
+      //var price = proposal.price
       var price = proposal.price
       var totalPrice = price + fee;
       //proposal = proposal;
       //proposal.price = totalPrice;
       req.session.proposal = proposal;
       req.session.price = totalPrice;
-      console.log('proposal: ' + req.session.proposal)
+      console.log('proposal1: ' + req.session.proposal)
       console.log('price: ' + req.session.price)
       res.render('checkout/single_proposal', {
         proposal: proposal, 
@@ -274,12 +275,13 @@ router.get('/checkout/single_proposal/:id', (req, res, next) => {
 });
 
 
-router.route('/payment')
+router.route('/payment/:id')
   .get((req, res, next) => {
     res.render('checkout/payment');
     console.log('.get /checkout/payment')
   })
-  .post((req, res, next) => {
+
+router.post('/payment', (req, res, next) => {
     console.log('.post /checkout/payment')
 // Create a new customer and then a new charge for that customer:
   var proposal = req.session.proposal
@@ -289,23 +291,36 @@ router.route('/payment')
   price*=100
   //stops somewhere around here
   console.log('before stripe.customers')
+  console.log('destination: ' + req.user.stripeAccountId)
+  //console.log('touchedByDestination: ' + proposal)
     stripe.customers
       .create({
         email: req.user.email,
       })
       .then((customer) => {
+        console.log('customer2')
         return stripe.customers.createSource(customer.id, {
           source: req.body.stripeToken
         });
-        console.log('customer')
       })
       .then((source) => {
-        return stripe.charges.create({
+        try{
+          console.log('source')
+        //return stripe.charges.create({
+          stripe.charges.create({
           amount: price,
           currency: 'usd',
           customer: source.customer,
+          //source: req.body.stripeToken,
+          transfer_data: {
+            
+            destination: req.user.stripeAccountId
+          },
         });
-        console.log('source')
+        } catch(e){
+          console.error(e.name + ': ' + e.message);
+        }
+        
       })
       .then((charge) => {
         console.log('charge')

@@ -7,7 +7,8 @@ const UserSchema = new Schema({
     type: String
   }, 
   stripeAccountId: {
-    type: String
+    type: String,
+    default: ""
   },
   email: {
     type: String

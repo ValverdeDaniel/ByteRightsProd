@@ -40,7 +40,11 @@
     </div>
     <div>
       <a class="btn blue" href="dashboard/edit">Edit</a>
+      {{#ifStripeAccountIdEqBlank user.stripeAccountId}}
       <a class="btn blue darken-2" href="stripe/authorize">Sign Up With Stripe</a>
+      {{else}}
+      <p>StripeAccountId: {{user.stripeAccountId}}</p>
+      {{/ifStripeAccountIdEqBlank}}
     </div>
   </div>
 

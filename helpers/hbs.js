@@ -54,6 +54,13 @@ module.exports = {
       return opts.inverse(this);
     }
   },
+  ifStripeAccountIdEqBlank: function(userStripeAccountId, opts) {
+    if(userStripeAccountId == "") {
+      return opts.fn(this);
+    } else {
+      return opts.inverse(this);
+    }
+  },
   ifEquals: function(arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
   }  

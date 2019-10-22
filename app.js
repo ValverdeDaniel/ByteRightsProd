@@ -41,6 +41,7 @@ const {
   ifLoggedUserEqProposalUser,
   ifCompensationEqBlank,
   ifCompanyNameEqBlank,
+  ifStripeAccountIdEqBlank,
   ifEquals
 } = require('./helpers/hbs');
 
@@ -82,6 +83,7 @@ app.engine('handlebars', exphbs({
     ifLoggedUserEqProposalUser: ifLoggedUserEqProposalUser,
     ifCompensationEqBlank: ifCompensationEqBlank,
     ifCompanyNameEqBlank: ifCompanyNameEqBlank,
+    ifStripeAccountIdEqBlank: ifStripeAccountIdEqBlank,
     ifEquals: ifEquals
   },
   defaultLayout: 'main'
