@@ -17,6 +17,16 @@
             <input type="text" name="url">
             <label for="url">Instagram Image Link</label>
           </div>
+        {{!-- adding a dropdown for seller/buyer --}}
+        
+          <div class="input-field">
+            <select name="contractUserType">
+                <option value="seller">Seller</option>
+                <option value="buyer">Buyer</option>
+            </select>
+            <label for="contractUserType">Contract User Type</label>
+          </div>
+  
           <p>Next, write the name of the recipient you'll be sending the request to.</p>
           <div class="input-field">
             <input type="text" name="recipient">
@@ -82,3 +92,20 @@
     </div>
   </div>
 </div>
+
+  <div class="input-field col s12">
+    <select>
+      <option value="" disabled selected>Choose your option</option>
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
+    </select>
+    <label>Materialize Select</label>
+  </div>
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems, options);
+  });
+</script>

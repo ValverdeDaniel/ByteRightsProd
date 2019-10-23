@@ -13,6 +13,9 @@ const ProposalSchema = new Schema({
     required: true
   },
   imageUrl: {
+    type: String
+  },
+  contractUserType: {
     type: String,
   },
   recipient: {
