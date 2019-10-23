@@ -44,6 +44,8 @@
       <a class="btn blue darken-2" href="stripe/authorize">Sign Up With Stripe</a>
       {{else}}
       <p>StripeAccountId: {{user.stripeAccountId}}</p>
+      <p>BalanceAvailable: {{balanceAvailable}}</p>
+      <p>BalancePending: {{balancePending}}</p>
       {{/ifStripeAccountIdEqBlank}}
     </div>
   </div>
