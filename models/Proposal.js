@@ -27,6 +27,13 @@ const ProposalSchema = new Schema({
   price: {
     type: Number
   },
+  usage: {
+    type: String
+  },
+  credit: {
+    type: Boolean,
+    default: true
+  },
   status: {
     type: String,
     default: 'public'
