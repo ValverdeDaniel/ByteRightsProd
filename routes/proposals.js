@@ -418,12 +418,9 @@ router.post('/', ensureAuthenticated, (req, res) => {
     contractUserType,
     recipient: req.body.recipient,
     compensation: req.body.compensation,
-<<<<<<< HEAD
     price: req.body.price,
-=======
     usage: req.body.usage,
     credit: credit,
->>>>>>> fb61b51f0f392f7d80807c7cce5eab4a75351e4c
     status: req.body.status,
     allowComments: allowComments,
     user: req.user.id
