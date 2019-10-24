@@ -28,6 +28,9 @@ const UserSchema = new Schema({
     type: String,
     default: ""
   },
+  contractUserType: {
+    type: String
+  },
   facebookID: {
     type: String
   },

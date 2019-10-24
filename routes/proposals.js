@@ -415,7 +415,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
 
   let newProposal = {
     url: url,
-    contractUserType,
+    contractUserType: req.body.contractUserType,
     recipient: req.body.recipient,
     compensation: req.body.compensation,
     price: req.body.price,
