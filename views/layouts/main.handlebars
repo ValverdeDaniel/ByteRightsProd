@@ -74,8 +74,11 @@
       padding-top: 10px;
     }
 
-    .ignore-select-wrapper.select-wrapper {
+    .ignore-select-wrapper {
       display: block;
+    }
+    .ignore-select {
+      display: none;
     }
     
   </style>
@@ -111,7 +114,7 @@
   {{!-- <script src="/js/select2-materialize.js"></script> --}}
 
 
-  <script>
+  <script> 
     $(document).ready(function () {
       $('.select1').select2({
         closeOnSelect: false,
@@ -284,6 +287,9 @@
       $($activeTab).addClass('active'); 
     });
 
+    $(document).ready(function () {
+      $( ".ignore-select" ).parent().addClass( "ignore-select-wrapper" ); 
+   });
   </script>
 
 </body>
