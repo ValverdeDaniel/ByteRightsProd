@@ -472,6 +472,7 @@ router.put('/:id', (req, res) => {
 
       //new values
       proposal.url = url;
+      contractUserType= req.body.contractUserType;
       proposal.recipient = req.body.recipient;
       proposal.compensation = req.body.compensation;
       proposal.usage = req.body.usage;
