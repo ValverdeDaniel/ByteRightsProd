@@ -316,7 +316,8 @@ router.post('/payment', (req, res, next) => {
           //source: req.body.stripeToken,
           transfer_data: {
             
-            destination: req.user.stripeAccountId
+            // destination: req.user.stripeAccountId
+            destination: proposal.sellerStripeAccountId
           },
         });
         } catch(e){

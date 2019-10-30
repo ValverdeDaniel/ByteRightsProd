@@ -1,9 +1,14 @@
+
 <div class="proposal_wrapper--add">
   <div class="row no-margin--bottom">
     <div class="proposal_topbar">
       <div class="col s12">
-        <h1 class="proposal_title">{{proposal.user.firstName}} {{proposal.user.lastName}}</h1>
+        <h1 class="proposal_title">Proposal for {{proposal.recipient}}</h1>
+          From: <b>{{proposal.user.firstName}} {{proposal.user.lastName}}</b> at <a href="{{proposal.user.website}}" target="_blank">{{proposal.user.companyName}}</a>
       </div>
+      {{!-- <div class="col s12">
+        <p>Proposal #: {{proposal.id}}</p>
+      </div> --}}
     </div>
   </div>
   <div class="row no-margin--bottom">
@@ -15,80 +20,103 @@
           </div> --}}
           <div class="card-stacked">
             <div class="card-content">
+              <span class="card-title">What You Need to Know</span>
+              <p class="proposal-label">Where will it be used?</p>
+              <p>{{proposal.usage}}</p>
 
+              <p class="proposal-label">Will you be credited?</p>
+              {{#if proposal.credit}}
+              <p>Yes</p>
+              {{else}}
+              <p>No</p>
+              {{/if}}
+              {{#ifCompensationEqBlank proposal.compensation}}
+              {{else}}
+              <p class="proposal-label">How will you be compensated?</p>
+              <p>{{proposal.compensation}}</p>
+              {{/ifCompensationEqBlank}}
+              <br/>
+              {{!-- start ifLoggedUserEqProposalUser --}}
               {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}
               <SPAN class="copyText">
-              {{#ifCompensationEqBlank proposal.compensation}}
-              {{#ifCompanyNameEqBlank user.companyName}}
-              {{else}}
-              {{!-- message for ProposalCreator to send if compensation = blank --}}
-              <p>Hi, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love a photo you posted! Would you allow us to use it sometime in the future? To accept, follow the link and enter the code: <strong>31415</strong>. <a class="word-break" href="{{proposal.id}}" 
-                  target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-              {{else}}
-              {{!-- message for proposalCreator to send if they are compensating --}}
-              <p>Hi, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love a photo you posted! Would you allow us to use it sometime in the future. In exchange we would be willing to compensate you with {{proposal.compensation}}. To accept, follow the link and enter the code: <strong>31415</strong>. <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-              {{/ifCompanyNameEqBlank}}
-              {{/ifCompensationEqBlank}}
+                {{#ifCompensationEqBlank proposal.compensation}}
+                {{#ifCompanyNameEqBlank user.companyName}}
+                {{!-- message ifCompensationEqBlank and if CompanyNameEqBlank --}}
+                <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
+                  Would you allow us to use it sometime in the future? To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
+                    target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                {{!-- else for ifCompanyNameEqBlank --}}
+                {{else}}
+                {{!-- message if compensationEqBlank but CompanyName does not Equal Blank --}}
+                <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
+                  posted! Would you allow us to use it sometime in the future? To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
+                    target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                {{/ifCompanyNameEqBlank}}
+                {{!-- else for ifCompanesationEqBlank --}}
+                {{else}}
+                {{#ifCompanyNameEqBlank user.companyName}}
+                {{!-- message if compensation not equal blank and company name equals blank --}}
+                <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
+                  Would you allow us to use it sometime in the future? In exchange we would be willing to compensate you
+                  with {{proposal.compensation}}. To accept, follow the link.
+                  <a class="word-break" href="{{proposal.id}}"
+                    target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                {{!-- else for second ifCompensationEqBlank --}}
+                {{else}}
+                {{!-- message if compensation not equal blank and company name does not equal blank --}}
+                <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
+                  posted! Would you allow us to use it sometime in the future? In exchange we would be willing to
+                  compensate you with {{proposal.compensation}}. To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
+                    target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                {{/ifCompanyNameEqBlank}}
+                {{!-- message for proposalCreator to send if they are compensating --}}
+                {{/ifCompensationEqBlank}}
               </SPAN>
-              <button class="btn white darekn-1 waves-effect">{{{editIcon proposal.user.id user.id proposal.id false}}}</button>
+              <button
+                class="btn white darekn-1 waves-effect">{{{editIcon proposal.user.id user.id proposal.id false}}}</button>
               <button class="copyBtn btn grey lighten-1 waves-effect"><i class="fa fa-clipboard"></i></button>
               <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
                 <div>
-                  <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1">
+                    <!-- Modal Trigger -->
+                  <button data-target="acceptModal" class="btn green lighten-1 modal-trigger">Accept</button>
                   <input name="voteBody" type="submit" value="Decline" class="btn red lighten-1">
                   <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
                 </div>
               </form>
+              {{!-- else ifLoggedUserEqProposalUser --}}
               {{else}}
               {{#if user}}
               {{#ifCompensationEqBlank proposal.compensation}}
               {{!-- message for client before logging in if compensation = blank --}}
               <p>To give us permission to use your photo, simply press "Accept".</p>
+              {{!-- else for ifCompensationEqBlank --}}
               {{else}}
               {{!-- message for client before logging in if compensation is not = blank --}}
-              <p>We'd like to compensate you with {{proposal.compensation}} for your photo. If you agree, simply press "Accept".</p>
+              <p>To give us permission to use your photo, simply press "Accept".</p>
               {{/ifCompensationEqBlank}}
               <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
                 <div>
-                  <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1">
+                  <!-- Modal Trigger -->
+                  <button data-target="acceptModal" class="btn green lighten-1 modal-trigger">Accept</button>
                   <input name="voteBody" type="submit" value="Decline" class="btn red lighten-1">
                   <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
                 </div>
               </form>
+              {{!-- else for if user --}}
               {{else}}
               {{#ifCompensationEqBlank proposal.compensation}}
               {{!-- message for client before logging in if compensation = blank --}}
-              <p>For us to use your photo, simply login or enter your email and the code we sent you (this informs us of who has responded). Then, press "Accept".</p>
+              <p>To give us permission to use your photo, login with Google or Facebook and hit "Accept".<br/><br/> This let's us create an account for you to keep record of this agreement and any future proposals that get sent to you.</p><br/>
+              {{!-- else for ifCompensationEqBlank --}}
               {{else}}
               {{!-- message for client before logging in if compensation is not = blank --}}
-              <p>We'd like to compensate you with {{proposal.compensation}} for your photo. Simply login or enter your email and the code we sent you (this informs us of who has responded). Then, press "Accept".</p>
+              <p>To give us permission to use your photo, login with Google or Facebook and hit "Accept".<br/><br/> This let's us create an account for you to keep record of this agreement and any future proposals that get sent to you.</p><br/>
               {{/ifCompensationEqBlank}}
-                <h6>To respond:</h6>
-                <a class = "btn red darken-1" href="/proposals/showClient/{{proposal.id}}">
-                <i class="fa fa-google left"></i>Login with Google
-                </a>
-                <form class="proposal_add-wrapper" method="post" action="/proposals/voteGuest/{{proposal.id}}">
-                  <div>
-                    {{!-- <div class='card'> --}}
-                      <h6>Or Enter:</h6>
-                      <div class="input-field">
-                        <input type="text" name="voteEmail">
-                        <label for="voteEmail">Email</label>
-                      </div>
-                      <div class="input-field">
-                        <input id='code' type='text' />
-                        <label for="code">Code</label>
-                      </div>
-                      <input name="voteBody" type="submit" value="Accept" onclick="javascript:return validatePass()"
-                        class="btn green lighten-1">
-                      <input name="voteBody" type="submit" value="Decline" onclick="javascript:return validatePass()"
-                        class="btn red lighten-1">  
-                    {{!-- </div> --}}
-                  </div>
-                </form>
-                <div>
-                  <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
-                </div>
+                {{!-- <h6>To respond:</h6> --}}
+                <!-- Modal Trigger -->
+                <button data-target="modalLogin" class="btn blue darken-2 modal-trigger">Login</button>
+                <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
+              {{!-- end if user --}}
               {{/if}}
               {{/ifLoggedUserEqProposalUser}}
             </div>
@@ -100,7 +128,24 @@
         </div>
         <div class="card">
           <div class="card-content">
-            <span class="card-title">Acceptance Status</span>
+            <span class="card-title">Contract Status</span>
+              <div class="col m-auto s4">
+                <a class="proposal-btn btn grey" href="/stripe/checkout/single_proposal/{{proposal._id}}"><i class="fa fa-cart">checkout</i></a>
+              </div>
+              <div>
+                <a class="btn blue darken-2" href="stripe/authorize">Sign Up With Stripe</a>
+              </div>
+              <div>
+                <p>link proposal to seller stripe account</p>
+                <p>user stripeId: {{user.stripeAccountId}}</p>
+
+                <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                  <div>
+                    <input name="sellerStripeAccountId" type="submit" value="{{req.user.stripeAccountId}}" class="btn blue lighten-1"><i>Link Seller Stripe</i> 
+                  </div>
+                </form>
+              </div>
+
             {{#each proposal.votes}}
             <br>
             <div class="chip">
@@ -128,7 +173,8 @@
               <input type="submit" value="Submit" class="btn">
             </form>
             {{else}}
-            <p>Please <a href="/proposals/showClient/{{proposal.id}}">login</a> if you would like to leave a comment or accept/decline the offer.
+            <p>Please <a href="/proposals/showClient/{{proposal.id}}">login</a> if you would like to leave a comment or
+              accept/decline the offer.
             </p>
             {{/if}}
             {{!-- {{else}}
@@ -158,14 +204,23 @@
           <div class="card-image">
             <a href="{{proposal.url}}media/?size=l"><img src="{{proposal.url}}media/?size=l" alt="" /></a>
           </div>
-        </div>
-        <a href="{{proposal.url}}">{{proposal.url}}</a>
+          <div class="card-content">
+            <p>
+              {{#each proposal.tag}}
+              <div class="chip">
+                {{this.text}}
+              </div>
+              {{/each}}
+            </p>
           </div>
         </div>
-        {{!-- <div><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="{{proposal.url}}" data-instgrm-version="12" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="{{proposal.url}}" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;"> View this post on Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div></a> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="{{proposal.url}}" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_blank">In “Graystone”, a fold down bed is securely lowered onto chains for the second explorer. The bed can be folded and secured to the wall to open up interior space. 🛠 More amazing conversions on @project.vanlife 📷 by @freedomvans #vanlifeaustralia #tinyhousedesign #vanlifemagazine #rvlifestyle #instatravel #exploremore</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A post shared by <a href="https://www.instagram.com/vanlifedistrict/" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px;" target="_blank"> Vanlife | Adventure | Buslife</a> (@vanlifedistrict) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2019-08-08T16:10:18+00:00">Aug 8, 2019 at 9:10am PDT</time></p></div></blockquote> <script async src="//www.instagram.com/embed.js"></script></time></p></div></blockquote> <script async src="//www.instagram.com/embed.js"></script></div> --}}
+        <a href="{{proposal.url}}">{{proposal.url}}</a>
       </div>
     </div>
-    {{!-- <div class="col s12">
+    {{!-- <div><blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="{{proposal.url}}" data-instgrm-version="12" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="{{proposal.url}}" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;"> View this post on Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div></a> <p style=" margin:8px 0 0 0; padding:0 4px;"> <a href="{{proposal.url}}" style=" color:#000; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none; word-wrap:break-word;" target="_blank">In “Graystone”, a fold down bed is securely lowered onto chains for the second explorer. The bed can be folded and secured to the wall to open up interior space. 🛠 More amazing conversions on @project.vanlife 📷 by @freedomvans #vanlifeaustralia #tinyhousedesign #vanlifemagazine #rvlifestyle #instatravel #exploremore</a></p> <p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;">A post shared by <a href="https://www.instagram.com/vanlifedistrict/" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px;" target="_blank"> Vanlife | Adventure | Buslife</a> (@vanlifedistrict) on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2019-08-08T16:10:18+00:00">Aug 8, 2019 at 9:10am PDT</time></p></div></blockquote> <script async src="//www.instagram.com/embed.js"></script></time></p></div></blockquote> <script async src="//www.instagram.com/embed.js"></script></div> --}}
+  </div>
+</div>
+{{!-- <div class="col s12">
       <div class="card center-align">
         <div class="card-content">
           <span class="card-title">{{proposal.user.firstName}} {{proposal.user.lastName}}</span>
@@ -177,36 +232,376 @@
       </div>
     </div> --}}
 
-  </div>
+</div>
 </div>
 <br>
 <br>
 
+  <!-- Modal Login Structure-->
+<div id="modalLogin" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <nav class="nav-horizontal">
+        <div class="row"> 
+          <div class="col s12">
+            <div class="nav_wrapper" width= "100%">
+              <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class= "center-align">
+    <h4>Please Login</h4>
+
+      <a class = "btn red darken-1" href="/proposals/showClient/{{proposal.id}}">
+        <i class="fa fa-google left"></i>Login with Google
+      </a>
+      <br>
+      <br>
+      <a class = "btn blue darken-1 row center-align" href="/proposals/showFBClient/{{proposal.id}}">
+        <i class="fa fa-facebook left"></i>Login with Facebook
+      </a>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
+{{!-- modal terms structure --}}
+  <!-- Modal Structure -->
+  <div id="acceptModal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <div style="padding: 25px;">
+      {{!-- beginning of contract --}}
+          <div align="center">
+        <table border="0" cellspacing="4" cellpadding="0" width="635">
+            <tbody>
+                <tr>
+                    <td width="637" colspan="2" valign="bottom">
+                        <p align="center">
+                            <strong>
+                                PHOTO LICENSING AGREEMENT
+                            </strong>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>
+        This Photo License Agreement (this “Agreement”) is made as of <b>{{formatDate proposal.date 'MMMM Do YYYY'}}</b> (the “Effective Date”) by and between <b>{{proposal.recipient}}</b>
+        (“Photographer”) and <b>{{proposal.user.firstName}} {{proposal.user.lastName}}</b> (“Client”). The parties agree as follows:
+    </p>
+    <p>
+        <strong>1. License. </strong>
+        Photographer hereby grants to Client a non-exclusive,
+        limited license to use the following work (the “Photos”):
+    </p>
+    <div>
+        <div align="center" >
+        <a href="{{proposal.url}}media/?size=m"><img src="{{proposal.url}}media/?size=m" alt=""/></a>
+        </div>
+    </div>
+    <p>
+        Client is authorized to use the Photos worldwide (the "Territory") in the following capacity: <strong>{{proposal.usage}}</strong>
+    </p>
+    <p>
+        <strong>2. Ownership of Photos. </strong>
+        Client agrees that, subject to the rights and licenses granted herein,
+        Photographer is, and will remain, the sole and exclusive owner of all
+        right, title, and interest, throughout the world, to all Photos and any
+        copies of the Photos. Except as expressly provided in this Agreement,
+        Photographer reserves all rights and licenses not expressly granted in
+        this Agreement.
+    </p>
+    <p>
+        <strong>3. Fee. </strong>
+        {{#ifCompensationEqBlank proposal.compensation}}
+            Client will not pay a fee in consideration for the rights and licenses
+            granted herein.
+        {{else}}
+            Client will pay in the form of {{proposal.compensation}} in consideration for the rights and licenses
+            granted herein.
+        {{/ifCompensationEqBlank}}
+    </p>
+    <p>
+        <strong>4. Restrictions on Use. </strong>
+        Client will not use the Photos for any of the following purposes:
+    </p>
+    <div style="padding-left:25px;">
+        <ul>
+            <li>
+                (A). No Unlawful Use. Client will not use the Photos in any unlawful manner, such as pornography or defamation.
+            </li>
+            <li>
+                (B). No Standalone File Use. Client will not use the Photos in any way that allows a standalone file or content file to be downloaded, extracted, or redistributed by others.  
+            </li>
+            <li>
+                (C). No Use in Trademark or Logo. Client will not use the Photos in any trademark, logo or other mark.
+            </li>
+            <li>
+                (D). No Products for Resale. Client will not use the Photos in any goods or products where the Photos are the primary value.
+            </li>
+            {{!-- <li>
+                (E). No Alterations. Client will not alter the Photos without the prior
+                written permission of Photographer.
+            </li> --}}
+            <li>
+                (E). No Sublicenses. Client will not sublicense the Photos without the
+                prior written permission of Photographer.
+            </li>
+        </ul>
+    </div>
+    <p>
+        <strong>5. Photo Notice and Markings. </strong>
+        {{#if proposal.credit}}
+        <p>Client must include a photo credit or copyright notice on the photos when used.</p>
+        {{else}}
+        <p>Client does not need to include a photo credit or copyright notice on
+        the Photos unless specifically requested by the Photographer.</p>
+        {{/if}}
+    </p>
+    <p>
+        <strong>6. Indemnification. </strong>
+        Client will indemnify, defend, and hold harmless Photographer from all
+        liability, claims, demands, causes of action, judgments, damages, and
+        expenses (including reasonable attorneys’ and experts’ fee and costs)
+        arising out of or as a result from use of the Photos by Client, except
+        in the event that any claims, demands, causes of action, judgments, or
+        expenses arose out of willful misconduct, gross negligence, or bad
+        faith by Photographer.
+        </br>
+        </br>
+        Both parties will indemnify and hold us (including our affiliates and subsidiaries, as well as our and their respective officers, directors, employees, agents) harmless from any claim or demand, including reasonable legal fees, made by any third party due to or arising out of your breach of this Licensing Agreement, your improper use of Byte Rights's Services or your breach of any law or the rights of a third party.
+    </p>
+    <p>
+        <strong>7. Limitations of Liability. </strong>
+        EXCEPT FOR ANY REMEDIES THAT CANNOT BE EXCLUDED OR LIMITED BY LAW,
+        NEITHER PARTY, NOR ANY AFFILIATE, WILL BE LIABLE UNDER THIS AGREEMENT
+        TO THE OTHER PARTY, ANY AFFILIATE OR OTHER THIRD PERSON FOR ANY
+        INDIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL, RELIANCE, OR PUNITIVE
+        DAMAGES OR LOST OR IMPUTED PROFITS, LOST DATA OR COST OF PROCUREMENT OF
+        SUBSTITUTE GOODS OR SERVICES.THIS LIMITATION OF LIABILITY MAY NOT BE
+        VALID IN SOME STATES. CLIENT MAY HAVE RIGHTS THAT CANNOT BE WAIVED
+        UNDER CONSUMER PROTECTION AND OTHER LAWS. PHOTOGRAPHER DOES NOT SEEK TO
+        LIMIT CLIENT’S WARRANTY OR REMEDIES TO ANY EXTENT NOT PERMITTED BY LAW.
+    </p>
+    <p>
+        <strong>8. Term. </strong>
+        This Agreement will commence on the Effective Date and will continue in
+        full force and effect for an initial period of 1 year.
+    </p>
+    <p>
+        <strong>9. Termination.</strong>
+        Either party may terminate this Agreement immediately upon delivery of
+        written notice to the other party specifying clearly the grounds for
+        termination if the other party commits a material breach of its
+        obligations under this Agreement and fails to cure the breach within
+        thirty (30) days after written notice of the breach is received by the
+        breaching party. For the avoidance of doubt, termination will be
+        without prejudice to any liability incurred prior to the effective date
+        of termination.
+    </p>
+    <p>
+        <strong>10. Assignment. </strong>
+        This Agreement may not be assigned by Client without Photographer’s
+        prior written consent. Photographer may assign this Agreement, in whole
+        or in part, to any affiliate or successor.
+    </p>
+    <p>
+        <strong>11. Severability. </strong>
+        If any provision of this Agreement is held invalid, illegal or
+        unenforceable by a court of competent jurisdiction, the remainder of
+        the Agreement will be valid and enforceable and the parties will
+        negotiate in good faith a substitute, valid and enforceable provision
+        which most nearly puts into effect the intent of the parties.
+    </p>
+    <p>
+        <strong>12. No Waiver.</strong>
+        This Agreement may not be altered, modified, or amended in any way
+        except in writing signed by both parties. The failure of a party to
+        enforce any provision of the Agreement will not be construed to be a
+        waiver of the right of such party to thereafter enforce that provision
+        or any other provision or right.
+    </p>
+    <p>
+        <strong>13. Entire Agreement.</strong>
+        This Agreement represents and constitutes the entire agreement between
+        the parties, and supersede and merge all prior negotiations,
+        agreements, and understandings, oral or written, with respect to any
+        and all matters between the parties.
+    </p>
+    <p>
+        <strong>14. Governing Law.</strong>
+        The parties hereby agree that this Agreement will be governed by, and
+        constructed and enforced in accordance with the laws of the State of
+        Florida, without reference to rules governing choice of laws.
+    </p>
+    <p>
+        <strong>15. Disputes. </strong>
+        Any dispute arising from this Agreement shall be resolved through
+        mediation.
+    </p>
+    <p>
+        <strong>16. Attorneys’ Fees.</strong>
+        If either party brings legal action to enforce its rights under this
+        Agreement, the prevailing party will be entitled to recover from the
+        other party its expenses (including reasonable attorneys’ fees and
+        costs) incurred in connection with the action an any appeal.
+    </p>
+    <p>
+        <strong>17. Notices. </strong>
+        All notices, demands or other communications to be given under this
+        Agreement by either Party to the other may be effected either by
+        personal delivery in writing or by U.S. mail, registered or certified,
+        postage prepaid with return receipt requested. Notices delivered
+        personally will be deemed communicated as of actual receipt. Mailed
+        notices will be deemed communicated as of two (2) days after mailing.
+    </p>
+    <p>
+        <strong>IN WITNESS WHEREOF, </strong>
+        the Parties have entered into this Agreement as of the Effective Date.
+    </p>
+</div>
+    </div>
+    <div class="modal-footer">
+      <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
+        <div>
+          <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+
+              <div>
+                {{!-- start if seller created proposal --}}
+                {{#ifEqualsElse proposal.contractUserType "seller"}}
+                  {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}
+                    {{#ifEqualsElse user.stripeAccountId ""}}
+                      <div>
+                        <a class="btn blue darken-2" href="stripe/authorize">Sign Up With Stripe</a>
+                      </div>
+                    {{!-- else for #ifEqualsElse user.stripeAccountId = "" --}}
+                    {{else}}
+                      {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                        <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                          <div>
+                            <input name="sellerStripeAccountId" type="submit" value="{{req.user.stripeAccountId}}" class="btn blue lighten-1"><i>Link Stripe Seller Account</i> 
+                          </div>
+                        </form>
+
+                      {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                      {{/else}}
+                        <p>you have successfully linked your stripe seller account</p>
+                        <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
+                      {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                      {{/ifEqualsElse}}
+                    {{!-- end #ifEqualsElse user.stripeAccountId = "" --}}
+                    {{/ifEqualsElse}}
+                  {{!--else for #ifLoggedUserEqProposalUser user.id proposal.user.id --}}
+                  {{else}}
+                    {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                      <div>
+                        <p>we are waiting for the seller to connect their stripe account</p>
+                      </div>
+                    {{!-- else for#ifEqualsElse proposal.sellerStripeAccountId = ""--}}
+                    {{else}}
+                      <div class="col m-auto s4">
+                        <a class="proposal-btn btn grey" href="/stripe/checkout/single_proposal/{{proposal._id}}"><i class="fa fa-cart">checkout</i></a>
+                      </div>
+                    {{!-- end #ifEqualsElse proposal.sellerStripeAccountId = "" --}}
+                    {{/ifEqualsElse}}
+                  {{!-- end #ifLoggedUserEqProposalUser user.id proposal.user.id --}}
+                  {{/ifLoggedUserEqProposalUser}}
+                {{!-- else for  #ifEqualsElse proposal.contractUserType = "seller" so this is what the buyer sees if they created the contract--}}
+                {{!-- start if buyer created proposal --}}
+                {{else}}
+                  {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}
+                    {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                      <div>
+                        <p>we are waiting for the seller to connect their stripe account</p>
+                      </div>
+                    {{!-- else for#ifEqualsElse proposal.sellerStripeAccountId = ""--}}
+                    {{else}}
+                      <div class="col m-auto s4">
+                        <a class="proposal-btn btn grey" href="/stripe/checkout/single_proposal/{{proposal._id}}"><i class="fa fa-cart">checkout</i></a>
+                      </div>
+                    {{!-- end #ifEqualsElse proposal.sellerStripeAccountId = "" --}}
+                    {{/ifEqualsElse}}
+                  {{!--else for #ifLoggedUserEqProposalUser user.id proposal.user.id --}}
+                  {{!-- the buyer created the proposal but the seller is looking at the proposal --}}
+                  {{else}}
+
+                    {{#ifEqualsElse user.stripeAccountId ""}}
+                        <p>in order to get paid you have to sign up with stripe. It's not that hard we promise.</p>
+                        <div>
+                          <a class="btn blue darken-2" href="stripe/authorize">Sign Up With Stripe</a>
+                        </div>
+                      {{!-- else for #ifEqualsElse user.stripeAccountId = "" --}}
+                    {{else}}
+                      {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                        <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                          <div>
+                            <input name="sellerStripeAccountId" type="submit" value="{{req.user.stripeAccountId}}" class="btn blue lighten-1"><i>Link Stripe Seller Account</i> 
+                          </div>
+                        </form>
+
+                      {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                      {{/else}}
+                        <p>you have successfully linked your stripe seller account</p>
+                        <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
+                      {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                      {{/ifEqualsElse}}
+                      {{!-- end #ifEqualsElse user.stripeAccountId = "" --}}
+                    {{/ifEqualsElse}}
+
+                  {{!-- end #ifLoggedUserEqProposalUser user.id proposal.user.id --}}
+                  {{/ifLoggedUserEqProposalUser}}
+
+                {{!-- end #ifEqualsElse proposal.contractUserType = "seller" --}}
+                {{/ifEqualsElse}}
+              </div>
+
+
 <script>
-  function validatePass() {
-    if (document.getElementById('code').value == "31415") {
-      return true;
-    } else {
-      alert('You have entered an incorrect code Please reference your direct message to get the proper code');
-      return false;
+//modal logic materialize 
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
+    var instances = M.Modal.init(elems);
+  });
+
+  //logic for validating that the code is 31415
+//  function validatePass() {
+//    if (document.getElementById('code').value == "31415") {
+//    return true;
+//    } else {
+//    alert('You have entered an incorrect code Please reference your direct message to get the proper code');
+//    return false;
+//    }
+//  }
+
+  //logic for copy Button
+  var copyBtn = document.querySelector('.copyBtn');
+  copyBtn.addEventListener('click', function (event) {
+    // Select the email link anchor text
+    var copyText = document.querySelector('.copyText');
+    var range = document.createRange();
+    range.selectNode(copyText);
+    window.getSelection().addRange(range);
+
+    try {
+      // Now that we've selected the anchor text, execute the copy command
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+      console.log('Copy email command was ' + msg);
+    } catch (err) {
+      console.log('Oops, unable to copy');
     }
-  }
-
-var copyBtn = document.querySelector('.copyBtn');
-copyBtn.addEventListener('click', function(event) {
-  // Select the email link anchor text
-  var copyText = document.querySelector('.copyText');
-  var range = document.createRange();
-  range.selectNode(copyText);
-  window.getSelection().addRange(range);
-
-  try {
-    // Now that we've selected the anchor text, execute the copy command
-    var successful = document.execCommand('copy');
-    var msg = successful ? 'successful' : 'unsuccessful';
-    console.log('Copy email command was ' + msg);
-  } catch(err) {
-    console.log('Oops, unable to copy');
-  }
-});
+  });
 </script>

@@ -624,4 +624,21 @@ router.post('/comment/:id', (req, res) => {
     });
 });
 
+//edit proposal to add sellerStripeAccountId process
+router.put('/sellerStripeAccountId/:id', (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .then(proposal => {
+      
+      //new values
+      proposal.sellerStripeAccountId = req.user.stripeAccountId;
+
+      proposal.save()
+        .then(proposal => {
+          res.redirect(`/proposals/show/${proposal.id}`);
+        });
+    });
+});
+
 module.exports = router;

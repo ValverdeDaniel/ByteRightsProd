@@ -38,6 +38,10 @@ const ProposalSchema = new Schema({
     type: String,
     default: 'public'
   },
+  sellerStripeAccountId: {
+    type: String,
+    default: ""
+  },
   allowComments: {
     type: Boolean,
     default: true

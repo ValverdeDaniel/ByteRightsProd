@@ -42,7 +42,9 @@ const {
   ifCompensationEqBlank,
   ifCompanyNameEqBlank,
   ifStripeAccountIdEqBlank,
-  ifEquals
+  ifEquals,
+  ifEqualsElse,
+  ifProposalContractUserTypeEQSeller
 } = require('./helpers/hbs');
 
 //map global promises
@@ -84,7 +86,9 @@ app.engine('handlebars', exphbs({
     ifCompensationEqBlank: ifCompensationEqBlank,
     ifCompanyNameEqBlank: ifCompanyNameEqBlank,
     ifStripeAccountIdEqBlank: ifStripeAccountIdEqBlank,
-    ifEquals: ifEquals
+    ifEquals: ifEquals,
+    ifEqualsElse: ifEqualsElse,
+    ifProposalContractUserTypeEQSeller: ifProposalContractUserTypeEQSeller
   },
   defaultLayout: 'main'
 }));

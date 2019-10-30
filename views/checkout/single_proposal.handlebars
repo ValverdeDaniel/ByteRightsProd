@@ -5,25 +5,22 @@
         <div class="single-order-package-card">
           <div class="margin-both">
             <div class="text-center">
-              <hr />
-              <div class="inner">
-                <img src="{{proposal.url}}" class="img-cirle">
-                <br>
-                <p class="text-center">{{proposal.url}}</p>
-                <p>single_proposal</p>
-              </div>
-              <hr>
-              <div class="input-group promocode">
+              {{!-- <div class="input-group promocode">
                 <input type="text" class="form-control" placeholder="Enter Promo Code" id="code">
                 <span class="input-group-btn">
                   <button class="btn btn-success btn-block" id="promocodeButton">Apply</button>
                 </span>
                 <p class="text-center" id="promoCodeResponse"></p>
+              </div> --}}
+              {{!-- why doesn't the image show? --}}
+              <div class="card-image">
+                <a href="{{proposal.url}}media/?size=l"><img src="{{proposal.url}}media/?size=l" alt="" /></a>
               </div>
-              <hr>
               <div>
-                <h4><span>Fee: $3.15</span></h4>
+                <h3><span>Fee: $3.15</span></h3>
                 <h3>SubTotal: ${{proposal.price}}</h3>
+                <hr>
+                <h3>Total: {{totalPrice}}</h3>
               </div>
               <a href="/stripe/payment/{{proposal._id}}" class="btn btn-success btn-lg proceed-btn">Proceed To Payment</a>
             </div>
