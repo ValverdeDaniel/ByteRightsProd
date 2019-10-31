@@ -26,6 +26,8 @@
         <p>{{user.companyName}}</p>
         <h6><strong>Website</strong></h6>
         <a href="{{user.website}}"target="_blank">{{user.website}}</a>
+        <h6><strong>Default User Type</strong></h6>
+        <p>{{user.contractUserType}}</p>
       </div>
       <div class="col m6 s12">
         <h6><strong>Instagram</strong></h6>
@@ -42,6 +44,13 @@
     </div>
     <div>
       <a class="btn blue" href="dashboard/edit">Edit</a>
+      {{#ifStripeAccountIdEqBlank user.stripeAccountId}}
+      <a class="btn blue darken-2" href="stripe/authorize">Sign Up With Stripe</a>
+      {{else}}
+      <p>StripeAccountId: {{user.stripeAccountId}}</p>
+      <p>BalanceAvailable: {{balanceAvailable}}</p>
+      <p>BalancePending: {{balancePending}}</p>
+      {{/ifStripeAccountIdEqBlank}}
     </div>
   </div>
 

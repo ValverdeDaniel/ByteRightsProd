@@ -6,6 +6,10 @@ const UserSchema = new Schema({
   googleID: {
     type: String
   }, 
+  stripeAccountId: {
+    type: String,
+    default: ""
+  },
   email: {
     type: String
   },
@@ -23,6 +27,9 @@ const UserSchema = new Schema({
   website: {
     type: String,
     default: ""
+  },
+  contractUserType: {
+    type: String
   },
   facebookID: {
     type: String

@@ -22,6 +22,15 @@
             <input type="text" name="url" value="{{proposal.url}}" required>
             
           </div>
+
+          <div class="input-field">
+            <select class="ignore-select" name="contractUserType">
+              <option value="seller">Seller</option>
+              <option value="buyer">Buyer</option>
+            </select>
+            <label for="contractUserType">Contract User Type</label>
+          </div> 
+          
           <label>Recipient Name</label>
           <div class="input-field">
             <input type="text" name="recipient" value="{{proposal.recipient}}" required>

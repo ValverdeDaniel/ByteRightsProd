@@ -415,8 +415,10 @@ router.post('/', ensureAuthenticated, (req, res) => {
 
   let newProposal = {
     url: url,
+    contractUserType: req.body.contractUserType,
     recipient: req.body.recipient,
     compensation: req.body.compensation,
+    price: req.body.price,
     usage: req.body.usage,
     credit: credit,
     status: req.body.status,
@@ -470,6 +472,7 @@ router.put('/:id', (req, res) => {
 
       //new values
       proposal.url = url;
+      contractUserType= req.body.contractUserType;
       proposal.recipient = req.body.recipient;
       proposal.compensation = req.body.compensation;
       proposal.usage = req.body.usage;
@@ -618,6 +621,23 @@ router.post('/comment/:id', (req, res) => {
         .then(proposal => {
           res.redirect(`/proposals/show/${proposal.id}`);
         })
+    });
+});
+
+//edit proposal to add sellerStripeAccountId process
+router.put('/sellerStripeAccountId/:id', (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .then(proposal => {
+      
+      //new values
+      proposal.sellerStripeAccountId = req.user.stripeAccountId;
+
+      proposal.save()
+        .then(proposal => {
+          res.redirect(`/proposals/show/${proposal.id}`);
+        });
     });
 });
 

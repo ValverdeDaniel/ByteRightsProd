@@ -1,3 +1,7 @@
+const config = require('../config/stripe');
+//not so sure about this stripe second part of require
+// const stripe = require('stripe')('../config.stripe.stripe.secretKey');
+const stripe = require('stripe')(config.stripe.secretKey);
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -15,9 +19,25 @@ router.get('/edit', ensureAuthenticated, (req, res) => {
     });
 });
 
-router.get('/', ensureAuthenticated, (req, res) => {
+router.get('/', ensureAuthenticated, async (req, res) => {
     User.findOne({id:req.user.id})
-      res.render('dashboard/dashboard');
+      const user = req.user;
+        // Retrieve the balance from Stripe
+        const balance = await stripe.balance.retrieve({
+        //const balance = await stripe.balance.retrieve({
+          stripe_account: user.stripeAccountId,
+        });
+          console.log('req.user: ' + req.user)
+          console.log('stripeAccountId' + req.user.stripeAccountId)
+          console.log('balance: ' + balance)
+          console.log('balance2: ' + balance.available[0].amount)
+      
+        
+        res.render('dashboard/dashboard', {
+          user: user, 
+          balanceAvailable: balance.available[0].amount/100,
+          balancePending: balance.pending[0].amount/100,
+        });
 });
 
 //edit form process
@@ -32,6 +52,7 @@ router.put('/update/:id', (req, res) => {
       user.firstName = req.body.firstName;
       user.lastName = req.body.lastName;
       user.companyName = req.body.companyName;
+      user.contractUserType = req.body.contractUserType;
       user.instagram = req.body.instagram;
       user.facebook = req.body.facebook;
       user.twitter = req.body.twitter;

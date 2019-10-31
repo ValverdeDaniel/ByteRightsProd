@@ -13,6 +13,9 @@ const ProposalSchema = new Schema({
     required: true
   },
   imageUrl: {
+    type: String
+  },
+  contractUserType: {
     type: String,
   },
   recipient: {
@@ -20,6 +23,9 @@ const ProposalSchema = new Schema({
   },
   compensation: {
     type: String
+  },
+  price: {
+    type: Number
   },
   usage: {
     type: String
@@ -31,6 +37,10 @@ const ProposalSchema = new Schema({
   status: {
     type: String,
     default: 'public'
+  },
+  sellerStripeAccountId: {
+    type: String,
+    default: ""
   },
   allowComments: {
     type: Boolean,
