@@ -496,7 +496,7 @@
                         </form>
 
                       {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
-                      {{/else}}
+                      {{else}}
                         <p>you have successfully linked your stripe seller account</p>
                         <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
                       {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
@@ -552,7 +552,7 @@
                         </form>
 
                       {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
-                      {{/else}}
+                      {{else}}
                         <p>you have successfully linked your stripe seller account</p>
                         <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
                       {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
@@ -567,6 +567,25 @@
                 {{/ifEqualsElse}}
               </div>
 
+
+              <div class="col m-auto s4">
+                <a class="proposal-btn btn grey" href="/stripe/checkout/single_proposal/{{proposal._id}}"><i class="fa fa-cart">checkout</i></a>
+              </div>
+              <div>
+                <a class="btn blue darken-2" href="stripe/authorize">Sign Up With Stripe</a>
+              </div>
+              <div>
+                <p>link proposal to seller stripe account</p>
+                <p>user stripeId: {{user.stripeAccountId}}</p>
+
+                <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+             
+                  
+                  <button type="submit" name="sellerStripeAccountId" class="btn waves-effect waves-light" value="{{req.user.stripeAccountId}}">Link Your Stripe Account
+                    <i class="material-icons right">send</i>
+                  </button>
+                </form>
+              </div>
 
 <script>
 //modal logic materialize 
