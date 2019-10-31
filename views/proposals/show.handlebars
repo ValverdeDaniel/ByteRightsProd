@@ -78,8 +78,7 @@
               <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
                 <div>
                     <!-- Modal Trigger -->
-                  <button data-target="acceptModal" class="btn green lighten-1 modal-trigger">Accept</button>
-                  <input name="voteBody" type="submit" value="Decline" class="btn red lighten-1">
+
                   <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
                 </div>
               </form>
@@ -98,7 +97,7 @@
                 <div>
                   <!-- Modal Trigger -->
                   <button data-target="acceptModal" class="btn green lighten-1 modal-trigger">Accept</button>
-                  <input name="voteBody" type="submit" value="Decline" class="btn red lighten-1">
+                  {{!-- <input name="voteBody" type="submit" value="Decline" class="btn red lighten-1"> --}}
                   <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
                 </div>
               </form>
