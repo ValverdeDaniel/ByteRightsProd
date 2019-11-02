@@ -119,42 +119,42 @@ router.get('/token', ensureAuthenticated, async (req, res, next) => {
  *
  * Redirect to the pilots' Stripe Express dashboard to view payouts and edit account details.
  */
-// router.get('/stripeDashboard', ensureAuthenticated, async (req, res) => {
-//   //i believe this is where I am leaving off i successfully got here but then it didn't like my api key
-//   console.log('made it to stripe/stripeDashboard')
-//   const user = req.user;
-//   // Make sure the logged-in pilot completed the Express onboarding
-//   if (!user.stripeAccountId) {
-//     console.log('!user.stripeAccountId')
-//     console.log(user)
-//     return res.redirect('/dashboard');
-//   }
-//   try {
-//     // Generate a unique login link for the associated Stripe account to access their Express dashboard
-//     console.log('attempting to loginLink')
-//     console.log('stripe ' + stripe)
-//     console.log('user.stripeAccountId' + user.stripeAccountId);
-//     console.log('stripeClientId ' + config.stripe.clientId)
-//     const loginLink = await stripe.accounts.createLoginLink(
-//       user.stripeAccountId, {
-//         //was pilots/dashboard
-//         //i want this to take me to stripeDashboard
-//         redirect_url: 'http://localhost:5000/dashboard'
-//       }
-//     );
-//     // Directly link to the account tab
-//     console.log('req.query.account')
-//     if (req.query.account) {
-//       loginLink.url = loginLink.url + '/dashboard';
-//     }
-//     // Retrieve the URL from the response and redirect the user to Stripe
-//     return res.redirect(loginLink.url);
-//   } catch (err) {
-//     console.log(err);
-//     console.log('Failed to create a Stripe login link.');
-//     return res.redirect('/pilots/signup');
-//   }
-// });
+router.get('/stripeDashboard', ensureAuthenticated, async (req, res) => {
+  //i believe this is where I am leaving off i successfully got here but then it didn't like my api key
+  console.log('made it to stripe/stripeDashboard')
+  const user = req.user;
+  // Make sure the logged-in pilot completed the Express onboarding
+  if (!user.stripeAccountId) {
+    console.log('!user.stripeAccountId')
+    console.log(user)
+    return res.redirect('/dashboard');
+  }
+  try {
+    // Generate a unique login link for the associated Stripe account to access their Express dashboard
+    console.log('attempting to loginLink')
+    console.log('stripe ' + stripe)
+    console.log('user.stripeAccountId' + user.stripeAccountId);
+    console.log('stripeClientId ' + config.stripe.clientId)
+    const loginLink = await stripe.accounts.createLoginLink(
+      user.stripeAccountId, {
+        //was pilots/dashboard
+        //i want this to take me to stripeDashboard
+        redirect_url: 'http://localhost:5000/dashboard'
+      }
+    );
+    // Directly link to the account tab
+    console.log('req.query.account')
+    if (req.query.account) {
+      loginLink.url = loginLink.url + '/dashboard';
+    }
+    // Retrieve the URL from the response and redirect the user to Stripe
+    return res.redirect(loginLink.url);
+  } catch (err) {
+    console.log(err);
+    console.log('Failed to create a Stripe login link.');
+    return res.redirect('/pilots/signup');
+  }
+});
 
 // /**
 //  * POST /pilots/stripe/payout
@@ -247,7 +247,7 @@ router.get('/token', ensureAuthenticated, async (req, res, next) => {
 // end of rocket rides template
 
 //the start of payment authentication using Fiverr Strategy
-const fee = 3.15;
+//const processingPercentage = .1;
 
 router.get('/checkout/single_proposal/:id', (req, res, next) => {
   console.log('checkout/single_proposal/:id')
@@ -256,16 +256,25 @@ router.get('/checkout/single_proposal/:id', (req, res, next) => {
     try{
       //var price = proposal.price
       var price = proposal.price
+      var fee = 3
       var totalPrice = price + fee;
+      console.log('%fee: ' + fee )
+      console.log('%price: ' + price )
+      console.log('%totalPrice: ' + totalPrice )
       //proposal = proposal;
       //proposal.price = totalPrice;
       req.session.proposal = proposal;
+      req.session.fee= fee;
+      //req.session.price = price;
       req.session.price = totalPrice;
       console.log('proposal1: ' + req.session.proposal)
       console.log('price: ' + req.session.price)
       res.render('checkout/single_proposal', {
         proposal: proposal, 
+        fee: fee,
+        //price: price,
         totalPrice: totalPrice
+        
       
       })
     } catch(e) {
@@ -283,15 +292,20 @@ router.route('/payment/:id')
     console.log('.get /checkout/payment')
   })
 
+  //we added application_fee_amount: fee and i'm not sure if it still sends a payment?
 router.post('/payment', (req, res, next) => {
     console.log('.post /checkout/payment')
 // Create a new customer and then a new charge for that customer:
   var proposal = req.session.proposal
   var price = req.session.price
+  var fee = req.session.fee
   console.log('payment proposal:' + proposal)
   console.log('payment price: ' + price)
-  price*=100
-  //stops somewhere around here
+  console.log('/payment fee: ' + fee)
+  price *= 100.0
+  fee *= 100
+  console.log('%aprice: ' + price)
+  console.log('%apaymentFee: ' + fee)
   console.log('before stripe.customers')
   console.log('destination: ' + req.user.stripeAccountId)
   //console.log('touchedByDestination: ' + proposal)
@@ -313,12 +327,14 @@ router.post('/payment', (req, res, next) => {
           amount: price,
           currency: 'usd',
           customer: source.customer,
+          application_fee_amount: fee,
           //source: req.body.stripeToken,
           transfer_data: {
             
             // destination: req.user.stripeAccountId
             destination: proposal.sellerStripeAccountId
           },
+          
         });
         } catch(e){
           console.error(e.name + ': ' + e.message);
@@ -327,7 +343,9 @@ router.post('/payment', (req, res, next) => {
       })
       .then((charge) => {
         console.log('charge')
+        console.log('%bprice: ' + price)
         // New charge created on a new customer
+        //place at end of put
         res.redirect('/');
       })
       .catch((err) => {

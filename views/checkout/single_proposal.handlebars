@@ -17,10 +17,10 @@
                 <a href="{{proposal.url}}media/?size=l"><img src="{{proposal.url}}media/?size=l" alt="" /></a>
               </div>
               <div>
-                <h3><span>Fee: $3.15</span></h3>
-                <h3>SubTotal: ${{proposal.price}}</h3>
+                <h5><span>Application Fee: ${{fee}}</span></h5>
+                <h5>SubTotal: ${{proposal.price}}</h5>
                 <hr>
-                <h3>Total: {{totalPrice}}</h3>
+                <h5>Total: ${{totalPrice}}</h5>
               </div>
               <a href="/stripe/payment/{{proposal._id}}" class="btn btn-success btn-lg proceed-btn">Proceed To Payment</a>
             </div>

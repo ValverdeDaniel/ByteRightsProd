@@ -42,6 +42,10 @@ const ProposalSchema = new Schema({
     type: String,
     default: ""
   },
+  paidStatus: {
+    type: String,
+    default: ""
+  },
   allowComments: {
     type: Boolean,
     default: true

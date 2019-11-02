@@ -47,6 +47,7 @@
       {{#ifStripeAccountIdEqBlank user.stripeAccountId}}
       <a class="btn blue darken-2" href="stripe/authorize">Sign Up With Stripe</a>
       {{else}}
+      <a class="btn blue darken-2" href="stripe/stripeDashboard">View Payouts on Stripe</a>
       <p>StripeAccountId: {{user.stripeAccountId}}</p>
       <p>BalanceAvailable: {{balanceAvailable}}</p>
       <p>BalancePending: {{balancePending}}</p>
