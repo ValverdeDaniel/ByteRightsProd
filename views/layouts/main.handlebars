@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/select2-materialize.css">
   <link rel="stylesheet" href="/css/materialize-tags.js">
+  <link rel="stylesheet" href="/css/stripe.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   {{!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" /> --}}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.10.6/jquery.typeahead.min.css">
@@ -73,6 +74,12 @@
       padding-top: 10px;
     }
 
+    .ignore-select-wrapper {
+      display: block;
+    }
+    .ignore-select {
+      display: none;
+    }
     
   </style>
 
@@ -102,10 +109,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/1.7.2/moment.min.js"></script>
   <script src="/js/materialize-tags.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.10.6/jquery.typeahead.min.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src = "/js/payment.js"></script>
   {{!-- <script src="/js/select2-materialize.js"></script> --}}
 
 
-  <script>
+  <script> 
     $(document).ready(function () {
       $('.select1').select2({
         closeOnSelect: false,
@@ -278,6 +287,9 @@
       $($activeTab).addClass('active'); 
     });
 
+    $(document).ready(function () {
+      $( ".ignore-select" ).parent().addClass( "ignore-select-wrapper" ); 
+   });
   </script>
 
 </body>

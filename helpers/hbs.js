@@ -54,7 +54,29 @@ module.exports = {
       return opts.inverse(this);
     }
   },
+  ifStripeAccountIdEqBlank: function(userStripeAccountId, opts) {
+    if(userStripeAccountId == "") {
+      return opts.fn(this);
+    } else {
+      return opts.inverse(this);
+    }
+  },
   ifEquals: function(arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-  }  
+  },
+  // doesn't work how i'd hoped but it would be great if it did
+  ifEqualsElse: function(a, b, opts) {
+    if(a == b) {
+      return opts.fn(this)
+    } else {
+      return opts.inverse(this)
+    }
+  },
+  ifProposalContractUserTypeEQSeller: function(proposalContractUserType, opts){
+    if(proposalContractUserType == "seller") {
+      return opts.fn(this);
+    } else {
+      return opts.inverse(this);
+    }
+  },
 }

@@ -1,19 +1,21 @@
 
-  <div class="home">
+  <div class="home" style="padding-top:15px">
     <div class="row"> 
       <div class="col s12">
-        <h1 class="proposal_title">Welcome {{user.firstName}}</h1> 
+        <h1 class="proposal_title center">Welcome {{user.firstName}}</h1> 
       </div>
-      <div class="col s12">
-        {{!-- <p class="lead">Thank you for being one of our early Beta users. Here's a quick guide to get you started down your Byte Rights journey.</p> --}}
-        <p class="lead">Thank you for being one of our early Beta users. If you haven't already, adding a company name to your profile will enable your client message to update and include your company name.</p>
+      <div class="container">
+        <div class="col s12 center">
+          {{!-- <p class="lead">Thank you for being one of our early Beta users. Here's a quick guide to get you started down your Byte Rights journey.</p> --}}
+          <p class="lead">Thank you for being one of our early Beta users. If you haven't already, adding a company name to your profile will enable your client message to update and include your company name.</p>
+        </div>
       </div>
     </div>
   </div>
-  <div class="grey-1">
+  <div class="container grey-1" style="padding:10px">
     <div class="row">
       <div class="home_copy">
-        <h3>User Details</h3>
+        <h5>User Details</h5>
       </div>
       <div class="col m6 s12">
         <h6><strong>First Name</strong></h6>
@@ -24,10 +26,12 @@
         <p>{{user.companyName}}</p>
         <h6><strong>Website</strong></h6>
         <a href="{{user.website}}"target="_blank">{{user.website}}</a>
+        <h6><strong>Default User Type</strong></h6>
+        <p>{{user.contractUserType}}</p>
       </div>
       <div class="col m6 s12">
         <h6><strong>Instagram</strong></h6>
-        <p>{{user.instagram}}</p>
+        <a href="{{user.instagram}}"target="_blank">{{user.instagram}}</a>
         <h6><strong>Facebook</strong></h6>
         <p>{{user.facebook}}</p>
         <h6><strong>Twitter</strong></h6>
@@ -40,6 +44,13 @@
     </div>
     <div>
       <a class="btn blue" href="dashboard/edit">Edit</a>
+      {{#ifStripeAccountIdEqBlank user.stripeAccountId}}
+      <a class="btn blue darken-2" href="stripe/authorize">Sign Up With Stripe</a>
+      {{else}}
+      <p>StripeAccountId: {{user.stripeAccountId}}</p>
+      <p>BalanceAvailable: {{balanceAvailable}}</p>
+      <p>BalancePending: {{balancePending}}</p>
+      {{/ifStripeAccountIdEqBlank}}
     </div>
   </div>
 

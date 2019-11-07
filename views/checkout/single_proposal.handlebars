@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="overview">
+        <div class="single-order-package-card">
+          <div class="margin-both">
+            <div class="text-center">
+              {{!-- <div class="input-group promocode">
+                <input type="text" class="form-control" placeholder="Enter Promo Code" id="code">
+                <span class="input-group-btn">
+                  <button class="btn btn-success btn-block" id="promocodeButton">Apply</button>
+                </span>
+                <p class="text-center" id="promoCodeResponse"></p>
+              </div> --}}
+              {{!-- why doesn't the image show? --}}
+              <div class="card-image">
+                <a href="{{proposal.url}}media/?size=l"><img src="{{proposal.url}}media/?size=l" alt="" /></a>
+              </div>
+              <div>
+                <h3><span>Fee: $3.15</span></h3>
+                <h3>SubTotal: ${{proposal.price}}</h3>
+                <hr>
+                <h3>Total: {{totalPrice}}</h3>
+              </div>
+              <a href="/stripe/payment/{{proposal._id}}" class="btn btn-success btn-lg proceed-btn">Proceed To Payment</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
