@@ -54,4 +54,32 @@
       {{/ifStripeAccountIdEqBlank}}
     </div>
   </div>
-
+{{!-- begin transaction history --}}
+{{#if transactions}}
+  <table class="striped">
+    <thead>
+      <tr>
+        <th>BuyerId</th>
+        <th>SellerId</th>
+        <th>ProposalId</th>
+        <th>Amount Buyer Paid</th>
+        <th>Amount Seller Received</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each transactions}}
+      <tr>
+        <td>{{buyerId}}</td>
+        <td>{{sellerId}}</td>
+        <td>{{proposalId}}</td>
+        <td>{{amountBuyerPaid}}</td>
+        <td>{{AmountSellerReceived}}</td>
+        <td>{{formatDate data 'MMMM do YYYY'}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <p>You have not created/received any transactions yet</p>
+{{/if}}
