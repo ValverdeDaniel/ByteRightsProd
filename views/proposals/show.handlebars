@@ -161,10 +161,16 @@
                       </div>
                     {{!-- else for#ifEqualsElse proposal.sellerStripeAccountId = ""--}}
                     {{else}}
+                      {{#ifEqualsElse proposal.paidStatus ""}}
                       <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
                       <div class="col m-auto s4">
                         <a class="proposal-btn btn blue darken-2" href="/stripe/checkout/single_proposal/{{proposal._id}}"><i>checkout</i></a>
                       </div>
+                      {{!-- else for ifEqualsElse proposal.paidStatus "" --}}
+                      {{else}}
+                      <p>this proposal has been paid for</p>
+                      {{!-- end if for ifEqualsElse proposal.paidStatus "" --}}
+                      {{/ifEqualsElse}}
                     {{!-- end #ifEqualsElse proposal.sellerStripeAccountId = "" --}}
                     {{/ifEqualsElse}}
                   {{!-- end #ifLoggedUserEqProposalUser user.id proposal.user.id --}}
@@ -179,10 +185,16 @@
                       </div>
                     {{!-- else for#ifEqualsElse proposal.sellerStripeAccountId = ""--}}
                     {{else}}
+                      {{#ifEqualsElse proposal.paidStatus ""}}
                       <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
                       <div class="col m-auto s4">
-                        <a class="proposal-btn btn blue darken-2" href="/stripe/checkout/single_proposal/{{proposal._id}}"><i class="fa fa-cart">checkout</i></a>
+                        <a class="proposal-btn btn blue darken-2" href="/stripe/checkout/single_proposal/{{proposal._id}}"><i>checkout</i></a>
                       </div>
+                      {{!-- else for ifEqualsElse proposal.paidStatus "" --}}
+                      {{else}}
+                      <p>this proposal has been paid for</p>
+                      {{!-- end if for ifEqualsElse proposal.paidStatus "" --}}
+                      {{/ifEqualsElse}}
                     {{!-- end #ifEqualsElse proposal.sellerStripeAccountId = "" --}}
                     {{/ifEqualsElse}}
                   {{!--else for #ifLoggedUserEqProposalUser user.id proposal.user.id --}}
