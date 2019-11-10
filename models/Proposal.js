@@ -84,7 +84,8 @@ const ProposalSchema = new Schema({
   }],
   votes: [{
     voteBody: {
-      type: String
+      type: String,
+      default: ""
     },
     voteEmail: {
       type: String

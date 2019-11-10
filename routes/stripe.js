@@ -321,14 +321,21 @@ router.post('/payment', async (req, res, next) => {
   //we want the user information based on the seller stripe account
   let sellerInformation = await user.findOne({ stripeAccountId: proposal.sellerStripeAccountId });
   console.log('SellerInfo', sellerInformation)
+  console.log('sellerId' + sellerInformation._id)
+  console.log('sellerFirstName' + sellerInformation.firstName)
+  console.log('sellerLastName' + sellerInformation.lastName)
 
   let newStripeTransaction = {
     buyerId: req.user.id,
+    buyerFirstName: req.user.firstName,
+    buyerLastName: req.user.lastName,
     //the account linked to the proposal.sellerStripeAccountId
     sellerId: sellerInformation._id,
+    sellerFirstName: sellerInformation.firstName,
+    sellerLastName: sellerInformation.lastName,
     proposalId: proposal._id,
-    amountBuyerPaid: price,
-    amountSellerReceived: amountSellerReceived
+    amountBuyerPaid: price/100,
+    amountSellerReceived: amountSellerReceived/100
     //stripePaymentIntentId: ???
   }
   // Save the ride

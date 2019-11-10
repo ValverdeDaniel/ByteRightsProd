@@ -10,9 +10,21 @@ const StripeTransactionSchema = new Schema({
     type : Schema.ObjectId, 
     ref : 'users' 
   },
+  buyerFirstName: {
+    type: String
+  },
+  buyerLastName: {
+    type: String
+  },
   sellerId: { 
     type : Schema.ObjectId,
     ref : 'users'
+  },
+  sellerFirstName: {
+    type: String
+  },
+  sellerLastName: {
+    type: String
   },
   proposalId: { 
     type: Schema.ObjectId,

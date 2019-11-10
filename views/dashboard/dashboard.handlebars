@@ -60,7 +60,9 @@
     <thead>
       <tr>
         <th>BuyerId</th>
+        <th>Buyer Last Name</th>
         <th>SellerId</th>
+        <th>Seller Last Name</th>
         <th>ProposalId</th>
         <th>Amount Buyer Paid</th>
         <th>Amount Seller Received</th>
@@ -71,11 +73,13 @@
       {{#each transactions}}
       <tr>
         <td>{{buyerId}}</td>
+        <td>{{buyerLastName}}</td>
         <td>{{sellerId}}</td>
+        <td>{{sellerLastName}}</td>
         <td>{{proposalId}}</td>
-        <td>{{amountBuyerPaid}}</td>
-        <td>{{AmountSellerReceived}}</td>
-        <td>{{formatDate data 'MMMM do YYYY'}}</td>
+        <td>${{amountBuyerPaid}}</td>
+        <td>${{amountSellerReceived}}</td>
+        <td>{{formatDate created 'MMMM Do YYYY'}}</td>
       </tr>
       {{/each}}
     </tbody>
