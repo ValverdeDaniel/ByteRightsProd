@@ -47,10 +47,43 @@
       {{#ifStripeAccountIdEqBlank user.stripeAccountId}}
       <a class="btn blue darken-2" href="stripe/authorize">Sign Up With Stripe</a>
       {{else}}
+      <a class="btn blue darken-2" href="stripe/stripeDashboard">View Payouts on Stripe</a>
       <p>StripeAccountId: {{user.stripeAccountId}}</p>
       <p>BalanceAvailable: {{balanceAvailable}}</p>
       <p>BalancePending: {{balancePending}}</p>
       {{/ifStripeAccountIdEqBlank}}
     </div>
   </div>
-
+{{!-- begin transaction history --}}
+{{#if transactions}}
+  <table class="striped">
+    <thead>
+      <tr>
+        <th>BuyerId</th>
+        <th>Buyer Last Name</th>
+        <th>SellerId</th>
+        <th>Seller Last Name</th>
+        <th>ProposalId</th>
+        <th>Amount Buyer Paid</th>
+        <th>Amount Seller Received</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each transactions}}
+      <tr>
+        <td>{{buyerId}}</td>
+        <td>{{buyerLastName}}</td>
+        <td>{{sellerId}}</td>
+        <td>{{sellerLastName}}</td>
+        <td>{{proposalId}}</td>
+        <td>${{amountBuyerPaid}}</td>
+        <td>${{amountSellerReceived}}</td>
+        <td>{{formatDate created 'MMMM Do YYYY'}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <p>You have not created/received any transactions yet</p>
+{{/if}}

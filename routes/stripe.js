@@ -11,7 +11,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Proposal = mongoose.model('proposals');
 const user = mongoose.model('users');
-const stripeTransaction = mongoose.model('stripeTransaction');
+const StripeTransaction = mongoose.model('stripeTransaction');
 const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
 
 
@@ -24,7 +24,7 @@ router.get('/stripeTest', (req, res) => {
 function pilotRequired(req, res, next) {
   if (!req.isAuthenticated()) {
     return res.redirect('/pilots/login');
-  } 
+  }
   next();
 }
 
@@ -47,7 +47,7 @@ router.get('/authorize', ensureAuthenticated, (req, res) => {
   // and `phone` in the query parameters: those form fields will be prefilled
   parameters = Object.assign(parameters, {
     //previous redirect_uri config.publicDomain +
-    redirect_uri:  'localhost:5000/stripe/token',
+    redirect_uri: 'localhost:5000/stripe/token',
     'stripe_user[business_type]': req.user.type || 'individual',
     'stripe_user[business_name]': req.user.businessName || undefined,
     'stripe_user[first_name]': req.user.firstName || undefined,
@@ -84,8 +84,8 @@ router.get('/token', ensureAuthenticated, async (req, res, next) => {
   try {
     // Post the authorization code to Stripe to complete the Express onboarding flow
     const expressAuthorized = await request.post({
-      uri: config.stripe.tokenUri, 
-      form: { 
+      uri: config.stripe.tokenUri,
+      form: {
         grant_type: 'authorization_code',
         client_id: config.stripe.clientId,
         client_secret: config.stripe.secretKey,
@@ -95,7 +95,7 @@ router.get('/token', ensureAuthenticated, async (req, res, next) => {
     });
 
     if (expressAuthorized.error) {
-      throw(expressAuthorized.error);
+      throw (expressAuthorized.error);
     }
 
     // Update the model and store the Stripe account ID in the datastore:
@@ -119,42 +119,42 @@ router.get('/token', ensureAuthenticated, async (req, res, next) => {
  *
  * Redirect to the pilots' Stripe Express dashboard to view payouts and edit account details.
  */
-// router.get('/stripeDashboard', ensureAuthenticated, async (req, res) => {
-//   //i believe this is where I am leaving off i successfully got here but then it didn't like my api key
-//   console.log('made it to stripe/stripeDashboard')
-//   const user = req.user;
-//   // Make sure the logged-in pilot completed the Express onboarding
-//   if (!user.stripeAccountId) {
-//     console.log('!user.stripeAccountId')
-//     console.log(user)
-//     return res.redirect('/dashboard');
-//   }
-//   try {
-//     // Generate a unique login link for the associated Stripe account to access their Express dashboard
-//     console.log('attempting to loginLink')
-//     console.log('stripe ' + stripe)
-//     console.log('user.stripeAccountId' + user.stripeAccountId);
-//     console.log('stripeClientId ' + config.stripe.clientId)
-//     const loginLink = await stripe.accounts.createLoginLink(
-//       user.stripeAccountId, {
-//         //was pilots/dashboard
-//         //i want this to take me to stripeDashboard
-//         redirect_url: 'http://localhost:5000/dashboard'
-//       }
-//     );
-//     // Directly link to the account tab
-//     console.log('req.query.account')
-//     if (req.query.account) {
-//       loginLink.url = loginLink.url + '/dashboard';
-//     }
-//     // Retrieve the URL from the response and redirect the user to Stripe
-//     return res.redirect(loginLink.url);
-//   } catch (err) {
-//     console.log(err);
-//     console.log('Failed to create a Stripe login link.');
-//     return res.redirect('/pilots/signup');
-//   }
-// });
+router.get('/stripeDashboard', ensureAuthenticated, async (req, res) => {
+  //i believe this is where I am leaving off i successfully got here but then it didn't like my api key
+  console.log('made it to stripe/stripeDashboard')
+  const user = req.user;
+  // Make sure the logged-in pilot completed the Express onboarding
+  if (!user.stripeAccountId) {
+    console.log('!user.stripeAccountId')
+    console.log(user)
+    return res.redirect('/dashboard');
+  }
+  try {
+    // Generate a unique login link for the associated Stripe account to access their Express dashboard
+    console.log('attempting to loginLink')
+    console.log('stripe ' + stripe)
+    console.log('user.stripeAccountId' + user.stripeAccountId);
+    console.log('stripeClientId ' + config.stripe.clientId)
+    const loginLink = await stripe.accounts.createLoginLink(
+      user.stripeAccountId, {
+        //was pilots/dashboard
+        //i want this to take me to stripeDashboard
+        redirect_url: 'http://localhost:5000/dashboard'
+      }
+    );
+    // Directly link to the account tab
+    console.log('req.query.account')
+    if (req.query.account) {
+      loginLink.url = loginLink.url + '/dashboard';
+    }
+    // Retrieve the URL from the response and redirect the user to Stripe
+    return res.redirect(loginLink.url);
+  } catch (err) {
+    console.log(err);
+    console.log('Failed to create a Stripe login link.');
+    return res.redirect('/pilots/signup');
+  }
+});
 
 // /**
 //  * POST /pilots/stripe/payout
@@ -247,28 +247,37 @@ router.get('/token', ensureAuthenticated, async (req, res, next) => {
 // end of rocket rides template
 
 //the start of payment authentication using Fiverr Strategy
-const fee = 3.15;
+//const processingPercentage = .1;
 
 router.get('/checkout/single_proposal/:id', (req, res, next) => {
   console.log('checkout/single_proposal/:id')
-  Proposal.findOne({_id: req.params.id }, function(err, proposal) {
+  Proposal.findOne({ _id: req.params.id }, function (err, proposal) {
     //console.log('proposal.price: ' + proposal.price)
-    try{
+    try {
       //var price = proposal.price
       var price = proposal.price
+      var fee = 3
       var totalPrice = price + fee;
+      console.log('%fee: ' + fee)
+      console.log('%price: ' + price)
+      console.log('%totalPrice: ' + totalPrice)
       //proposal = proposal;
       //proposal.price = totalPrice;
       req.session.proposal = proposal;
+      req.session.fee = fee;
+      //req.session.price = price;
       req.session.price = totalPrice;
       console.log('proposal1: ' + req.session.proposal)
       console.log('price: ' + req.session.price)
       res.render('checkout/single_proposal', {
-        proposal: proposal, 
+        proposal: proposal,
+        fee: fee,
+        //price: price,
         totalPrice: totalPrice
-      
+
+
       })
-    } catch(e) {
+    } catch (e) {
       console.log(e)
       //we are currently hitting this because price is undefined???
       console.log('something went wrong');
@@ -279,60 +288,133 @@ router.get('/checkout/single_proposal/:id', (req, res, next) => {
 
 router.route('/payment/:id')
   .get((req, res, next) => {
+    Proposal.findOne({
+      _id: req.params.id
+    })
     res.render('checkout/payment');
     console.log('.get /checkout/payment')
   })
 
-router.post('/payment', (req, res, next) => {
-    console.log('.post /checkout/payment')
-// Create a new customer and then a new charge for that customer:
+//we added application_fee_amount: fee and i'm not sure if it still sends a payment?
+router.post('/payment', async (req, res, next) => {
+  console.log('.post /checkout/payment')
+  // Create a new customer and then a new charge for that customer:
   var proposal = req.session.proposal
   var price = req.session.price
-  console.log('payment proposal:' + proposal)
+  var fee = req.session.fee
+  //console.log('payment proposal:' + JSON.stringify(proposal))
   console.log('payment price: ' + price)
-  price*=100
-  //stops somewhere around here
+  console.log('/payment fee: ' + fee)
+  price *= 100.0
+  fee *= 100
+  console.log('%aprice: ' + price)
+  console.log('%apaymentFee: ' + fee)
   console.log('before stripe.customers')
   console.log('destination: ' + req.user.stripeAccountId)
-  //console.log('touchedByDestination: ' + proposal)
-    stripe.customers
-      .create({
-        email: req.user.email,
-      })
-      .then((customer) => {
-        console.log('customer2')
-        return stripe.customers.createSource(customer.id, {
-          source: req.body.stripeToken
-        });
-      })
-      .then((source) => {
-        try{
-          console.log('source')
+  console.log('buyerId: ' + req.user.id)
+
+  console.log('proposalId: ' + proposal._id)
+
+  var amountSellerReceived = price - fee;
+
+  console.log('seller strip acc id', proposal.sellerStripeAccountId)
+  //we want the user information based on the seller stripe account
+  let sellerInformation = await user.findOne({ stripeAccountId: proposal.sellerStripeAccountId });
+  console.log('SellerInfo', sellerInformation)
+  console.log('sellerId' + sellerInformation._id)
+  console.log('sellerFirstName' + sellerInformation.firstName)
+  console.log('sellerLastName' + sellerInformation.lastName)
+
+  let newStripeTransaction = {
+    buyerId: req.user.id,
+    buyerFirstName: req.user.firstName,
+    buyerLastName: req.user.lastName,
+    //the account linked to the proposal.sellerStripeAccountId
+    sellerId: sellerInformation._id,
+    sellerFirstName: sellerInformation.firstName,
+    sellerLastName: sellerInformation.lastName,
+    proposalId: proposal._id,
+    amountBuyerPaid: price/100,
+    amountSellerReceived: amountSellerReceived/100
+    //stripePaymentIntentId: ???
+  }
+  // Save the ride
+  new StripeTransaction(newStripeTransaction)
+    .save();
+
+  stripe.customers
+    .create({
+      email: req.user.email,
+    })
+    .then((customer) => {
+      console.log('customer2')
+      return stripe.customers.createSource(customer.id, {
+        source: req.body.stripeToken
+      });
+    })
+    .then((source) => {
+      try {
+        console.log('source')
         //return stripe.charges.create({
-          stripe.charges.create({
+        stripe.charges.create({
           amount: price,
           currency: 'usd',
           customer: source.customer,
+
           //source: req.body.stripeToken,
           transfer_data: {
-            
+            amount: price - fee,
             // destination: req.user.stripeAccountId
             destination: proposal.sellerStripeAccountId
           },
+
         });
-        } catch(e){
-          console.error(e.name + ': ' + e.message);
-        }
-        
-      })
-      .then((charge) => {
-        console.log('charge')
-        // New charge created on a new customer
-        res.redirect('/');
-      })
-      .catch((err) => {
-        // Deal with an error
-      });
-  })
+      } catch (e) {
+        console.error(e.name + ': ' + e.message);
+      }
+
+    })
+    .then(async (charge) => {
+      console.log('charge')
+      console.log('%bprice: ' + price)
+      //At this point we need to update the proposal payment status
+      try {
+        let updatedProposal = await Proposal.findByIdAndUpdate(proposal._id, {
+          paidStatus: "paid"
+        });
+      } catch (err) {
+        console.log('getting error inpdating the proposal', err)
+
+      }
+
+      console.log('paid')
+      // New charge created on a new customer
+      //place at end of put
+      res.redirect('/');
+    })
+    .catch((err) => {
+      // Deal with an error
+    })
+
+  // .then((paid)=> {
+  //   console.log('made it through charge')
+  //     Proposal.findOne({
+  //       _id: req.params.id
+  //     })
+  //     console.log('made it through proposal.findOne payment.put')
+  //     console.log('proposal2: ' + req.session.proposal )
+  //     console.log('proposal3' + proposal)
+
+  //     proposal((req, res) => {
+  //       proposal.paidStatus = "paid";
+
+  //       proposal.save()
+  //       console.log('maid it through proposal.save')
+  //       .then(proposal => {
+  //         res.redirect('/');
+  //       });
+  //     })
+  // })
+})
 
 module.exports = router;

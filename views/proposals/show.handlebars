@@ -93,14 +93,20 @@
               {{!-- message for client before logging in if compensation is not = blank --}}
               <p>To give us permission to use your photo, simply press "Accept".</p>
               {{/ifCompensationEqBlank}}
-              <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
-                <div>
-                  <!-- Modal Trigger -->
-                  <button data-target="acceptModal" class="btn green lighten-1 modal-trigger">Accept</button>
-                  {{!-- <input name="voteBody" type="submit" value="Decline" class="btn red lighten-1"> --}}
-                  <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
-                </div>
-              </form>
+              {{#ifEqualsElse proposal.votes.[0].voteBody "Accept"}}
+                <p>this proposal has been accepted by {{proposal.votes.[0].voteUser.firstName}} {{proposal.votes.[0].voteUser.lastName}}</p>
+              {{else}}
+                <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
+                  <div>
+                    <!-- Modal Trigger -->
+                    <button data-target="acceptModal" class="btn green lighten-1 modal-trigger">Accept</button>
+                    {{!-- <input name="voteBody" type="submit" value="Decline" class="btn red lighten-1"> --}}
+                    <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
+                  </div>
+                </form>
+                {{!-- end ifEqualsElse proposal.votes.[0] "Accept" --}}
+              {{/ifEqualsElse}}
+              
               {{!-- else for if user --}}
               {{else}}
               {{#ifCompensationEqBlank proposal.compensation}}
@@ -161,10 +167,16 @@
                       </div>
                     {{!-- else for#ifEqualsElse proposal.sellerStripeAccountId = ""--}}
                     {{else}}
+                      {{#ifEqualsElse proposal.paidStatus ""}}
                       <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
                       <div class="col m-auto s4">
                         <a class="proposal-btn btn blue darken-2" href="/stripe/checkout/single_proposal/{{proposal._id}}"><i>checkout</i></a>
                       </div>
+                      {{!-- else for ifEqualsElse proposal.paidStatus "" --}}
+                      {{else}}
+                      <p>this proposal has been paid for</p>
+                      {{!-- end if for ifEqualsElse proposal.paidStatus "" --}}
+                      {{/ifEqualsElse}}
                     {{!-- end #ifEqualsElse proposal.sellerStripeAccountId = "" --}}
                     {{/ifEqualsElse}}
                   {{!-- end #ifLoggedUserEqProposalUser user.id proposal.user.id --}}
@@ -179,10 +191,16 @@
                       </div>
                     {{!-- else for#ifEqualsElse proposal.sellerStripeAccountId = ""--}}
                     {{else}}
+                      {{#ifEqualsElse proposal.paidStatus ""}}
                       <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
                       <div class="col m-auto s4">
-                        <a class="proposal-btn btn blue darken-2" href="/stripe/checkout/single_proposal/{{proposal._id}}"><i class="fa fa-cart">checkout</i></a>
+                        <a class="proposal-btn btn blue darken-2" href="/stripe/checkout/single_proposal/{{proposal._id}}"><i>checkout</i></a>
                       </div>
+                      {{!-- else for ifEqualsElse proposal.paidStatus "" --}}
+                      {{else}}
+                      <p>this proposal has been paid for</p>
+                      {{!-- end if for ifEqualsElse proposal.paidStatus "" --}}
+                      {{/ifEqualsElse}}
                     {{!-- end #ifEqualsElse proposal.sellerStripeAccountId = "" --}}
                     {{/ifEqualsElse}}
                   {{!--else for #ifLoggedUserEqProposalUser user.id proposal.user.id --}}

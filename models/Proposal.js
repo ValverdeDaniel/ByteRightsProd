@@ -42,6 +42,10 @@ const ProposalSchema = new Schema({
     type: String,
     default: ""
   },
+  paidStatus: {
+    type: String,
+    default: ""
+  },
   allowComments: {
     type: Boolean,
     default: true
@@ -80,7 +84,8 @@ const ProposalSchema = new Schema({
   }],
   votes: [{
     voteBody: {
-      type: String
+      type: String,
+      default: ""
     },
     voteEmail: {
       type: String

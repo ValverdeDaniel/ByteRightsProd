@@ -1,5 +1,3 @@
-'use strict';
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -8,21 +6,50 @@ mongoose.Promise = global.Promise;
 
 // Define the Stripe Transaction schema.
 const StripeTransactionSchema = new Schema({
-  sender: { type : Schema.ObjectId, ref : 'users', required: true },
-  receiver: { type : Schema.ObjectId, ref : 'users', required: true },
-  amount: Number,
-  currency: { type: String, default: 'usd' },
-  created: { type: Date, default: Date.now },
+  buyerId: { 
+    type : Schema.ObjectId, 
+    ref : 'users' 
+  },
+  buyerFirstName: {
+    type: String
+  },
+  buyerLastName: {
+    type: String
+  },
+  sellerId: { 
+    type : Schema.ObjectId,
+    ref : 'users'
+  },
+  sellerFirstName: {
+    type: String
+  },
+  sellerLastName: {
+    type: String
+  },
+  proposalId: { 
+    type: Schema.ObjectId,
+    ref: 'proposals'
+  },
+  amountBuyerPaid: {
+    type: Number
+  },
+  amountSellerReceived: {
+    type: Number
+  },
+  currency: { 
+    type: String, 
+    default: 'usd' 
+  },
+  created: { 
+    type: Date, 
+    default: Date.now 
+  },
 
   // Stripe Payment Intent ID corresponding to this stripe transaction.
-  stripePaymentIntentId: String
+  stripePaymentIntentId: {
+    type: String  
+  }
 });
 
-// Return the stripe transaction amount for the receiver after collecting 20% platform fees.
-StripeTransactionSchema.methods.amountForReceiver = function() {
-  return parseInt(this.amount * 0.8);
-};
-
-const StripeTransaction = mongoose.model('stripeTransaction', StripeTransactionSchema);
-
-module.exports = StripeTransaction;
+//create collection and add schema
+mongoose.model('stripeTransaction', StripeTransactionSchema, 'stripeTransaction');
