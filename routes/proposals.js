@@ -78,6 +78,45 @@ router.get('/show/:id', (req, res) => {
     })
 })
 
+//show single proposal
+router.get('/tempshow/:id', (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .populate('user')
+    .populate('votes.voteUser')
+    .populate('comments.commentUser')
+    .populate('touchedBy.touchedByUser')
+    .then(proposal => {
+      console.log(proposal);
+      if (proposal.status == 'public') {
+        //messing with metaTags
+        res.locals.metaTags = { 
+          title: "Byte Rights Proposal from " + proposal.user.firstName, 
+          description: "Click the link for details.",   
+          image: proposal.url 
+         } 
+        res.render('proposals/tempshow', {
+          proposal: proposal
+        });
+
+      } else {
+        if (req.user) {
+          if (req.user.id == proposal.user._id) {
+            res.render('proposals/tempshow', {
+              proposal: proposal
+            });
+          } else {
+            res.redirect('/proposals/my');
+          }
+        } else {
+          res.redirect('/proposals/my');
+        }
+      }
+    })
+})
+
+
 // show single proposal for guest OG ensureLoggedin /auth/google
 router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
   Proposal.findOne({
