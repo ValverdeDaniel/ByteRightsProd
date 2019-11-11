@@ -94,7 +94,7 @@
               <p>To give us permission to use your photo, simply press "Accept".</p>
               {{/ifCompensationEqBlank}}
               {{#ifEqualsElse proposal.votes.[0].voteBody "Accept"}}
-                <p>this proposal has been accepted by {{proposal.votes.[0].voteUser.firstName}} {{proposal.votes.[0].voteUser.lastName}}</p>
+                <p>This proposal has been accepted by {{proposal.votes.[0].voteUser.firstName}} {{proposal.votes.[0].voteUser.lastName}}</p>
               {{else}}
                 <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
                   <div>
@@ -153,14 +153,14 @@
 
                       {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
                       {{else}}
-                        <p>you have successfully linked your stripe seller account</p>
+                        <p>You have successfully linked your stripe seller account</p>
                         <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
                         {{#ifEqualsElse proposal.paidStatus ""}}
                           <p>Waiting for client to pay you</p>
                           
                         {{!-- else for ifEqualsElse proposal.paidStatus "" --}}
                         {{else}}
-                          <p>this proposal has been paid for</p>
+                          <p>This proposal has been paid for</p>
                         {{!-- end if for ifEqualsElse proposal.paidStatus "" --}}
                         {{/ifEqualsElse}}
                       {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
@@ -171,7 +171,7 @@
                   {{else}}
                     {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
                       <div>
-                        <p>we are waiting for the seller to connect their stripe account</p>
+                        <p>We are waiting for the seller to connect their stripe account</p>
                       </div>
                     {{!-- else for#ifEqualsElse proposal.sellerStripeAccountId = ""--}}
                     {{else}}
@@ -182,7 +182,7 @@
                       </div>
                       {{!-- else for ifEqualsElse proposal.paidStatus "" --}}
                       {{else}}
-                      <p>this proposal has been paid for</p>
+                      <p>This proposal has been paid for</p>
                       {{!-- end if for ifEqualsElse proposal.paidStatus "" --}}
                       {{/ifEqualsElse}}
                     {{!-- end #ifEqualsElse proposal.sellerStripeAccountId = "" --}}
@@ -195,7 +195,7 @@
                   {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}
                     {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
                       <div>
-                        <p>we are waiting for the seller to connect their stripe account</p>
+                        <p>We are waiting for the seller to connect their stripe account</p>
                       </div>
                     {{!-- else for#ifEqualsElse proposal.sellerStripeAccountId = ""--}}
                     {{else}}
@@ -206,7 +206,7 @@
                       </div>
                       {{!-- else for ifEqualsElse proposal.paidStatus "" --}}
                       {{else}}
-                      <p>this proposal has been paid for</p>
+                      <p>This proposal has been paid for</p>
                       {{!-- end if for ifEqualsElse proposal.paidStatus "" --}}
                       {{/ifEqualsElse}}
                     {{!-- end #ifEqualsElse proposal.sellerStripeAccountId = "" --}}
@@ -216,7 +216,7 @@
                   {{else}}
 
                     {{#ifEqualsElse user.stripeAccountId ""}}
-                        <p>in order to get paid you have to sign up with stripe. It's not that hard we promise.</p>
+                        <p>In order to get paid you have to sign up with stripe. It's not that hard we promise.</p>
                         <div>
                           <a class="btn blue darken-2" href="/stripe/authorize">Sign Up With Stripe</a>
                         </div>
@@ -231,7 +231,7 @@
 
                       {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
                       {{else}}
-                        <p>you have successfully linked your stripe seller account</p>
+                        <p>You have successfully linked your stripe seller account</p>
                         <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
                       {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
                       {{/ifEqualsElse}}
