@@ -140,7 +140,7 @@
                   {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}
                     {{#ifEqualsElse user.stripeAccountId ""}}
                       <div>
-                        <a class="btn blue darken-2" href="stripe/authorize">Sign Up With Stripe</a>
+                        <a class="btn blue darken-2" href="/stripe/authorize">Sign Up With Stripe</a>
                       </div>
                     {{!-- else for #ifEqualsElse user.stripeAccountId = "" --}}
                     {{else}}
@@ -155,6 +155,14 @@
                       {{else}}
                         <p>you have successfully linked your stripe seller account</p>
                         <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
+                        {{#ifEqualsElse proposal.paidStatus ""}}
+                          <p>Waiting for client to pay you</p>
+                          
+                        {{!-- else for ifEqualsElse proposal.paidStatus "" --}}
+                        {{else}}
+                          <p>this proposal has been paid for</p>
+                        {{!-- end if for ifEqualsElse proposal.paidStatus "" --}}
+                        {{/ifEqualsElse}}
                       {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
                       {{/ifEqualsElse}}
                     {{!-- end #ifEqualsElse user.stripeAccountId = "" --}}
@@ -210,7 +218,7 @@
                     {{#ifEqualsElse user.stripeAccountId ""}}
                         <p>in order to get paid you have to sign up with stripe. It's not that hard we promise.</p>
                         <div>
-                          <a class="btn blue darken-2" href="stripe/authorize">Sign Up With Stripe</a>
+                          <a class="btn blue darken-2" href="/stripe/authorize">Sign Up With Stripe</a>
                         </div>
                       {{!-- else for #ifEqualsElse user.stripeAccountId = "" --}}
                     {{else}}
@@ -576,6 +584,10 @@
     <p>contractUserType = buyer</p>
   {{/ifEqualsElse}}
 </div>
+
+  <div>
+    <a class="btn blue darken-2" href="/stripe/authorize">Sign Up With Stripe</a>
+  </div>
 
 <script>
 //modal logic materialize 

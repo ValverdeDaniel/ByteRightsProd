@@ -36,8 +36,8 @@ router.get('/', ensureAuthenticated, async (req, res) => {
   console.log('stripeAccountId' + req.user.stripeAccountId)
   console.log('balance: ' + balance)
   console.log('balance2: ' + balance.available[0].amount)
-
-
+  
+  //.sort({ created: -1})
   res.render('dashboard/dashboard', {
     user: user,
     transactions: transactions,

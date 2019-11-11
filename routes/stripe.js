@@ -256,7 +256,8 @@ router.get('/checkout/single_proposal/:id', (req, res, next) => {
     try {
       //var price = proposal.price
       var price = proposal.price
-      var fee = 3
+      var feePercent = .1
+      var fee = Math.ceil(price * feePercent)
       var totalPrice = price + fee;
       console.log('%fee: ' + fee)
       console.log('%price: ' + price)
