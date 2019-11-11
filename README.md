@@ -11,3 +11,10 @@ gitpushtest1
 
 git branch --set-upstream-to origin/master 2stripeTest 
 
+git pull
+
+git add .
+
+git commit -m "some message"
+
+git push origin NameOfBranch
