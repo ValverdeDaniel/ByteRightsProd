@@ -42,17 +42,28 @@ router.post('/filter', (req, res) => {
 
 //show single proposal
 router.get('/show/:id', (req, res) => {
-  Proposal.findOne({
-    _id: req.params.id
-  })
-
-    .populate('user')
-    .populate('votes.voteUser')
-    .populate('comments.commentUser')
-    .populate('touchedBy.touchedByUser')
-    .then(proposal => {
+  Proposal.findOne({_id: req.params.id})
+ 
+  .populate('user')
+  .populate('votes.voteUser')
+  .populate('comments.commentUser')
+  .populate('touchedBy.touchedByUser')
+  .then(proposal => {
+    try { 
+      var price = proposal.price
+      var feePercent = .1
+      var fee = Math.ceil(price * feePercent)
+      var totalPrice = price + fee;
+      console.log('%fee: ' + fee)
+      console.log('%price: ' + price)
+      console.log('%totalPrice: ' + totalPrice)
       console.log(proposal);
-
+      req.session.proposal = proposal;
+      req.session.fee = fee;
+      //req.session.price = price;
+      req.session.price = totalPrice;
+      console.log('proposal1: ' + req.session.proposal)
+      console.log('price: ' + req.session.price)
         //messing with metaTags
         res.locals.metaTags = { 
           title: "Byte Rights Proposal from " + proposal.user.firstName, 
@@ -60,10 +71,18 @@ router.get('/show/:id', (req, res) => {
           image: proposal.url 
          } 
         res.render('proposals/show', {
-          proposal: proposal
+          proposal: proposal,
+          fee: fee,
+          //price: price,
+          totalPrice: totalPrice
         });
+  
+    } catch { 
+      console.log(e)
+      console.log('somethingWentWrong get tempshow')
+    }
 
-    })
+  })
 })
 
 //show single proposal
@@ -114,26 +133,45 @@ router.get('/tempshow/:id', (req, res) => {
 
 // show single proposal for guest OG ensureLoggedin /auth/google
 router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
-  Proposal.findOne({
-    _id: req.params.id
-  })
+  Proposal.findOne({_id: req.params.id})
  
   .populate('user')
   .populate('votes.voteUser')
   .populate('comments.commentUser')
   .populate('touchedBy.touchedByUser')
   .then(proposal => {
-    console.log(proposal);
-
-      //messing with metaTags
-      res.locals.metaTags = { 
-        title: "Byte Rights Proposal from " + proposal.user.firstName, 
-        description: "Click the link for details.",   
-        image: proposal.url 
-       } 
-      res.render('proposals/showClient', {
-        proposal: proposal
-      });
+    try { 
+      var price = proposal.price
+      var feePercent = .1
+      var fee = Math.ceil(price * feePercent)
+      var totalPrice = price + fee;
+      console.log('%fee: ' + fee)
+      console.log('%price: ' + price)
+      console.log('%totalPrice: ' + totalPrice)
+      console.log(proposal);
+      req.session.proposal = proposal;
+      req.session.fee = fee;
+      //req.session.price = price;
+      req.session.price = totalPrice;
+      console.log('proposal1: ' + req.session.proposal)
+      console.log('price: ' + req.session.price)
+        //messing with metaTags
+        res.locals.metaTags = { 
+          title: "Byte Rights Proposal from " + proposal.user.firstName, 
+          description: "Click the link for details.",   
+          image: proposal.url 
+         } 
+        res.render('proposals/showClient', {
+          proposal: proposal,
+          fee: fee,
+          //price: price,
+          totalPrice: totalPrice
+        });
+  
+    } catch { 
+      console.log(e)
+      console.log('somethingWentWrong get tempshow')
+    }
 
   })
 })
