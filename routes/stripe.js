@@ -139,7 +139,8 @@ router.get('/stripeDashboard', ensureAuthenticated, async (req, res) => {
       user.stripeAccountId, {
         //was pilots/dashboard
         //i want this to take me to stripeDashboard
-        redirect_url: 'http://localhost:5000/dashboard'
+        // redirect_url: 'http://localhost:5000/dashboard'
+        redirect_url: 'https://desolate-sierra-72554.herokuapp.com/dashboard'
       }
     );
     // Directly link to the account tab
@@ -381,7 +382,8 @@ router.post('/payment', async (req, res, next) => {
       //At this point we need to update the proposal payment status
       try {
         let updatedProposal = await Proposal.findByIdAndUpdate(proposal._id, {
-          paidStatus: "paid"
+          paidStatus: "paid",
+          status: "Paid"
         });
       } catch (err) {
         console.log('getting error inpdating the proposal', err)
@@ -391,7 +393,7 @@ router.post('/payment', async (req, res, next) => {
       console.log('paid')
       // New charge created on a new customer
       //place at end of put
-      res.redirect('/');
+      res.redirect(`/proposals/show/${proposal._id}`);
     })
     .catch((err) => {
       // Deal with an error
