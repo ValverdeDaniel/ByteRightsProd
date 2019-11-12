@@ -36,7 +36,7 @@ const ProposalSchema = new Schema({
   },
   status: {
     type: String,
-    default: 'public'
+    default: 'Created'
   },
   sellerStripeAccountId: {
     type: String,

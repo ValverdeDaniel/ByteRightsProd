@@ -45,13 +45,14 @@ router.get('/show/:id', (req, res) => {
   Proposal.findOne({
     _id: req.params.id
   })
+
     .populate('user')
     .populate('votes.voteUser')
     .populate('comments.commentUser')
     .populate('touchedBy.touchedByUser')
     .then(proposal => {
       console.log(proposal);
-      if (proposal.status == 'public') {
+
         //messing with metaTags
         res.locals.metaTags = { 
           title: "Byte Rights Proposal from " + proposal.user.firstName, 
@@ -62,19 +63,6 @@ router.get('/show/:id', (req, res) => {
           proposal: proposal
         });
 
-      } else {
-        if (req.user) {
-          if (req.user.id == proposal.user._id) {
-            res.render('proposals/show', {
-              proposal: proposal
-            });
-          } else {
-            res.redirect('/proposals/my');
-          }
-        } else {
-          res.redirect('/proposals/my');
-        }
-      }
     })
 })
 
@@ -83,37 +71,25 @@ router.get('/tempshow/:id', (req, res) => {
   Proposal.findOne({
     _id: req.params.id
   })
-    .populate('user')
-    .populate('votes.voteUser')
-    .populate('comments.commentUser')
-    .populate('touchedBy.touchedByUser')
-    .then(proposal => {
-      console.log(proposal);
-      if (proposal.status == 'public') {
-        //messing with metaTags
-        res.locals.metaTags = { 
-          title: "Byte Rights Proposal from " + proposal.user.firstName, 
-          description: "Click the link for details.",   
-          image: proposal.url 
-         } 
-        res.render('proposals/tempshow', {
-          proposal: proposal
-        });
+ 
+  .populate('user')
+  .populate('votes.voteUser')
+  .populate('comments.commentUser')
+  .populate('touchedBy.touchedByUser')
+  .then(proposal => {
+    console.log(proposal);
 
-      } else {
-        if (req.user) {
-          if (req.user.id == proposal.user._id) {
-            res.render('proposals/tempshow', {
-              proposal: proposal
-            });
-          } else {
-            res.redirect('/proposals/my');
-          }
-        } else {
-          res.redirect('/proposals/my');
-        }
-      }
-    })
+      //messing with metaTags
+      res.locals.metaTags = { 
+        title: "Byte Rights Proposal from " + proposal.user.firstName, 
+        description: "Click the link for details.",   
+        image: proposal.url 
+       } 
+      res.render('proposals/tempshow', {
+        proposal: proposal
+      });
+
+  })
 })
 
 
@@ -122,60 +98,54 @@ router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
   Proposal.findOne({
     _id: req.params.id
   })
-    .populate('user')
-    .populate('votes.voteUser')
-    .populate('comments.commentUser')
-    .then(proposal => {
-      if (proposal.status == 'public') {
-        res.render('proposals/showClient', {
-          proposal: proposal
-        });
+ 
+  .populate('user')
+  .populate('votes.voteUser')
+  .populate('comments.commentUser')
+  .populate('touchedBy.touchedByUser')
+  .then(proposal => {
+    console.log(proposal);
 
-      } else {
-        if (req.user) {
-          if (req.user.id == proposal.user._id) {
-            res.render('proposals/showClient', {
-              proposal: proposal
-            });
-          } else {
-            res.redirect('/proposals/my');
-          }
-        } else {
-          res.redirect('/proposals/my');
-        }
-      }
-    })
+      //messing with metaTags
+      res.locals.metaTags = { 
+        title: "Byte Rights Proposal from " + proposal.user.firstName, 
+        description: "Click the link for details.",   
+        image: proposal.url 
+       } 
+      res.render('proposals/showClient', {
+        proposal: proposal
+      });
+
+  })
 })
+
 
 //testing if function for ensureLoggedIn
 router.get('/showFBClient/:id', ensureLoggedIn('/auth/facebook'), (req, res) => {
   Proposal.findOne({
     _id: req.params.id
   })
-    .populate('user')
-    .populate('votes.voteUser')
-    .populate('comments.commentUser')
-    .then(proposal => {
-      if(proposal.status == 'public') {
-        res.render('proposals/showClient', {
-          proposal:proposal
-        });
+ 
+  .populate('user')
+  .populate('votes.voteUser')
+  .populate('comments.commentUser')
+  .populate('touchedBy.touchedByUser')
+  .then(proposal => {
+    console.log(proposal);
 
-      } else {
-        if(req.user){
-          if(req.user.id == proposal.user._id){
-            res.render('proposals/showClient', {
-              proposal:proposal
-            });
-          } else {
-            res.redirect('/proposals/my');
-          }
-        } else {
-          res.redirect('/proposals/my');
-        }
-      }
-    })
+      //messing with metaTags
+      res.locals.metaTags = { 
+        title: "Byte Rights Proposal from " + proposal.user.firstName, 
+        description: "Click the link for details.",   
+        image: proposal.url 
+       } 
+      res.render('proposals/showClient', {
+        proposal: proposal
+      });
+
+  })
 })
+
 
 //display terms per proposal
 router.get('/terms/:id', (req, res) => {
@@ -194,15 +164,15 @@ router.get('/terms/:id', (req, res) => {
 
 
 //list proposals from a user
-router.get('/user/:userId', (req, res) => {
-  Proposal.find({ user: req.params.userId, status: 'public' })
-    .populate('user')
-    .then(proposals => {
-      res.render('proposals/index', {
-        proposals: proposals
-      });
-    });
-});
+// router.get('/user/:userId', (req, res) => {
+//   Proposal.find({ user: req.params.userId, status: 'public' })
+//     .populate('user')
+//     .then(proposals => {
+//       res.render('proposals/index', {
+//         proposals: proposals
+//       });
+//     });
+// });
 
 //logged in Users proposals
 router.get('/my', ensureAuthenticated, (req, res) => {
@@ -451,19 +421,23 @@ router.post('/', ensureAuthenticated, (req, res) => {
   var url = req.body.url;
   var n = url.indexOf('?');
   url = url.substring(0, n != -1 ? n : url.length);
+  
+    let newProposal = {
+      url: url,
+      contractUserType: req.body.contractUserType,
+      recipient: req.body.recipient,
+      compensation: req.body.compensation,
+      price: req.body.price,
+      usage: req.body.usage,
+      credit: credit,
+      status: req.body.status,
+      allowComments: allowComments,
+      user: req.user.id
+    }
 
-  let newProposal = {
-    url: url,
-    contractUserType: req.body.contractUserType,
-    recipient: req.body.recipient,
-    compensation: req.body.compensation,
-    price: req.body.price,
-    usage: req.body.usage,
-    credit: credit,
-    status: req.body.status,
-    allowComments: allowComments,
-    user: req.user.id
-  }
+    if (req.body.contractUserType == "seller"){
+      newProposal.sellerStripeAccountId = req.user.stripeAccountId  
+    }   
 
   let tagIDs = [];
   if (req.body.tags.length > 0) {
@@ -536,44 +510,6 @@ router.put('/:id', (req, res) => {
     });
 });
 
-//vote on proposal
-// router.put('/:id/vote', async (req, res) => {
-//   try {
-//     const errors = {};
-//     let proposal = await Proposal.findOne({ _id: req.params.id })
-//     if (!proposal) {
-//       throw new Error('Proposal not found');
-//     }
-//     let votes = proposal.votes || [];
-//     let existingVote = votes.find(vote => vote.user.toString() === req.user._id.toString())
-//     if (existingVote) {
-//       existingVote.userSay = req.body.userSay;
-//     } else {
-//       votes.push({user: req.user._id, userSay: req.body.userSay});
-//     }
-//     proposal.votes = votes;
-//     await proposal.save();
-//     res.json(proposal)
-//   } catch (error) {
-//     res.status(404).json(error)
-//   }
-// });
-
-// //add this part to the show proposals part. or something like that.
-// export const voteProposal = (id, data) => (dispatch) => {
-//   dispatch(setProposalSaving());
-//   console.log('voteProposal ', id, data)
-//   axios
-//     .put(`/api/proposal/${id}/vote`, data)
-//     .then(res => dispatch({
-//       type: VOTE_CONTRACT,
-//       payload: res.data,
-//     }))
-//     .catch(err => dispatch({
-//       type: VOTE_CONTRACT,
-//       payload: null,
-//     }));
-// };
 
 //delete Proposal
 router.delete('/:id', (req, res) => {
@@ -596,6 +532,10 @@ router.post('/voteUser/:id', (req, res) => {
       const newTouch = {
         touchedByUser: req.user.id
       }
+      if (proposal.contractUserType == "buyer"){
+        proposal.sellerStripeAccountId = req.user.stripeAccountId;
+      }
+      proposal.status = "Accepted";
       // voteBody= req.body.voteBody,
       // voteUser= req.user.id,
       // touchedBy= req.user.id

@@ -381,7 +381,8 @@ router.post('/payment', async (req, res, next) => {
       //At this point we need to update the proposal payment status
       try {
         let updatedProposal = await Proposal.findByIdAndUpdate(proposal._id, {
-          paidStatus: "paid"
+          paidStatus: "paid",
+          status: "Paid"
         });
       } catch (err) {
         console.log('getting error inpdating the proposal', err)
@@ -391,7 +392,7 @@ router.post('/payment', async (req, res, next) => {
       console.log('paid')
       // New charge created on a new customer
       //place at end of put
-      res.redirect('/');
+      res.redirect(`/proposals/show/${proposal._id}`);
     })
     .catch((err) => {
       // Deal with an error
