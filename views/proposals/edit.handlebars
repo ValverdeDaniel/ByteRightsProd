@@ -7,15 +7,11 @@
         </div>
       </div>
     </div>
-      <div class="row"></div>
-        <div class="col m12 s12 right-align">
-          <button data-target="deleteModal" class="btn red fa fa-remove modal-trigger">Delete</button>
-        </div>
-      </div>
+  </div>
+  <div class="row">
     <div class="col m6 s12">
       <form class="proposal_add-wrapper" action="/proposals/{{proposal.id}}?_method=PUT" method="post"
         id="editproposal">
-        <div class="col m6 s12">
           <input type="hidden" name="_method" value="PUT">
           <label>Image Link</label>
           <div class="input-field">
@@ -51,7 +47,7 @@
             <label for="status">Status</label>
           </div>   --}}
           <p>
-            <p>Specify whether or not you will credit the creator when using the requested photo.</p>
+            <p>Will the creator be mentioned when the photo is used?</p>
             <p>
           <label>Credit</label>
           <div class="switch">
@@ -84,10 +80,13 @@
               </label>
             </p>
           </div> --}}
-          <label for="compensation">Compensation</label>
+          <p>How would you like the photo to be compensated?</p>
           <div class="input-field">
             <input type="text" name="compensation" value="{{proposal.compensation}}">
-            
+          </div>
+          <p>If cash, how much?</p>
+          <div class="input-field">
+            <input type="text" name="price" value="{{proposal.price}}">
           </div>
           <label>Tags</label>
           <div class="input-field">
@@ -115,7 +114,7 @@
           </div> --}}
           {{!-- text area end input field --}}
           <input type="button" value="Save" class="btn primary" onclick="$('#editproposal').submit()">
-        </div>
+          <button data-target="deleteModal" class="btn red modal-trigger">Delete</button>
       </form>
       {{!-- delete button --}}
     </div>

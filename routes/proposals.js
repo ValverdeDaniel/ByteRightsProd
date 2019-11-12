@@ -542,13 +542,18 @@ router.put('/:id', (req, res) => {
 
       //new values
       proposal.url = url;
-      contractUserType= req.body.contractUserType;
+      proposal.contractUserType= req.body.contractUserType;
       proposal.recipient = req.body.recipient;
       proposal.compensation = req.body.compensation;
+      proposal.price = req.body.price;
       proposal.usage = req.body.usage;
       proposal.credit = credit;
       proposal.status = req.body.status;
       proposal.allowComments = allowComments;
+
+      if (req.body.contractUserType == "seller"){
+        proposal.sellerStripeAccountId = req.user.stripeAccountId  
+      }   
 
       let tagIDs = [];
       if (req.body.tags.length > 0) {

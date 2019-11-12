@@ -1,11 +1,9 @@
-tempShow
 <div class="proposal_wrapper--add">
   <div class="row no-margin--bottom">
     <div class="proposal_topbar">
       <div class="col s12">
         <h1 class="proposal_title">Proposal for {{proposal.recipient}}</h1>
-          From: <b>{{proposal.user.firstName}} {{proposal.user.lastName}}</b> at <a href="{{proposal.user.website}}" target="_blank">{{proposal.user.companyName}}</a>
-          <p>Proposal Status: {{proposal.status}}</p>
+          From: <b>{{proposal.user.firstName}} {{proposal.user.lastName}}</b> at <a href="{{proposal.user.website}}" target="_blank">{{proposal.user.companyName}}</a> | Status: <b>{{proposal.status}}</b>
       </div>
       {{!-- <div class="col s12">
         <p>Proposal #: {{proposal.id}}</p>
@@ -22,6 +20,7 @@ tempShow
           <div class="card-stacked">
             <div class="card-content">
               <span class="card-title">What You Need to Know</span>
+              <p>This is a proposal for the right to the referenced image. Here are the important details:</p><br>
               <p class="proposal-label">Where will it be used?</p>
               <p>{{proposal.usage}}</p>
 
@@ -32,9 +31,16 @@ tempShow
               <p>No</p>
               {{/if}}
               {{!-- add logic ifEqualsElse --}}
+              {{#ifEqualsElse proposal.compensation "Cash"}}
                 <p class="proposal-label">How will you be compensated?</p>
-                <p>{{proposal.compensation}}</p>
-                <p>{{proposal.price}}</p>
+                <p>${{proposal.price}}</p>
+              {{else}}
+                {{#ifEqualsElse proposal.compensation ""}}
+                {{else}}
+                  <p class="proposal-label">How will you be compensated?</p>
+                  <p>{{proposal.compensation}}</p>
+                {{/ifEqualsElse}}
+              {{/ifEqualsElse}}
                 <br>
                 {{{editIcon proposal.user.id user.id proposal.id false}}}
                 <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
@@ -48,91 +54,120 @@ tempShow
             <div class="card">
               <div class="card-content">
                 <span class="card-title">Share Your Proposal</span>
+                <p>You've succesfully created your proposal! Now share it with your recipient by copying the message below and pasting it into your preferred contact method whether that's Instagram Direct Messenger or Email.</p><br>
                 {{#ifEqualsElse proposal.contractUserType "seller"}}
-                  <SPAN class="copyText">
-                    {{#ifEqualsElse proposal.compensation ""}}
+                  <div style="padding:5px; background-color:lightgrey;">
+                  <SPAN class="copyText" style="background-color:lightgrey;">
+                    {{#ifEqualsElse proposal.compensation "Cash"}}
                       {{#ifEqualsElse user.companyName ""}}
-                      {{!-- message ifCompensationEqBlank and if CompanyNameEqBlank --}}
-                      <p>Hi I'm a seller, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
-                        Would you allow us to use it sometime in the future? To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
-                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-                      {{!-- else for ifEqualsElse user.companyName "" --}}
+                        {{!-- message if compensation not equal blank and company name equals blank --}}
+                        <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I'd like to offer you the rights to use this great photo in exchange for: ${{proposal.price}}.
+                          To accept and download the image, follow the link-
+                        <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                        {{!-- else for user.companyName "" --}}
                       {{else}}
-                      {{!-- message if compensationEqBlank but CompanyName does not Equal Blank --}}
-                      <p>Hi I'm a seller, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
-                        posted! Would you allow us to use it sometime in the future? To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
-                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-                      {{!-- end ifEqualsElse user.companyName "" --}}
+                        {{!-- message if compensation not equal blank and company name does not equal blank --}}
+                        <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}}  from {{proposal.user.companyName}}. I'd like to offer you the rights to use this great photo in exchange for: ${{proposal.price}}.
+                          To accept and download the image, follow the link- <a class="word-break" href="{{proposal.id}}"
+                            target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                        {{!-- end ifEqualsElse user.companyName "" --}}
                       {{/ifEqualsElse}}
-                    {{!-- else for ifEqualsElse proposal.comepnsation "" --}}
                     {{else}}
-                      {{#ifEqualsElse user.companyName ""}}
-                      {{!-- message if compensation not equal blank and company name equals blank --}}
-                      <p>Hi I'm a seller, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
-                        Would you allow us to use it sometime in the future? In exchange we would be willing to compensate you
-                        with {{proposal.compensation}}. To accept, follow the link.
-                        <a class="word-break" href="{{proposal.id}}"
-                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-                      {{!-- else for user.companyName "" --}}
+                      {{#ifEqualsElse proposal.compensation ""}}
+                        {{#ifEqualsElse user.companyName ""}}
+                          {{!-- message ifCompensationEqBlank and if CompanyNameEqBlank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I'd like to offer you the rights to use this great photo that you might find useful. To accept and download the image, follow the link- <a class="word-break" href="{{proposal.id}}"
+                              target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- else for ifEqualsElse user.companyName "" --}}
+                        {{else}}
+                          {{!-- message if compensationEqBlank but CompanyName does not Equal Blank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. I'd like to offer you the rights to use this great photo that you might find useful. To accept and download the image, follow the link- <a class="word-break" href="{{proposal.id}}"
+                              target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- end ifEqualsElse user.companyName "" --}}
+                        {{/ifEqualsElse}}
                       {{else}}
-                      {{!-- message if compensation not equal blank and company name does not equal blank --}}
-                      <p>Hi I'm a seller, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
-                        posted! Would you allow us to use it sometime in the future? In exchange we would be willing to
-                        compensate you with {{proposal.compensation}}. To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
-                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-                      {{!-- end ifEqualsElse user.companyName "" --}}
+                        {{#ifEqualsElse user.companyName ""}}
+                          {{!-- message if compensation not equal blank and company name equals blank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I'd like to offer you the rights to use this great photo in exchange for: {{proposal.compensation}}.
+                            To accept and download the image, follow the link-
+                          <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- else for user.companyName "" --}}
+                        {{else}}
+                          {{!-- message if compensation not equal blank and company name does not equal blank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}}  from {{proposal.user.companyName}}. I'd like to offer you the rights to use this great photo in exchange for: {{proposal.compensation}}.
+                            To accept and download the image, follow the link- <a class="word-break" href="{{proposal.id}}"
+                              target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- end ifEqualsElse user.companyName "" --}}
+                        {{/ifEqualsElse}}
                       {{/ifEqualsElse}}
-                    {{!-- message for proposalCreator to send if they are compensating --}}
-                    {{!-- end ifEqualsElse proposal.compensation "" --}}
                     {{/ifEqualsElse}}
                   </SPAN>
+                  </div>
 
                 {{!-- if buyer created the proposal --}}
                 {{!-- else for ifEqualsElse proposal.contractUserType "seller" --}}
                 {{else}}
+                  <div style="padding:5px; background-color:lightgrey;">
                   <SPAN class="copyText">
-                    {{#ifEqualsElse proposal.compensation ""}}
+                    {{#ifEqualsElse proposal.compensation "Cash"}}
                       {{#ifEqualsElse user.companyName ""}}
-                      {{!-- message ifCompensationEqBlank and if CompanyNameEqBlank --}}
-                      <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
-                        Would you allow us to use it sometime in the future? To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
-                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-                      {{!-- else for ifEqualsElse user.companyName "" --}}
-                      {{else}}
-                      {{!-- message if compensationEqBlank but CompanyName does not Equal Blank --}}
-                      <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
-                        posted! Would you allow us to use it sometime in the future? To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
-                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-                      {{!-- end ifEqualsElse user.companyName "" --}}
-                      {{/ifEqualsElse}}
-                    {{!-- else for ifEqualsElse proposal.comepnsation "" --}}
-                    {{else}}
-                      {{#ifEqualsElse user.companyName ""}}
-                      {{!-- message if compensation not equal blank and company name equals blank --}}
-                      <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
+                        {{!-- message if compensation not equal blank and company name equals blank --}}
+                        <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
                         Would you allow us to use it sometime in the future? In exchange we would be willing to compensate you
-                        with {{proposal.compensation}}. To accept, follow the link.
+                        with: ${{proposal.price}}. To accept, follow the link- 
                         <a class="word-break" href="{{proposal.id}}"
                           target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-                      {{!-- else for user.companyName "" --}}
+                        {{!-- else for user.companyName "" --}}
                       {{else}}
-                      {{!-- message if compensation not equal blank and company name does not equal blank --}}
-                      <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
+                        {{!-- message if compensation not equal blank and company name does not equal blank --}}
+                        <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
                         posted! Would you allow us to use it sometime in the future? In exchange we would be willing to
-                        compensate you with {{proposal.compensation}}. To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
+                        compensate you with: ${{proposal.price}}. To accept, follow the link- <a class="word-break" href="{{proposal.id}}"
                           target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-                      {{!-- end ifEqualsElse user.companyName "" --}}
+                        {{!-- end ifEqualsElse user.companyName "" --}}
                       {{/ifEqualsElse}}
-                    {{!-- message for proposalCreator to send if they are compensating --}}
-                    {{!-- end ifEqualsElse proposal.compensation "" --}}
+                    {{else}}
+                      {{#ifEqualsElse proposal.compensation ""}}
+                        {{#ifEqualsElse user.companyName ""}}
+                          {{!-- message ifCompensationEqBlank and if CompanyNameEqBlank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
+                        Would you allow us to use it sometime in the future? To accept, follow the link- <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- else for ifEqualsElse user.companyName "" --}}
+                        {{else}}
+                          {{!-- message if compensationEqBlank but CompanyName does not Equal Blank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
+                        posted! Would you allow us to use it sometime in the future? To accept, follow the link- <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- end ifEqualsElse user.companyName "" --}}
+                        {{/ifEqualsElse}}
+                      {{else}}
+                        {{#ifEqualsElse user.companyName ""}}
+                          {{!-- message if compensation not equal blank and company name equals blank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
+                        Would you allow us to use it sometime in the future? In exchange we would be willing to compensate you
+                        with: {{proposal.compensation}}. To accept, follow the link- 
+                        <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- else for user.companyName "" --}}
+                        {{else}}
+                          {{!-- message if compensation not equal blank and company name does not equal blank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
+                        posted! Would you allow us to use it sometime in the future? In exchange we would be willing to
+                        compensate you with: {{proposal.compensation}}. To accept, follow the link- <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- end ifEqualsElse user.companyName "" --}}
+                        {{/ifEqualsElse}}
+                      {{/ifEqualsElse}}
                     {{/ifEqualsElse}}
+                  </div>
                   </SPAN>
 
                 {{!-- end ifEqualsElse proposal.contractUerType "seller" --}}
                 {{/ifEqualsElse}}
                 <br>
                 <div>
-                  <button class="copyBtn btn grey lighten-1 waves-effect"><i class="fa fa-clipboard"></i></button>
+                  <button class="copyBtn btn grey waves-effect"><i class="fa fa-clipboard"></i></button>
                 </div>
               </div>
             </div>
@@ -143,9 +178,9 @@ tempShow
               <div class="card-content">
                 <span class="card-title">Look Good To You?</span>
                 {{#if user}}
-                  <button data-target="acceptModal" class="btn green lighten-1 modal-trigger">Accept</button>
+                  <button data-target="acceptModal" class="btn green modal-trigger">Accept</button>
                 {{else}}
-                  <button data-target="modalLogin" class="btn blue darken-2 modal-trigger">Login</button>
+                  <button data-target="modalLogin" class="btn blue modal-trigger">Login</button>
                 {{/if}}
               </div>
             </div>
@@ -156,122 +191,143 @@ tempShow
           <div class="card-content">
             <span class="card-title">Contract Status</span>
               {{#each proposal.votes}}
-              <br>
               <div class="chip">
                 {{!-- <img src="{{voteUser.image}}"> --}}
                 <p>{{voteUser.firstName}} {{voteUser.lastName}}</p>
                 <p>{{voteEmail}}</p>
               </div>
-              <p style="font-size:20px;">{{voteBody}}</p>
+              <p style="font-size:20px;color:hotpink;"><b>{{voteBody}}</b></p>
               <small>Posted: {{formatDate voteDate 'MMMM Do YYYY, h:mm'}} </small>
               <br>
               {{/each}}
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">Payment</span>
-              <div>
-                <p style="font-size:20px;">Price: ${{proposal.price}}</p>
-                <p style="font-size:20px;"><span>Application Fee: ${{fee}}</span></p>
-                <hr>
-                <h5>Total: ${{totalPrice}}</h5>
-              </div>
-              <br>
-              {{#ifEqualsElse proposal.status "Paid" }}
-                <p>This proposal has been paid for</p>
-              {{else}}
-                {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
-                  {{#ifEqualsElse proposal.contractUserType "seller"}}
-                    {{#ifEqualsElse user.id proposal.user.id}}
-                      <div>
-                        <a class="btn blue darken-2" href="/stripe/authorize">Sign Up With Stripe</a>
-                      </div>
-                    {{!-- else for ifEqualsElse user.id proposal.user.id --}}
-                    {{else}}
-                      <p>Waiting for seller to sign up with Stripe</p>
-                    {{!-- end ifEqualsElse user.id proposal.user.id --}}
-                    {{/ifEqualsElse}}
-                  {{!-- else for ifEqualsElse proposal.contractUserType "seller" --}}
-                  {{!-- this means the buyer created the proposal --}}
-                  {{else}}
-                    {{#ifEqualsElse user.id proposal.user.id}}
-                        <p>Waiting for seller to sign up with Stripe</p>
+        {{#ifEquals proposal.compensation "Cash"}}
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Payment</span>
+                <div>
+                  <table style="font-size:18px;">
+                    <tr style="border:0px;">
+                      <td style="padding:5px 5px;">
+                        Price:
+                      </td>
+                      <td style="padding:5px 5px;">
+                        ${{proposal.price}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:5px 5px;">
+                        Application Fee (10%):
+                      </td>
+                      <td style="padding:5px 5px;">
+                        ${{fee}}
+                      </td>
+                    </tr>
+                    <tr style="border:0px;">
+                      <th>
+                        Total:
+                      </th>
+                      <th>
+                        ${{totalPrice}}
+                      </th>
+                    </tr>
+                  </table>
+                </div>
+                <br>
+                {{#ifEqualsElse proposal.status "Paid" }}
+                  <p>This proposal has been paid for</p>
+                {{else}}
+                  {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                    {{#ifEqualsElse proposal.contractUserType "seller"}}
+                      {{#ifEqualsElse user.id proposal.user.id}}
+                        <div>
+                          <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+                        </div>
                       {{!-- else for ifEqualsElse user.id proposal.user.id --}}
                       {{else}}
-                        <div>
-                          <a class="btn blue darken-2" href="/stripe/authorize">Sign Up With Stripe</a>
-                        </div>
+                        <p>Waiting for seller to sign up with Stripe</p>
                       {{!-- end ifEqualsElse user.id proposal.user.id --}}
                       {{/ifEqualsElse}}
-                    {{!-- end ifEqualsElse proposal.contractUserType "seller" --}}
+                    {{!-- else for ifEqualsElse proposal.contractUserType "seller" --}}
+                    {{!-- this means the buyer created the proposal --}}
+                    {{else}}
+                      {{#ifEqualsElse user.id proposal.user.id}}
+                          <p>Waiting for seller to sign up with Stripe</p>
+                        {{!-- else for ifEqualsElse user.id proposal.user.id --}}
+                        {{else}}
+                          <div>
+                            <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+                          </div>
+                        {{!-- end ifEqualsElse user.id proposal.user.id --}}
+                        {{/ifEqualsElse}}
+                      {{!-- end ifEqualsElse proposal.contractUserType "seller" --}}
+                      {{/ifEqualsElse}}
+
+                  {{!-- else for ifEqualsElse proposal.sellerStripeAccountId "" --}}
+                  {{else}}
+                  {{#ifEqualsElse proposal.contractUserType "seller"}}
+                    {{#ifEqualsElse user.id proposal.user.id}}
+                      <p>Waiting to get Paid</p>
+                    {{!--seller created proposal and buyer is currently accessing proposal --}}
+                    {{!-- else for ifEqualsElse user.id proposal.user.id --}}
+                    {{else}}
+                      <div>
+                        <div class="row">
+                          <form action="/stripe/payment" method="post" id="payment-form">
+                            <div class="form-row" style="padding:12px">
+                              <label for="card-element">
+                                Credit or debit card
+                              </label>
+                              <div id="card-element">
+                                <!-- A Stripe Element will be inserted here. -->
+                              </div>
+                              <!-- Used to display form errors. -->
+                              <div id="card-errors" role="alert"></div>
+                              <button class= "StripeButton">Submit Payment</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+
+                    {{/ifEqualsElse}}
+                  {{!--  this is if proposalcontractUserType = buyer within the section for ifEqualsElse proposal.contractUserType "seller" --}}
+                  {{else}}
+                    {{!-- buyer created proposal and is currently viewing proposal --}}
+                    {{#ifEqualsElse user.id proposal.user.id}}
+                      <div>
+                        <div class="row">
+                          <form action="/stripe/payment" method="post" id="payment-form">
+                            <div class="form-row" style="padding:12px">
+                              <label for="card-element">
+                                Credit or debit card
+                              </label>
+                              <div id="card-element">
+                                <!-- A Stripe Element will be inserted here. -->
+                              </div>
+                              <!-- Used to display form errors. -->
+                              <div id="card-errors" role="alert"></div>
+                              <button class= "StripeButton">Submit Payment</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    {{else}}
+                    <p>Waiting to get Paid</p>
+
                     {{/ifEqualsElse}}
 
-                {{!-- else for ifEqualsElse proposal.sellerStripeAccountId "" --}}
-                {{else}}
-                {{#ifEqualsElse proposal.contractUserType "seller"}}
-                  {{#ifEqualsElse user.id proposal.user.id}}
-                    <p>Waiting to get Paid</p>
-                  {{!--seller created proposal and buyer is currently accessing proposal --}}
-                  {{!-- else for ifEqualsElse user.id proposal.user.id --}}
-                  {{else}}
-                    <div>
-                      <div class="row">
-                        <form action="/stripe/payment" method="post" id="payment-form">
-                          <div class="form-row" style="padding:12px">
-                            <label for="card-element">
-                              Credit or debit card
-                            </label>
-                            <div id="card-element">
-                              <!-- A Stripe Element will be inserted here. -->
-                            </div>
-                            <!-- Used to display form errors. -->
-                            <div id="card-errors" role="alert"></div>
-                            <button class= "StripeButton">Submit Payment</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-
-                  {{/ifEqualsElse}}
-                {{!--  this is if proposalcontractUserType = buyer within the section for ifEqualsElse proposal.contractUserType "seller" --}}
-                {{else}}
-                  {{!-- buyer created proposal and is currently viewing proposal --}}
-                  {{#ifEqualsElse user.id proposal.user.id}}
-                    <div>
-                      <div class="row">
-                        <form action="/stripe/payment" method="post" id="payment-form">
-                          <div class="form-row" style="padding:12px">
-                            <label for="card-element">
-                              Credit or debit card
-                            </label>
-                            <div id="card-element">
-                              <!-- A Stripe Element will be inserted here. -->
-                            </div>
-                            <!-- Used to display form errors. -->
-                            <div id="card-errors" role="alert"></div>
-                            <button class= "StripeButton">Submit Payment</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  {{else}}
-                  <p>Waiting to get Paid</p>
-
+                  {{!-- end ifEqualsElse proposal.contractUserType "seller" --}}
                   {{/ifEqualsElse}}
 
-                {{!-- end ifEqualsElse proposal.contractUserType "seller" --}}
+                  {{!-- end ifEqualsElse proposal.sellerStripeAccountId  --}}
+                  {{/ifEqualsElse}}
+                {{!-- end ifEqualsElse proposal.status "Paid" --}}
                 {{/ifEqualsElse}}
-
-                {{!-- end ifEqualsElse proposal.sellerStripeAccountId  --}}
-                {{/ifEqualsElse}}
-              {{!-- end ifEqualsElse proposal.status "Paid" --}}
-              {{/ifEqualsElse}}
-
-
+            </div>
           </div>
-        </div>
+        {{/ifEquals}}
         {{!-- end ifEqualsElse proposal.status "Created" --}}
         {{/ifEqualsElse}}
 
@@ -284,7 +340,7 @@ tempShow
                     <textarea name="commentBody" class="materialize-textarea"></textarea>
                     <label>Add Comment</label>
                   </div>
-                  <input type="submit" value="Submit" class="btn">
+                  <input type="submit" value="Submit" class="btn blue">
                 </form>
               {{else}}
                 <p>Please login if you would like to leave a comment or
@@ -355,7 +411,7 @@ tempShow
       <nav class="nav-horizontal">
         <div class="row">
           <div class="col s12">
-            <div class="nav_wrapper" width= "100%">
+            <div class="nav_wrapper" width= "100%" style="height: 48px;">
               <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
             </div>
           </div>
@@ -384,7 +440,7 @@ tempShow
   <!-- Modal Structure -->
   <div id="acceptModal" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <div style="padding: 25px;">
+      <div>
       {{!-- beginning of contract --}}
           <div align="center">
         <table border="0" cellspacing="4" cellpadding="0" width="635">
@@ -578,9 +634,9 @@ tempShow
 </div>
     </div>
     <div class="modal-footer">
-      <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
+      <form class="proposal_add-wrapper" style="margin-top: 0px;" method="post" action="/proposals/voteUser/{{proposal.id}}">
         <div>
-          <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1">
+          <input name="voteBody" type="submit" value="Accept" class="btn green">
           <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
         </div>
       </form>
