@@ -139,7 +139,8 @@ router.get('/stripeDashboard', ensureAuthenticated, async (req, res) => {
       user.stripeAccountId, {
         //was pilots/dashboard
         //i want this to take me to stripeDashboard
-        redirect_url: 'http://localhost:5000/dashboard'
+        // redirect_url: 'http://localhost:5000/dashboard'
+        redirect_url: 'https://desolate-sierra-72554.herokuapp.com/dashboard'
       }
     );
     // Directly link to the account tab

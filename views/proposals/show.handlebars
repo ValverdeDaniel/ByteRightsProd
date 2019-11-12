@@ -48,6 +48,92 @@ tempShow
             <div class="card">
               <div class="card-content">
                 <span class="card-title">Share Your Proposal</span>
+                {{#ifEqualsElse proposal.contractUserType "seller"}}
+                  <SPAN class="copyText">
+                    {{#ifEqualsElse proposal.compensation ""}}
+                      {{#ifEqualsElse user.companyName ""}}
+                      {{!-- message ifCompensationEqBlank and if CompanyNameEqBlank --}}
+                      <p>Hi I'm a seller, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
+                        Would you allow us to use it sometime in the future? To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                      {{!-- else for ifEqualsElse user.companyName "" --}}
+                      {{else}}
+                      {{!-- message if compensationEqBlank but CompanyName does not Equal Blank --}}
+                      <p>Hi I'm a seller, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
+                        posted! Would you allow us to use it sometime in the future? To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                      {{!-- end ifEqualsElse user.companyName "" --}}
+                      {{/ifEqualsElse}}
+                    {{!-- else for ifEqualsElse proposal.comepnsation "" --}}
+                    {{else}}
+                      {{#ifEqualsElse user.companyName ""}}
+                      {{!-- message if compensation not equal blank and company name equals blank --}}
+                      <p>Hi I'm a seller, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
+                        Would you allow us to use it sometime in the future? In exchange we would be willing to compensate you
+                        with {{proposal.compensation}}. To accept, follow the link.
+                        <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                      {{!-- else for user.companyName "" --}}
+                      {{else}}
+                      {{!-- message if compensation not equal blank and company name does not equal blank --}}
+                      <p>Hi I'm a seller, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
+                        posted! Would you allow us to use it sometime in the future? In exchange we would be willing to
+                        compensate you with {{proposal.compensation}}. To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                      {{!-- end ifEqualsElse user.companyName "" --}}
+                      {{/ifEqualsElse}}
+                    {{!-- message for proposalCreator to send if they are compensating --}}
+                    {{!-- end ifEqualsElse proposal.compensation "" --}}
+                    {{/ifEqualsElse}}
+                  </SPAN>
+
+                {{!-- if buyer created the proposal --}}
+                {{!-- else for ifEqualsElse proposal.contractUserType "seller" --}}
+                {{else}}
+                  <SPAN class="copyText">
+                    {{#ifEqualsElse proposal.compensation ""}}
+                      {{#ifEqualsElse user.companyName ""}}
+                      {{!-- message ifCompensationEqBlank and if CompanyNameEqBlank --}}
+                      <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
+                        Would you allow us to use it sometime in the future? To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                      {{!-- else for ifEqualsElse user.companyName "" --}}
+                      {{else}}
+                      {{!-- message if compensationEqBlank but CompanyName does not Equal Blank --}}
+                      <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
+                        posted! Would you allow us to use it sometime in the future? To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                      {{!-- end ifEqualsElse user.companyName "" --}}
+                      {{/ifEqualsElse}}
+                    {{!-- else for ifEqualsElse proposal.comepnsation "" --}}
+                    {{else}}
+                      {{#ifEqualsElse user.companyName ""}}
+                      {{!-- message if compensation not equal blank and company name equals blank --}}
+                      <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
+                        Would you allow us to use it sometime in the future? In exchange we would be willing to compensate you
+                        with {{proposal.compensation}}. To accept, follow the link.
+                        <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                      {{!-- else for user.companyName "" --}}
+                      {{else}}
+                      {{!-- message if compensation not equal blank and company name does not equal blank --}}
+                      <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
+                        posted! Would you allow us to use it sometime in the future? In exchange we would be willing to
+                        compensate you with {{proposal.compensation}}. To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                      {{!-- end ifEqualsElse user.companyName "" --}}
+                      {{/ifEqualsElse}}
+                    {{!-- message for proposalCreator to send if they are compensating --}}
+                    {{!-- end ifEqualsElse proposal.compensation "" --}}
+                    {{/ifEqualsElse}}
+                  </SPAN>
+
+                {{!-- end ifEqualsElse proposal.contractUerType "seller" --}}
+                {{/ifEqualsElse}}
+                <br>
+                <div>
+                  <button class="copyBtn btn grey lighten-1 waves-effect"><i class="fa fa-clipboard"></i></button>
+                </div>
               </div>
             </div>
           {{!-- else for ifEqualsElse user.id proposal.user.id --}}
@@ -111,7 +197,7 @@ tempShow
                   {{!-- this means the buyer created the proposal --}}
                   {{else}}
                     {{#ifEqualsElse user.id proposal.user.id}}
-                        <p>Waiting for seller to sign up with Stripe</p>                        
+                        <p>Waiting for seller to sign up with Stripe</p>
                       {{!-- else for ifEqualsElse user.id proposal.user.id --}}
                       {{else}}
                         <div>
@@ -174,7 +260,7 @@ tempShow
                   <p>Waiting to get Paid</p>
 
                   {{/ifEqualsElse}}
-                  
+
                 {{!-- end ifEqualsElse proposal.contractUserType "seller" --}}
                 {{/ifEqualsElse}}
 
@@ -254,7 +340,7 @@ tempShow
           <span class="card-title">{{proposal.user.firstName}} {{proposal.user.lastName}}</span>
           <img src="{{proposal.user.image}}" class="circle responsive-img">
         </div>
-        <div class="card-action"> 
+        <div class="card-action">
           <a href="/proposals/user/{{proposal.user.id}}">More From {{proposal.user.firstName}}</a>
         </div>
       </div>
@@ -267,7 +353,7 @@ tempShow
   <div class="modal-content">
     <div class="modal-header">
       <nav class="nav-horizontal">
-        <div class="row"> 
+        <div class="row">
           <div class="col s12">
             <div class="nav_wrapper" width= "100%">
               <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
@@ -361,7 +447,7 @@ tempShow
                 (A). No Unlawful Use. Client will not use the Photos in any unlawful manner, such as pornography or defamation.
             </li>
             <li>
-                (B). No Standalone File Use. Client will not use the Photos in any way that allows a standalone file or content file to be downloaded, extracted, or redistributed by others.  
+                (B). No Standalone File Use. Client will not use the Photos in any way that allows a standalone file or content file to be downloaded, extracted, or redistributed by others.
             </li>
             <li>
                 (C). No Use in Trademark or Logo. Client will not use the Photos in any trademark, logo or other mark.
@@ -503,7 +589,7 @@ tempShow
   </div>
 
 <script>
-//modal logic materialize 
+//modal logic materialize
   document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.modal');
     //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
