@@ -120,6 +120,8 @@
         closeOnSelect: false,
         placeholder: 'Filter by tags'
       });
+      
+      $('select').formSelect();
     })
     $(document).ready(function () {
       $("#filterproposals").on('change', function () {
@@ -289,7 +291,24 @@
 
     $(document).ready(function () {
       $( ".ignore-select" ).parent().addClass( "ignore-select-wrapper" ); 
-   });
+    });    
+
+    $(document).ready(function () {      
+      var showPrice = $('#compensationField').prevAll('ul.multiple-select-dropdown').children('li:nth-child(3)');
+
+      var showPrice1 = $('#compensationField').prevAll('ul.multiple-select-dropdown');
+       
+      if (showPrice.hasClass('selected')){
+        showPrice.addClass('red');
+        console.log('hey');
+        $('#priceField').toggleClass('hide');
+      };
+
+      showPrice.click(function() {
+        $('#priceField').toggleClass('hide');
+      });
+
+    });    
   </script>
 
 </body>

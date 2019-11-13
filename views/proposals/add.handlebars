@@ -73,12 +73,23 @@
           </div>
           </p>
           </p>
-          <p>You may offer any form of compensation. If left blank, we won't mention it in your proposal.</p>
-          <div class="input-field">
+          <p>You may offer any form of compensation. If left blank, we won't mention it in your proposal.</p> 
+
+          <div class="input-field col s12">
+            <select id="compensationField" class="ignore-select" multiple>
+              <option value="" disabled selected>Choose your option</option>
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+            </select>
+            <label>Materialize Multiple Select</label>
+          </div>
+
+          {{!-- <div class="input-field">
             <input type="text" name="compensation">
             <label for="compensation">Amount/Description</label>
-          </div>
-          <div class="input-field">
+          </div> --}}
+          <div id="priceField" class="input-field hide">
             <input type="text" name="price">
             <label for="price">Price</label>
           </div>
