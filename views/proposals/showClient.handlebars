@@ -237,7 +237,7 @@
                 </div>
                 <br>
                 {{#ifEqualsElse proposal.status "Paid" }}
-                  <p>This proposal has been paid for</p>
+                  <p>Status: <b>This proposal has been paid for</b></p>
                 {{else}}
                   {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
                     {{#ifEqualsElse proposal.contractUserType "seller"}}
@@ -247,14 +247,14 @@
                         </div>
                       {{!-- else for ifEqualsElse user.id proposal.user.id --}}
                       {{else}}
-                        <p>Waiting for seller to sign up with Stripe</p>
+                        <p>Status: <b>Waiting for seller to sign up with Stripe</b></p>
                       {{!-- end ifEqualsElse user.id proposal.user.id --}}
                       {{/ifEqualsElse}}
                     {{!-- else for ifEqualsElse proposal.contractUserType "seller" --}}
                     {{!-- this means the buyer created the proposal --}}
                     {{else}}
                       {{#ifEqualsElse user.id proposal.user.id}}
-                          <p>Waiting for seller to sign up with Stripe</p>
+                          <p>Status: <b>Waiting for seller to sign up with Stripe</b></p>
                         {{!-- else for ifEqualsElse user.id proposal.user.id --}}
                         {{else}}
                           <div>
@@ -269,7 +269,7 @@
                   {{else}}
                   {{#ifEqualsElse proposal.contractUserType "seller"}}
                     {{#ifEqualsElse user.id proposal.user.id}}
-                      <p>Waiting to get Paid</p>
+                      <p>Status: <b>Waiting to get Paid</b></p>
                     {{!--seller created proposal and buyer is currently accessing proposal --}}
                     {{!-- else for ifEqualsElse user.id proposal.user.id --}}
                     {{else}}
@@ -314,7 +314,7 @@
                         </div>
                       </div>
                     {{else}}
-                    <p>Waiting to get Paid</p>
+                    <p>Status: <b>Waiting to get Paid</b></p>
 
                     {{/ifEqualsElse}}
 
