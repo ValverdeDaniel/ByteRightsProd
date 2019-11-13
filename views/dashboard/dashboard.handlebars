@@ -44,47 +44,49 @@
     </div>
     <div>
       <a class="btn grey" href="dashboard/edit">Edit</a>
+    </div>
+    <div>
+      <h5>Payment Details</h5>
       {{#ifStripeAccountIdEqBlank user.stripeAccountId}}
       <a class="btn blue" href="stripe/authorize">Sign Up With Stripe</a>
       {{else}}
       <a class="btn blue " href="stripe/stripeDashboard">View Payouts on Stripe</a>
-      <p>StripeAccountId: {{user.stripeAccountId}}</p>
-      <p>BalanceAvailable: {{balanceAvailable}}</p>
-      <p>BalancePending: {{balancePending}}</p>
+      <h6>Balance to be Paid Out: ${{balancePending}}</h6>
+      {{!-- <p>StripeAccountId: {{user.stripeAccountId}}</p>
+      <p>BalanceAvailable: {{balanceAvailable}}</p> --}}
       {{/ifStripeAccountIdEqBlank}}
     </div>
-
-{{!-- begin transaction history --}}
-{{#if transactions}}
-  <table class="striped">
-    <thead>
-      <tr>
-        <th>BuyerId</th>
-        <th>Buyer Last Name</th>
-        <th>SellerId</th>
-        <th>Seller Last Name</th>
-        <th>ProposalId</th>
-        <th>Amount Buyer Paid</th>
-        <th>Amount Seller Received</th>
-        <th>Created</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each transactions}}
-      <tr>
-        <td>{{buyerId}}</td>
-        <td>{{buyerLastName}}</td>
-        <td>{{sellerId}}</td>
-        <td>{{sellerLastName}}</td>
-        <td>{{proposalId}}</td>
-        <td>${{amountBuyerPaid}}</td>
-        <td>${{amountSellerReceived}}</td>
-        <td>{{formatDate created 'MMMM Do YYYY'}}</td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
-{{else}}
-  <p>You have not created/received any transactions yet</p>
-{{/if}}
+    {{!-- begin transaction history --}}
+    {{#if transactions}}
+      <table class="striped">
+        <thead>
+          <tr>
+            <th>BuyerId</th>
+            <th>Buyer Last Name</th>
+            <th>SellerId</th>
+            <th>Seller Last Name</th>
+            <th>ProposalId</th>
+            <th>Amount Buyer Paid</th>
+            <th>Amount Seller Received</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each transactions}}
+          <tr>
+            <td>{{buyerId}}</td>
+            <td>{{buyerLastName}}</td>
+            <td>{{sellerId}}</td>
+            <td>{{sellerLastName}}</td>
+            <td>{{proposalId}}</td>
+            <td>${{amountBuyerPaid}}</td>
+            <td>${{amountSellerReceived}}</td>
+            <td>{{formatDate created 'MMMM Do YYYY'}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <p>You have not created/received any transactions yet</p>
+    {{/if}}
   </div>
