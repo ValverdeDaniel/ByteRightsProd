@@ -418,21 +418,73 @@
 </div>
 </div>
 <!-- Modal Help Structure-->
-<div id="helpModal" class="modal">
+<div id="helpModal" class="modal modal-fixed-footer">
   <div class="modal-content">
     <div class="modal-header center-align">
       <h5>How Proposals Work</h5>
     </div>
-    <div class= "center-align">
+    <div class= "center-align" style="background-color:#B6E9FF;">
       {{#ifEqualsElse proposal.contractUserType "seller"}}
-        <img width="100%"src="/images/SellerProposal_Help.png"/>
+        {{!-- <img width="100%"src="/images/SellerProposal_Help.png"/> --}}
+        <table>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">1</td>
+            <td width="85%">Share the proposal with the potential buyer of your photo with a simple link, or use the “Copy” button to use our pre-generated message to reach out.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">2</td>
+            <td width="85%">Your recipient then reviews the terms of the licensing proposal and can message you with requests to edit certain conditions.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">3</td>
+            <td width="85%">The recipient then accepts the terms of the licensing agreement, and then triggers the payment process if you have specified cash compensation for the photo.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">4</td>
+            <td width="85%">If you have not done so, you’ll be asked to set up your Stripe seller account so that you can receive your payment.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">5</td>
+            <td width="85%">The Buyer may then complete their payment for the photo and funds will be transferred to your account which you can see on the Dashboard page.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">6</td>
+            <td width="85%">You may then cash out your balance using the regular payout method, or instantly.</td>
+          </tr>
+        </table>
       {{else}}
-        <img width="100%"src="/images/BuyerProposal_Help.png"/>
+        {{!-- <img width="100%"src="/images/BuyerProposal_Help.png"/> --}}
+        <table>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">1</td>
+            <td width="85%">Share the proposal with the owner of the photo with a simple link, or use the “Copy” button to use our pre-generated message to reach out.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">2</td>
+            <td width="85%">Your recipient then reviews the terms of the licensing proposal and can message you with requests to edit certain conditions.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">3</td>
+            <td width="85%">The recipient then accepts the terms of the licensing agreement, and then triggers the payment process if you have offered cash compensation for the photo.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">4</td>
+            <td width="85%">The owner must set up their account in order to receive the funds related to your purchase.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">5</td>
+            <td width="85%">You may then make your payment using a credit or debit card and the funds will be added to the seller’s balance.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">6</td>
+            <td width="85%">You can download your newly licensed image by right-clicking on it or long-pressing it if on mobile.</td>
+          </tr>
+        </table>      
       {{/ifEqualsElse}}
     </div>
   </div>
   <div class="modal-footer">
-    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    <div><a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a></div>
   </div>
 </div>
 <!-- Modal Login Structure-->

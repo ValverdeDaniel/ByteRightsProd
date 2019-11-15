@@ -18,13 +18,12 @@
             <label for="url">Instagram Image Link</label>
           </div>
         {{!-- adding a dropdown for seller/buyer --}}
-        
+          <p>Who are you?</p>
           <div class="input-field">
             <select class="ignore-select" name="contractUserType">
-              <option value="seller">Seller</option>
-              <option value="buyer">Buyer</option>
+              <option value="Seller">Seller</option>
+              <option value="Buyer">Buyer</option>
             </select>
-            <label for="contractUserType">Contract User Type</label>
           </div> 
 
           <p>Next, write the name or username of the recipient you'll be sending the request to.</p>
@@ -34,7 +33,11 @@
           </div>
           <p>Describe how and where you plan to use the photo.</p>
           <div class="input-field">
-            <input type="text" name="usage" placeholder="i.e. Instagram, Website, Print, etc.">
+            {{!-- <select class="ignore-select" name="contractUserType">
+              <option value="Instagram Repost">Instagram Repost</option>
+              <option value="Website">Website</option>
+            </select> --}}
+            <input type="text" name="usage" value="Instagram Repost" placeholder="i.e. Instagram, Website, Print, etc.">
           </div>
 
           {{!-- <div class="input-field">
@@ -76,7 +79,7 @@
           <p>You may offer any form of compensation. If left blank, we won't mention it in your proposal.</p>
           <div class="input-field">
             <input type="text" name="compensation">
-            <label for="compensation">Amount/Description</label>
+            <label for="compensation">Type of compensation</label>
           </div>
           <div class="input-field">
             <input type="text" name="price">
