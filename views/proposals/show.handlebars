@@ -1,14 +1,27 @@
 <div class="proposal_wrapper--add">
   <div class="row no-margin--bottom">
     <div class="proposal_topbar">
-      <div class="col s12">
+      <table style="border:0px;">
+        <tr style="border-bottom:0px;">
+          <td width="90%" style="padding: 0px 0px 0px 10px;"><h1 class="proposal_title">Proposal for {{proposal.recipient}}</h1></td>
+          <td class="left-align" width="10%" style="padding:0px 15px 0px 0px;"><button data-target="helpModal" class="btn-floating grey modal-trigger">?</button></td>
+        </tr>
+      </table>
+      {{!-- <div class="col xs11">
         <h1 class="proposal_title">Proposal for {{proposal.recipient}}</h1>
+      </div>
+      <div class="col xs1 right-align">
+        <button data-target="helpModal" class="btn-floating grey modal-trigger">?</button>
+      </div> --}}
+    </div>
+      <div class="row" style="margin-bottom: 10px">
+        <div class="col s12">
           From: <b>{{proposal.user.firstName}} {{proposal.user.lastName}}</b> at <a href="{{proposal.user.website}}" target="_blank">{{proposal.user.companyName}}</a> | Status: <b>{{proposal.status}}</b>
+        </div>
       </div>
       {{!-- <div class="col s12">
         <p>Proposal #: {{proposal.id}}</p>
       </div> --}}
-    </div>
   </div>
   <div class="row no-margin--bottom">
     <div class="proposal_show-content alternate">
@@ -404,7 +417,25 @@
 
 </div>
 </div>
-  <!-- Modal Login Structure-->
+<!-- Modal Help Structure-->
+<div id="helpModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header center-align">
+      <h5>How Proposals Work</h5>
+    </div>
+    <div class= "center-align">
+      {{#ifEqualsElse proposal.contractUserType "seller"}}
+        <img width="100%"src="/images/SellerProposal_Help.png"/>
+      {{else}}
+        <img width="100%"src="/images/BuyerProposal_Help.png"/>
+      {{/ifEqualsElse}}
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+<!-- Modal Login Structure-->
 <div id="modalLogin" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -468,7 +499,7 @@
     </p>
     <div>
         <div align="center" >
-        <a href="{{proposal.url}}media/?size=m"><img src="{{proposal.url}}media/?size=m" alt=""/></a>
+        <a href="{{proposal.url}}media/?size=m"><img width="100%" src="{{proposal.url}}media/?size=m" alt=""/></a>
         </div>
     </div>
     <p>
