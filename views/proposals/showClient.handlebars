@@ -1,14 +1,27 @@
 <div class="proposal_wrapper--add">
   <div class="row no-margin--bottom">
     <div class="proposal_topbar">
-      <div class="col s12">
+      <table style="border:0px;">
+        <tr style="border-bottom:0px;">
+          <td width="90%" style="padding: 0px 0px 0px 10px;"><h1 class="proposal_title">Proposal for {{proposal.recipient}}</h1></td>
+          <td class="left-align" width="10%" style="padding:0px 15px 0px 0px;"><button data-target="helpModal" class="btn-floating grey modal-trigger">?</button></td>
+        </tr>
+      </table>
+      {{!-- <div class="col xs11">
         <h1 class="proposal_title">Proposal for {{proposal.recipient}}</h1>
+      </div>
+      <div class="col xs1 right-align">
+        <button data-target="helpModal" class="btn-floating grey modal-trigger">?</button>
+      </div> --}}
+    </div>
+      <div class="row" style="margin-bottom: 10px">
+        <div class="col s12">
           From: <b>{{proposal.user.firstName}} {{proposal.user.lastName}}</b> at <a href="{{proposal.user.website}}" target="_blank">{{proposal.user.companyName}}</a> | Status: <b>{{proposal.status}}</b>
+        </div>
       </div>
       {{!-- <div class="col s12">
         <p>Proposal #: {{proposal.id}}</p>
       </div> --}}
-    </div>
   </div>
   <div class="row no-margin--bottom">
     <div class="proposal_show-content alternate">
@@ -404,7 +417,77 @@
 
 </div>
 </div>
-  <!-- Modal Login Structure-->
+<!-- Modal Help Structure-->
+<div id="helpModal" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <div class="modal-header center-align">
+      <h5>How Proposals Work</h5>
+    </div>
+    <div class= "center-align" style="background-color:#B6E9FF;">
+      {{#ifEqualsElse proposal.contractUserType "seller"}}
+        {{!-- <img width="100%"src="/images/SellerProposal_Help.png"/> --}}
+        <table>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">1</td>
+            <td width="85%">Share the proposal with the potential buyer of your photo with a simple link, or use the “Copy” button to use our pre-generated message to reach out.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">2</td>
+            <td width="85%">Your recipient then reviews the terms of the licensing proposal and can message you with requests to edit certain conditions.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">3</td>
+            <td width="85%">The recipient then accepts the terms of the licensing agreement, and then triggers the payment process if you have specified cash compensation for the photo.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">4</td>
+            <td width="85%">If you have not done so, you’ll be asked to set up your Stripe seller account so that you can receive your payment.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">5</td>
+            <td width="85%">The Buyer may then complete their payment for the photo and funds will be transferred to your account which you can see on the Dashboard page.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">6</td>
+            <td width="85%">You may then cash out your balance using the regular payout method, or instantly.</td>
+          </tr>
+        </table>
+      {{else}}
+        {{!-- <img width="100%"src="/images/BuyerProposal_Help.png"/> --}}
+        <table>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">1</td>
+            <td width="85%">Share the proposal with the owner of the photo with a simple link, or use the “Copy” button to use our pre-generated message to reach out.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">2</td>
+            <td width="85%">Your recipient then reviews the terms of the licensing proposal and can message you with requests to edit certain conditions.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">3</td>
+            <td width="85%">The recipient then accepts the terms of the licensing agreement, and then triggers the payment process if you have offered cash compensation for the photo.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">4</td>
+            <td width="85%">The owner must set up their account in order to receive the funds related to your purchase.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">5</td>
+            <td width="85%">You may then make your payment using a credit or debit card and the funds will be added to the seller’s balance.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">6</td>
+            <td width="85%">You can download your newly licensed image by right-clicking on it or long-pressing it if on mobile.</td>
+          </tr>
+        </table>      
+      {{/ifEqualsElse}}
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div><a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a></div>
+  </div>
+</div>
+<!-- Modal Login Structure-->
 <div id="modalLogin" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -468,7 +551,7 @@
     </p>
     <div>
         <div align="center" >
-        <a href="{{proposal.url}}media/?size=m"><img src="{{proposal.url}}media/?size=m" alt=""/></a>
+        <a href="{{proposal.url}}media/?size=m"><img width="100%" src="{{proposal.url}}media/?size=m" alt=""/></a>
         </div>
     </div>
     <p>
