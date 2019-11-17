@@ -44,6 +44,88 @@
                 <br>
                 {{{editIcon proposal.user.id user.id proposal.id false}}}
                 <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
+        
+                  {{!-- begin signup/link stripeAccount Logic --}}
+                  {{#ifEqualsElse proposal.contractUserType "seller"}}
+                    {{#ifEqualsElse user.id proposal.user.id}}
+                      {{#ifEqualsElse user.stripeAccountId ""}}
+                        <p>If You would like to get paid for this proposal you have to sign up with Stripe, it will only take 2 minutes we promise.</p>
+                        <div>
+                          <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+                        </div>
+                      {{!-- else for user.stripeAccountId = "" --}}
+                      {{else}}
+                        {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                          <p>Our Records say youu have already signed up with Stripe, the last thing you need to do before the buyer can pay you is link your Stripe Account to this proposal. The next time around we will automatically do this for you.</p>
+                          <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                            <button type="submit" name="sellerStripeAccountId" class="btn waves-effect waves-light" value="{{req.user.stripeAccountId}}">Link Your Stripe Account
+                              <i class="material-icons right">send</i>
+                            </button>
+                          </form>
+
+                        {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                        {{else}}
+                          <p>You have successfully linked your stripe seller account</p>
+                          <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
+                        {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                        {{/ifEqualsElse}}                      
+                      {{!-- end ifEqualsElse user.stripeAccountId = "" --}}
+                      {{/ifEqualsElse}}
+
+                    {{!-- else for ifEqualsElse user.id proposal.user.id... buyer is looking at proposal --}}
+                    {{else}}
+                      {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                        <p>Waiting for seller to link their stripe Account</p>
+
+                      {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                      {{else}}
+                        <p>Seller has linked their stripe account to the proposal</p>
+                        <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
+                      {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                      {{/ifEqualsElse}}
+                    {{/ifEqualsElse}}
+                  {{!-- else for psoposal.contractUserType = "seller" so proposal was made by buyer --}}
+                  {{else}}
+                    {{!-- proposal made by buyer and buyer is currently interacting --}}
+                    {{#ifEqualsElse user.id proposal.user.id}}
+                      {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                        <p>Waiting for seller to link their stripe Account</p>
+
+                      {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                      {{else}}
+                        <p>Seller has linked their stripe account to the proposal</p>
+                        <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
+                      {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                      {{/ifEqualsElse}}
+                    {{!-- else for user.id = proposal.user.id, proposal made by buyer and seller is currently interacting --}}
+                    {{else}}
+                      {{#ifEqualsElse user.stripeAccountId ""}}
+                        <p>If You would like to get paid for this proposal you have to sign up with Stripe, it will only take 2 minutes we promise.</p>
+                        <div>
+                          <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+                        </div>
+                      {{!-- else for user.stripeAccountId = "" --}}
+                      {{else}}
+                        {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                          <p>Our Records say youu have already signed up with Stripe, the last thing you need to do before the buyer can pay you is link your Stripe Account to this proposal. The next time around we will automatically do this for you.</p>
+                          <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                            <button type="submit" name="sellerStripeAccountId" class="btn waves-effect waves-light" value="{{req.user.stripeAccountId}}">Link Your Stripe Account
+                              <i class="material-icons right">send</i>
+                            </button>
+                          </form>
+
+                        {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                        {{else}}
+                          <p>You have successfully linked your stripe seller account</p>
+                          <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
+                        {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                        {{/ifEqualsElse}}                      
+                      {{!-- end ifEqualsElse user.stripeAccountId = "" --}}
+                      {{/ifEqualsElse}}
+                    {{!-- end if equals else user.id = proposal.user.id --}}
+                    {{/ifEqualsElse}}
+                  {{!--end ifEqualsElse proposal.contractUserType "seller"  --}}
+                  {{/ifEqualsElse}}
             </div>
           </div>
         </div>
@@ -643,7 +725,17 @@
 
     </div>
   </div>
+<br>
+  <div>
+    <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+  </div>
 
+  <form class="proposal_add-wrapper" style="margin-top: 0px;" method="post" action="/proposals/voteUser/{{proposal.id}}">
+  <div>
+    <input name="voteBody" type="submit" value="Accept" class="btn green">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</form>
 <script>
 //modal logic materialize
   document.addEventListener('DOMContentLoaded', function() {

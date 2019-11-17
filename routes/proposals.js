@@ -42,138 +42,138 @@ router.post('/filter', (req, res) => {
 
 //show single proposal
 router.get('/show/:id', (req, res) => {
-  Proposal.findOne({_id: req.params.id})
- 
-  .populate('user')
-  .populate('votes.voteUser')
-  .populate('comments.commentUser')
-  .populate('touchedBy.touchedByUser')
-  .then(proposal => {
-    try { 
-      var price = proposal.price
-      var feePercent = .1
-      var fee = Math.ceil(price * feePercent)
-      var totalPrice = price + fee;
-      console.log('%fee: ' + fee)
-      console.log('%price: ' + price)
-      console.log('%totalPrice: ' + totalPrice)
-      console.log(proposal);
-      req.session.proposal = proposal;
-      req.session.fee = fee;
-      //req.session.price = price;
-      req.session.price = totalPrice;
-      console.log('proposal1: ' + req.session.proposal)
-      console.log('price: ' + req.session.price)
+  Proposal.findOne({ _id: req.params.id })
+
+    .populate('user')
+    .populate('votes.voteUser')
+    .populate('comments.commentUser')
+    .populate('touchedBy.touchedByUser')
+    .then(proposal => {
+      try {
+        var price = proposal.price
+        var feePercent = .1
+        var fee = Math.ceil(price * feePercent)
+        var totalPrice = price + fee;
+        console.log('%fee: ' + fee)
+        console.log('%price: ' + price)
+        console.log('%totalPrice: ' + totalPrice)
+        console.log(proposal);
+        req.session.proposal = proposal;
+        req.session.fee = fee;
+        //req.session.price = price;
+        req.session.price = totalPrice;
+        console.log('proposal1: ' + req.session.proposal)
+        console.log('price: ' + req.session.price)
         //messing with metaTags
-        res.locals.metaTags = { 
-          title: "Byte Rights Proposal from " + proposal.user.firstName, 
-          description: "Click the link for details.",   
-          image: proposal.url 
-         } 
+        res.locals.metaTags = {
+          title: "Byte Rights Proposal from " + proposal.user.firstName,
+          description: "Click the link for details.",
+          image: proposal.url
+        }
         res.render('proposals/show', {
           proposal: proposal,
           fee: fee,
           //price: price,
           totalPrice: totalPrice
         });
-  
-    } catch { 
-      console.log(e)
-      console.log('somethingWentWrong get tempshow')
-    }
 
-  })
+      } catch {
+        console.log(e)
+        console.log('somethingWentWrong get tempshow')
+      }
+
+    })
 })
 
 //show single proposal
 router.get('/tempshow/:id', (req, res) => {
-  Proposal.findOne({_id: req.params.id})
- 
-  .populate('user')
-  .populate('votes.voteUser')
-  .populate('comments.commentUser')
-  .populate('touchedBy.touchedByUser')
-  .then(proposal => {
-    try { 
-      var price = proposal.price
-      var feePercent = .1
-      var fee = Math.ceil(price * feePercent)
-      var totalPrice = price + fee;
-      console.log('%fee: ' + fee)
-      console.log('%price: ' + price)
-      console.log('%totalPrice: ' + totalPrice)
-      console.log(proposal);
-      req.session.proposal = proposal;
-      req.session.fee = fee;
-      //req.session.price = price;
-      req.session.price = totalPrice;
-      console.log('proposal1: ' + req.session.proposal)
-      console.log('price: ' + req.session.price)
+  Proposal.findOne({ _id: req.params.id })
+
+    .populate('user')
+    .populate('votes.voteUser')
+    .populate('comments.commentUser')
+    .populate('touchedBy.touchedByUser')
+    .then(proposal => {
+      try {
+        var price = proposal.price
+        var feePercent = .1
+        var fee = Math.ceil(price * feePercent)
+        var totalPrice = price + fee;
+        console.log('%fee: ' + fee)
+        console.log('%price: ' + price)
+        console.log('%totalPrice: ' + totalPrice)
+        console.log(proposal);
+        req.session.proposal = proposal;
+        req.session.fee = fee;
+        //req.session.price = price;
+        req.session.price = totalPrice;
+        console.log('proposal1: ' + req.session.proposal)
+        console.log('price: ' + req.session.price)
         //messing with metaTags
-        res.locals.metaTags = { 
-          title: "Byte Rights Proposal from " + proposal.user.firstName, 
-          description: "Click the link for details.",   
-          image: proposal.url 
-         } 
+        res.locals.metaTags = {
+          title: "Byte Rights Proposal from " + proposal.user.firstName,
+          description: "Click the link for details.",
+          image: proposal.url
+        }
         res.render('proposals/tempshow', {
           proposal: proposal,
           fee: fee,
           //price: price,
           totalPrice: totalPrice
         });
-  
-    } catch { 
-      console.log(e)
-      console.log('somethingWentWrong get tempshow')
-    }
 
-  })
+      } catch {
+        console.log(e)
+        console.log('somethingWentWrong get tempshow')
+      }
+
+    })
 })
 
 
 // show single proposal for guest OG ensureLoggedin /auth/google
 router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
-  Proposal.findOne({_id: req.params.id})
- 
-  .populate('user')
-  .populate('votes.voteUser')
-  .populate('comments.commentUser')
-  .populate('touchedBy.touchedByUser')
-  .then(proposal => {
-    try { 
-      var price = proposal.price
-      var feePercent = .1
-      var fee = Math.ceil(price * feePercent)
-      var totalPrice = price + fee;
-      console.log('%fee: ' + fee)
-      console.log('%price: ' + price)
-      console.log('%totalPrice: ' + totalPrice)
-      console.log(proposal);
-      req.session.proposal = proposal;
-      req.session.fee = fee;
-      //req.session.price = price;
-      req.session.price = totalPrice;
-      console.log('proposal1: ' + req.session.proposal)
-      console.log('price: ' + req.session.price)
+  Proposal.findOne({ _id: req.params.id })
+
+    .populate('user')
+    .populate('votes.voteUser')
+    .populate('comments.commentUser')
+    .populate('touchedBy.touchedByUser')
+    .then(proposal => {
+      try {
+        var price = proposal.price
+        var feePercent = .1
+        var fee = Math.ceil(price * feePercent)
+        var totalPrice = price + fee;
+        console.log('%fee: ' + fee)
+        console.log('%price: ' + price)
+        console.log('%totalPrice: ' + totalPrice)
+        console.log(proposal);
+        req.session.proposal = proposal;
+        req.session.fee = fee;
+        //req.session.price = price;
+        req.session.price = totalPrice;
+        console.log('proposal1: ' + req.session.proposal)
+        console.log('price: ' + req.session.price)
         //messing with metaTags
-        res.locals.metaTags = { 
-          title: "Byte Rights Proposal from " + proposal.user.firstName, 
-          description: "Click the link for details.",   
-          image: proposal.url 
-         } 
+        res.locals.metaTags = {
+          title: "Byte Rights Proposal from " + proposal.user.firstName,
+          description: "Click the link for details.",
+          image: proposal.url
+        }
         res.render('proposals/showClient', {
           proposal: proposal,
           fee: fee,
           //price: price,
           totalPrice: totalPrice
         });
-  
-    } catch { 
-      console.log(e)
-      console.log('somethingWentWrong get tempshow')
-    }
 
-  })
+      } catch {
+        console.log(e)
+        console.log('somethingWentWrong get tempshow')
+      }
+
+    })
 })
 
 
@@ -182,25 +182,25 @@ router.get('/showFBClient/:id', ensureLoggedIn('/auth/facebook'), (req, res) => 
   Proposal.findOne({
     _id: req.params.id
   })
- 
-  .populate('user')
-  .populate('votes.voteUser')
-  .populate('comments.commentUser')
-  .populate('touchedBy.touchedByUser')
-  .then(proposal => {
-    console.log(proposal);
+
+    .populate('user')
+    .populate('votes.voteUser')
+    .populate('comments.commentUser')
+    .populate('touchedBy.touchedByUser')
+    .then(proposal => {
+      console.log(proposal);
 
       //messing with metaTags
-      res.locals.metaTags = { 
-        title: "Byte Rights Proposal from " + proposal.user.firstName, 
-        description: "Click the link for details.",   
-        image: proposal.url 
-       } 
+      res.locals.metaTags = {
+        title: "Byte Rights Proposal from " + proposal.user.firstName,
+        description: "Click the link for details.",
+        image: proposal.url
+      }
       res.render('proposals/showClient', {
         proposal: proposal
       });
 
-  })
+    })
 })
 
 
@@ -285,7 +285,7 @@ router.get('/my', ensureAuthenticated, (req, res) => {
 
 //Received proposals
 router.get('/received', ensureAuthenticated, (req, res) => {
-  Proposal.find({ 'touchedBy.touchedByUser': req.user.id, user: {$ne:req.user.id} }, { tag: true })
+  Proposal.find({ 'touchedBy.touchedByUser': req.user.id, user: { $ne: req.user.id } }, { tag: true })
     .then(p => {
       console.log(p);
       let tags = [];
@@ -312,7 +312,7 @@ router.get('/received', ensureAuthenticated, (req, res) => {
       console.log(result);
 
       if (tags.length > 0) {
-        Proposal.find({ 'touchedBy.touchedByUser': req.user.id, user: {$ne:req.user.id}  })
+        Proposal.find({ 'touchedBy.touchedByUser': req.user.id, user: { $ne: req.user.id } })
           .populate('user')
           .sort({ date: -1 })
           .then(proposals => {
@@ -322,7 +322,7 @@ router.get('/received', ensureAuthenticated, (req, res) => {
             });
           });
       } else {
-        Proposal.find({ 'touchedBy.touchedByUser': req.user.id, user: {$ne:req.user.id} })
+        Proposal.find({ 'touchedBy.touchedByUser': req.user.id, user: { $ne: req.user.id } })
           .populate('user')
           .sort({ date: -1 })
           .then(proposals => {
@@ -470,31 +470,31 @@ router.post('/', ensureAuthenticated, (req, res) => {
     allowComments = false;
   }
   let credit;
-  if(req.body.credit){
+  if (req.body.credit) {
     credit = true;
-  }else{
+  } else {
     credit = false;
   }
   var url = req.body.url;
   var n = url.indexOf('?');
   url = url.substring(0, n != -1 ? n : url.length);
-  
-    let newProposal = {
-      url: url,
-      contractUserType: req.body.contractUserType,
-      recipient: req.body.recipient,
-      compensation: req.body.compensation,
-      price: req.body.price,
-      usage: req.body.usage,
-      credit: credit,
-      status: req.body.status,
-      allowComments: allowComments,
-      user: req.user.id
-    }
 
-    if (req.body.contractUserType == "seller"){
-      newProposal.sellerStripeAccountId = req.user.stripeAccountId  
-    }   
+  let newProposal = {
+    url: url,
+    contractUserType: req.body.contractUserType,
+    recipient: req.body.recipient,
+    compensation: req.body.compensation,
+    price: req.body.price,
+    usage: req.body.usage,
+    credit: credit,
+    status: req.body.status,
+    allowComments: allowComments,
+    user: req.user.id
+  }
+
+  if (req.body.contractUserType == "seller") {
+    newProposal.sellerStripeAccountId = req.user.stripeAccountId
+  }
 
   let tagIDs = [];
   if (req.body.tags.length > 0) {
@@ -542,7 +542,7 @@ router.put('/:id', (req, res) => {
 
       //new values
       proposal.url = url;
-      proposal.contractUserType= req.body.contractUserType;
+      proposal.contractUserType = req.body.contractUserType;
       proposal.recipient = req.body.recipient;
       proposal.compensation = req.body.compensation;
       proposal.price = req.body.price;
@@ -551,9 +551,9 @@ router.put('/:id', (req, res) => {
       proposal.status = req.body.status;
       proposal.allowComments = allowComments;
 
-      if (req.body.contractUserType == "seller"){
-        proposal.sellerStripeAccountId = req.user.stripeAccountId  
-      }   
+      if (req.body.contractUserType == "seller") {
+        proposal.sellerStripeAccountId = req.user.stripeAccountId
+      }
 
       let tagIDs = [];
       if (req.body.tags.length > 0) {
@@ -594,9 +594,20 @@ router.post('/voteUser/:id', (req, res) => {
       const newTouch = {
         touchedByUser: req.user.id
       }
-      if (proposal.contractUserType == "buyer"){
+      console.log('In voteUSER');
+      console.log('Seller Stripe Account ID', req.user.stripeAccountId)
+
+      if (proposal.contractUserType == "buyer" && proposal.price != "") {
         proposal.sellerStripeAccountId = req.user.stripeAccountId;
+        //See if the seller has account id
+        if (!req.user.stripeAccountId || req.user.stripeAccountId == "") {
+          //Means user doesnot have stripe account, let's show him the signup page first
+         return res.redirect(`/stripe/authorize?referer=${req.header('Referer')}`);
+        }
       }
+     
+
+
       proposal.status = "Accepted";
       // voteBody= req.body.voteBody,
       // voteUser= req.user.id,
@@ -671,7 +682,7 @@ router.put('/sellerStripeAccountId/:id', (req, res) => {
     _id: req.params.id
   })
     .then(proposal => {
-      
+
       //new values
       proposal.sellerStripeAccountId = req.user.stripeAccountId;
 
