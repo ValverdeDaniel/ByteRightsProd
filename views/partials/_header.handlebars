@@ -5,23 +5,27 @@
         <ul class="group">
           <li><a href="/proposals/my" class="logo" style="height:48px;"><img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/></a></li>
             {{#if user}}
-            <li class="pull-right-sm"><a href="#" data-target="main-menu" class="sidenav-trigger show-on-small"><i class="fa fa-bars"></i></a></li>
+            <li class="pull-right-sm pull-right-md"><a href="#" data-target="main-menu" class="sidenav-trigger show-on-small"><i class="fa fa-bars"></i></a></li>
+            
+            {{!-- desktop version when user is not logged in top navigation bar --}}
             {{else}}
-              {{!-- <li class="pull-right-sm">
-                <a class = "btn red darken-1" href="/auth/google">
-                <i class="fa fa-google left"></i>Login
-                </a>
-              </li> --}}
-              
+              <li class="pull-right-sm pull-right-md"><a href="#" data-target="main-menu" class="sidenav-trigger show-on-small"><i class="fa fa-bars"></i></a></li>
+              <ul class="hide-on-med-and-down pull-right-lg">
+                <li><a href="/businesses">Businesses</a></li>
+                <li><a href="/creatives" class="active">Creatives</a></li>
+              </ul>
             {{/if}}
           
         </ul>  
         {{!-- Left Nav --}}
+        {{!-- side navigation bar for desktop  --}}
         <ul class="hide-on-small-only">
           {{#if user}} 
             <li><a href="/dashboard">Dashboard</a></li>
             <li><a href="/proposals/my" class="active">Proposals</a></li>
             <li><a href="/about" class="active">About</a></li>
+            <li><a href="/businesses">Businesses</a></li>
+            <li><a href="/creatives" class="active">Creatives</a></li>
             <li><a href="/support">Support</a></li>
             <li><a href="/auth/logout">Logout</a></li>
           {{else}} 
@@ -29,6 +33,7 @@
         </ul>
 
         {{!-- side menu --}}
+        {{!-- mobile side navigation bar --}}
         <ul class="sidenav" id="main-menu">        
           {{#if user}}
 
@@ -50,9 +55,13 @@
             <li><a href="/dashboard">Dashboard</a></li>
             <li><a href="/proposals/my" class="active">Proposals</a></li>
             <li><a href="/about" class="active">About</a></li>
+            <li><a href="/businesses">Businesses</a></li>
+            <li><a href="/creatives" class="active">Creatives</a></li>
             <li><a href="/support">Support</a></li> 
             <li><a href="/auth/logout">Logout</a></li>
           {{else}} 
+            <li><a href="/businesses">Businesses</a></li>
+            <li><a href="/creatives" class="active">Creatives</a></li>
           {{/if}}
         </ul> 
       </div>
