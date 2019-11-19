@@ -64,9 +64,18 @@ module.exports = {
   ifEquals: function(arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
   },
-  // doesn't work how i'd hoped but it would be great if it did
   ifEqualsElse: function(a, b, opts) {
     if(a == b) {
+      return opts.fn(this)
+    } else {
+      return opts.inverse(this)
+    }
+  },
+  ifNotEquals: function(arg1, arg2, options) {
+    return (arg1 != arg2) ? options.fn(this) : options.inverse(this);
+  },
+  ifNotEqualsElse: function(a, b, opts) {
+    if(a != b) {
       return opts.fn(this)
     } else {
       return opts.inverse(this)
