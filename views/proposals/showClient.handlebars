@@ -68,7 +68,7 @@
               <div class="card-content">
                 <span class="card-title">Share Your Proposal</span>
                 <p>You've succesfully created your proposal! Now share it with your recipient by copying the message below and pasting it into your preferred contact method whether that's Instagram Direct Messenger or Email.</p><br>
-                {{#ifEqualsElse proposal.contractUserType "seller"}}
+                {{#ifEqualsElse proposal.contractUserType "Seller"}}
                   <div style="padding:5px; background-color:lightgrey;">
                   <SPAN class="copyText" style="background-color:lightgrey;">
                     {{#ifEqualsElse proposal.compensation "Cash"}}
@@ -118,7 +118,7 @@
                   </div>
 
                 {{!-- if buyer created the proposal --}}
-                {{!-- else for ifEqualsElse proposal.contractUserType "seller" --}}
+                {{!-- else for ifEqualsElse proposal.contractUserType "Seller" --}}
                 {{else}}
                   <div style="padding:5px; background-color:lightgrey;">
                   <SPAN class="copyText">
@@ -176,7 +176,7 @@
                   </div>
                   </SPAN>
 
-                {{!-- end ifEqualsElse proposal.contractUerType "seller" --}}
+                {{!-- end ifEqualsElse proposal.contractUerType "Seller" --}}
                 {{/ifEqualsElse}}
                 <br>
                 <div>
@@ -253,7 +253,7 @@
                   <p>Status: <b>This proposal has been paid for</b></p>
                 {{else}}
                   {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
-                    {{#ifEqualsElse proposal.contractUserType "seller"}}
+                    {{#ifEqualsElse proposal.contractUserType "Seller"}}
                       {{#ifEqualsElse user.id proposal.user.id}}
                         <div>
                           <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
@@ -263,7 +263,7 @@
                         <p>Status: <b>Waiting for seller to sign up with Stripe</b></p>
                       {{!-- end ifEqualsElse user.id proposal.user.id --}}
                       {{/ifEqualsElse}}
-                    {{!-- else for ifEqualsElse proposal.contractUserType "seller" --}}
+                    {{!-- else for ifEqualsElse proposal.contractUserType "Seller" --}}
                     {{!-- this means the buyer created the proposal --}}
                     {{else}}
                       {{#ifEqualsElse user.id proposal.user.id}}
@@ -275,12 +275,12 @@
                           </div>
                         {{!-- end ifEqualsElse user.id proposal.user.id --}}
                         {{/ifEqualsElse}}
-                      {{!-- end ifEqualsElse proposal.contractUserType "seller" --}}
+                      {{!-- end ifEqualsElse proposal.contractUserType "Seller" --}}
                       {{/ifEqualsElse}}
 
                   {{!-- else for ifEqualsElse proposal.sellerStripeAccountId "" --}}
                   {{else}}
-                  {{#ifEqualsElse proposal.contractUserType "seller"}}
+                  {{#ifEqualsElse proposal.contractUserType "Seller"}}
                     {{#ifEqualsElse user.id proposal.user.id}}
                       <p>Status: <b>Waiting to get Paid</b></p>
                     {{!--seller created proposal and buyer is currently accessing proposal --}}
@@ -305,7 +305,7 @@
                       </div>
 
                     {{/ifEqualsElse}}
-                  {{!--  this is if proposalcontractUserType = buyer within the section for ifEqualsElse proposal.contractUserType "seller" --}}
+                  {{!--  this is if proposalcontractUserType = buyer within the section for ifEqualsElse proposal.contractUserType "Seller" --}}
                   {{else}}
                     {{!-- buyer created proposal and is currently viewing proposal --}}
                     {{#ifEqualsElse user.id proposal.user.id}}
@@ -331,7 +331,7 @@
 
                     {{/ifEqualsElse}}
 
-                  {{!-- end ifEqualsElse proposal.contractUserType "seller" --}}
+                  {{!-- end ifEqualsElse proposal.contractUserType "Seller" --}}
                   {{/ifEqualsElse}}
 
                   {{!-- end ifEqualsElse proposal.sellerStripeAccountId  --}}
@@ -424,7 +424,7 @@
       <h5>How Proposals Work</h5>
     </div>
     <div class= "center-align" style="background-color:#B6E9FF;">
-      {{#ifEqualsElse proposal.contractUserType "seller"}}
+      {{#ifEqualsElse proposal.contractUserType "Seller"}}
         {{!-- <img width="100%"src="/images/SellerProposal_Help.png"/> --}}
         <table>
           <tr style="border-bottom:0px;">

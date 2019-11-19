@@ -137,7 +137,7 @@
             <span class="card-title">Contract Status</span>
               <div>
                 {{!-- start if seller created proposal --}}
-                {{#ifEqualsElse proposal.contractUserType "seller"}}
+                {{#ifEqualsElse proposal.contractUserType "Seller"}}
                   {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}
                     {{#ifEqualsElse user.stripeAccountId ""}}
                       <div>
@@ -190,7 +190,7 @@
                     {{/ifEqualsElse}}
                   {{!-- end #ifLoggedUserEqProposalUser user.id proposal.user.id --}}
                   {{/ifLoggedUserEqProposalUser}}
-                {{!-- else for  #ifEqualsElse proposal.contractUserType = "seller" so this is what the buyer sees if they created the contract--}}
+                {{!-- else for  #ifEqualsElse proposal.contractUserType = "Seller" so this is what the buyer sees if they created the contract--}}
                 {{!-- start if buyer created proposal --}}
                 {{else}}
                   {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}
@@ -242,7 +242,7 @@
                   {{!-- end #ifLoggedUserEqProposalUser user.id proposal.user.id --}}
                   {{/ifLoggedUserEqProposalUser}}
 
-                {{!-- end #ifEqualsElse proposal.contractUserType = "seller" --}}
+                {{!-- end #ifEqualsElse proposal.contractUserType = "Seller" --}}
                 {{/ifEqualsElse}}
               </div>
               <br>
@@ -579,7 +579,7 @@
   </div>
 
 <div>
-  {{#ifEqualsElse proposal.contractUserType "seller"}}
+  {{#ifEqualsElse proposal.contractUserType "Seller"}}
     <p>contractUserType = seller</p>
   {{else}}
     <p>contractUserType = buyer</p>
