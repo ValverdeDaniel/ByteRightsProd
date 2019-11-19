@@ -73,7 +73,7 @@ module.exports = {
     }
   },
   ifProposalContractUserTypeEQSeller: function(proposalContractUserType, opts){
-    if(proposalContractUserType == "seller") {
+    if(proposalContractUserType == "Seller") {
       return opts.fn(this);
     } else {
       return opts.inverse(this);

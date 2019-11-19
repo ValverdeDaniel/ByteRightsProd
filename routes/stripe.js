@@ -55,8 +55,8 @@ router.get('/authorize', ensureAuthenticated, (req, res) => {
   // and `phone` in the query parameters: those form fields will be prefilled
   parameters = Object.assign(parameters, {
     //previous redirect_uri config.publicDomain +
-    //redirect_uri: 'localhost:5000/stripe/token',
-    redirect_uri:'desolate-sierra-72554.herokuapp.com/stripe/token',
+    redirect_uri: 'localhost:5000/stripe/token',
+    //redirect_uri:'desolate-sierra-72554.herokuapp.com/stripe/token',
     'stripe_user[business_type]': req.user.type || 'individual',
     'stripe_user[business_name]': req.user.businessName || undefined,
     'stripe_user[first_name]': req.user.firstName || undefined,
@@ -149,8 +149,8 @@ router.get('/stripeDashboard', ensureAuthenticated, async (req, res) => {
       user.stripeAccountId, {
         //was pilots/dashboard
         //i want this to take me to stripeDashboard
-        //redirect_url: req.session.redirectUrl ? req.session.redirectUrl : 'http://localhost:5000/dashboard'
-        redirect_url: req.session.redirectUrl ? req.session.redirectUrl : 'https://desolate-sierra-72554.herokuapp.com/dashboard'
+        redirect_url: req.session.redirectUrl ? req.session.redirectUrl : 'http://localhost:5000/dashboard'
+        //redirect_url: req.session.redirectUrl ? req.session.redirectUrl : 'https://desolate-sierra-72554.herokuapp.com/dashboard'
       }
     );
     // Directly link to the account tab
@@ -261,6 +261,7 @@ router.get('/stripeDashboard', ensureAuthenticated, async (req, res) => {
 //the start of payment authentication using Fiverr Strategy
 //const processingPercentage = .1;
 
+// ps we are no longer using this route the show route contains this logic
 router.get('/checkout/single_proposal/:id', (req, res, next) => {
   console.log('checkout/single_proposal/:id')
   Proposal.findOne({ _id: req.params.id }, function (err, proposal) {
@@ -268,8 +269,14 @@ router.get('/checkout/single_proposal/:id', (req, res, next) => {
     try {
       //var price = proposal.price
       var price = proposal.price
-      var feePercent = .1
-      var fee = Math.ceil(price * feePercent)
+      if(price < 5) {
+        var fee = 1
+      } else {
+        var feePercent = .2
+        var fee = price*feePercent
+      }
+
+      //var fee = Math.ceil(price * feePercent)
       var totalPrice = price + fee;
       console.log('%fee: ' + fee)
       console.log('%price: ' + price)
@@ -318,7 +325,7 @@ router.post('/payment', async (req, res, next) => {
   //console.log('payment proposal:' + JSON.stringify(proposal))
   console.log('payment price: ' + price)
   console.log('/payment fee: ' + fee)
-  price *= 100.0
+  price *= 100
   fee *= 100
   console.log('%aprice: ' + price)
   console.log('%apaymentFee: ' + fee)
