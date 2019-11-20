@@ -21,7 +21,7 @@
 @media only screen and (max-width: 600px) {
   .nav-horizontal {
     width: 100%;
-    padding: 25px 0 15px;
+    padding: 25px 0 25px;
   }
 }
 .nav-horizontal ul li div {
@@ -68,6 +68,7 @@ main {
 }
 
 .nav_wrapper .group {
+  height: 48px;
   width: 100%;
 }
 
