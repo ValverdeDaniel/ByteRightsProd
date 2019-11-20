@@ -5,14 +5,15 @@
         <ul class="group">
           <li><a href="/proposals/my" class="logo" style="height:48px;"><img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/></a></li>
             {{#if user}}
-            <li class="pull-right-sm pull-right-md"><a href="#" data-target="main-menu" class="sidenav-trigger show-on-small"><i class="fa fa-bars"></i></a></li>
+            <li class="pull-right-sm pull-right-md"><a href="#" data-target="main-menu" class="sidenav-trigger show-on-small hide-on-med-and-up"><i class="fa fa-bars"></i></a></li>
             
             {{!-- desktop version when user is not logged in top navigation bar --}}
             {{else}}
               <li class="pull-right-sm pull-right-md"><a href="#" data-target="main-menu" class="sidenav-trigger show-on-small"><i class="fa fa-bars"></i></a></li>
               <ul class="hide-on-med-and-down pull-right-lg">
                 <li><a href="/businesses">Businesses</a></li>
-                <li><a href="/creatives" class="active">Creatives</a></li>
+                <li><a href="/creatives">Creatives</a></li>
+                <li><a href="/howitworks">How it Works</a></li>
               </ul>
             {{/if}}
           
@@ -61,7 +62,8 @@
             <li><a href="/auth/logout">Logout</a></li>
           {{else}} 
             <li><a href="/businesses">Businesses</a></li>
-            <li><a href="/creatives" class="active">Creatives</a></li>
+            <li><a href="/creatives">Creatives</a></li>
+            <li><a href="/howitworks">How it Works</a></li>
           {{/if}}
         </ul> 
       </div>

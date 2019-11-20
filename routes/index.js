@@ -17,6 +17,10 @@ router.get('/creatives', (req, res) => {
   res.render('index/creatives');
 });
 
+router.get('/howitworks', (req, res) => {
+  res.render('index/howitworks');
+});
+
 
 // router.get('/dashboard', ensureAuthenticated, (req, res) => {
 //   user.findOne({id:req.user.id})

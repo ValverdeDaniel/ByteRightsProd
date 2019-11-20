@@ -12,7 +12,7 @@
         {{else}} 
           <button data-target="modalLogin" class="btn brPink modal-trigger">Join Beta</button>
         - OR - 
-        {{/if}} <button data-target="modalLogin" class="btn brBlue modal-trigger">Learn More</button>
+        {{/if}} <a class="btn brBlue" href="/howitworks">Learn More</a>
       </div>
     </div>
   </div>
@@ -133,7 +133,7 @@
         {{else}} 
           <button data-target="modalLogin" class="btn brPink waves-pink modal-trigger">Join Beta</button>
         - OR - 
-        {{/if}} <button data-target="modalLogin" class="btn brBlue modal-trigger">Learn More</button>
+        {{/if}} <a class="btn brBlue" href="/howitworks">Learn More</a>
       </div>
     </div>    
 
@@ -157,12 +157,12 @@
     <div class= "center-align">
     <h4>Please Login</h4>
 
-      <a class = "btn red darken-1" href="/proposals/showClient/{{proposal.id}}">
+      <a class = "btn red darken-1" href="/auth/google">
         <i class="fa fa-google left"></i>Login with Google
       </a>
       <br>
       <br>
-      <a class = "btn blue darken-1 row center-align" href="/proposals/showFBClient/{{proposal.id}}">
+      <a class = "btn blue darken-1 row center-align" href="/auth/facebook">
         <i class="fa fa-facebook left"></i>Login with Facebook
       </a>
     </div>
