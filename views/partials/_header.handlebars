@@ -40,7 +40,8 @@
           {{#if user}}
 
           {{else}}
-          <li><a data-target="modalLogin" class="btn brPink modal-trigger">Login</a></li>
+          {{!-- <li><a data-target="modalLogin" class="btn brPink modal-trigger">Login</a></li> --}}
+          
             {{!-- <li>
               <a class = "btn red darken-1" href="/auth/google">
               <i class="fa fa-google left"> </i>Login With Google
@@ -66,6 +67,7 @@
             <li><a href="/businesses">Businesses</a></li>
             <li><a href="/creatives">Creatives</a></li>
             <li><a href="/howitworks">How it Works</a></li>
+            <li style="padding:0 30px;"><button data-target="modalLogin" class="btn brPink modal-trigger">Login</button></li>
           {{/if}}
         </ul> 
       </div>
@@ -91,12 +93,12 @@
     <h4>Please Login</h4>
 
       <a class = "btn red darken-1" href="/auth/google">
-        <i class="fa fa-google left"></i>Login with Google
+        <i class="fab fa-google left"></i>Login with Google
       </a>
       <br>
       <br>
       <a class = "btn blue darken-1 row center-align" href="/auth/facebook">
-        <i class="fa fa-facebook left"></i>Login with Facebook
+        <i class="fab fa-facebook-f left"></i>Login with Facebook
       </a>
     </div>
   </div>
