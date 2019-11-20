@@ -44,19 +44,110 @@
               <p>No</p>
               {{/if}}
               {{!-- add logic ifEqualsElse --}}
-              {{#ifEqualsElse proposal.compensation "Cash"}}
+              {{!-- {{#ifEqualsElse proposal.compensation "Cash"}} --}}
+              {{#ifNotEqualsElse proposal.price ""}}
                 <p class="proposal-label">How will you be compensated?</p>
                 <p>${{proposal.price}}</p>
+                <p>{{proposal.compensation}}</p>
               {{else}}
                 {{#ifEqualsElse proposal.compensation ""}}
                 {{else}}
                   <p class="proposal-label">How will you be compensated?</p>
                   <p>{{proposal.compensation}}</p>
                 {{/ifEqualsElse}}
-              {{/ifEqualsElse}}
+              {{/ifNotEqualsElse}}
                 <br>
                 {{{editIcon proposal.user.id user.id proposal.id false}}}
                 <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
+        
+                  {{!-- begin signup/link stripeAccount Logic --}}
+                  {{#if user}}
+                    {{#ifEquals proposal.status "Created"}}
+                      {{#ifEqualsElse proposal.contractUserType "Seller"}}
+                        {{#ifEqualsElse user.id proposal.user.id}}
+                          {{#ifEqualsElse user.stripeAccountId ""}}
+                            <p>If You would like to get paid for this proposal you have to sign up with Stripe, it will only take 2 minutes we promise.</p>
+                            <div>
+                              <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+                            </div>
+                          {{!-- else for user.stripeAccountId = "" --}}
+                          {{else}}
+                            {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                              <p>Our Records say you have already signed up with Stripe, the last thing you need to do before the buyer can pay you is link your Stripe Account to this proposal. The next time around we will automatically do this for you.</p>
+                              <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                                <button type="submit" name="sellerStripeAccountId" class="btn waves-effect waves-light" value="{{req.user.stripeAccountId}}">Link Your Stripe Account
+                                  <i class="material-icons right">send</i>
+                                </button>
+                              </form>
+
+                            {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                            {{else}}
+                              <p>You have successfully linked your stripe seller account</p>
+                              <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
+                            {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                            {{/ifEqualsElse}}                      
+                          {{!-- end ifEqualsElse user.stripeAccountId = "" --}}
+                          {{/ifEqualsElse}}
+
+                        {{!-- else for ifEqualsElse user.id proposal.user.id... buyer is looking at proposal --}}
+                        {{else}}
+                          {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                            <p>Waiting for seller to link their stripe Account</p>
+
+                          {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                          {{else}}
+                            <p>Seller has linked their stripe account to the proposal</p>
+                            <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
+                          {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                          {{/ifEqualsElse}}
+                        {{/ifEqualsElse}}
+                      {{!-- else for proposal.contractUserType = "Seller" so proposal was made by buyer --}}
+                      {{else}}
+                        {{!-- proposal made by buyer and buyer is currently interacting --}}
+                        {{#ifEqualsElse user.id proposal.user.id}}
+                          {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                            <p>Waiting for seller to link their stripe Account</p>
+
+                          {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                          {{else}}
+                            <p>Seller has linked their stripe account to the proposal</p>
+                            <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
+                          {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                          {{/ifEqualsElse}}
+                        {{!-- else for user.id = proposal.user.id, proposal made by buyer and seller is currently interacting --}}
+                        {{else}}
+                          {{#ifEqualsElse user.stripeAccountId ""}}
+                            <p>If You would like to get paid for this proposal you have to sign up with Stripe, it will only take 2 minutes we promise.</p>
+                            <div>
+                              <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+                            </div>
+                          {{!-- else for user.stripeAccountId = "" --}}
+                          {{else}}
+                            {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                              <p>Our Records say you have already signed up with Stripe, the last thing you need to do before the buyer can pay you is link your Stripe Account to this proposal. The next time around we will automatically do this for you.</p>
+                              <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                                <button type="submit" name="sellerStripeAccountId" class="btn waves-effect waves-light" value="{{req.user.stripeAccountId}}">Link Your Stripe Account
+                                  <i class="material-icons right">send</i>
+                                </button>
+                              </form>
+
+                            {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                            {{else}}
+                              <p>You have successfully linked your stripe seller account</p>
+                              <p>Stripe Seller Account ID: {{proposal.sellerStripeAccountId}}</p>
+                            {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                            {{/ifEqualsElse}}                      
+                          {{!-- end ifEqualsElse user.stripeAccountId = "" --}}
+                          {{/ifEqualsElse}}
+                        {{!-- end if equals else user.id = proposal.user.id --}}
+                        {{/ifEqualsElse}}
+                      {{!--end ifEqualsElse proposal.contractUserType "Seller"  --}}
+                      {{/ifEqualsElse}}
+
+                    {{/ifEquals}}
+                  {{!-- end if user --}}
+                  {{/if}}
+
             </div>
           </div>
         </div>
@@ -71,16 +162,17 @@
                 {{#ifEqualsElse proposal.contractUserType "Seller"}}
                   <div style="padding:5px; background-color:lightgrey;">
                   <SPAN class="copyText" style="background-color:lightgrey;">
-                    {{#ifEqualsElse proposal.compensation "Cash"}}
+                    {{!-- {{#ifEqualsElse proposal.compensation "Cash"}} --}}
+                    {{#ifNotEqualsElse proposal.price ""}}
                       {{#ifEqualsElse user.companyName ""}}
                         {{!-- message if compensation not equal blank and company name equals blank --}}
-                        <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I'd like to offer you the rights to use this great photo in exchange for: ${{proposal.price}}.
+                        <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I'd like to offer you the rights to use this great photo in exchange for: ${{proposal.price}} {{proposal.compensation}}.
                           To accept and download the image, follow the link-
                         <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
                         {{!-- else for user.companyName "" --}}
                       {{else}}
                         {{!-- message if compensation not equal blank and company name does not equal blank --}}
-                        <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}}  from {{proposal.user.companyName}}. I'd like to offer you the rights to use this great photo in exchange for: ${{proposal.price}}.
+                        <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}}  from {{proposal.user.companyName}}. I'd like to offer you the rights to use this great photo in exchange for: ${{proposal.price}} {{proposal.compensation}}.
                           To accept and download the image, follow the link- <a class="word-break" href="{{proposal.id}}"
                             target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
                         {{!-- end ifEqualsElse user.companyName "" --}}
@@ -113,7 +205,7 @@
                           {{!-- end ifEqualsElse user.companyName "" --}}
                         {{/ifEqualsElse}}
                       {{/ifEqualsElse}}
-                    {{/ifEqualsElse}}
+                    {{/ifNotEqualsElse}}
                   </SPAN>
                   </div>
 
@@ -122,12 +214,13 @@
                 {{else}}
                   <div style="padding:5px; background-color:lightgrey;">
                   <SPAN class="copyText">
-                    {{#ifEqualsElse proposal.compensation "Cash"}}
+                    {{!-- {{#ifEqualsElse proposal.compensation "Cash"}} --}}
+                    {{#ifNotEqualsElse proposal.price ""}}
                       {{#ifEqualsElse user.companyName ""}}
                         {{!-- message if compensation not equal blank and company name equals blank --}}
                         <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
                         Would you allow us to use it sometime in the future? In exchange we would be willing to compensate you
-                        with: ${{proposal.price}}. To accept, follow the link- 
+                        with: ${{proposal.price}} {{proposal.compensation}}. To accept, follow the link- 
                         <a class="word-break" href="{{proposal.id}}"
                           target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
                         {{!-- else for user.companyName "" --}}
@@ -135,7 +228,7 @@
                         {{!-- message if compensation not equal blank and company name does not equal blank --}}
                         <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
                         posted! Would you allow us to use it sometime in the future? In exchange we would be willing to
-                        compensate you with: ${{proposal.price}}. To accept, follow the link- <a class="word-break" href="{{proposal.id}}"
+                        compensate you with: ${{proposal.price}} {{proposal.compensation}}. To accept, follow the link- <a class="word-break" href="{{proposal.id}}"
                           target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
                         {{!-- end ifEqualsElse user.companyName "" --}}
                       {{/ifEqualsElse}}
@@ -172,7 +265,7 @@
                           {{!-- end ifEqualsElse user.companyName "" --}}
                         {{/ifEqualsElse}}
                       {{/ifEqualsElse}}
-                    {{/ifEqualsElse}}
+                    {{/ifNotEqualsElse}}
                   </div>
                   </SPAN>
 
@@ -215,8 +308,7 @@
               {{/each}}
           </div>
         </div>
-
-        {{#ifEquals proposal.compensation "Cash"}}
+        {{#ifNotEquals proposal.price ""}}
           <div class="card">
             <div class="card-content">
               <span class="card-title">Payment</span>
@@ -232,7 +324,7 @@
                     </tr>
                     <tr>
                       <td style="padding:5px 5px;">
-                        Application Fee (10%):
+                        Application Fee (20%):
                       </td>
                       <td style="padding:5px 5px;">
                         ${{fee}}
@@ -252,95 +344,121 @@
                 {{#ifEqualsElse proposal.status "Paid" }}
                   <p>Status: <b>This proposal has been paid for</b></p>
                 {{else}}
-                  {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
-                    {{#ifEqualsElse proposal.contractUserType "Seller"}}
-                      {{#ifEqualsElse user.id proposal.user.id}}
-                        <div>
-                          <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
-                        </div>
-                      {{!-- else for ifEqualsElse user.id proposal.user.id --}}
-                      {{else}}
-                        <p>Status: <b>Waiting for seller to sign up with Stripe</b></p>
-                      {{!-- end ifEqualsElse user.id proposal.user.id --}}
-                      {{/ifEqualsElse}}
-                    {{!-- else for ifEqualsElse proposal.contractUserType "Seller" --}}
-                    {{!-- this means the buyer created the proposal --}}
-                    {{else}}
-                      {{#ifEqualsElse user.id proposal.user.id}}
-                          <p>Status: <b>Waiting for seller to sign up with Stripe</b></p>
+                  {{#if user}}
+                    {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                      {{#ifEqualsElse proposal.contractUserType "Seller"}}
+                        {{#ifEqualsElse user.id proposal.user.id}}
+                          {{#ifEqualsElse user.stripeAccountId ""}}
+                            <div>
+                              <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+                            </div>
+                          {{!-- else for ifequalsElse user.stripeAccountId "" --}}
+                          {{else}}
+                              <p>Our Records say you have already signed up with Stripe, the last thing you need to do before the buyer can pay you is link your Stripe Account to this proposal. The next time around we will automatically do this for you.</p>
+                              <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                                <button type="submit" name="sellerStripeAccountId" class="btn waves-effect waves-light" value="{{req.user.stripeAccountId}}">Link Your Stripe Account
+                                  <i class="material-icons right">send</i>
+                                </button>
+                              </form>
+                          {{!-- end if equals else for user.stripeAccountId = "" --}}
+                          {{/ifEqualsElse}}
+
                         {{!-- else for ifEqualsElse user.id proposal.user.id --}}
                         {{else}}
-                          <div>
-                            <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
-                          </div>
+                          <p>Status: <b>Waiting for seller to sign up with Stripe</b></p>
                         {{!-- end ifEqualsElse user.id proposal.user.id --}}
                         {{/ifEqualsElse}}
-                      {{!-- end ifEqualsElse proposal.contractUserType "Seller" --}}
+                      {{!-- else for ifEqualsElse proposal.contractUserType "Seller" --}}
+                      {{!-- this means the buyer created the proposal --}}
+                      {{else}}
+                        {{#ifEqualsElse user.id proposal.user.id}}
+                            <p>Status: <b>Waiting for seller to sign up with Stripe</b></p>
+                          {{!-- else for ifEqualsElse user.id proposal.user.id --}}
+                          {{else}}
+                            {{#ifEqualsElse user.stripeAccountId ""}}
+                              <div>
+                                <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+                              </div>
+                            {{!-- else for ifequalsElse user.stripeAccountId "" --}}
+                            {{else}}
+                                <p>Our Records say you have already signed up with Stripe, the last thing you need to do before the buyer can pay you is link your Stripe Account to this proposal. The next time around we will automatically do this for you.</p>
+                                <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                                  <button type="submit" name="sellerStripeAccountId" class="btn waves-effect waves-light" value="{{req.user.stripeAccountId}}">Link Your Stripe Account
+                                    <i class="material-icons right">send</i>
+                                  </button>
+                                </form>
+                            {{!-- end if equals else for user.stripeAccountId = "" --}}
+                            {{/ifEqualsElse}}
+
+                          {{!-- end ifEqualsElse user.id proposal.user.id --}}
+                          {{/ifEqualsElse}}
+                        {{!-- end ifEqualsElse proposal.contractUserType "Seller" --}}
+                        {{/ifEqualsElse}}
+
+                    {{!-- else for ifEqualsElse proposal.sellerStripeAccountId "" --}}
+                    {{else}}
+                    {{#ifEqualsElse proposal.contractUserType "Seller"}}
+                      {{#ifEqualsElse user.id proposal.user.id}}
+                        <p>Status: <b>Waiting to get Paid</b></p>
+                      {{!--seller created proposal and buyer is currently accessing proposal --}}
+                      {{!-- else for ifEqualsElse user.id proposal.user.id --}}
+                      {{else}}
+                        <div>
+                          <div class="row">
+                            <form action="/stripe/payment" method="post" id="payment-form">
+                              <div class="form-row" style="padding:12px">
+                                <label for="card-element">
+                                  Credit or debit card
+                                </label>
+                                <div id="card-element">
+                                  <!-- A Stripe Element will be inserted here. -->
+                                </div>
+                                <!-- Used to display form errors. -->
+                                <div id="card-errors" role="alert"></div>
+                                <button class= "StripeButton">Submit Payment</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+
+                      {{/ifEqualsElse}}
+                    {{!--  this is if proposalcontractUserType = buyer within the section for ifEqualsElse proposal.contractUserType "Seller" --}}
+                    {{else}}
+                      {{!-- buyer created proposal and is currently viewing proposal --}}
+                      {{#ifEqualsElse user.id proposal.user.id}}
+                        <div>
+                          <div class="row">
+                            <form action="/stripe/payment" method="post" id="payment-form">
+                              <div class="form-row" style="padding:12px">
+                                <label for="card-element">
+                                  Credit or debit card
+                                </label>
+                                <div id="card-element">
+                                  <!-- A Stripe Element will be inserted here. -->
+                                </div>
+                                <!-- Used to display form errors. -->
+                                <div id="card-errors" role="alert"></div>
+                                <button class= "StripeButton">Submit Payment</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      {{else}}
+                      <p>Status: <b>Waiting to get Paid</b></p>
+
                       {{/ifEqualsElse}}
 
-                  {{!-- else for ifEqualsElse proposal.sellerStripeAccountId "" --}}
-                  {{else}}
-                  {{#ifEqualsElse proposal.contractUserType "Seller"}}
-                    {{#ifEqualsElse user.id proposal.user.id}}
-                      <p>Status: <b>Waiting to get Paid</b></p>
-                    {{!--seller created proposal and buyer is currently accessing proposal --}}
-                    {{!-- else for ifEqualsElse user.id proposal.user.id --}}
-                    {{else}}
-                      <div>
-                        <div class="row">
-                          <form action="/stripe/payment" method="post" id="payment-form">
-                            <div class="form-row" style="padding:12px">
-                              <label for="card-element">
-                                Credit or debit card
-                              </label>
-                              <div id="card-element">
-                                <!-- A Stripe Element will be inserted here. -->
-                              </div>
-                              <!-- Used to display form errors. -->
-                              <div id="card-errors" role="alert"></div>
-                              <button class= "StripeButton">Submit Payment</button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-
-                    {{/ifEqualsElse}}
-                  {{!--  this is if proposalcontractUserType = buyer within the section for ifEqualsElse proposal.contractUserType "Seller" --}}
-                  {{else}}
-                    {{!-- buyer created proposal and is currently viewing proposal --}}
-                    {{#ifEqualsElse user.id proposal.user.id}}
-                      <div>
-                        <div class="row">
-                          <form action="/stripe/payment" method="post" id="payment-form">
-                            <div class="form-row" style="padding:12px">
-                              <label for="card-element">
-                                Credit or debit card
-                              </label>
-                              <div id="card-element">
-                                <!-- A Stripe Element will be inserted here. -->
-                              </div>
-                              <!-- Used to display form errors. -->
-                              <div id="card-errors" role="alert"></div>
-                              <button class= "StripeButton">Submit Payment</button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    {{else}}
-                    <p>Status: <b>Waiting to get Paid</b></p>
-
+                    {{!-- end ifEqualsElse proposal.contractUserType "Seller" --}}
                     {{/ifEqualsElse}}
 
-                  {{!-- end ifEqualsElse proposal.contractUserType "Seller" --}}
-                  {{/ifEqualsElse}}
-
-                  {{!-- end ifEqualsElse proposal.sellerStripeAccountId  --}}
-                  {{/ifEqualsElse}}
+                    {{!-- end ifEqualsElse proposal.sellerStripeAccountId  --}}
+                    {{/ifEqualsElse}}
+                  {{/if}}
                 {{!-- end ifEqualsElse proposal.status "Paid" --}}
                 {{/ifEqualsElse}}
             </div>
           </div>
-        {{/ifEquals}}
+        {{/ifNotEquals}}
         {{!-- end ifEqualsElse proposal.status "Created" --}}
         {{/ifEqualsElse}}
 
@@ -505,12 +623,12 @@
     <h4>Please Login</h4>
 
       <a class = "btn red darken-1" href="/proposals/showClient/{{proposal.id}}">
-        <i class="fa fa-google left"></i>Login with Google
+        <i class="fab fa-google left"></i>Login with Google
       </a>
       <br>
       <br>
       <a class = "btn blue darken-1 row center-align" href="/proposals/showFBClient/{{proposal.id}}">
-        <i class="fa fa-facebook left"></i>Login with Facebook
+        <i class="fab fa-facebook-f left"></i>Login with Facebook
       </a>
     </div>
   </div>
