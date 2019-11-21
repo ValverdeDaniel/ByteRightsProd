@@ -176,7 +176,7 @@ footer {
 }
 .home_content-wrapper {
   max-width: 1140px;
-  margin: 35px auto;
+  margin: 35px 15%;
 }
 .home_content-wrapper h3 {
   font-size: 26px;
@@ -478,11 +478,13 @@ footer {
 }
 
 .brBlue {
-  background-color: #B6E9FF;
+  background-color:  ;
+  background-color: rgb(3, 172, 245) ;
+  /* color:black; */
 }
 
 .brBlue:hover {
-  background-color: rgb(3, 172, 245);
+  background-color: #B6E9FF;
 }
 
 /*# sourceMappingURL=style.css.map */

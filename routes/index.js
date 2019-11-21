@@ -21,6 +21,9 @@ router.get('/howitworks', (req, res) => {
   res.render('index/howitworks');
 });
 
+router.get('/pricing', (req, res) => {
+  res.render('index/pricing');
+});
 
 // router.get('/dashboard', ensureAuthenticated, (req, res) => {
 //   user.findOne({id:req.user.id})
