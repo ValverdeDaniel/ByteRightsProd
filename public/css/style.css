@@ -248,6 +248,12 @@ footer {
   width: 75%; */
   margin: 0 auto;
 }
+.landing_content-2col-center {
+  text-align: center;
+  /* padding: 40px 20px;
+  width: 75%; */
+  margin: 0 auto;
+}
 @media only screen and (max-width: 600px) {
   .landing_content-header {
     width: 100%;
