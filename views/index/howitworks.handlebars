@@ -96,6 +96,16 @@
     </div>
 </div>
 
+  <div class="row"> 
+    <div class="col s12">
+      {{#if user}} 
+      {{else}} 
+        <button data-target="modalLogin" class="btn brPink waves-pink modal-trigger">Join Beta</button>
+      - OR - 
+      {{/if}} <a class="btn brBlue" href="/pricing">Pricing</a>
+    </div>
+  </div>
+
 
 <!-- Modal Login Structure-->
 <div id="modalLogin" class="modal">
