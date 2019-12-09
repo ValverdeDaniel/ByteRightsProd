@@ -115,6 +115,11 @@ footer {
   width: 100%;
   height: calc(100vh - 90px);
 }
+.home_welcome .creative_home_wrapper {
+  max-width: 100%;
+  width: 100%;
+  height: calc(100vh - 90px);
+}
 .home_welcome main {
   width: 100%;
 }
@@ -140,6 +145,25 @@ footer {
   margin: auto;
 }
 .home .row {
+  margin-bottom: 0;
+}
+.creative_home_wrapper{
+  display: flex;
+  flex-direction: column;
+  background-image: url("/images/creatives_photography.png");
+  height: 100%;
+}
+.creative_home_container {
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 1140px;
+  margin: auto;
+}
+.creative_home .row {
   margin-bottom: 0;
 }
 .home_content {
@@ -484,7 +508,6 @@ footer {
 }
 
 .brBlue {
-  background-color:  ;
   background-color: rgb(3, 172, 245) ;
   /* color:black; */
 }
