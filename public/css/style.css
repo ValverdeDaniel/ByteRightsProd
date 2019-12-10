@@ -150,7 +150,7 @@ footer {
 .creative_home_wrapper{
   display: flex;
   flex-direction: column;
-  background-image: url("/images/creatives_photography.png");
+  background-image: url("/images/Creatives_Photography.png");
   height: 100%;
 }
 .creative_home_container {
