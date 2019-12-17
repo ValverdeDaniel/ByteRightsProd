@@ -6,6 +6,10 @@ const user = mongoose.model('users');
 const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
 const { ensureLoggedIn } = require('connect-ensure-login');
 const axios = require('axios');
+const request = require('request-promise');
+const { getMetadata } = require('page-metadata-parser');
+const domino = require('domino');
+
 
 
 // proposals index (all public proposals route) 
@@ -490,6 +494,26 @@ router.post('/', ensureAuthenticated, (req, res) => {
   var n = url.indexOf('?');
   url = url.substring(0, n != -1 ? n : url.length);
 
+  // / Create the base function to be ran /
+  (async () => {
+  try {
+      let html = await request(url);
+      const doc = domino.createWindow(html).document;
+      const metadata = getMetadata(doc, url);
+      if (metadata != null && metadata.description != null) {
+        let igUsername=metadata.description.match(/\(([^)]+)\)/)[1];
+        console.log('metadata is', metadata.description.match(/\(([^)]+)\)/)[1]);
+        console.log(igUsername);
+      } else {
+        console.log('either metadata is undefined or it does not contains the description name')
+      }
+      debugger;
+  } catch {
+      console.log('something went wrong with the scraper probably that multiphoto for private user scenario')
+  }
+  
+  })() 
+//console.log('2' + igUsername)
   let newProposal = {
     url: url,
     contractUserType: req.body.contractUserType,
@@ -501,6 +525,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
     status: req.body.status,
     allowComments: allowComments,
     user: req.user.id
+    //igUsername: igUsername
   }
 
   if (req.body.contractUserType == "Seller") {
