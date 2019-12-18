@@ -51,6 +51,10 @@ const ProposalSchema = new Schema({
     default: true
 
   },
+  igUsername: {
+    type: String,
+    default: ""
+  },
   tag: [{
     text: {
       type: String,

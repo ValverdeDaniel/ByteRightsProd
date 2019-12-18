@@ -17,7 +17,7 @@ git add .
 
 git commit -m "some message"
 
-git push origin NameOfBranch
+git push origin instaScraper
 
 hp test2
 
