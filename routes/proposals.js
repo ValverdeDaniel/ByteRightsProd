@@ -492,27 +492,27 @@ router.post('/', ensureAuthenticated, (req, res) => {
   } else {
     credit = false;
   }
-  var url = req.body.url;
-  var n = url.indexOf('?');
+  let url = req.body.url;
+  let n = url.indexOf('?');
   url = url.substring(0, n != -1 ? n : url.length);
 
   // / Create the base function to be ran /
-  
-//  try {
+  let igUsername;  
+  try {
       let html = await request(url);
       const doc = domino.createWindow(html).document;
       const metadata = getMetadata(doc, url);
-      //if (metadata != null && metadata.description != null) {
-        let igUsername=metadata.description.match(/\(([^)]+)\)/)[1];
+      if (metadata != null && metadata.description != null) {
+        igUsername=metadata.description.match(/\(([^)]+)\)/)[1];
         console.log('metadata is', metadata.description.match(/\(([^)]+)\)/)[1]);
         console.log(igUsername);
-      //} else {
-        //console.log('either metadata is undefined or it does not contains the description name')
-      //}
+      } else {
+        console.log('either metadata is undefined or it does not contains the description name')
+      }
       debugger;
-  // } catch {
-  //     console.log('something went wrong with the scraper probably that multiphoto for private user scenario')
-  // }
+  } catch {
+       console.log('something went wrong with the scraper probably that multiphoto for private user scenario')
+  }
   
    
   console.log('2' + igUsername)
