@@ -478,6 +478,8 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 
 //process add proposal
 router.post('/', ensureAuthenticated, (req, res) => {
+  (async () => {
+
   let allowComments;
   if (req.body.allowComments) {
     allowComments = true;
@@ -495,25 +497,25 @@ router.post('/', ensureAuthenticated, (req, res) => {
   url = url.substring(0, n != -1 ? n : url.length);
 
   // / Create the base function to be ran /
-  (async () => {
-  try {
+  
+//  try {
       let html = await request(url);
       const doc = domino.createWindow(html).document;
       const metadata = getMetadata(doc, url);
-      if (metadata != null && metadata.description != null) {
+      //if (metadata != null && metadata.description != null) {
         let igUsername=metadata.description.match(/\(([^)]+)\)/)[1];
         console.log('metadata is', metadata.description.match(/\(([^)]+)\)/)[1]);
         console.log(igUsername);
-      } else {
-        console.log('either metadata is undefined or it does not contains the description name')
-      }
+      //} else {
+        //console.log('either metadata is undefined or it does not contains the description name')
+      //}
       debugger;
-  } catch {
-      console.log('something went wrong with the scraper probably that multiphoto for private user scenario')
-  }
+  // } catch {
+  //     console.log('something went wrong with the scraper probably that multiphoto for private user scenario')
+  // }
   
-  })() 
-//console.log('2' + igUsername)
+   
+  console.log('2' + igUsername)
   let newProposal = {
     url: url,
     contractUserType: req.body.contractUserType,
@@ -524,8 +526,8 @@ router.post('/', ensureAuthenticated, (req, res) => {
     credit: credit,
     status: req.body.status,
     allowComments: allowComments,
-    user: req.user.id
-    //igUsername: igUsername
+    user: req.user.id,
+    igUsername: igUsername
   }
 
   if (req.body.contractUserType == "Seller") {
@@ -551,6 +553,8 @@ router.post('/', ensureAuthenticated, (req, res) => {
     .then(proposal => {
       res.redirect(`/proposals/show/${proposal.id}`);
     })
+
+  })()
 })
 
 //edit form process
