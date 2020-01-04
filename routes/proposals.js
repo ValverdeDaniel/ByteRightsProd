@@ -94,6 +94,8 @@ router.get('/show/:id', (req, res) => {
     })
 })
 
+
+
 //show single proposal
 router.get('/tempshow/:id', (req, res) => {
   Proposal.findOne({ _id: req.params.id })
