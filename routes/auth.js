@@ -17,6 +17,7 @@ router.get('/google/callback',
   passport.authenticate('google', { successReturnToOrRedirect: '/proposals/my', failureRedirect: '/' })
 );
 
+//add , 'instagram_basic' to scope in order to get this to work with instagram
 router.get('/facebook', passport.authenticate('facebook', {scope: ['public_profile', 'email']}));
 
 //OG Facebook login route

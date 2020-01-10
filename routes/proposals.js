@@ -63,16 +63,12 @@ router.get('/show/:id', (req, res) => {
           var fee = +rawfee.toFixed(2)
         }
         var totalPrice = price + fee;
-        console.log('%fee: ' + fee)
-        console.log('%price: ' + price)
-        console.log('%totalPrice: ' + totalPrice)
-        console.log(proposal);
         req.session.proposal = proposal;
         req.session.fee = fee;
         //req.session.price = price;
         req.session.price = totalPrice;
-        console.log('proposal1: ' + req.session.proposal)
-        console.log('price: ' + req.session.price)
+        // console.log('proposal1: ' + req.session.proposal)
+        // console.log('price: ' + req.session.price)
         //messing with metaTags
         res.locals.metaTags = {
           title: "Byte Rights Proposal from " + proposal.user.firstName,
@@ -110,17 +106,14 @@ router.get('/tempshow/:id', (req, res) => {
         var feePercent = .1
         var fee = Math.ceil(price * feePercent)
         var totalPrice = price + fee;
-        console.log('%fee: ' + fee)
-        console.log('%price: ' + price)
-        console.log('%totalPrice: ' + totalPrice)
-        console.log(proposal);
+        // console.log(proposal);
         req.session.proposal = proposal;
         req.session.fee = fee;
         //req.session.price = price;
         req.session.price = totalPrice;
-        console.log('proposal1: ' + req.session.proposal)
-        console.log('price: ' + req.session.price)
-        //messing with metaTags
+        // console.log('proposal1: ' + req.session.proposal)
+        // console.log('price: ' + req.session.price)
+        // //messing with metaTags
         res.locals.metaTags = {
           title: "Byte Rights Proposal from " + proposal.user.firstName,
           description: "Click the link for details.",
@@ -161,16 +154,12 @@ router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
         var fee = +rawfee.toFixed(2)
       }
       var totalPrice = price + fee;
-      console.log('%fee: ' + fee)
-      console.log('%price: ' + price)
-      console.log('%totalPrice: ' + totalPrice)
-      console.log(proposal);
       req.session.proposal = proposal;
       req.session.fee = fee;
       //req.session.price = price;
       req.session.price = totalPrice;
-      console.log('proposal1: ' + req.session.proposal)
-      console.log('price: ' + req.session.price)
+      // console.log('proposal1: ' + req.session.proposal)
+      // console.log('price: ' + req.session.price)
       //messing with metaTags
       res.locals.metaTags = {
         title: "Byte Rights Proposal from " + proposal.user.firstName,

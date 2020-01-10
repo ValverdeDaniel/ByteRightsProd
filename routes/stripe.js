@@ -379,7 +379,10 @@ router.post('/payment', async (req, res, next) => {
         stripe.charges.create({
           amount: price,
           currency: 'usd',
-          customer: source.customer,
+          //customer: source.customer,
+          source: customer,
+          transfer_group: '',
+
 
           //source: req.body.stripeToken,
           transfer_data: {
@@ -438,4 +441,216 @@ router.post('/payment', async (req, res, next) => {
   // })
 })
 
+
+//we added application_fee_amount: fee and i'm not sure if it still sends a payment?
+router.post('/charge', async (req, res, next) => {
+  console.log('CHARGE .post /checkout/charge')
+  // Create a new customer and then a new charge for that customer:
+  var proposal = req.session.proposal
+  var price = req.session.price
+  var fee = req.session.fee
+  //console.log('payment proposal:' + JSON.stringify(proposal))
+  price *= 100
+  fee *= 100
+  console.log('charge variables')
+
+
+  var amountSellerReceived = price - fee;
+//beginning of finding the user that touched the proposal
+  if (proposal.sellerStripeAccountId == "") {
+    let sellerInformation = await user.findOne({ 'touchedBy.touchedByUser': proposal.touchedBy.touchedByUser });
+
+    console.log('sellerInformationCharge = ""' + sellerInformation)
+  
+    let newStripeTransaction = {
+      buyerId: req.user.id,
+      buyerFirstName: req.user.firstName,
+      buyerLastName: req.user.lastName,
+      //the account linked to the proposal.sellerStripeAccountId
+      sellerId: sellerInformation._id,
+      sellerFirstName: sellerInformation.firstName,
+      sellerLastName: sellerInformation.lastName,
+      proposalId: proposal._id,
+      amountBuyerPaid: price / 100,
+      //amountSellerReceived: amountSellerReceived / 100
+      //stripePaymentIntentId: ???
+    }
+    // Save the ride
+    new StripeTransaction(newStripeTransaction)
+      .save();
+
+  } else {
+    let sellerInformation = await user.findOne({ stripeAccountId: proposal.sellerStripeAccountId });
+    console.log('SellerInfo', sellerInformation)
+    console.log('sellerId' + sellerInformation._id)
+    console.log('sellerFirstName' + sellerInformation.firstName)
+    console.log('sellerLastName' + sellerInformation.lastName)
+
+    let newStripeTransaction = {
+      buyerId: req.user.id,
+      buyerFirstName: req.user.firstName,
+      buyerLastName: req.user.lastName,
+      //the account linked to the proposal.sellerStripeAccountId
+      sellerId: sellerInformation._id,
+      sellerFirstName: sellerInformation.firstName,
+      sellerLastName: sellerInformation.lastName,
+      proposalId: proposal._id,
+      amountBuyerPaid: price / 100,
+      //amountSellerReceived: amountSellerReceived / 100
+      //stripePaymentIntentId: ???
+    }
+    // Save the ride
+    new StripeTransaction(newStripeTransaction)
+      .save();
+  }
+
+  console.log('charge made it through sending data to db')
+
+  stripe.customers
+    .create({
+      email: req.user.email,
+    })
+    .then((customer) => {
+      console.log('customer2')
+      return stripe.customers.createSource(customer.id, {
+        source: req.body.stripeToken
+      });
+    })
+    .then((source) => {
+      try {
+        console.log('source')
+        //return stripe.charges.create({
+        stripe.charges.create({
+          amount: price,
+          currency: 'usd',
+          customer: source.customer,
+          //source: req.body.stripeToken,
+          transfer_group: 'proposal-' + proposal._id,
+
+
+          // //source: req.body.stripeToken,
+          // transfer_data: {
+          //   amount: price - fee,
+          //   // destination: req.user.stripeAccountId
+          //   destination: proposal.sellerStripeAccountId
+         // },
+
+        });
+      } catch (e) {
+        console.error(e.name + ': ' + e.message);
+      }
+
+    })
+    .then(async (charge) => {
+      console.log('charge')
+      console.log('%bprice: ' + price)
+      //At this point we need to update the proposal payment status
+      try {
+        let updatedProposal = await Proposal.findByIdAndUpdate(proposal._id, {
+          paidStatus: "deposited",
+          status: "Deposited"
+        });
+      } catch (err) {
+        console.log('getting error in updating the proposal', err)
+
+      }
+
+      console.log('deposited')
+      // New charge created on a new customer
+      //place at end of put
+      res.redirect(`/proposals/show/${proposal._id}`);
+    })
+    .catch((err) => {
+      // Deal with an error
+    })
+
+
+})
+
+router.post('/transfer', async (req, res, next) => {
+  console.log('TRANSFER .post /checkout/transfer')
+  // Create a new customer and then a new charge for that customer:
+  var proposal = req.session.proposal
+  var price = req.session.price
+  var fee = req.session.fee
+  //console.log('payment proposal:' + JSON.stringify(proposal))
+  price *= 100
+  fee *= 100
+
+  var amountSellerReceived = price - fee;
+
+  console.log('seller strip acc id', proposal.sellerStripeAccountId)
+  //we want the user information based on the seller stripe account
+  let sellerInformation = await user.findOne({ stripeAccountId: proposal.sellerStripeAccountId });
+
+  let newStripeTransaction = {
+    buyerId: req.user.id,
+    buyerFirstName: req.user.firstName,
+    buyerLastName: req.user.lastName,
+    //the account linked to the proposal.sellerStripeAccountId
+    sellerId: sellerInformation._id,
+    sellerFirstName: sellerInformation.firstName,
+    sellerLastName: sellerInformation.lastName,
+    proposalId: proposal._id,
+    amountBuyerPaid: price / 100,
+    amountSellerReceived: amountSellerReceived / 100
+    //stripePaymentIntentId: ???
+  }
+  // Save the ride
+  new StripeTransaction(newStripeTransaction)
+    .save();
+  console.log('TRANSFER made it through saving to db')
+  stripe.customers
+    .create({
+      email: req.user.email,
+    })
+    // .then((customer) => {
+    //   console.log('customer2')
+    //   return stripe.customers.createSource(customer.id, {
+    //     source: req.body.stripeToken
+    //   });
+    // })
+    .then((source) => {
+      try {
+        console.log('source')
+        //return stripe.charges.create({
+        stripe.transfers.create({
+          amount: price - fee,
+          currency: 'usd',
+          destination: proposal.sellerStripeAccountId,
+          //customer: source.customer,
+          //source: req.body.stripeToken,
+          transfer_group: 'proposal-' + proposal._id,
+
+        });
+      } catch (e) {
+        console.error(e.name + ': ' + e.message);
+      }
+
+    })
+    .then(async (transfer) => {
+      console.log('charge')
+      console.log('%bprice: ' + price)
+      //At this point we need to update the proposal payment status
+      try {
+        let updatedProposal = await Proposal.findByIdAndUpdate(proposal._id, {
+          paidStatus: "paid",
+          status: "Paid"
+        });
+      } catch (err) {
+        console.log('getting error inpdating the proposal', err)
+
+      }
+
+      console.log('transfer paid')
+      // New charge created on a new customer
+      //place at end of put
+      res.redirect(`/proposals/show/${proposal._id}`);
+    })
+    .catch((err) => {
+      // Deal with an error
+    })
+
+
+})
 module.exports = router;

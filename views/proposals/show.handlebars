@@ -845,6 +845,32 @@
     </div>
   </div>
 
+<br>
+<br>
+<div class="row">
+  <form action="/stripe/charge" method="post" id="payment-form">
+    <div class="form-row" style="padding:12px">
+      <label for="card-element">
+        Credit or debit card
+      </label>
+      <div id="card-element">
+        <!-- A Stripe Element will be inserted here. -->
+      </div>
+      <!-- Used to display form errors. -->
+      <div id="card-errors" role="alert"></div>
+      <button class= "StripeButton">Charge</button>
+    </div>
+  </form>
+</div>
+
+<div class="row">
+  <form action="/stripe/transfer" method="post" id="payment-form">
+    <div class="form-row" style="padding:12px">
+      <button class= "StripeButton">Transfer Money to me</button>
+    </div>
+  </form>
+</div>
+
 <script>
 //modal logic materialize
   document.addEventListener('DOMContentLoaded', function() {
