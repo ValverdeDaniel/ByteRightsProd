@@ -55,8 +55,8 @@ router.get('/authorize', ensureAuthenticated, (req, res) => {
   // and `phone` in the query parameters: those form fields will be prefilled
   parameters = Object.assign(parameters, {
     //previous redirect_uri config.publicDomain +
-    redirect_uri: 'localhost:5000/stripe/token',
-    //redirect_uri:'desolate-sierra-72554.herokuapp.com/stripe/token',
+    //redirect_uri: 'localhost:5000/stripe/token',
+    redirect_uri:'desolate-sierra-72554.herokuapp.com/stripe/token',
     'stripe_user[business_type]': req.user.type || 'individual',
     'stripe_user[business_name]': req.user.businessName || undefined,
     'stripe_user[first_name]': req.user.firstName || undefined,
@@ -149,8 +149,8 @@ router.get('/stripeDashboard', ensureAuthenticated, async (req, res) => {
       user.stripeAccountId, {
         //was pilots/dashboard
         //i want this to take me to stripeDashboard
-        redirect_url: req.session.redirectUrl ? req.session.redirectUrl : 'http://localhost:5000/dashboard'
-        //redirect_url: req.session.redirectUrl ? req.session.redirectUrl : 'https://desolate-sierra-72554.herokuapp.com/dashboard'
+        //redirect_url: req.session.redirectUrl ? req.session.redirectUrl : 'http://localhost:5000/dashboard'
+        redirect_url: req.session.redirectUrl ? req.session.redirectUrl : 'https://desolate-sierra-72554.herokuapp.com/dashboard'
       }
     );
     // Directly link to the account tab
