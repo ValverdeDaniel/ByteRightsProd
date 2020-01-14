@@ -40,6 +40,12 @@ const StripeTransactionSchema = new Schema({
     type: String, 
     default: 'usd' 
   },
+  stripeId: {
+    type: String
+  },
+  stripeReceiptUrl: {
+    type: String
+  },
   created: { 
     type: Date, 
     default: Date.now 

@@ -453,58 +453,20 @@ router.post('/charge', async (req, res, next) => {
   price *= 100
   fee *= 100
   console.log('charge variables')
+  const buyerId = req.user.id
+  const buyerFirstName = req.user.firstName
+  const buyerLastName = req.user.lastName
+  //the account linked to the proposal.sellerStripeAccountId
+
+  const proposalId = proposal._id
+  const amountBuyerPaid = price / 100
+  let stripeId
+  let stripeReceiptUrl
 
 
   var amountSellerReceived = price - fee;
 //beginning of finding the user that touched the proposal
-  if (proposal.sellerStripeAccountId == "") {
-    let sellerInformation = await user.findOne({ 'touchedBy.touchedByUser': proposal.touchedBy.touchedByUser });
 
-    console.log('sellerInformationCharge = ""' + sellerInformation)
-  
-    let newStripeTransaction = {
-      buyerId: req.user.id,
-      buyerFirstName: req.user.firstName,
-      buyerLastName: req.user.lastName,
-      //the account linked to the proposal.sellerStripeAccountId
-      sellerId: sellerInformation._id,
-      sellerFirstName: sellerInformation.firstName,
-      sellerLastName: sellerInformation.lastName,
-      proposalId: proposal._id,
-      amountBuyerPaid: price / 100,
-      //amountSellerReceived: amountSellerReceived / 100
-      //stripePaymentIntentId: ???
-    }
-    // Save the ride
-    new StripeTransaction(newStripeTransaction)
-      .save();
-
-  } else {
-    let sellerInformation = await user.findOne({ stripeAccountId: proposal.sellerStripeAccountId });
-    console.log('SellerInfo', sellerInformation)
-    console.log('sellerId' + sellerInformation._id)
-    console.log('sellerFirstName' + sellerInformation.firstName)
-    console.log('sellerLastName' + sellerInformation.lastName)
-
-    let newStripeTransaction = {
-      buyerId: req.user.id,
-      buyerFirstName: req.user.firstName,
-      buyerLastName: req.user.lastName,
-      //the account linked to the proposal.sellerStripeAccountId
-      sellerId: sellerInformation._id,
-      sellerFirstName: sellerInformation.firstName,
-      sellerLastName: sellerInformation.lastName,
-      proposalId: proposal._id,
-      amountBuyerPaid: price / 100,
-      //amountSellerReceived: amountSellerReceived / 100
-      //stripePaymentIntentId: ???
-    }
-    // Save the ride
-    new StripeTransaction(newStripeTransaction)
-      .save();
-  }
-
-  console.log('charge made it through sending data to db')
 
   stripe.customers
     .create({
@@ -527,13 +489,72 @@ router.post('/charge', async (req, res, next) => {
           //source: req.body.stripeToken,
           transfer_group: 'proposal-' + proposal._id,
 
+        }, async (req, res) => {
+          if (proposal.sellerStripeAccountId == "") {
+            let sellerInformation = await user.findOne({ 'touchedBy.touchedByUser': proposal.touchedBy.touchedByUser });
+            //let JSONresId = JSON.stringify(res.id)
+            console.log('sellerInformationCharge = ""' + sellerInformation)
+            console.log('res: ' + JSON.stringify(res))
 
-          // //source: req.body.stripeToken,
-          // transfer_data: {
-          //   amount: price - fee,
-          //   // destination: req.user.stripeAccountId
-          //   destination: proposal.sellerStripeAccountId
-         // },
+            stripeId = res.id;
+            console.log('stripeID is this',stripeId);
+            stripeReceiptUrl = res.receipt_url;              
+
+          
+            let newStripeTransaction = {
+              buyerId: buyerId,
+              buyerFirstName: buyerFirstName,
+              buyerLastName: buyerLastName,
+              //the account linked to the proposal.sellerStripeAccountId
+              sellerId: sellerInformation._id,
+              sellerFirstName: sellerInformation.firstName,
+              sellerLastName: sellerInformation.lastName,
+              proposalId: proposalId,
+              amountBuyerPaid: amountBuyerPaid,
+              stripeId: stripeId,
+              stripeReceiptUrl: stripeReceiptUrl,
+              //amountSellerReceived: amountSellerReceived / 100
+              //stripePaymentIntentId: ???
+            }
+            // Save the ride
+            new StripeTransaction(newStripeTransaction)
+              .save();
+        
+          } else {
+            let sellerInformation = await user.findOne({ stripeAccountId: proposal.sellerStripeAccountId });
+            console.log('SellerInfo', sellerInformation)
+            console.log('sellerId' + sellerInformation._id)
+            console.log('sellerFirstName' + sellerInformation.firstName)
+            console.log('sellerLastName' + sellerInformation.lastName)
+            console.log('sellerInformationCharge = ""' + sellerInformation)
+
+            stripeId = res.id;
+            console.log('stripeID is this',stripeId);
+            stripeReceiptUrl = res.receipt_url;  
+        
+            let newStripeTransaction = {
+              buyerId: buyerId,
+              buyerFirstName: buyerFirstName,
+              buyerLastName: buyerLastName,
+              //the account linked to the proposal.sellerStripeAccountId
+              sellerId: sellerInformation._id,
+              sellerFirstName: sellerInformation.firstName,
+              sellerLastName: sellerInformation.lastName,
+              proposalId: proposalId,
+              amountBuyerPaid: amountBuyerPaid,
+              stripeId: stripeId,
+              stripeReceiptUrl: stripeReceiptUrl,
+
+              //amountSellerReceived: amountSellerReceived / 100
+              //stripePaymentIntentId: ???
+            }
+            // Save the ride
+            new StripeTransaction(newStripeTransaction)
+              .save();
+            console.log('newStripeTransaction: ' + newStripeTransaction)
+          }
+        
+          console.log('charge made it through sending data to db')
 
         });
       } catch (e) {
@@ -577,11 +598,27 @@ router.post('/transfer', async (req, res, next) => {
   price *= 100
   fee *= 100
 
+  const sellerId = req.user.id
+  const sellerFirstName = req.user.firstName
+  const sellerLastName = req.user.lastName
+  //the account linked to the proposal.sellerStripeAccountId
+
+  const proposalId = proposal._id
+  const amountBuyerPaid = price / 100
+  let stripeId
+  let stripeReceiptUrl
+
   var amountSellerReceived = price - fee;
+  let chargeTransaction = await StripeTransaction.findOne({ proposalId: proposal._id }  ).sort({ 'created' : -1 });
+  console.log('chargeTransaction: ' + chargeTransaction)
+  console.log('chargeTransactionId: ' + chargeTransaction.stripeId)
+  let sourceTransaction = chargeTransaction.stripeId
+  //let sourceTransaction = 'ch_1G0cEiFP26uzgcuNoFpn8zBt'
 
   console.log('seller strip acc id', proposal.sellerStripeAccountId)
   //we want the user information based on the seller stripe account
   let sellerInformation = await user.findOne({ stripeAccountId: proposal.sellerStripeAccountId });
+  console.log('sellerInformation: ' + sellerInformation)
 
   let newStripeTransaction = {
     buyerId: req.user.id,
@@ -621,6 +658,7 @@ router.post('/transfer', async (req, res, next) => {
           //customer: source.customer,
           //source: req.body.stripeToken,
           transfer_group: 'proposal-' + proposal._id,
+          source_transaction: sourceTransaction,
 
         });
       } catch (e) {
