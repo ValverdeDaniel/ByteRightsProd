@@ -323,17 +323,10 @@ router.post('/payment', async (req, res, next) => {
   var price = req.session.price
   var fee = req.session.fee
   //console.log('payment proposal:' + JSON.stringify(proposal))
-  console.log('payment price: ' + price)
-  console.log('/payment fee: ' + fee)
+
   price *= 100
   fee *= 100
-  console.log('%aprice: ' + price)
-  console.log('%apaymentFee: ' + fee)
-  console.log('before stripe.customers')
-  console.log('destination: ' + req.user.stripeAccountId)
-  console.log('buyerId: ' + req.user.id)
 
-  console.log('proposalId: ' + proposal._id)
 
   var amountSellerReceived = price - fee;
 
@@ -341,9 +334,6 @@ router.post('/payment', async (req, res, next) => {
   //we want the user information based on the seller stripe account
   let sellerInformation = await user.findOne({ stripeAccountId: proposal.sellerStripeAccountId });
   console.log('SellerInfo', sellerInformation)
-  console.log('sellerId' + sellerInformation._id)
-  console.log('sellerFirstName' + sellerInformation.firstName)
-  console.log('sellerLastName' + sellerInformation.lastName)
 
   let newStripeTransaction = {
     buyerId: req.user.id,
@@ -437,5 +427,92 @@ router.post('/payment', async (req, res, next) => {
   //     })
   // })
 })
+
+router.post('/charge', async (req, res, next) => {
+  console.log('CHARGE .post /checkout/charge')
+  // Create a new customer and then a new charge for that customer:
+  var proposal = req.session.proposal
+  var price = req.session.price
+  var fee = req.session.fee
+  //console.log('payment proposal:' + JSON.stringify(proposal))
+  price *= 100
+  fee *= 100
+  var amountSellerReceived = price - fee;
+
+  console.log('charge variables')
+  const buyerId = req.user.id
+  const buyerFirstName = req.user.firstName
+  const buyerLastName = req.user.lastName
+  //the account linked to the proposal.sellerStripeAccountId
+
+  const proposalId = proposal._id
+  const amountBuyerPaid = price / 100
+  let stripeId
+  let stripeReceiptUrl
+
+
+  var amountSellerReceived = price - fee;
+  //beginning of finding the user that touched the proposal
+  try {
+    let customer = await stripe.customers
+      .create({
+        email: req.user.email,
+      });
+    let source = await stripe.customers.createSource(customer.id, {
+      source: req.body.stripeToken
+    });
+    console.log('customer is this', customer.id)
+    console.log('source is this', source)
+    let stripeCharge = await stripe.charges.create({
+      amount: price,
+      currency: 'usd',
+      customer: source.customer,
+
+      transfer_data: {
+        amount: price - fee,
+        destination: proposal.sellerStripeAccountId
+      }
+    })
+
+      let sellerInformation = await user.findOne({ stripeAccountId: proposal.sellerStripeAccountId });
+      console.log('SellerInfo', sellerInformation)
+      console.log('sellerId' + sellerInformation._id)
+      console.log('sellerFirstName' + sellerInformation.firstName)
+      console.log('sellerLastName' + sellerInformation.lastName)
+      console.log('sellerInformationCharge = ""' + sellerInformation)
+
+      stripeId = stripeCharge.id;
+      console.log('stripeID is this', stripeId);
+      stripeReceiptUrl = stripeCharge.receipt_url;
+
+      let newStripeTransaction = {
+        buyerId: buyerId,
+        buyerFirstName: buyerFirstName,
+        buyerLastName: buyerLastName,
+        sellerId: sellerInformation._id,
+        sellerFirstName: sellerInformation.firstName,
+        sellerLastName: sellerInformation.lastName,
+        proposalId: proposalId,
+        amountBuyerPaid: amountBuyerPaid,
+        amountSellerReceived: amountSellerReceived / 100,
+        stripeId: stripeId,
+        stripeReceiptUrl: stripeReceiptUrl,
+
+      }
+      // Save the ride
+      new StripeTransaction(newStripeTransaction)
+        .save();
+      console.log('newStripeTransaction: ' + newStripeTransaction)
+    
+    console.log('charge made it through sending data to db')
+    res.redirect(`/proposals/show/${proposal._id}`);
+  } catch (err) {
+    console.log('catched err is this', err)
+
+  }
+})
+
+
+
 
 module.exports = router;
