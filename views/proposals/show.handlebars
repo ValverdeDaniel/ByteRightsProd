@@ -313,32 +313,132 @@
             <div class="card-content">
               <span class="card-title">Payment</span>
                 <div>
-                  <table style="font-size:18px;">
-                    <tr style="border:0px;">
-                      <td style="padding:5px 5px;">
-                        Price:
-                      </td>
-                      <td style="padding:5px 5px;">
-                        ${{proposal.price}}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="padding:5px 5px;">
-                        Application Fee (20%):
-                      </td>
-                      <td style="padding:5px 5px;">
-                        ${{fee}}
-                      </td>
-                    </tr>
-                    <tr style="border:0px;">
-                      <th>
-                        Total:
-                      </th>
-                      <th>
-                        ${{totalPrice}}
-                      </th>
-                    </tr>
-                  </table>
+                  {{#ifEqualsElse proposal.contractUserType "Seller"}}
+                    {{#ifEqualsElse user.id proposal.user.id}}
+                      {{!-- seller created proposal and seller is looking at proposal --}}
+                      <table style="font-size:18px;">
+                        <tr style="border:0px;">
+                          <td style="padding:5px 5px;">
+                            Price:
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{proposal.price}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:5px 5px;">
+                            Application Fee (20%):
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{sellerFee}}
+                          </td>
+                        </tr>
+                        <tr style="border:0px;">
+                          <th>
+                            Total:
+                          </th>
+                          <th>
+                            ${{price}}
+                          </th>
+                        </tr>
+                      </table>
+                    {{!-- else for ifEqualsElse user.id proposal.user.id --}}
+                    {{else}}
+                    {{!-- seller made the proposal and buyer is looking at it --}}
+                      <table style="font-size:18px;">
+                        <tr style="border:0px;">
+                          <td style="padding:5px 5px;">
+                            Price:
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{proposal.price}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:5px 5px;">
+                            Application Fee (20%):
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{buyerFee}}
+                          </td>
+                        </tr>
+                        <tr style="border:0px;">
+                          <th>
+                            Total:
+                          </th>
+                          <th>
+                            ${{totalPrice}}
+                          </th>
+                        </tr>
+                      </table>
+                    {{!-- end ifEqualsElse user.id proposal.user.id --}}
+                    {{/ifEqualsElse}}
+                  {{!-- else for ifEqualsElse proposal.contractUserType "Seller" --}}
+                  {{else}}
+                    {{!-- buyer created the proposal --}}
+                    {{#ifEqualsElse user.id proposal.user.id}}
+                    {{!-- buyer created proposal and is looking at it --}}
+                      <table style="font-size:18px;">
+                        <tr style="border:0px;">
+                          <td style="padding:5px 5px;">
+                            Price:
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{proposal.price}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:5px 5px;">
+                            Application Fee (20%):
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{buyerFee}}
+                          </td>
+                        </tr>
+                        <tr style="border:0px;">
+                          <th>
+                            Total:
+                          </th>
+                          <th>
+                            ${{totalPrice}}
+                          </th>
+                        </tr>
+                      </table>
+                    {{else}}
+                    {{!-- buyer created the proposal and seller is looking at it  --}}
+                      <table style="font-size:18px;">
+                        <tr style="border:0px;">
+                          <td style="padding:5px 5px;">
+                            Price:
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{proposal.price}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:5px 5px;">
+                            Application Fee (20%):
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{sellerFee}}
+                          </td>
+                        </tr>
+                        <tr style="border:0px;">
+                          <th>
+                            Total:
+                          </th>
+                          <th>
+                            ${{price}}
+                          </th>
+                        </tr>
+                      </table>
+                    {{/ifEqualsElse}}
+                  {{!-- end ifEqualsElse proposal.contractUserType "Seller" --}}
+                  {{/ifEqualsElse}}
+                
+                    
+                  
+                    
                 </div>
                 <br>
                 {{#ifEqualsElse proposal.status "Paid" }}
