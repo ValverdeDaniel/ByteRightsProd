@@ -45,7 +45,7 @@ router.post('/filter', (req, res) => {
 })
 
 //show single proposal
-router.get('/show/:id', (req, res) => {
+router.get('/show/:id', async (req, res) => {
   Proposal.findOne({ _id: req.params.id })
 
     .populate('user')
@@ -53,16 +53,32 @@ router.get('/show/:id', (req, res) => {
     .populate('comments.commentUser')
     .populate('touchedBy.touchedByUser')
     .then(proposal => {
-      try {
-        var price = proposal.price
-        if(price < 5) {
-          var fee = 1
-        } else {
-          var feePercent = .2
-          var rawfee = price*feePercent
-          var fee = +rawfee.toFixed(2)
-        }
-        var totalPrice = price + fee;
+     
+     
+     
+    try {
+      var price = proposal.price
+      var feePercent = .2
+      var rawfee = price*feePercent
+      var buyerFee = +rawfee.toFixed(2)
+      if(buyerFee < 2) {
+        buyerFee = 2
+      }
+      var sellerFee = buyerFee;
+      var fee = sellerFee + buyerFee;
+      price = price - sellerFee;
+      var totalPrice = price + fee;
+      
+      // try {
+      //   var price = proposal.price
+      //   if(price < 10) {
+      //     var fee = 1
+      //   } else {
+      //     var feePercent = .2
+      //     var rawfee = price*feePercent
+      //     var fee = +rawfee.toFixed(2)
+      //   }
+      //var totalPrice = price + fee;
         console.log('%fee: ' + fee)
         console.log('%price: ' + price)
         console.log('%totalPrice: ' + totalPrice)
@@ -83,7 +99,10 @@ router.get('/show/:id', (req, res) => {
           proposal: proposal,
           fee: fee,
           //price: price,
-          totalPrice: totalPrice
+          totalPrice: totalPrice,
+          price: price,
+          sellerFee: sellerFee,
+          buyerFee: buyerFee
         });
 
       } catch {
