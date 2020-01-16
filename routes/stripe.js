@@ -503,7 +503,10 @@ router.post('/charge', async (req, res, next) => {
       new StripeTransaction(newStripeTransaction)
         .save();
       console.log('newStripeTransaction: ' + newStripeTransaction)
-    
+      let updatedProposal = await Proposal.findByIdAndUpdate(proposal._id, {
+        paidStatus: "paid",
+        status: "Paid"
+      });
     console.log('charge made it through sending data to db')
     res.redirect(`/proposals/show/${proposal._id}`);
   } catch (err) {
