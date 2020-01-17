@@ -45,7 +45,7 @@
               {{/if}}
               {{!-- add logic ifEqualsElse --}}
               {{!-- {{#ifEqualsElse proposal.compensation "Cash"}} --}}
-              {{#ifNotEqualsElse proposal.price ""}}
+              {{#ifNotEqualsElse proposal.price null}}
                 <p class="proposal-label">How will you be compensated?</p>
                 <p>${{proposal.price}}</p>
                 <p>{{proposal.compensation}}</p>
@@ -163,7 +163,7 @@
                   <div style="padding:5px; background-color:lightgrey;">
                   <SPAN class="copyText" style="background-color:lightgrey;">
                     {{!-- {{#ifEqualsElse proposal.compensation "Cash"}} --}}
-                    {{#ifNotEqualsElse proposal.price ""}}
+                    {{#ifNotEqualsElse proposal.price null}}
                       {{#ifEqualsElse user.companyName ""}}
                         {{!-- message if compensation not equal blank and company name equals blank --}}
                         <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I'd like to offer you the rights to use this great photo in exchange for: ${{proposal.price}} {{proposal.compensation}}.
@@ -215,7 +215,7 @@
                   <div style="padding:5px; background-color:lightgrey;">
                   <SPAN class="copyText">
                     {{!-- {{#ifEqualsElse proposal.compensation "Cash"}} --}}
-                    {{#ifNotEqualsElse proposal.price ""}}
+                    {{#ifNotEqualsElse proposal.price null}}
                       {{#ifEqualsElse user.companyName ""}}
                         {{!-- message if compensation not equal blank and company name equals blank --}}
                         <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
@@ -308,7 +308,7 @@
               {{/each}}
           </div>
         </div>
-        {{#ifNotEquals proposal.price ""}}
+        {{#ifNotEquals proposal.price null}}
           <div class="card">
             <div class="card-content">
               <span class="card-title">Payment</span>
@@ -945,6 +945,7 @@
     </div>
   </div>
 
+
 <script>
 //modal logic materialize
   document.addEventListener('DOMContentLoaded', function() {
@@ -981,4 +982,5 @@
       console.log('Oops, unable to copy');
     }
   });
+
 </script>

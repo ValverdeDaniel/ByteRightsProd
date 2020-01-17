@@ -10,7 +10,6 @@ const ProposalSchema = new Schema({
   // this is where i am trying to generate a random number for the pin
   url: {
     type: String,
-    required: true
   },
   imageUrl: {
     type: String
@@ -25,7 +24,9 @@ const ProposalSchema = new Schema({
     type: String
   },
   price: {
-    type: Number
+    type: Number,
+    //this defaults to null maybe in future we actually default to null?
+    default: ""
   },
   usage: {
     type: String
