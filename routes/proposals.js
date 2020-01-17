@@ -67,7 +67,8 @@ router.get('/show/:id', async (req, res) => {
       var sellerFee = buyerFee;
       var fee = sellerFee + buyerFee;
       price = price - sellerFee;
-      var totalPrice = price + fee;
+      unRoundedTotalPrice = price + fee;
+      var totalPrice = unRoundedTotalPrice.toFixed(2);
       
       // try {
       //   var price = proposal.price
