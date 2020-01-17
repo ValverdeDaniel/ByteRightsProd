@@ -83,8 +83,9 @@
           </div>
           <p>If the seller will be receiving monetary compensation this field requires that you input a number</p>
           <div class="input-field">
-            <input type="number" name="price">
+            <input type="number" name="price" id="numb" onkeyup="priceValidation()">
             <label for="price">Price</label>
+            <p id="demo"></p>
           </div>
           <p>Lastly, to help keep your proposals organized, add any relevant tags.</p>
           <label>Tags</label>
@@ -107,26 +108,51 @@
             {{/each}}
             {{!-- <label for="tags">Tags</label> --}}
           </div>
-          <input type="button" value="Create Proposal" class="btn primary" onclick="$('#newproposal').submit()">
+          <input type="button" value="Create Proposal" class="btn primary" onclick="preventSubmit();$('#newproposal').submit()">
         </div>
       </form>
     </div>
   </div>
 </div>
 
-  <div class="input-field col s12">
-    <select>
-      <option value="" disabled selected>Choose your option</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
-    </select>
-    <label>Materialize Select</label>
-  </div>
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems, options);
   });
+
+  function priceValidation() {
+  var x, text;
+
+  // Get the value of the input field with id="numb"
+  x = document.getElementById("numb").value;
+
+  // If x is Not a Number or less than one or greater than 10
+  if (x == null || x > 3) {
+    text = "we gucci";
+   // e.preventDefault(e);
+  } else {
+    text = "price must be either blank, or > $3"
+  }
+  
+  
+  document.getElementById("demo").innerHTML = text;
+}
+
+function preventSubmit() {
+  x=document.getElementById("numb").value;
+
+  
+  if(isNaN(x) || x > 3) {
+
+  } else {
+    $(document).on("submit", "form", function(e){
+        e.preventDefault();
+        alert('form submission cancelled');
+        return  false;
+    }); 
+  }
+}
+
 </script>

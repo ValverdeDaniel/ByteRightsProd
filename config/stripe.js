@@ -17,22 +17,22 @@ module.exports = {
   // API Keys: https://dashboard.stripe.com/account/apikeys
   // Connect Settings: https://dashboard.stripe.com/account/applications/settings
 //  test keys
-  // stripe: {
-  //   secretKey: 'sk_test_tF2ATjx0ybAcarTgqn0zpqbr005vSTX7PO',
-  //   publishableKey: 'pk_test_ggUprAz0qNKTol6UXU7bRtLu003bsXsePv',
-  //   clientId: 'ca_FtuG5UUMgotba2yf8gH1C6yQSnpr4pq1',
-  //   authorizeUri: 'https://connect.stripe.com/express/oauth/authorize',
-  //   tokenUri: 'https://connect.stripe.com/oauth/token'
-  // },
-
-  //live keys
   stripe: {
-    secretKey: 'sk_live_JmyIePyCKEXSCk5VAMbu1m7z00O3F0NQdH',
-    publishableKey: 'pk_live_4M58knUUy4u65d6WojUkHCeP00sGvRWJvt',
-    clientId: 'ca_FtuGniH7a1hLRU0AnPkrYlFuh9vHMjuG',
+    secretKey: 'sk_test_tF2ATjx0ybAcarTgqn0zpqbr005vSTX7PO',
+    publishableKey: 'pk_test_ggUprAz0qNKTol6UXU7bRtLu003bsXsePv',
+    clientId: 'ca_FtuG5UUMgotba2yf8gH1C6yQSnpr4pq1',
     authorizeUri: 'https://connect.stripe.com/express/oauth/authorize',
     tokenUri: 'https://connect.stripe.com/oauth/token'
   },
+
+  //live keys
+  // stripe: {
+  //   secretKey: 'sk_live_JmyIePyCKEXSCk5VAMbu1m7z00O3F0NQdH',
+  //   publishableKey: 'pk_live_4M58knUUy4u65d6WojUkHCeP00sGvRWJvt',
+  //   clientId: 'ca_FtuGniH7a1hLRU0AnPkrYlFuh9vHMjuG',
+  //   authorizeUri: 'https://connect.stripe.com/express/oauth/authorize',
+  //   tokenUri: 'https://connect.stripe.com/oauth/token'
+  // },
   // // Configuration for MongoDB
   // mongoUri: 'mongodb://localhost/rocketrides',
 
