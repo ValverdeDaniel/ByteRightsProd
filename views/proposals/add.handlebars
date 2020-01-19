@@ -83,9 +83,9 @@
           </div>
           <p>If the seller will be receiving monetary compensation this field requires that you input a number</p>
           <div class="input-field">
-            <input type="number" name="price" id="numb" onkeyup="priceValidation()">
+            <input type="number" name="price" id="priceNumb" onkeyup="priceValidation()">
             <label for="price">Price</label>
-            <p id="demo"></p>
+            <p id="priceValidationMsg" style="color:red;"></p>
           </div>
           <p>Lastly, to help keep your proposals organized, add any relevant tags.</p>
           <label>Tags</label>
@@ -126,30 +126,29 @@
   var x, text;
 
   // Get the value of the input field with id="numb"
-  x = document.getElementById("numb").value;
+  x = document.getElementById("priceNumb").value;
 
   // If x is Not a Number or less than one or greater than 10
-  if (x == null || x > 3) {
-    text = "we gucci";
-   // e.preventDefault(e);
+  if (x == null || x == "" || x > 3) {
+    text = "";
   } else {
-    text = "price must be either blank, or > $3"
+    text = "Price field must be either blank, or greater than $3"
   }
   
   
-  document.getElementById("demo").innerHTML = text;
+  document.getElementById("priceValidationMsg").innerHTML = text;
 }
 
 function preventSubmit() {
-  x=document.getElementById("numb").value;
+  x=document.getElementById("priceNumb").value;
 
   
-  if(isNaN(x) || x > 3) {
+  if(x == null || x == "" || x > 3) {
 
   } else {
     $(document).on("submit", "form", function(e){
         e.preventDefault();
-        alert('form submission cancelled');
+        alert('submission cancelled');
         return  false;
     }); 
   }
