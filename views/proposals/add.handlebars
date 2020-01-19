@@ -129,7 +129,7 @@
   x = document.getElementById("numb").value;
 
   // If x is Not a Number or less than one or greater than 10
-  if (x == null || x > 3) {
+  if (x == null || x == "" || x > 3) {
     text = "we gucci";
    // e.preventDefault(e);
   } else {
@@ -144,12 +144,12 @@ function preventSubmit() {
   x=document.getElementById("numb").value;
 
   
-  if(isNaN(x) || x > 3) {
+  if(x == null || x == "" || x > 3) {
 
   } else {
     $(document).on("submit", "form", function(e){
         e.preventDefault();
-        alert('form submission cancelled');
+        alert('submission cancelled');
         return  false;
     }); 
   }
