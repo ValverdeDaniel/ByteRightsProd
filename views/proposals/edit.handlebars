@@ -86,7 +86,8 @@
           </div>
           <p>If cash, how much?</p>
           <div class="input-field">
-            <input type="text" name="price" value="{{proposal.price}}">
+            <input type="text" name="price" value="{{proposal.price}}" id="priceNumb" onkeyup="priceValidation()">
+            <p id="priceValidationMsg" style="color:red;"></p>
           </div>
           <label>Tags</label>
           <div class="input-field">
@@ -113,7 +114,7 @@
             <label for="offerMessage">Textarea</label>
           </div> --}}
           {{!-- text area end input field --}}
-          <input type="button" value="Save" class="btn primary" onclick="$('#editproposal').submit()">
+          <input type="button" value="Save" class="btn primary" onclick="preventSubmit();$('#editproposal').submit()">
           <button data-target="deleteModal" class="btn red modal-trigger">Delete</button>
       </form>
       {{!-- delete button --}}
@@ -146,4 +147,36 @@
       //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
       var instances = M.Modal.init(elems);
     });
+
+function priceValidation() {
+  var x, text;
+
+  // Get the value of the input field with id="numb"
+  x = document.getElementById("priceNumb").value;
+
+  // If x is Not a Number or less than one or greater than 10
+  if (x == null || x == "" || x > 3) {
+    text = "";
+  } else {
+    text = "Price field must be either blank, or greater than $3"
+  }
+  
+  
+  document.getElementById("priceValidationMsg").innerHTML = text;
+}
+
+function preventSubmit() {
+  x=document.getElementById("priceNumb").value;
+
+  
+  if(x == null || x == "" || x > 3) {
+
+  } else {
+    $(document).on("submit", "form", function(e){
+        e.preventDefault();
+        alert('submission cancelled');
+        return  false;
+    }); 
+  }
+}
 </script>
