@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="col s12">
-      <form class="proposal_add-wrapper" action="/proposals" method="post" id="newproposal">
+      <form class="proposal_add-wrapper" action="/proposals" method="post" id="newproposal" onsubmit='return checkForm(this);'>
         <div class="col m6 s12">
           <p>Start by pasting the URL for the Instagram image you wish to request rights for. It should be
             https://www.instagram.com/p/<strong>(unique ID of the photo)</strong>/</p>
@@ -108,7 +108,7 @@
             {{/each}}
             {{!-- <label for="tags">Tags</label> --}}
           </div>
-          <input type="button" value="Create Proposal" class="btn primary" onclick="preventSubmit();$('#newproposal').submit()">
+          <input type="button" value="Create Proposal" class="btn primary" id="proposalSubmit" onclick="$('#newproposal').submit()">
         </div>
       </form>
     </div>
@@ -130,8 +130,10 @@
 
   // If x is Not a Number or less than one or greater than 10
   if (x == null || x == "" || x > 3) {
+    console.log('we gucci')
     text = "";
   } else {
+    console.log('thou shall not pass')
     text = "Price field must be either blank, or greater than $3"
   }
   
@@ -139,19 +141,17 @@
   document.getElementById("priceValidationMsg").innerHTML = text;
 }
 
-function preventSubmit() {
-  x=document.getElementById("priceNumb").value;
+function checkForm() {
+  pNumb = document.getElementById("priceNumb");
 
-  
-  if(x == null || x == "" || x > 3) {
-
-  } else {
-    $(document).on("submit", "form", function(e){
-        e.preventDefault();
-        alert('submission cancelled');
-        return  false;
-    }); 
+  if(pNumb.value > 3 || pNumb.value == null || pNumb.value == "") {
+    pNumb.focus();
+    return true;
   }
+  
+  return false; 
+
 }
+
 
 </script>
