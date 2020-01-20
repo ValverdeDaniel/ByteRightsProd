@@ -155,12 +155,12 @@
   x = document.getElementById("priceNumb").value;
 
   // If x is Not a Number or less than one or greater than 10
-  if (x == null || x == "" || x > 3) {
+  if (x == null || x == "" || x > 2.99) {
     console.log('we gucci')
     text = "";
   } else {
     console.log('thou shall not pass')
-    text = "Price field must be either blank, or greater than $3"
+    text = "Price field must be either blank, or greater than $2.99"
   }
   
   
@@ -170,7 +170,7 @@
 function checkForm() {
   pNumb = document.getElementById("priceNumb");
 
-  if(pNumb.value > 3 || pNumb.value == null || pNumb.value == "") {
+  if(pNumb.value > 2.99 || pNumb.value == null || pNumb.value == "") {
     pNumb.focus();
     return true;
   }
