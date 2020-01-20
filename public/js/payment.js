@@ -1,7 +1,7 @@
 
 // var stripe = Stripe('pk_test_ggUprAz0qNKTol6UXU7bRtLu003bsXsePv');
-//var stripe = Stripe('pk_live_4M58knUUy4u65d6WojUkHCeP00sGvRWJvt');
-const stripe = require('stripe')(config.stripe.publishableKey);
+var stripe = Stripe('pk_live_4M58knUUy4u65d6WojUkHCeP00sGvRWJvt');
+//const stripe = require('stripe')(config.stripe.publishableKey);
 
 // Create an instance of Elements.
 var elements = stripe.elements();
