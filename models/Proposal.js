@@ -8,6 +8,12 @@ const ProposalSchema = new Schema({
     ref: 'users'
   },
   // this is where i am trying to generate a random number for the pin
+  ogOwner: {
+    type: String
+  },
+  proposalType: {
+    type: String
+  },
   url: {
     type: String,
   },

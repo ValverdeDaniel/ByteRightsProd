@@ -496,6 +496,27 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 
 });
 
+//edit proposal form
+router.get('/exchange/:id', ensureAuthenticated, (req, res) => {
+
+
+      Proposal.findOne({
+        _id: req.params.id
+      })
+        .then(proposal => {
+          console.log('/exchange route we made it !')
+          if (proposal.user != req.user.id) {
+            res.redirect('/proposals/my')
+          } else {
+            res.render('proposals/exchange', {
+              proposal: proposal,
+
+            });
+          }
+        });
+
+});
+
 //process add proposal
 router.post('/', ensureAuthenticated, (req, res) => {
   (async () => {
@@ -620,9 +641,82 @@ router.put('/:id', (req, res) => {
         let tagsArr = req.body.tags.split(',');
         tagsArr.forEach(item => {
           tagIDs.push({ text: item });
+
+//process add exchange proposal Customer
+router.post('/exchange/new', ensureAuthenticated, (req, res) => {
+  (async () => {
+    console.log('exchange1')
+  // let allowComments;
+  // if (req.body.allowComments) {
+  //   allowComments = true;
+  // } else {
+  //   allowComments = false;
+  // }
+  let credit;
+  if (req.body.credit) {
+    credit = true;
+  } else {
+    credit = false;
+  }
+  let url = req.body.url;
+  let n = url.indexOf('?');
+  url = url.substring(0, n != -1 ? n : url.length);
+console.log('exchange2')
+  // / Create the base function to be ran /
+  let igUsername;  
+  try {
+      let html = await request(url);
+      const doc = domino.createWindow(html).document;
+      const metadata = getMetadata(doc, url);
+      if (metadata != null && metadata.description != null) {
+        igUsername=metadata.description.match(/\(([^)]+)\)/)[1];
+        console.log('metadata is', metadata.description.match(/\(([^)]+)\)/)[1]);
+        console.log(igUsername);
+      } else {
+        console.log('either metadata is undefined or it does not contains the description name')
+      }
+      debugger;
+  } catch {
+       console.log('something went wrong with the scraper probably that multiphoto for private user scenario')
+  }
+  
+   
+  console.log('2' + igUsername)
+  let newProposal = {
+    url: url,
+    //contractUserType: req.body.contractUserType,
+    //recipient: req.body.recipient,
+    compensation: req.body.compensation,
+    //price: req.body.price,
+    usage: req.body.usage,
+    credit: credit,
+    status: req.body.status,
+    //allowComments: allowComments,
+    user: req.user.id,
+    igUsername: igUsername,
+    ogUser: req.body.ogUser
+  }
+
+  if (req.body.contractUserType == "Seller") {
+    newProposal.sellerStripeAccountId = req.user.stripeAccountId
+  }
+
+
+
+  // console.log(newProposal);
+  // return;
+
+  //create proposal
+  new Proposal(newProposal)
+    .save()
+    .then(proposal => {
+      res.redirect(`/proposals/show/${proposal.id}`);
+    })
+
+  })()
+})
         });
 
-        proposal.tag = tagIDs;
       }
 
       proposal.save()
@@ -631,6 +725,8 @@ router.put('/:id', (req, res) => {
         });
     });
 });
+
+
 
 
 //delete Proposal
