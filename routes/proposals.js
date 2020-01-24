@@ -159,7 +159,37 @@ router.get('/tempshow/:id', (req, res) => {
     })
 })
 
+//show singleSubmission proposal
+router.get('/showSubmission/:id', async (req, res) => {
+  Proposal.findOne({ _id: req.params.id })
 
+    .populate('user')
+    .populate('votes.voteUser')
+    // .populate('comments.commentUser')
+    // .populate('touchedBy.touchedByUser')
+    .then(proposal => {
+     
+     
+     
+    try {
+
+        //messing with metaTags
+        res.locals.metaTags = {
+          title: "Byte Rights Proposal from " + proposal.user.firstName,
+          description: "Click the link for details.",
+          image: proposal.url
+        }
+        res.render('proposals/showSubmission', {
+          proposal: proposal,
+        });
+
+      } catch {
+        console.log(e)
+        console.log('somethingWentWrong with get showSubmission')
+      }
+
+    })
+})
 // show single proposal for guest OG ensureLoggedin /auth/google
 router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
   Proposal.findOne({ _id: req.params.id })
@@ -495,24 +525,76 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
     })
 
 });
+//add Offer Buyer creates offer
+router.get('/addOffer', ensureAuthenticated, (req, res) => {
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      let t = [];
+      let count = 0;
+      for (var i = result.length; i >= 0; i--) {
+        t.push(result[i]);
+        if (count > 10) {
+          break;
+        }
+        count++;
+      }
+      res.render('proposals/addOffer', {
+        tags: t
+      });
+    })
+})
 
-//edit proposal form
-router.get('/exchange/:id', ensureAuthenticated, (req, res) => {
 
+//edit exchange form customer
+router.get('/createSubmission/:id', ensureAuthenticated, (req, res) => {
 
+      let tag
       Proposal.findOne({
         _id: req.params.id
       })
         .then(proposal => {
-          console.log('/exchange route we made it !')
-          if (proposal.user != req.user.id) {
-            res.redirect('/proposals/my')
-          } else {
-            res.render('proposals/exchange', {
-              proposal: proposal,
+          console.log('/createSubmission route we made it !')
+          // if (proposal.user != req.user.id) {
+          //   res.redirect('/proposals/my')
+          // } else {
+          Proposal.findOne({
+            _id: req.params.id
+          })
+            .then(proposal => {
+              let tag = "";
+              if (proposal.tag.length > 0) {
+                proposal.tag.forEach(item => {
+                  // console.log(item.text);
+                  tag = tag + item.text.toLowerCase() + ',';
+                })
+                tag = tag.slice(0, -1);
+              }
 
             });
-          }
+            res.render('proposals/createSubmission', {
+              proposal: proposal,
+              tag: tag
+            });
+          // }
         });
 
 });
@@ -598,6 +680,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
   })()
 })
 
+
 //edit form process
 router.put('/:id', (req, res) => {
   Proposal.findOne({
@@ -641,67 +724,69 @@ router.put('/:id', (req, res) => {
         let tagsArr = req.body.tags.split(',');
         tagsArr.forEach(item => {
           tagIDs.push({ text: item });
+        });
 
-//process add exchange proposal Customer
-router.post('/exchange/new', ensureAuthenticated, (req, res) => {
+        proposal.tag = tagIDs;
+      }
+
+      proposal.save()
+        .then(proposal => {
+          res.redirect(`/proposals/show/${proposal.id}`);
+        });
+    });
+});
+
+//process add offer submit
+router.post('/addOffer/new', ensureAuthenticated, (req, res) => {
   (async () => {
-    console.log('exchange1')
+
   // let allowComments;
   // if (req.body.allowComments) {
   //   allowComments = true;
   // } else {
   //   allowComments = false;
   // }
+  let approvalNeeded;
+  if (req.body.approvalNeeded) {
+    approvalNeeded = true;
+  } else {
+    approvalNeeded = false;
+  }
   let credit;
   if (req.body.credit) {
     credit = true;
   } else {
     credit = false;
   }
-  let url = req.body.url;
-  let n = url.indexOf('?');
-  url = url.substring(0, n != -1 ? n : url.length);
-console.log('exchange2')
-  // / Create the base function to be ran /
-  let igUsername;  
-  try {
-      let html = await request(url);
-      const doc = domino.createWindow(html).document;
-      const metadata = getMetadata(doc, url);
-      if (metadata != null && metadata.description != null) {
-        igUsername=metadata.description.match(/\(([^)]+)\)/)[1];
-        console.log('metadata is', metadata.description.match(/\(([^)]+)\)/)[1]);
-        console.log(igUsername);
-      } else {
-        console.log('either metadata is undefined or it does not contains the description name')
-      }
-      debugger;
-  } catch {
-       console.log('something went wrong with the scraper probably that multiphoto for private user scenario')
-  }
-  
-   
-  console.log('2' + igUsername)
+  let offerLink = req.body.offerLink;
+  let n = offerLink.indexOf('?');
+  offerLink = offerLink.substring(0, n != -1 ? n : offerLink.length);
+
   let newProposal = {
-    url: url,
-    //contractUserType: req.body.contractUserType,
-    //recipient: req.body.recipient,
+    offerLink: offerLink,
     compensation: req.body.compensation,
-    //price: req.body.price,
     usage: req.body.usage,
     credit: credit,
-    status: req.body.status,
+    approvalNeeded: approvalNeeded,
+    welcomeMessage: req.body.welcomeMessage,
+    redemptionInstructions: req.body.redemptionInstructions,
+    proposalType: "Offer",
+    //approvalNeeded: approvalNeeded
+    //status: req.body.status,
     //allowComments: allowComments,
-    user: req.user.id,
-    igUsername: igUsername,
-    ogUser: req.body.ogUser
+    user: req.user.id
+    //igUsername: igUsername
   }
 
-  if (req.body.contractUserType == "Seller") {
-    newProposal.sellerStripeAccountId = req.user.stripeAccountId
+  let tagIDs = [];
+  if (req.body.tags.length > 0) {
+    let tagsArr = req.body.tags.split(',');
+    tagsArr.forEach(item => {
+      tagIDs.push({ text: item.toLowerCase() });
+    });
+
+    newProposal.tag = tagIDs;
   }
-
-
 
   // console.log(newProposal);
   // return;
@@ -715,17 +800,67 @@ console.log('exchange2')
 
   })()
 })
-        });
 
-      }
+//process add exchange attempt2 proposal customer
+router.post('/createSubmission/new', ensureAuthenticated, (req, res) => {
+  //console.log('exchange1')
+  (async ()=> {
+    let credit;
+    if (req.body.credit) {
+      credit = true;
+    } else {
+      credit = false;
+    }
+    console.log('exchange2')
 
-      proposal.save()
-        .then(proposal => {
-          res.redirect(`/proposals/show/${proposal.id}`);
-        });
-    });
-});
+    let url = req.body.url;
+    let n = url.indexOf('?');
+    url = url.substring(0, n != -1 ? n : url.length);
+  
+    // / Create the base function to be ran /
+    let igUsername;  
+    console.log('exchange3')
 
+    try {
+        let html = await request(url);
+        const doc = domino.createWindow(html).document;
+        const metadata = getMetadata(doc, url);
+        if (metadata != null && metadata.description != null) {
+          igUsername=metadata.description.match(/\(([^)]+)\)/)[1];
+          console.log('metadata is', metadata.description.match(/\(([^)]+)\)/)[1]);
+          console.log(igUsername);
+        } else {
+          console.log('either metadata is undefined or it does not contains the description name')
+        }
+        debugger;
+    } catch {
+         console.log('something went wrong with the scraper probably that multiphoto for private user scenario')
+    }
+    console.log('exchange4')
+
+    let newProposal = {
+      url: url,
+      compensation: req.body.compensation,
+      usage: req.body.usage,
+      credit: credit,
+      user: req.user.id,
+      igUsername: igUsername,
+      ogOwner: req.body.ogOwner,
+      proposalType: "Offer"
+    }
+    console.log('exchange5')
+
+    new Proposal(newProposal)
+      .save()
+      .then(proposal => {
+        console.log('exchange6')
+
+        res.redirect(`/proposals/showSubmission/${proposal.id}`);
+      })
+  
+
+  })()
+})
 
 
 

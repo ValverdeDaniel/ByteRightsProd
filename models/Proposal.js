@@ -7,9 +7,9 @@ const ProposalSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
-  // this is where i am trying to generate a random number for the pin
   ogOwner: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: 'users',
   },
   proposalType: {
     type: String
@@ -82,7 +82,7 @@ const ProposalSchema = new Schema({
   comments: [{
     commentBody: {
       type: String,
-      required: true
+      default: true
     },
     commentDate: {
       type: Date,
@@ -113,6 +113,21 @@ const ProposalSchema = new Schema({
 
   igProfile: {
     type: String
+  },
+  offerLink: {
+    type: String
+  },
+  approvalNeeded: {
+    type: Boolean,
+    default: true,
+  },
+  welcomeMessage: {
+    type: String,
+    default: ""
+  },
+  redemptionInstructions: {
+    type: String,
+    default: ""
   },
   date: {
     type: Date,
