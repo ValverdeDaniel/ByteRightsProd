@@ -61,14 +61,19 @@
               </label>
             </div>
           </p>
-          <p>How would you like the photo to be compensated?</p>
+          <p>You may offer any form of compensation. ex. 1 ice-cream with 2 toppings</p>
           <div class="input-field">
             <input type="text" name="compensation" value="{{proposal.compensation}}">
           </div>
-          <p>If cash, how much?</p>
-          <div class="input-field">
-            <input type="text" name="price" value="{{proposal.price}}" id="priceNumb" onkeyup="priceValidation()">
-            <p id="priceValidationMsg" style="color:red;"></p>
+          <p>Below you can greet your customer and inform them what is going on in this page</p>
+          <div class="input-field col s12">
+            <textarea id="welcomeMessage" name="welcomeMessage" class="materialize-textarea" value="{{proposal.welcomeMessage}}"></textarea>
+            <label for="welcomeMessage">Welcome Message</label>
+          </div>
+          <p>Below you can give your customer any insights on how they will be reedeming this offer</p>
+          <div class="input-field col s12">
+            <textarea id="redemptionInstructions" name="redemptionInstructions" class="materialize-textarea" value="{{proposal.redemptionInstructions}}"></textarea>
+            <label for="redemptionInstructions">Redemption Instructions</label>
           </div>
           <label>Tags</label>
           <div class="input-field">
