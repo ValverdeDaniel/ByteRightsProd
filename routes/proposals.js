@@ -525,6 +525,7 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
     })
 
 });
+
 //add Offer Buyer creates offer
 router.get('/addOffer', ensureAuthenticated, (req, res) => {
   Proposal.find({ user: req.user.id }, { tag: true })
@@ -563,7 +564,64 @@ router.get('/addOffer', ensureAuthenticated, (req, res) => {
     })
 })
 
+//edit proposal form
+router.get('/editOffer/:id', ensureAuthenticated, (req, res) => {
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      let t = [];
+      let count = 0;
+      for (var i = result.length; i >= 0; i--) {
+        t.push(result[i]);
+        if (count > 10) {
+          break;
+        }
+        count++;
+      }
 
+      Proposal.findOne({
+        _id: req.params.id
+      })
+        .then(proposal => {
+          let tag = "";
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              // console.log(item.text);
+              tag = tag + item.text.toLowerCase() + ',';
+            })
+            tag = tag.slice(0, -1);
+          }
+          if (proposal.user != req.user.id) {
+            res.redirect('/proposals/my')
+          } else {
+            res.render('proposals/edit', {
+              proposal: proposal,
+              tag: tag,
+              tags: t
+            });
+          }
+        });
+    })
+
+});
 //edit exchange form customer
 router.get('/createSubmission/:id', ensureAuthenticated, (req, res) => {
 
