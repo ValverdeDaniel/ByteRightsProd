@@ -158,55 +158,72 @@ router.get('/tempshow/:id', (req, res) => {
 
     })
 })
-
-
 // show single proposal for guest OG ensureLoggedin /auth/google
 router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
   Proposal.findOne({ _id: req.params.id })
 
-  .populate('user')
-  .populate('votes.voteUser')
-  .populate('comments.commentUser')
-  .populate('touchedBy.touchedByUser')
-  .then(proposal => {
+    .populate('user')
+    .populate('votes.voteUser')
+    .populate('comments.commentUser')
+    .populate('touchedBy.touchedByUser')
+    .then(proposal => {
+     
+     
+     
     try {
       var price = proposal.price
-      if(price < 5) {
-        var fee = 1
-      } else {
-        var feePercent = .2
-        var rawfee = price*feePercent
-        var fee = +rawfee.toFixed(2)
+      var feePercent = .2
+      var rawfee = price*feePercent
+      var buyerFee = +rawfee.toFixed(2)
+      if(buyerFee < 2) {
+        buyerFee = 2
       }
-      var totalPrice = price + fee;
-      console.log('%fee: ' + fee)
-      console.log('%price: ' + price)
-      console.log('%totalPrice: ' + totalPrice)
-      console.log(proposal);
-      req.session.proposal = proposal;
-      req.session.fee = fee;
-      //req.session.price = price;
-      req.session.price = totalPrice;
-      console.log('proposal1: ' + req.session.proposal)
-      console.log('price: ' + req.session.price)
-      //messing with metaTags
-      res.locals.metaTags = {
-        title: "Byte Rights Proposal from " + proposal.user.firstName,
-        description: "Click the link for details.",
-        image: proposal.url
+      var sellerFee = buyerFee;
+      var fee = sellerFee + buyerFee;
+      price = price - sellerFee;
+      unRoundedTotalPrice = price + fee;
+      var totalPrice = unRoundedTotalPrice.toFixed(2);
+      
+      // try {
+      //   var price = proposal.price
+      //   if(price < 10) {
+      //     var fee = 1
+      //   } else {
+      //     var feePercent = .2
+      //     var rawfee = price*feePercent
+      //     var fee = +rawfee.toFixed(2)
+      //   }
+      //var totalPrice = price + fee;
+        console.log('%fee: ' + fee)
+        console.log('%price: ' + price)
+        console.log('%totalPrice: ' + totalPrice)
+        console.log(proposal);
+        req.session.proposal = proposal;
+        req.session.fee = fee;
+        //req.session.price = price;
+        req.session.price = totalPrice;
+        console.log('proposal1: ' + req.session.proposal)
+        console.log('price: ' + req.session.price)
+        //messing with metaTags
+        res.locals.metaTags = {
+          title: "Byte Rights Proposal from " + proposal.user.firstName,
+          description: "Click the link for details.",
+          image: proposal.url
+        }
+        res.render('proposals/show', {
+          proposal: proposal,
+          fee: fee,
+          //price: price,
+          totalPrice: totalPrice,
+          price: price,
+          sellerFee: sellerFee,
+          buyerFee: buyerFee
+        });
+
+      } catch {
+        console.log(e)
+        console.log('somethingWentWrong get tempshow')
       }
-      res.render('proposals/show', {
-        proposal: proposal,
-        fee: fee,
-        //price: price,
-        totalPrice: totalPrice
-      });
-
-    } catch {
-      console.log(e)
-      console.log('somethingWentWrong get tempshow')
-    }
-
 
     })
 })
@@ -214,30 +231,73 @@ router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
 
 //testing if function for ensureLoggedIn
 router.get('/showFBClient/:id', ensureLoggedIn('/auth/facebook'), (req, res) => {
-  Proposal.findOne({
-    _id: req.params.id
-  })
+  Proposal.findOne({ _id: req.params.id })
 
     .populate('user')
     .populate('votes.voteUser')
     .populate('comments.commentUser')
     .populate('touchedBy.touchedByUser')
     .then(proposal => {
-      console.log(proposal);
-
-      //messing with metaTags
-      res.locals.metaTags = {
-        title: "Byte Rights Proposal from " + proposal.user.firstName,
-        description: "Click the link for details.",
-        image: proposal.url
+     
+     
+     
+    try {
+      var price = proposal.price
+      var feePercent = .2
+      var rawfee = price*feePercent
+      var buyerFee = +rawfee.toFixed(2)
+      if(buyerFee < 2) {
+        buyerFee = 2
       }
-      res.render('proposals/showClient', {
-        proposal: proposal
-      });
+      var sellerFee = buyerFee;
+      var fee = sellerFee + buyerFee;
+      price = price - sellerFee;
+      unRoundedTotalPrice = price + fee;
+      var totalPrice = unRoundedTotalPrice.toFixed(2);
+      
+      // try {
+      //   var price = proposal.price
+      //   if(price < 10) {
+      //     var fee = 1
+      //   } else {
+      //     var feePercent = .2
+      //     var rawfee = price*feePercent
+      //     var fee = +rawfee.toFixed(2)
+      //   }
+      //var totalPrice = price + fee;
+        console.log('%fee: ' + fee)
+        console.log('%price: ' + price)
+        console.log('%totalPrice: ' + totalPrice)
+        console.log(proposal);
+        req.session.proposal = proposal;
+        req.session.fee = fee;
+        //req.session.price = price;
+        req.session.price = totalPrice;
+        console.log('proposal1: ' + req.session.proposal)
+        console.log('price: ' + req.session.price)
+        //messing with metaTags
+        res.locals.metaTags = {
+          title: "Byte Rights Proposal from " + proposal.user.firstName,
+          description: "Click the link for details.",
+          image: proposal.url
+        }
+        res.render('proposals/show', {
+          proposal: proposal,
+          fee: fee,
+          //price: price,
+          totalPrice: totalPrice,
+          price: price,
+          sellerFee: sellerFee,
+          buyerFee: buyerFee
+        });
+
+      } catch {
+        console.log(e)
+        console.log('somethingWentWrong get tempshow')
+      }
 
     })
 })
-
 
 //display terms per proposal
 router.get('/terms/:id', (req, res) => {
