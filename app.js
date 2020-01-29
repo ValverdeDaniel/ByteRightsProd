@@ -14,7 +14,8 @@ const passport = require('passport');
 //load Models
 require('./models/User');
 require('./models/Proposal');
-require('./models/StripeTransaction')
+require('./models/StripeTransaction');
+require('./models/Offer');
 
 //passport config
 require('./config/passport')(passport);

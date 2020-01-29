@@ -793,9 +793,73 @@ router.put('/:id', (req, res) => {
         });
     });
 });
-
 //process add offer submit
 router.post('/addOffer/new', ensureAuthenticated, (req, res) => {
+  (async () => {
+
+  // let allowComments;
+  // if (req.body.allowComments) {
+  //   allowComments = true;
+  // } else {
+  //   allowComments = false;
+  // }
+  let approvalNeeded;
+  if (req.body.approvalNeeded) {
+    approvalNeeded = true;
+  } else {
+    approvalNeeded = false;
+  }
+  let credit;
+  if (req.body.credit) {
+    credit = true;
+  } else {
+    credit = false;
+  }
+  let offerLink = req.body.offerLink;
+  let n = offerLink.indexOf('?');
+  offerLink = offerLink.substring(0, n != -1 ? n : offerLink.length);
+
+  let newOffer = {
+    offerLink: offerLink,
+    compensation: req.body.compensation,
+    usage: req.body.usage,
+    credit: credit,
+    approvalNeeded: approvalNeeded,
+    welcomeMessage: req.body.welcomeMessage,
+    redemptionInstructions: req.body.redemptionInstructions,
+    offerType: "Offer",
+    //approvalNeeded: approvalNeeded
+    //status: req.body.status,
+    //allowComments: allowComments,
+    user: req.user.id
+    //igUsername: igUsername
+  }
+
+  let tagIDs = [];
+  if (req.body.tags.length > 0) {
+    let tagsArr = req.body.tags.split(',');
+    tagsArr.forEach(item => {
+      tagIDs.push({ text: item.toLowerCase() });
+    });
+
+    newOffer.tag = tagIDs;
+  }
+
+  // console.log(newOffer;
+  // return;
+
+  //create offer
+  new Offer(newOffer)
+    .save()
+    .then(offer => {
+      res.redirect(`/proposals/show/${offer.id}`);
+    })
+
+  })()
+})
+
+//process add offer submit
+router.post('/addOffer/new1', ensureAuthenticated, (req, res) => {
   (async () => {
 
   // let allowComments;
