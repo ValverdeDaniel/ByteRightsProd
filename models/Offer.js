@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 //create Schema
-const ProposalSchema = new Schema({
+const OfferSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'users'
@@ -11,14 +11,11 @@ const ProposalSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users',
   },
-  proposalType: {
+  offerType: {
     type: String
   },
   url: {
     type: String,
-  },
-  imageUrl: {
-    type: String
   },
   compensation: {
     type: String
@@ -29,6 +26,21 @@ const ProposalSchema = new Schema({
   credit: {
     type: Boolean,
     default: true
+  },
+  offerLink: {
+    type: String
+  },
+  approvalNeeded: {
+    type: Boolean,
+    default: true,
+  },
+  welcomeMessage: {
+    type: String,
+    default: ""
+  },
+  redemptionInstructions: {
+    type: String,
+    default: ""
   },
   status: {
     type: String,
@@ -42,23 +54,23 @@ const ProposalSchema = new Schema({
     type: String,
     default: ""
   },
-  tag: [{
-    text: {
-      type: String,
-      required: true
-    },
-    tagDate: {
-      type: Date,
-      default: Date.now
-    }
-  }],
-  touchedBy:[{
-    touchedByUser: {
-      type: Schema.Types.ObjectId,
-      ref: 'users',
-      unique: true
-    }
-  }],
+  // tag: [{
+  //   text: {
+  //     type: String,
+  //     required: true
+  //   },
+  //   tagDate: {
+  //     type: Date,
+  //     default: Date.now
+  //   }
+  // }],
+  // touchedBy:[{
+  //   touchedByUser: {
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'users',
+  //     unique: true
+  //   }
+  // }],
   comments: [{
     commentBody: {
       type: String,
@@ -94,21 +106,7 @@ const ProposalSchema = new Schema({
   igProfile: {
     type: String
   },
-  offerLink: {
-    type: String
-  },
-  approvalNeeded: {
-    type: Boolean,
-    default: true,
-  },
-  welcomeMessage: {
-    type: String,
-    default: ""
-  },
-  redemptionInstructions: {
-    type: String,
-    default: ""
-  },
+
   date: {
     type: Date,
     default: Date.now
@@ -116,4 +114,4 @@ const ProposalSchema = new Schema({
 });
 
 //create collection and add schema
-mongoose.model('proposals', ProposalSchema, 'proposals');
+mongoose.model('offers', OfferSchema, 'offers');

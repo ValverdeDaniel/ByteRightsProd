@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Proposal = mongoose.model('proposals');
+const Offer = mongoose.model('offers');
 const user = mongoose.model('users');
 const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
 const { ensureLoggedIn } = require('connect-ensure-login');
@@ -691,6 +692,7 @@ router.get('/createSubmission/:id', ensureAuthenticated, (req, res) => {
       Proposal.findOne({
         _id: req.params.id
       })
+      console.log(JSON.stringify(proposal))
         .then(proposal => {
           console.log('/createSubmission route we made it !')
           // if (proposal.user != req.user.id) {
@@ -710,7 +712,7 @@ router.get('/createSubmission/:id', ensureAuthenticated, (req, res) => {
               }
 
             });
-            res.render('proposals/createSubmission', {
+            res.render('offers/createSubmission', {
               proposal: proposal,
               tag: tag
             });
@@ -889,7 +891,7 @@ router.post('/addOffer/new', ensureAuthenticated, (req, res) => {
     approvalNeeded: approvalNeeded,
     welcomeMessage: req.body.welcomeMessage,
     redemptionInstructions: req.body.redemptionInstructions,
-    offerType: "Offer",
+    Type: "Offer",
     //approvalNeeded: approvalNeeded
     //status: req.body.status,
     //allowComments: allowComments,
@@ -979,7 +981,7 @@ router.post('/addOffer/new1', ensureAuthenticated, (req, res) => {
   new Proposal(newProposal)
     .save()
     .then(proposal => {
-      res.redirect(`/proposals/show/${proposal.id}`);
+      res.redirect(`/offers/createSubmission/${proposal.id}`);
     })
 
   })()

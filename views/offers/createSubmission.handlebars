@@ -20,7 +20,7 @@
                   {{!-- <input name="_method" value="PUT"> --}}
                   <label>Image Link</label>
                   <div class="input-field">
-                    <input type="text" name="url" value="{{proposal.url}}" required>
+                    <input type="text" name="url" required>
                     
                   </div>
 
@@ -90,6 +90,25 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="col m6 s12">
+        {{!-- the div below this is carries the embed code for the instagram post --}}
+        <div class="card">
+          <div class="card-image">
+            <a href="{{proposal.offerLink}}media/?size=l"><img src="{{proposal.offerLink}}media/?size=l" alt="" /></a>
+          </div>
+          <div class="card-content">
+            <p>
+              {{#each proposal.tag}}
+              <div class="chip">
+                {{this.text}}
+              </div>
+              {{/each}}
+            </p>
+          </div>
+        </div>
+        <a href="{{proposal.offerLink}}">{{proposal.offerLink}} test</a>
       </div>
     </div>
 </div>
