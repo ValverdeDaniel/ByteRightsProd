@@ -915,7 +915,7 @@ router.post('/addOffer/new', ensureAuthenticated, (req, res) => {
   new Proposal(newProposal)
     .save()
     .then(proposal => {
-      res.redirect(`/proposals/show/${proposal.id}`);
+      res.redirect(`/proposals/createSubmission/${proposal.id}`);
     })
 
   })()
@@ -1016,6 +1016,77 @@ router.get('/createSubmission/:id', (req, res) => {
 
 });
 
+//edit exchange form customer
+router.get('/createSubmissionGClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
+
+  let tag
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .then(proposal => {
+      console.log('/createSubmission route we made it !')
+      // if (proposal.user != req.user.id) {
+      //   res.redirect('/proposals/my')
+      // } else {
+      Proposal.findOne({
+        _id: req.params.id
+      })
+        .then(proposal => {
+          let tag = "";
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              // console.log(item.text);
+              tag = tag + item.text.toLowerCase() + ',';
+            })
+            tag = tag.slice(0, -1);
+          }
+
+        });
+        res.render('proposals/createSubmission', {
+          proposal: proposal,
+          tag: tag
+        });
+      // }
+    });
+
+});
+
+//edit exchange form customer
+router.get('/createSubmissionFBClient/:id', ensureLoggedIn('/auth/facebook'), (req, res) => {
+
+  let tag
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .then(proposal => {
+      console.log('/createSubmission route we made it !')
+      // if (proposal.user != req.user.id) {
+      //   res.redirect('/proposals/my')
+      // } else {
+      Proposal.findOne({
+        _id: req.params.id
+      })
+        .then(proposal => {
+          let tag = "";
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              // console.log(item.text);
+              tag = tag + item.text.toLowerCase() + ',';
+            })
+            tag = tag.slice(0, -1);
+          }
+
+        });
+        res.render('proposals/createSubmission', {
+          proposal: proposal,
+          tag: tag
+        });
+      // }
+    });
+
+});
+
+
 
 //process add exchange attempt2 proposal customer
 router.post('/createSubmission/new', (req, res) => {
@@ -1071,7 +1142,7 @@ router.post('/createSubmission/new', (req, res) => {
       .then(proposal => {
         console.log('exchange6')
 
-        res.redirect(`/proposals/show/${proposal.id}`);
+        res.redirect(`/proposals/showSubmission/${proposal.id}`);
       })
   
 
@@ -1080,35 +1151,37 @@ router.post('/createSubmission/new', (req, res) => {
 
 //show singleSubmission proposal
 router.get('/showSubmission/:id', async (req, res) => {
-  Proposal.findOne({ _id: req.params.id })
 
-    .populate('user')
-    .populate('votes.voteUser')
-    // .populate('comments.commentUser')
-    // .populate('touchedBy.touchedByUser')
+  let tag
+  Proposal.findOne({
+    _id: req.params.id
+  })
     .then(proposal => {
-     
-     
-     
-    try {
+      console.log('/createSubmission route we made it !')
+      // if (proposal.user != req.user.id) {
+      //   res.redirect('/proposals/my')
+      // } else {
+      Proposal.findOne({
+        _id: req.params.id
+      })
+        .then(proposal => {
+          let tag = "";
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              // console.log(item.text);
+              tag = tag + item.text.toLowerCase() + ',';
+            })
+            tag = tag.slice(0, -1);
+          }
 
-        //messing with metaTags
-        res.locals.metaTags = {
-          title: "Byte Rights Proposal from " + proposal.user.firstName,
-          description: "Click the link for details.",
-          image: proposal.url
-        }
+        });
         res.render('proposals/showSubmission', {
           proposal: proposal,
+          tag: tag
         });
+      // }
+    });
 
-      } catch {
-        console.log(e)
-        console.log('somethingWentWrong with get showSubmission')
-      }
-
-    })
-})
-
+});
 
 module.exports = router;

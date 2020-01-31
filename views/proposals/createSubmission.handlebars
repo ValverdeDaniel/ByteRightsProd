@@ -3,7 +3,7 @@
     <div class="col s12">
       <div class="proposal_topbar">
         <div class="col m6 pull-m6 s12">
-          <h1 class="proposal_title">Insta Exchange</h1>
+          <h1 class="proposal_title">Loyalty Image Submission</h1>
         </div>
       </div>
     </div>
@@ -11,6 +11,13 @@
   <div class="row no-margin--bottom">
     <div class="proposal_show-content alternate">
       <div class="col m6 s12">
+        {{!-- <div class="card">
+          <div class="card-content">
+            <p>hey there if you would like to share this offer with people send the link below!!</p>
+            <p><a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/createSubmission/{{proposal.id}}</a></p>
+          </div>
+        </div> --}}
+
         <div class="card horizontal">
           <div class="card-stacked">
             <div class="card-content">
@@ -90,6 +97,12 @@
       </div>
 
       <div class="col m6 s12">
+        <div class="card">
+          <div class="card-content">
+            <p>If you would like to share this offer with people send the link below!! Put it in your Bio, get it tatted on your back; share it wherever you like! You can always just send it in a text ;)</p>
+            <p><a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/createSubmission/{{proposal.id}}</a></p>
+          </div>
+        </div>
         {{!-- the div below this is carries the embed code for the instagram post --}}
         <div class="card">
           <div class="card-image">
@@ -127,12 +140,12 @@
     <div class= "center-align">
     <h4>Please Login</h4>
 
-      <a class = "btn red darken-1" href="/proposals/showClient/{{proposal.id}}">
+      <a class = "btn red darken-1" href="/proposals/createSubmissionGClient/{{proposal.id}}">
         <i class="fab fa-google left"></i>Login with Google
       </a>
       <br>
       <br>
-      <a class = "btn blue darken-1 row center-align" href="/proposals/showFBClient/{{proposal.id}}">
+      <a class = "btn blue darken-1 row center-align" href="/proposals/createSubmissionFBClient/{{proposal.id}}">
         <i class="fab fa-facebook-f left"></i>Login with Facebook
       </a>
     </div>
