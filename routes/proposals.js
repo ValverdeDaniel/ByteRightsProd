@@ -1071,7 +1071,7 @@ router.post('/createSubmission/new', ensureAuthenticated, (req, res) => {
       .then(proposal => {
         console.log('exchange6')
 
-        res.redirect(`/proposals/showSubmission/${proposal.id}`);
+        res.redirect(`/proposals/show/${proposal.id}`);
       })
   
 
