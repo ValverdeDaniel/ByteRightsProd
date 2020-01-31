@@ -816,6 +816,10 @@ router.put('/sellerStripeAccountId/:id', (req, res) => {
     });
 });
 
+
+
+
+
 // this is where the Offer routes begin
 //add Offer Buyer creates offer
 router.get('/addOffer', ensureAuthenticated, (req, res) => {
