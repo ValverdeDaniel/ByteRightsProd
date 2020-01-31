@@ -15,9 +15,14 @@
           <div class="card-stacked">
             <div class="card-content">
               <h5>Top of the Mornin'!</h5>
-              <p>{{proposal.welcomeMessage}}</p>
-              <form class="proposal_add-wrapper" action="/proposals/createSubmission/new" method="post" id="newproposal">
+              {{#ifEqualsElse proposal.welcomeMessage ""}}
 
+              {{else}}
+              <p>{{proposal.welcomeMessage}}</p>
+              {{/ifEqualsElse}}
+              {{#if user}}
+              <form class="proposal_add-wrapper" action="/proposals/createSubmission/new" method="post" id="newproposal">
+                  <p><strong>Paste the URL to your instagram post below</strong></p>
                   <label>Image Link</label>
                   <div class="input-field">
                     <input type="text" name="url" value="{{proposal.url}}" required>
@@ -49,7 +54,17 @@
                   </div>
                   <input type="button" value="Submit" class="btn primary" onclick="$('#newproposal').submit()">
               </form>
+              {{else}}
+              {{!-- else for if the user is not logged in then they see this --}}
+              <br>
+              <p><strong>If you would like to submit your photo please just login and then paste your link :)</strong></p>
+              <br>
+              <button data-target="modalLogin" class="btn blue modal-trigger">Login</button>
 
+              {{!-- end if user statement for form --}}
+              {{/if}}
+
+              
             </div>
           </div>
         </div>
@@ -63,8 +78,13 @@
             <ul>
               <li>-{{proposal.credit}}</li>
             </ul>
-            <h5>Redemption Instructions</h5>
-            <p>{{proposal.redemptionInstructions}}</p>
+              {{#ifEqualsElse proposal.redemptionInstructions ""}}
+
+              {{else}}
+                <h5>Redemption Instructions</h5>
+                <p>{{proposal.redemptionInstructions}}</p>
+              {{/ifEqualsElse}}
+
           </div>
         </div>
       </div>
@@ -89,6 +109,39 @@
       </div>
     </div>
 </div>
+
+<!-- Modal Login Structure-->
+<div id="modalLogin" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <nav class="nav-horizontal">
+        <div class="row">
+          <div class="col s12">
+            <div class="nav_wrapper" width= "100%" style="height: 48px;">
+              <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class= "center-align">
+    <h4>Please Login</h4>
+
+      <a class = "btn red darken-1" href="/proposals/showClient/{{proposal.id}}">
+        <i class="fab fa-google left"></i>Login with Google
+      </a>
+      <br>
+      <br>
+      <a class = "btn blue darken-1 row center-align" href="/proposals/showFBClient/{{proposal.id}}">
+        <i class="fab fa-facebook-f left"></i>Login with Facebook
+      </a>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
 
 <script>
 //  modal logic materialize 

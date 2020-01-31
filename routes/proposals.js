@@ -982,7 +982,7 @@ router.get('/editOffer/:id', ensureAuthenticated, (req, res) => {
 
 });
 //edit exchange form customer
-router.get('/createSubmission/:id', ensureAuthenticated, (req, res) => {
+router.get('/createSubmission/:id', (req, res) => {
 
       let tag
       Proposal.findOne({
@@ -1018,7 +1018,7 @@ router.get('/createSubmission/:id', ensureAuthenticated, (req, res) => {
 
 
 //process add exchange attempt2 proposal customer
-router.post('/createSubmission/new', ensureAuthenticated, (req, res) => {
+router.post('/createSubmission/new', (req, res) => {
   //console.log('exchange1')
   (async ()=> {
     let credit;
