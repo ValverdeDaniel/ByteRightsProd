@@ -21,55 +21,13 @@
         <div class="card horizontal">
           <div class="card-stacked">
             <div class="card-content">
-              <h5>Top of the Mornin'!</h5>
-              {{#ifEqualsElse proposal.welcomeMessage ""}}
+              <h5>You did it! Thanks</h5>
+              {{#ifEqualsElse proposal.redemptionInstructions ""}}
 
               {{else}}
-              <p>{{proposal.welcomeMessage}}</p>
+                <h5>Redemption Instructions</h5>
+                <p>{{proposal.redemptionInstructions}}</p>
               {{/ifEqualsElse}}
-              {{#if user}}
-              <form class="proposal_add-wrapper" action="/proposals/createSubmission/new" method="post" id="newproposal">
-                  <p><strong>Paste the URL to your instagram post below</strong></p>
-                  <label>Image Link</label>
-                  <div class="input-field">
-                    <input type="text" name="url" value="{{proposal.url}}" required>
-                    
-                  </div>
-
-                  <div class="input-field">
-                    <input type="text" name="ogOwner" value="{{proposal.user}}" hidden>
-                    
-                  </div>
-
-
-                  <div class="input-field">
-                    <input type="text" name="usage" value="{{proposal.usage}}" placeholder="i.e. Instagram, Website, Print, etc." hidden>
-                  </div>
-
-                  <div class="input-field">
-                    <input type="text" name="credit" id="credit" value={{proposal.credit}} hidden>
-                  </div>
-
-                  {{!-- <div class="input-field">
-                    <p>Tags</p>
-                    <input type="text" data-role="materialtags" name="tags" value="{{tag}}" id="tags">
-                  </div> --}}
-
-                  <p>How will you be compensated?</p>
-                  <div class="input-field">
-                    <input type="text" name="compensation" value="{{proposal.compensation}}" readonly>
-                  </div>
-                  <input type="button" value="Submit" class="btn primary" onclick="$('#newproposal').submit()">
-              </form>
-              {{else}}
-              {{!-- else for if the user is not logged in then they see this --}}
-              <br>
-              <p><strong>If you would like to submit your photo please just login and then paste your link :)</strong></p>
-              <br>
-              <button data-target="modalLogin" class="btn blue modal-trigger">Login</button>
-
-              {{!-- end if user statement for form --}}
-              {{/if}}
 
               
             </div>
@@ -85,13 +43,6 @@
             <ul>
               <li>-{{proposal.credit}}</li>
             </ul>
-              {{#ifEqualsElse proposal.redemptionInstructions ""}}
-
-              {{else}}
-                <h5>Redemption Instructions</h5>
-                <p>{{proposal.redemptionInstructions}}</p>
-              {{/ifEqualsElse}}
-
           </div>
         </div>
       </div>
@@ -168,3 +119,4 @@
 {{!-- 
 http://localhost:5000/proposals/createSubmission/5e34853aa5b91f9c142193a8 
 --}}
+

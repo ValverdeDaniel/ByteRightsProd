@@ -1133,6 +1133,7 @@ router.post('/createSubmission/new', (req, res) => {
       user: req.user.id,
       igUsername: igUsername,
       ogOwner: req.body.ogOwner,
+      redemptionInstructions: req.body.redemptionInstructions,
       proposalType: "Offer"
     }
     console.log('exchange5')

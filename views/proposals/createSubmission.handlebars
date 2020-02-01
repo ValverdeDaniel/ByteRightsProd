@@ -55,6 +55,8 @@
                     <input type="text" data-role="materialtags" name="tags" value="{{tag}}" id="tags">
                   </div> --}}
 
+                  <input type="text" name="redemptionInstructions" value="{{proposal.redemptionInstructions}}" hidden>
+
                   <p>How will you be compensated?</p>
                   <div class="input-field">
                     <input type="text" name="compensation" value="{{proposal.compensation}}" readonly>
@@ -168,3 +170,7 @@
 {{!-- 
 http://localhost:5000/proposals/createSubmission/5e34853aa5b91f9c142193a8 
 --}}
+
+{{!--
+ http://localhost:5000/proposals/createSubmission/5e3589c4bb23e83a60a40d2a 
+ --}}
