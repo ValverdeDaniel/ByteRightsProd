@@ -1,0 +1,124 @@
+<div class="proposal_wrapper--add">
+  <div class="row">
+    <div class="col s12">
+      <div class="proposal_topbar">
+        <div class="col m6 pull-m6 s12">
+          <h1 class="proposal_title">Loyalty Image Submission Completed</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row no-margin--bottom">
+    <div class="proposal_show-content alternate">
+      <div class="col m6 s12">
+        {{!-- <div class="card">
+          <div class="card-content">
+            <p>hey there if you would like to share this offer with people send the link below!!</p>
+            <p><a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/createSubmission/{{proposal.id}}</a></p>
+          </div>
+        </div> --}}
+
+        <div class="card horizontal">
+          <div class="card-stacked">
+            <div class="card-content">
+              <h5>You did it! Thanks for participating!</h5>
+              <p>When you log back into ByteRights we will have your Submission waiting for you</p>
+              {{#ifEqualsElse proposal.redemptionInstructions ""}}
+
+              {{else}}
+                <h5>Redemption Instructions</h5>
+                <p>{{proposal.redemptionInstructions}}</p>
+              {{/ifEqualsElse}}
+
+              
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h5>Tell Your Friends!</h5>
+            <p>If you would like to share this offer with people send the link below!! Put it in your Bio, get it tatted on your back; share it wherever you like! You can always just send it in a text ;)</p>
+            <p><a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/createSubmission/{{proposal.id}}</a></p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <p><strong>Below is how we plan to use this photo.</strong></p>
+            <ul>
+              <li>-{{proposal.usage}}</li>
+            </ul>
+            <p><strong>Will the creator be mentioned when this photo is used</strong></p>
+            <ul>
+              <li>-{{proposal.credit}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col m6 s12">
+        {{!-- the div below this is carries the embed code for the instagram post --}}
+        <div class="card">
+          <div class="card-image">
+            <a href="{{proposal.url}}media/?size=l"><img src="{{proposal.url}}media/?size=l" alt="" /></a>
+          </div>
+          {{!-- <div class="card-content">
+            <p>
+              {{#each proposal.tag}}
+              <div class="chip">
+                {{this.text}}
+              </div>
+              {{/each}}
+            </p>
+          </div> --}}
+        </div>
+        <a href="{{proposal.url}}">{{proposal.url}}</a>
+      </div>
+    </div>
+</div>
+
+<!-- Modal Login Structure-->
+<div id="modalLogin" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <nav class="nav-horizontal">
+        <div class="row">
+          <div class="col s12">
+            <div class="nav_wrapper" width= "100%" style="height: 48px;">
+              <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class= "center-align">
+    <h4>Please Login</h4>
+
+      <a class = "btn red darken-1" href="/proposals/createSubmissionGClient/{{proposal.id}}">
+        <i class="fab fa-google left"></i>Login with Google
+      </a>
+      <br>
+      <br>
+      <a class = "btn blue darken-1 row center-align" href="/proposals/createSubmissionFBClient/{{proposal.id}}">
+        <i class="fab fa-facebook-f left"></i>Login with Facebook
+      </a>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
+
+<script>
+//  modal logic materialize 
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
+      var instances = M.Modal.init(elems);
+    });
+
+</script>
+{{!-- 
+http://localhost:5000/proposals/createSubmission/5e34853aa5b91f9c142193a8 
+--}}
+

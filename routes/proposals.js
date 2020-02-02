@@ -158,6 +158,7 @@ router.get('/tempshow/:id', (req, res) => {
 
     })
 })
+
 // show single proposal for guest OG ensureLoggedin /auth/google
 router.get('/showClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
   Proposal.findOne({ _id: req.params.id })
@@ -556,6 +557,7 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 
 });
 
+
 //process add proposal
 router.post('/', ensureAuthenticated, (req, res) => {
   (async () => {
@@ -636,6 +638,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
 
   })()
 })
+
 
 //edit form process
 router.put('/:id', (req, res) => {
@@ -813,4 +816,479 @@ router.put('/sellerStripeAccountId/:id', (req, res) => {
     });
 });
 
+// this is where the Offer routes begin
+//add Offer Buyer creates offer
+router.get('/addOffer', ensureAuthenticated, (req, res) => {
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      let t = [];
+      let count = 0;
+      for (var i = result.length; i >= 0; i--) {
+        t.push(result[i]);
+        if (count > 10) {
+          break;
+        }
+        count++;
+      }
+      res.render('proposals/addOffer', {
+        tags: t
+      });
+    })
+})
+
+
+//process add offer submit
+router.post('/addOffer/new', ensureAuthenticated, (req, res) => {
+  (async () => {
+
+  // let allowComments;
+  // if (req.body.allowComments) {
+  //   allowComments = true;
+  // } else {
+  //   allowComments = false;
+  // }
+  let approvalNeeded;
+  if (req.body.approvalNeeded) {
+    approvalNeeded = true;
+  } else {
+    approvalNeeded = false;
+  }
+  let credit;
+  if (req.body.credit) {
+    credit = true;
+  } else {
+    credit = false;
+  }
+  let offerLink = req.body.offerLink;
+  let n = offerLink.indexOf('?');
+  offerLink = offerLink.substring(0, n != -1 ? n : offerLink.length);
+
+  let newProposal = {
+    offerLink: offerLink,
+    compensation: req.body.compensation,
+    usage: req.body.usage,
+    credit: credit,
+    approvalNeeded: approvalNeeded,
+    welcomeMessage: req.body.welcomeMessage,
+    redemptionInstructions: req.body.redemptionInstructions,
+    proposalType: "Offer",
+    //approvalNeeded: approvalNeeded
+    //status: req.body.status,
+    //allowComments: allowComments,
+    user: req.user.id
+    //igUsername: igUsername
+  }
+
+  let tagIDs = [];
+  if (req.body.tags.length > 0) {
+    let tagsArr = req.body.tags.split(',');
+    tagsArr.forEach(item => {
+      tagIDs.push({ text: item.toLowerCase() });
+    });
+
+    newProposal.tag = tagIDs;
+  }
+
+  // console.log(newProposal);
+  // return;
+
+  //create proposal
+  new Proposal(newProposal)
+    .save()
+    .then(proposal => {
+      res.redirect(`/proposals/createSubmission/${proposal.id}`);
+    })
+
+  })()
+})
+
+
+
+//edit proposal form
+router.get('/editOffer/:id', ensureAuthenticated, (req, res) => {
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      let t = [];
+      let count = 0;
+      for (var i = result.length; i >= 0; i--) {
+        t.push(result[i]);
+        if (count > 10) {
+          break;
+        }
+        count++;
+      }
+
+      Proposal.findOne({
+        _id: req.params.id
+      })
+        .then(proposal => {
+          let tag = "";
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              // console.log(item.text);
+              tag = tag + item.text.toLowerCase() + ',';
+            })
+            tag = tag.slice(0, -1);
+          }
+          if (proposal.user != req.user.id) {
+            res.redirect('/proposals/my')
+          } else {
+            res.render('proposals/edit', {
+              proposal: proposal,
+              tag: tag,
+              tags: t
+            });
+          }
+        });
+    })
+
+});
+//edit exchange form customer
+router.get('/createSubmission/:id', (req, res) => {
+
+      let tag
+      Proposal.findOne({
+        _id: req.params.id
+      })
+        .then(proposal => {
+          console.log('/createSubmission route we made it !')
+          // if (proposal.user != req.user.id) {
+          //   res.redirect('/proposals/my')
+          // } else {
+          Proposal.findOne({
+            _id: req.params.id
+          })
+            .then(proposal => {
+              let tag = "";
+              if (proposal.tag.length > 0) {
+                proposal.tag.forEach(item => {
+                  // console.log(item.text);
+                  tag = tag + item.text.toLowerCase() + ',';
+                })
+                tag = tag.slice(0, -1);
+              }
+
+            });
+            res.render('proposals/createSubmission', {
+              proposal: proposal,
+              tag: tag
+            });
+          // }
+        });
+
+});
+
+//edit exchange form customer
+router.get('/createSubmissionGClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
+
+  let tag
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .then(proposal => {
+      console.log('/createSubmission route we made it !')
+      // if (proposal.user != req.user.id) {
+      //   res.redirect('/proposals/my')
+      // } else {
+      Proposal.findOne({
+        _id: req.params.id
+      })
+        .then(proposal => {
+          let tag = "";
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              // console.log(item.text);
+              tag = tag + item.text.toLowerCase() + ',';
+            })
+            tag = tag.slice(0, -1);
+          }
+
+        });
+        res.render('proposals/createSubmission', {
+          proposal: proposal,
+          tag: tag
+        });
+      // }
+    });
+
+});
+
+//edit exchange form customer
+router.get('/createSubmissionFBClient/:id', ensureLoggedIn('/auth/facebook'), (req, res) => {
+
+  let tag
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .then(proposal => {
+      console.log('/createSubmission route we made it !')
+      // if (proposal.user != req.user.id) {
+      //   res.redirect('/proposals/my')
+      // } else {
+      Proposal.findOne({
+        _id: req.params.id
+      })
+        .then(proposal => {
+          let tag = "";
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              // console.log(item.text);
+              tag = tag + item.text.toLowerCase() + ',';
+            })
+            tag = tag.slice(0, -1);
+          }
+
+        });
+        res.render('proposals/createSubmission', {
+          proposal: proposal,
+          tag: tag
+        });
+      // }
+    });
+
+});
+
+
+
+//process add exchange attempt2 proposal customer
+router.post('/createSubmission/new', (req, res) => {
+  //console.log('exchange1')
+  (async ()=> {
+    let credit;
+    if (req.body.credit) {
+      credit = true;
+    } else {
+      credit = false;
+    }
+    console.log('exchange2')
+
+    let url = req.body.url;
+    let n = url.indexOf('?');
+    url = url.substring(0, n != -1 ? n : url.length);
+  
+    // / Create the base function to be ran /
+    let igUsername;  
+    console.log('exchange3')
+
+    try {
+        let html = await request(url);
+        const doc = domino.createWindow(html).document;
+        const metadata = getMetadata(doc, url);
+        if (metadata != null && metadata.description != null) {
+          igUsername=metadata.description.match(/\(([^)]+)\)/)[1];
+          console.log('metadata is', metadata.description.match(/\(([^)]+)\)/)[1]);
+          console.log(igUsername);
+        } else {
+          console.log('either metadata is undefined or it does not contains the description name')
+        }
+        debugger;
+    } catch {
+         console.log('something went wrong with the scraper probably that multiphoto for private user scenario')
+    }
+    console.log('exchange4')
+
+    let newProposal = {
+      url: url,
+      compensation: req.body.compensation,
+      usage: req.body.usage,
+      credit: credit,
+      user: req.user.id,
+      igUsername: igUsername,
+      ogOwner: req.body.ogOwner,
+      redemptionInstructions: req.body.redemptionInstructions,
+      proposalType: "Submission"
+    }
+    console.log('exchange5')
+
+    new Proposal(newProposal)
+      .save()
+      .then(proposal => {
+        console.log('exchange6')
+
+        res.redirect(`/proposals/showSubmission/${proposal.id}`);
+      })
+  
+
+  })()
+})
+
+//show singleSubmission proposal
+router.get('/showSubmission/:id', async (req, res) => {
+
+  let tag
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .then(proposal => {
+      console.log('/createSubmission route we made it !')
+      // if (proposal.user != req.user.id) {
+      //   res.redirect('/proposals/my')
+      // } else {
+      Proposal.findOne({
+        _id: req.params.id
+      })
+        .then(proposal => {
+          let tag = "";
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              // console.log(item.text);
+              tag = tag + item.text.toLowerCase() + ',';
+            })
+            tag = tag.slice(0, -1);
+          }
+
+        });
+        res.render('proposals/showSubmission', {
+          proposal: proposal,
+          tag: tag
+        });
+      // }
+    });
+
+});
+
+//logged in Users proposals
+router.get('/mySubmissions', ensureAuthenticated, (req, res) => {
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+
+      console.log(tags);
+
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      console.log(result);
+
+      if (tags.length > 0) {
+        Proposal.find({$or: [{ user: req.user.id, ogOwner: req.user.id}], proposalType: "Submission" })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/mySubmissions', {
+              proposals: proposals,
+              tags: result
+            });
+          });
+      } else {
+        Proposal.find({$or: [{ user: req.user.id, ogOwner: req.user.id}], proposalType: "Submission" })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/mySubmissions', {
+              proposals: proposals,
+              tags: []
+            });
+          });
+      }
+    })
+});
+
+//logged in Users proposals
+router.get('/myOffers', ensureAuthenticated, (req, res) => {
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+
+      console.log(tags);
+
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      console.log(result);
+
+      if (tags.length > 0) {
+        Proposal.find({ user: req.user.id, proposalType: "Offer"})
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/mySubmissions', {
+              proposals: proposals,
+              tags: result
+            });
+          });
+      } else {
+        Proposal.find({ user: req.user.id, proposalType: "Offer"})
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/mySubmissions', {
+              proposals: proposals,
+              tags: []
+            });
+          });
+      }
+    })
+});
+
 module.exports = router;
+
+// http://localhost:5000/proposals/createSubmission/5e36e98ef35c5c72dcba709c

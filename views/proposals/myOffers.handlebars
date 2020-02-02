@@ -3,7 +3,7 @@
     <div class="col"> 
       <div class="row proposal_topbar">
         <div class="col m2 s12">
-          <h1 class="proposal_title">Created Proposals </h1>
+          <h1 class="proposal_title">Offers </h1>
         </div>
         <div class="col m8 s12" style="display: grid">
           <ul class="br_tabs tabs hide-on-small-only "> 
@@ -92,8 +92,8 @@
                   <td>{{formatDate date 'MMMM Do YYYY'}}</td>
                 </div>  --}}
                     <div class="col m1 s12">
-                      {{#if url}}
-                      <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
+                      {{#if offerLink}}
+                      <img src="{{offerLink}}media/?size=l" class="proposal_image" width="100%" alt="" />
                       {{else}}
                       <img src="{{user.image}}" width="100%" class="proposal_image">
                       {{/if}}
@@ -168,8 +168,8 @@
                   <td>{{formatDate date 'MMMM Do YYYY'}}</td>
                 </div>  --}}
                     <div class="col m1 s12">
-                      {{#if url}}
-                      <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
+                      {{#if offerLink}}
+                      <img src="{{offerLink}}media/?size=l" class="proposal_image" width="100%" alt="" />
                       {{else}}
                       <img src="{{user.image}}" width="100%" class="proposal_image">
                       {{/if}}
@@ -243,8 +243,8 @@
                 <td>{{formatDate date 'MMMM Do YYYY'}}</td>
               </div>  --}}
                   <div class="col m1 s12">
-                    {{#if url}}
-                    <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
+                    {{#if offerLink}}
+                    <img src="{{offerLink}}media/?size=l" class="proposal_image" width="100%" alt="" />
                     {{else}}
                     <img src="{{user.image}}" width="100%" class="proposal_image">
                     {{/if}}
