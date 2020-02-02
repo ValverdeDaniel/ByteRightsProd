@@ -21,7 +21,8 @@
         <div class="card horizontal">
           <div class="card-stacked">
             <div class="card-content">
-              <h5>You did it! Thanks</h5>
+              <h5>You did it! Thanks for participating!</h5>
+              <p>When you log back into ByteRights we will have your Submission waiting for you</p>
               {{#ifEqualsElse proposal.redemptionInstructions ""}}
 
               {{else}}
@@ -31,6 +32,13 @@
 
               
             </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h5>Tell Your Friends!</h5>
+            <p>If you would like to share this offer with people send the link below!! Put it in your Bio, get it tatted on your back; share it wherever you like! You can always just send it in a text ;)</p>
+            <p><a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/createSubmission/{{proposal.id}}</a></p>
           </div>
         </div>
         <div class="card">
@@ -48,18 +56,12 @@
       </div>
 
       <div class="col m6 s12">
-        <div class="card">
-          <div class="card-content">
-            <p>If you would like to share this offer with people send the link below!! Put it in your Bio, get it tatted on your back; share it wherever you like! You can always just send it in a text ;)</p>
-            <p><a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/createSubmission/{{proposal.id}}</a></p>
-          </div>
-        </div>
         {{!-- the div below this is carries the embed code for the instagram post --}}
         <div class="card">
           <div class="card-image">
             <a href="{{proposal.url}}media/?size=l"><img src="{{proposal.url}}media/?size=l" alt="" /></a>
           </div>
-          <div class="card-content">
+          {{!-- <div class="card-content">
             <p>
               {{#each proposal.tag}}
               <div class="chip">
@@ -67,7 +69,7 @@
               </div>
               {{/each}}
             </p>
-          </div>
+          </div> --}}
         </div>
         <a href="{{proposal.url}}">{{proposal.url}}</a>
       </div>

@@ -1134,7 +1134,7 @@ router.post('/createSubmission/new', (req, res) => {
       igUsername: igUsername,
       ogOwner: req.body.ogOwner,
       redemptionInstructions: req.body.redemptionInstructions,
-      proposalType: "Offer"
+      proposalType: "Submission"
     }
     console.log('exchange5')
 
@@ -1185,4 +1185,110 @@ router.get('/showSubmission/:id', async (req, res) => {
 
 });
 
+//logged in Users proposals
+router.get('/mySubmissions', ensureAuthenticated, (req, res) => {
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+
+      console.log(tags);
+
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      console.log(result);
+
+      if (tags.length > 0) {
+        Proposal.find({$or: [{ user: req.user.id, ogOwner: req.user.id}], proposalType: "Submission" })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/mySubmissions', {
+              proposals: proposals,
+              tags: result
+            });
+          });
+      } else {
+        Proposal.find({$or: [{ user: req.user.id, ogOwner: req.user.id}], proposalType: "Submission" })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/mySubmissions', {
+              proposals: proposals,
+              tags: []
+            });
+          });
+      }
+    })
+});
+
+//logged in Users proposals
+router.get('/myOffers', ensureAuthenticated, (req, res) => {
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+
+      console.log(tags);
+
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      console.log(result);
+
+      if (tags.length > 0) {
+        Proposal.find({ user: req.user.id, proposalType: "Offer"})
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/mySubmissions', {
+              proposals: proposals,
+              tags: result
+            });
+          });
+      } else {
+        Proposal.find({ user: req.user.id, proposalType: "Offer"})
+          .populate('user')
+          .sort({ date: -1 })
+          .then(proposals => {
+            res.render('proposals/mySubmissions', {
+              proposals: proposals,
+              tags: []
+            });
+          });
+      }
+    })
+});
+
 module.exports = router;
+
+// http://localhost:5000/proposals/createSubmission/5e36e98ef35c5c72dcba709c
