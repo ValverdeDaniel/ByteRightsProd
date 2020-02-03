@@ -36,21 +36,35 @@
                 <span class="card-title">Redemption Instructions</span>
                 <p>{{proposal.redemptionInstructions}}</p>
               {{/ifEqualsElse}}
-              
-                {{#if user}}
-                  {{#ifEqualsElse proposal.status "Redeemed"}}
 
+              {{#if user}}
+                {{#ifEqualsElse proposal.ogOwner user.id}}
+                  {{#ifEqualsElse proposal.status "Waiting for Approval" }}
+
+                    <form class="proposal_add-wrapper" style="margin-top: 0px;" method="post" action="/proposals/approveSubmission/{{proposal.id}}">
+                      <div>
+                        <input name="Approve" type="submit" value="Approve" class="btn green">
+                      </div>
+                    </form>
                   {{else}}
-                    {{!-- add if proposal.status = approved display redeem --}}
-                    <br>
-                    <button data-target="redeemModal" class="btn green modal-trigger">Redeem</button>
 
                   {{/ifEqualsElse}}
                 {{else}}
-                  <button data-target="modalLogin" class="btn blue modal-trigger">Login</button>
-                {{/if}}
-                <br>
-                <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
+
+                {{/ifEqualsElse}}
+
+                {{#ifEqualsElse proposal.status "Approved"}}
+                  {{!-- add if proposal.status = approved display redeem --}}
+                  <br>
+                  <button data-target="redeemModal" class="btn green modal-trigger">Redeem</button>
+                {{else}}
+
+                {{/ifEqualsElse}}
+              {{else}}
+                <button data-target="modalLogin" class="btn blue modal-trigger">Login</button>
+              {{/if}}
+              <br>
+              <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
 
               
             </div>
@@ -191,7 +205,7 @@
   <div class="modal-footer">
       <form class="proposal_add-wrapper" style="margin-top: 0px;" method="post" action="/proposals/redeemSubmission/{{proposal.id}}">
         <div>
-          <input name="voteBody" type="submit" value="Redeem" class="btn green">
+          <input name="Redeem" type="submit" value="Redeem" class="btn green">
           <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
         </div>
       </form>
