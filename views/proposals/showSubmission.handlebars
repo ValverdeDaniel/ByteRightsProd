@@ -70,7 +70,11 @@
             <p class="proposal-label">Below is how we plan to use this photo.</p>
               <p>{{proposal.usage}}</p>
             <p class="proposal-label">Will the creator be mentioned when this photo is used</p>
-              <p>{{proposal.credit}}</p>
+              {{#if proposal.credit}}
+              <p>Yes</p>
+              {{else}}
+              <p>No</p>
+              {{/if}}
           </div>
         </div>
         <div class="card">

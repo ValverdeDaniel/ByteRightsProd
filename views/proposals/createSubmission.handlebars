@@ -21,7 +21,8 @@
         <div class="card horizontal">
           <div class="card-stacked">
             <div class="card-content">
-              <h5>Show Us What You Got</h5>
+              <span class="card-title">Show Us What You Got</span>
+
               {{#ifEqualsElse proposal.welcomeMessage ""}}
 
               {{else}}
@@ -29,7 +30,7 @@
               {{/ifEqualsElse}}
               {{#if user}}
               <form class="proposal_add-wrapper" action="/proposals/createSubmission/new" method="post" id="newproposal">
-                  <p><strong>Paste the URL to your instagram post below</strong></p>
+                  <p class="proposal-label">Paste the URL to your instagram post below</p>
                   <label>Image Link</label>
                   <div class="input-field">
                     <input type="text" name="url" value="{{proposal.url}}" required>
@@ -84,25 +85,18 @@
 
         <div class="card">
           <div class="card-content">
-            <h5><strong>What You Need to Know</strong></h5>
-            <p><strong>How will you be compensated</strong></p>
-            <ul>
-              <li>{{proposal.compensation}}</li>
-            </ul>
-            <p><strong>Below is how we plan to use this photo</strong></p>
-            <ul>
-              <li>{{proposal.usage}}</li>
-            </ul>
-            <p><strong>Will the creator be mentioned when this photo is used</strong></p>
-            <ul>
+            <span class="card-title">What You Need to Know</span>
+            <p>This is an agreement for the right to the referenced image. Here are the important details:</p><br>
+            <p class="proposal-label">You will be compensated with</p>
+              <p>{{proposal.compensation}}</p>
+            <p class="proposal-label">Below is how we plan to use this photo.</p>
+              <p>{{proposal.usage}}</p>
+            <p class="proposal-label">Will the creator be mentioned when this photo is used</p>
               {{#if proposal.credit}}
               <p>Yes</p>
               {{else}}
               <p>No</p>
               {{/if}}
-            </ul>
-
-        
           </div>
         </div>
         {{#ifEqualsElse proposal.redemptionInstructions ""}}
@@ -110,8 +104,7 @@
         {{else}}
         <div class="card">
           <div class="card-content">
-            <h5>Redemption Instructions</h5>
-            <p>{{proposal.redemptionInstructions}}</p>
+            <span class="card-title">Redemption Instructions</span>            <p>{{proposal.redemptionInstructions}}</p>
           </div>
         </div>
         {{/ifEqualsElse}}
