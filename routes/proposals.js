@@ -356,7 +356,9 @@ router.get('/my', ensureAuthenticated, (req, res) => {
       console.log(result);
 
       if (tags.length > 0) {
-        Proposal.find({ user: req.user.id })
+        // Proposal.find({ user: req.user.id, proposalType: { $ne: "Offer" }, proposalType: { $ne: "Submission" } })
+        Proposal.find({$and: [{ user: req.user.id}, {proposalType: { $ne: "Offer" }}, {proposalType: { $ne: "Submission" }}]})
+        // Proposal.find({$or: [{ user: req.user.id}, {ogOwner: req.user.id}], proposalType: "Submission" })
           .populate('user')
           .sort({ date: -1 })
           .then(proposals => {
@@ -366,7 +368,8 @@ router.get('/my', ensureAuthenticated, (req, res) => {
             });
           });
       } else {
-        Proposal.find({ user: req.user.id })
+        // Proposal.find({ user: req.user.id, proposalType: { $ne: "Offer" }, proposalType: { $ne: "Submission" } })
+        Proposal.find({$and: [{ user: req.user.id}, {proposalType: { $ne: "Offer" }}, {proposalType: { $ne: "Submission" }}]})
           .populate('user')
           .sort({ date: -1 })
           .then(proposals => {
@@ -971,7 +974,7 @@ router.get('/editOffer/:id', ensureAuthenticated, (req, res) => {
           if (proposal.user != req.user.id) {
             res.redirect('/proposals/my')
           } else {
-            res.render('proposals/edit', {
+            res.render('proposals/editOffer', {
               proposal: proposal,
               tag: tag,
               tags: t
@@ -1215,7 +1218,7 @@ router.get('/mySubmissions', ensureAuthenticated, (req, res) => {
       console.log(result);
 
       if (tags.length > 0) {
-        Proposal.find({$or: [{ user: req.user.id, ogOwner: req.user.id}], proposalType: "Submission" })
+        Proposal.find({$or: [{ user: req.user.id}, {ogOwner: req.user.id}], proposalType: "Submission" })
           .populate('user')
           .sort({ date: -1 })
           .then(proposals => {
@@ -1225,7 +1228,7 @@ router.get('/mySubmissions', ensureAuthenticated, (req, res) => {
             });
           });
       } else {
-        Proposal.find({$or: [{ user: req.user.id, ogOwner: req.user.id}], proposalType: "Submission" })
+        Proposal.find({$or: [{ user: req.user.id}, {ogOwner: req.user.id}], proposalType: "Submission" })
           .populate('user')
           .sort({ date: -1 })
           .then(proposals => {
