@@ -31,10 +31,9 @@
               {{#if user}}
               <form class="proposal_add-wrapper" action="/proposals/createSubmission/new" method="post" id="newproposal">
                   <p class="proposal-label">Paste the URL to your instagram post below</p>
-                  <label>Image Link</label>
                   <div class="input-field">
-                    <input type="text" name="url" value="{{proposal.url}}" required>
-                    
+                    <input type="text" name="url" class="validate">
+                    <label for="url">Image Link</label>
                   </div>
 
                   <div class="input-field">
