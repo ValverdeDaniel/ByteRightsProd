@@ -10,7 +10,7 @@
     </div>
       <div class="row" style="margin-bottom: 10px">
         <div class="col s12">
-          From: <b>{{proposal.igUsername}}</b> | Status: <b style="font-size:20px;color:hotpink;">{{proposal.status}}</b>
+          From: <b>{{proposal.igUsername}}</b> | Status: <b style="color:hotpink;">{{proposal.status}}</b>
         </div>
       </div>
   </div>
@@ -32,6 +32,7 @@
               {{#ifEqualsElse proposal.redemptionInstructions ""}}
 
               {{else}}
+              <br>
                 <span class="card-title">Redemption Instructions</span>
                 <p>{{proposal.redemptionInstructions}}</p>
               {{/ifEqualsElse}}
@@ -41,6 +42,7 @@
 
                   {{else}}
                     {{!-- add if proposal.status = approved display redeem --}}
+                    <br>
                     <button data-target="redeemModal" class="btn green modal-trigger">Redeem</button>
 
                   {{/ifEqualsElse}}
