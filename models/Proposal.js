@@ -11,6 +11,10 @@ const ProposalSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users',
   },
+  ogProposalId: {
+    type: Schema.Types.ObjectId,
+    ref: 'users'
+  },
   proposalType: {
     type: String
   },
