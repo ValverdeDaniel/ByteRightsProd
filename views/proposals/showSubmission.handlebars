@@ -1,13 +1,18 @@
 <div class="proposal_wrapper--add">
-  <div class="row">
-    <div class="col s12">
-      <div class="proposal_topbar">
-        <div class="col m6 pull-m6 s12">
-          <h1 class="proposal_title">Loyalty Image Submission Completed</h1>
-          <strong>Giveaway Status:</strong> <b style="font-size:20px;color:hotpink;">{{proposal.status}}</b>
+  <div class="row no-margin--bottom">
+    <div class="proposal_topbar">
+      <table style="border:0px;">
+        <tr style="border-bottom:0px;">
+          <td width="90%" style="padding: 0px 0px 0px 10px;"><h1 class="proposal_title">Instagram Submission</h1></td>
+          {{!-- <td class="left-align" width="10%" style="padding:0px 15px 0px 0px;"><button data-target="helpModal" class="btn-floating grey modal-trigger">?</button></td> --}}
+        </tr>
+      </table>
+    </div>
+      <div class="row" style="margin-bottom: 10px">
+        <div class="col s12">
+          From: <b>{{proposal.igUsername}}</b> | Status: <b style="font-size:20px;color:hotpink;">{{proposal.status}}</b>
         </div>
       </div>
-    </div>
   </div>
   <div class="row no-margin--bottom">
     <div class="proposal_show-content alternate">
