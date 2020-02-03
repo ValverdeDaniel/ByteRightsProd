@@ -123,7 +123,6 @@ const ProposalSchema = new Schema({
   },
   approvalNeeded: {
     type: Boolean,
-    default: true,
   },
   welcomeMessage: {
     type: String,

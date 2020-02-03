@@ -1010,11 +1010,37 @@ router.get('/createSubmission/:id', (req, res) => {
               }
 
             });
+            console.log('approvalneeded1')
+            console.log('proposal' + proposal)
+            try{
+
+              if (proposal.approvalNeeded == true) {
+                var status = 'Waiting for Approval'
+                console.log('approvalNeeded')
+              } else {
+                var status = 'Approved'
+                console.log('Approved')
+              }
+              req.session.proposal = proposal;
+              req.session.status = status
+              var approvalNeeded = proposal.approvalNeeded
+              req.session.approvalNeeded = approvalNeeded
+              console.log('1' + status)
+              console.log('1' + approvalNeeded)
+              // console.log('2' + approvalStatus)
+
+
+
             res.render('proposals/createSubmission', {
               proposal: proposal,
-              tag: tag
+              tag: tag,
+              status: status,
+              approvalNeeded: approvalNeeded
+              
             });
-          // }
+          } catch {
+            console.log('something went wrong section of /createSubmission')
+          }
         });
 
 });
@@ -1045,13 +1071,38 @@ router.get('/createSubmissionGClient/:id', ensureLoggedIn('/auth/google'), (req,
           }
 
         });
+        console.log('approvalneeded1')
+        console.log('proposal' + proposal)
+        try{
+
+          if (proposal.approvalNeeded == true) {
+            var status = 'Waiting for Approval'
+            console.log('approvalNeeded')
+          } else {
+            var status = 'Approved'
+            console.log('Approved')
+          }
+          req.session.proposal = proposal;
+          req.session.status = status
+          var approvalNeeded = proposal.approvalNeeded
+          req.session.approvalNeeded = approvalNeeded
+          console.log('1' + status)
+          console.log('1' + approvalNeeded)
+          // console.log('2' + approvalStatus)
+
+
+
         res.render('proposals/createSubmission', {
           proposal: proposal,
-          tag: tag
+          tag: tag,
+          status: status,
+          approvalNeeded: approvalNeeded
+          
         });
-      // }
+      } catch {
+        console.log('something went wrong section of /createSubmission')
+      }
     });
-
 });
 
 //edit exchange form customer
@@ -1080,16 +1131,40 @@ router.get('/createSubmissionFBClient/:id', ensureLoggedIn('/auth/facebook'), (r
           }
 
         });
+        console.log('approvalneeded1')
+        console.log('proposal' + proposal)
+        try{
+
+          if (proposal.approvalNeeded == true) {
+            var status = 'Waiting for Approval'
+            console.log('approvalNeeded')
+          } else {
+            var status = 'Approved'
+            console.log('Approved')
+          }
+          req.session.proposal = proposal;
+          req.session.status = status
+          var approvalNeeded = proposal.approvalNeeded
+          req.session.approvalNeeded = approvalNeeded
+          console.log('1' + status)
+          console.log('1' + approvalNeeded)
+          // console.log('2' + approvalStatus)
+
+
+
         res.render('proposals/createSubmission', {
           proposal: proposal,
-          tag: tag
+          tag: tag,
+          status: status,
+          approvalNeeded: approvalNeeded
+          
         });
-      // }
+      } catch {
+        console.log('something went wrong section of /createSubmission')
+      }
     });
 
 });
-
-
 
 //process add exchange attempt2 proposal customer
 router.post('/createSubmission/new', (req, res) => {
@@ -1126,7 +1201,10 @@ router.post('/createSubmission/new', (req, res) => {
     } catch {
          console.log('something went wrong with the scraper probably that multiphoto for private user scenario')
     }
-    console.log('exchange4')
+    var status = req.session.status
+    var approvalNeeded = req.session.approvalNeeded
+    console.log('status' + status)
+    console.log('exchange4' + approvalNeeded)
 
     let newProposal = {
       url: url,
@@ -1138,6 +1216,8 @@ router.post('/createSubmission/new', (req, res) => {
       ogOwner: req.body.ogOwner,
       ogProposalId: req.body.ogProposalId,
       redemptionInstructions: req.body.redemptionInstructions,
+      status: status,
+      approvalNeeded: approvalNeeded,
       proposalType: "Submission"
     }
     console.log('exchange5')
@@ -1293,7 +1373,7 @@ router.get('/myOffers', ensureAuthenticated, (req, res) => {
     })
 });
 
-//add user vote
+//add redeem submission button route
 router.post('/redeemSubmission/:id', (req, res) => {
   Proposal.findOne({
     _id: req.params.id
@@ -1307,7 +1387,7 @@ router.post('/redeemSubmission/:id', (req, res) => {
       //   touchedByUser: req.user.id
       // }
       console.log('In voteUSER');
-      console.log('Seller Stripe Account ID', req.user.stripeAccountId)
+      //console.log('Seller Stripe Account ID', req.user.stripeAccountId)
      
 
 
@@ -1329,6 +1409,44 @@ router.post('/redeemSubmission/:id', (req, res) => {
         })
     });
 });
+
+//add redeem submission button route
+router.post('/approveSubmission/:id', (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .then(proposal => {
+      // const newVote = {
+      //   voteBody: req.body.voteBody,
+      //   voteUser: req.user.id
+      // }
+      // const newTouch = {
+      //   touchedByUser: req.user.id
+      // }
+      console.log('In voteUSER');
+      //console.log('Seller Stripe Account ID', req.user.stripeAccountId)
+     
+
+
+      proposal.status = "Approved";
+      // voteBody= req.body.voteBody,
+      // voteUser= req.user.id,
+      // touchedBy= req.user.id
+      // console.log('voteBody1: '+voteBody)
+      // console.log('voteUser1: '+voteUser)
+      // console.log('touchedByUser1: '+touchedBy)
+      //push to votes array
+      //unshift adds it to the beginning
+      // proposal.votes.unshift(newVote);
+      // proposal.touchedBy.unshift(newTouch);
+
+      proposal.save()
+        .then(proposal => {
+          res.redirect(`/proposals/showSubmission/${proposal.id}`);
+        })
+    });
+});
+
 
 //add comment
 router.post('/commentSubmission/:id', (req, res) => {
