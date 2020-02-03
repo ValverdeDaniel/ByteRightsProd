@@ -27,12 +27,12 @@
         <div class="card horizontal">
           <div class="card-stacked">
             <div class="card-content">
-              <h5>You did it! Thanks for participating!</h5>
+              <span class="card-title">You did it! Thanks for participating!</span>
               <p>When you log back into ByteRights we will have your Submission waiting for you</p>
               {{#ifEqualsElse proposal.redemptionInstructions ""}}
 
               {{else}}
-                <h5>Redemption Instructions</h5>
+                <span class="card-title">Redemption Instructions</span>
                 <p>{{proposal.redemptionInstructions}}</p>
               {{/ifEqualsElse}}
               
@@ -56,23 +56,21 @@
         </div>
         <div class="card">
           <div class="card-content">
-            <h5>Tell Your Friends!</h5>
+            <span class="card-title">Tell Your Friends!</span>
             <p>If you would like to share this offer with people send the link below!! Put it in your Bio, get it tatted on your back; share it wherever you like! You can always just send it in a text ;)</p>
             <p><a class="word-break" href="../createSubmission/{{proposal.ogProposalId}}" target="_blank">byterights.com/proposals/createSubmission/{{proposal.ogProposalId}}</a></p>
           </div>
         </div>
         <div class="card">
           <div class="card-content">
-            <p><strong>You will be compensated with</strong></p>
-            <p>{{proposal.compensation}}</p>
-            <p><strong>Below is how we plan to use this photo.</strong></p>
-            <ul>
-              <li>{{proposal.usage}}</li>
-            </ul>
-            <p><strong>Will the creator be mentioned when this photo is used</strong></p>
-            <ul>
-              <li>{{proposal.credit}}</li>
-            </ul>
+            <span class="card-title">What You Need to Know</span>
+            <p>This is an agreement for the right to the referenced image. Here are the important details:</p><br>
+            <p class="proposal-label">You will be compensated with</p>
+              <p>{{proposal.compensation}}</p>
+            <p class="proposal-label">Below is how we plan to use this photo.</p>
+              <p>{{proposal.usage}}</p>
+            <p class="proposal-label">Will the creator be mentioned when this photo is used</p>
+              <p>{{proposal.credit}}</p>
           </div>
         </div>
         <div class="card">
