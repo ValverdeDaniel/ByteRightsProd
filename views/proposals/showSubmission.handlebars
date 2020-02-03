@@ -4,6 +4,7 @@
       <div class="proposal_topbar">
         <div class="col m6 pull-m6 s12">
           <h1 class="proposal_title">Loyalty Image Submission Completed</h1>
+          <strong>Giveaway Status:</strong> <b style="font-size:20px;color:hotpink;">{{proposal.status}}</b>
         </div>
       </div>
     </div>
@@ -29,6 +30,20 @@
                 <h5>Redemption Instructions</h5>
                 <p>{{proposal.redemptionInstructions}}</p>
               {{/ifEqualsElse}}
+              
+                {{#if user}}
+                  {{#ifEqualsElse proposal.status "Redeemed"}}
+
+                  {{else}}
+                    {{!-- add if proposal.status = approved display redeem --}}
+                    <button data-target="redeemModal" class="btn green modal-trigger">Redeem</button>
+
+                  {{/ifEqualsElse}}
+                {{else}}
+                  <button data-target="modalLogin" class="btn blue modal-trigger">Login</button>
+                {{/if}}
+                <br>
+                <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
 
               
             </div>
@@ -38,19 +53,56 @@
           <div class="card-content">
             <h5>Tell Your Friends!</h5>
             <p>If you would like to share this offer with people send the link below!! Put it in your Bio, get it tatted on your back; share it wherever you like! You can always just send it in a text ;)</p>
-            <p><a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/createSubmission/{{proposal.id}}</a></p>
+            <p><a class="word-break" href="../createSubmission/{{proposal.ogProposalId}}" target="_blank">byterights.com/proposals/createSubmission/{{proposal.ogProposalId}}</a></p>
           </div>
         </div>
         <div class="card">
           <div class="card-content">
+            <p><strong>You will be compensated with</strong></p>
+            <p>{{proposal.compensation}}</p>
             <p><strong>Below is how we plan to use this photo.</strong></p>
             <ul>
-              <li>-{{proposal.usage}}</li>
+              <li>{{proposal.usage}}</li>
             </ul>
             <p><strong>Will the creator be mentioned when this photo is used</strong></p>
             <ul>
-              <li>-{{proposal.credit}}</li>
+              <li>{{proposal.credit}}</li>
             </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Comments</span>
+              {{#if user}}
+                <form method="post" action="/proposals/commentSubmission/{{proposal.id}}">
+                  <div class="input-field">
+                    <textarea name="commentBody" class="materialize-textarea"></textarea>
+                    <label>Add Comment</label>
+                  </div>
+                  <input type="submit" value="Submit" class="btn blue">
+                </form>
+              {{else}}
+                <p>Please login if you would like to leave a comment or
+                  accept the offer.
+                </p>
+              {{/if}}
+              {{!-- {{else}}
+              <p>Please <a href="/auth/google">login</a> if you would like to accept/decline the offer.</p> --}}
+              {{!-- </div> --}}
+              {{#if proposal.comments}}
+              <div class="card-content">
+                {{#each proposal.comments}}
+                <br>
+                {{!-- <div class="chip">
+                  <img src="{{commentUser.image}}">
+                  <a href="/proposals/user/{{commentUser.id}}">{{commentUser.firstName}} {{commentUser.lastName}}</a>
+                </div> --}}
+                <p>{{commentBody}}</p>
+                <small>Posted: {{formatDate commentDate 'MMMM Do YYYY, h:mm'}} </small>
+                <br>
+                {{/each}}
+              </div>
+              {{/if}}
           </div>
         </div>
       </div>
@@ -105,6 +157,35 @@
   </div>
   <div class="modal-footer">
     <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
+<!-- Modal Login Structure-->
+<div id="redeemModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <nav class="nav-horizontal">
+        <div class="row">
+          <div class="col s12">
+            <div class="nav_wrapper" width= "100%" style="height: 48px;">
+              <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class= "center-align">
+    <h6>Be sure you want to redeem this giveaway, once it has been redeemed it can't be redeemed again</h6>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+      <form class="proposal_add-wrapper" style="margin-top: 0px;" method="post" action="/proposals/redeemSubmission/{{proposal.id}}">
+        <div>
+          <input name="voteBody" type="submit" value="Redeem" class="btn green">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+      </form>
   </div>
 </div>
 

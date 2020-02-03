@@ -40,7 +40,10 @@
                     <input type="text" name="ogOwner" value="{{proposal.user}}" hidden>
                     
                   </div>
-
+                  <div class="input-field">
+                    <input type="text" name="ogProposalId" value="{{proposal._id}}" hidden>
+                    
+                  </div>
 
                   <div class="input-field">
                     <input type="text" name="usage" value="{{proposal.usage}}" placeholder="i.e. Instagram, Website, Print, etc." hidden>
@@ -61,6 +64,8 @@
                     <input type="text" name="compensation" value="{{proposal.compensation}}" hidden>
                   </div>
                   <input type="button" value="Submit" class="btn primary" onclick="$('#newproposal').submit()">
+                  <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
+
               </form>
               {{else}}
               {{!-- else for if the user is not logged in then they see this --}}
@@ -114,7 +119,6 @@
           <div class="card-content">
             <p>If you would like to share this offer with people send the link below!! Put it in your Bio, get it tatted on your back; share it wherever you like! You can always just send it in a text ;)</p>
             <p><a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/createSubmission/{{proposal.id}}</a></p>
-            <p>this doesn't work right now we need to update proposal.id</p>
           </div>
         </div>
       </div>

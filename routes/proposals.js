@@ -1133,6 +1133,7 @@ router.post('/createSubmission/new', (req, res) => {
       user: req.user.id,
       igUsername: igUsername,
       ogOwner: req.body.ogOwner,
+      ogProposalId: req.body.ogProposalId,
       redemptionInstructions: req.body.redemptionInstructions,
       proposalType: "Submission"
     }
@@ -1270,7 +1271,7 @@ router.get('/myOffers', ensureAuthenticated, (req, res) => {
           .populate('user')
           .sort({ date: -1 })
           .then(proposals => {
-            res.render('proposals/mySubmissions', {
+            res.render('proposals/myOffers', {
               proposals: proposals,
               tags: result
             });
@@ -1280,7 +1281,7 @@ router.get('/myOffers', ensureAuthenticated, (req, res) => {
           .populate('user')
           .sort({ date: -1 })
           .then(proposals => {
-            res.render('proposals/mySubmissions', {
+            res.render('proposals/myOffers', {
               proposals: proposals,
               tags: []
             });
@@ -1288,6 +1289,71 @@ router.get('/myOffers', ensureAuthenticated, (req, res) => {
       }
     })
 });
+
+//add user vote
+router.post('/redeemSubmission/:id', (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .then(proposal => {
+      // const newVote = {
+      //   voteBody: req.body.voteBody,
+      //   voteUser: req.user.id
+      // }
+      // const newTouch = {
+      //   touchedByUser: req.user.id
+      // }
+      console.log('In voteUSER');
+      console.log('Seller Stripe Account ID', req.user.stripeAccountId)
+     
+
+
+      proposal.status = "Redeemed";
+      // voteBody= req.body.voteBody,
+      // voteUser= req.user.id,
+      // touchedBy= req.user.id
+      // console.log('voteBody1: '+voteBody)
+      // console.log('voteUser1: '+voteUser)
+      // console.log('touchedByUser1: '+touchedBy)
+      //push to votes array
+      //unshift adds it to the beginning
+      // proposal.votes.unshift(newVote);
+      // proposal.touchedBy.unshift(newTouch);
+
+      proposal.save()
+        .then(proposal => {
+          res.redirect(`/proposals/showSubmission/${proposal.id}`);
+        })
+    });
+});
+
+//add comment
+router.post('/commentSubmission/:id', (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .then(proposal => {
+      const newComment = {
+        commentBody: req.body.commentBody,
+        commentUser: req.user.id,
+        touchedBy: req.user.id
+      }
+      const newTouch = {
+        touchedByUser: req.user.id
+      }
+
+      //push to comments array
+      //unshift adds it to the beginning
+      proposal.comments.unshift(newComment);
+      proposal.touchedBy.unshift(newTouch);
+
+      proposal.save()
+        .then(proposal => {
+          res.redirect(`/proposals/showSubmission/${proposal.id}`);
+        })
+    });
+});
+
 
 module.exports = router;
 
