@@ -984,6 +984,67 @@ router.get('/editOffer/:id', ensureAuthenticated, (req, res) => {
     })
 
 });
+
+//edit form process
+router.put('/editOffer/:id', (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .then(proposal => {
+      let approvalNeeded;
+      if (req.body.approvalNeeded) {
+        approvalNeeded = true;
+      } else {
+        approvalNeeded = false;
+      }
+      let credit;
+      if (req.body.credit) {
+        credit = true;
+      } else {
+        credit = false;
+      }
+
+      var offerLink = req.body.offerLink;
+      var n = offerLink.indexOf('?');
+      offerLink = offerLink.substring(0, n != -1 ? n : offerLink.length);
+
+      //new values
+      proposal.offerLink= offerLink;
+      proposal.compensation= req.body.compensation;
+      proposal.usage= req.body.usage;
+      proposal.credit= credit;
+      proposal.approvalNeeded= approvalNeeded;
+      proposal.welcomeMessage= req.body.welcomeMessage;
+      proposal.redemptionInstructions= req.body.redemptionInstructions;
+      proposal.proposalType= "Offer";
+      //approvalNeeded= approvalNeeded
+      //status= req.body.status;
+      //allowComments= allowComments;
+      //igUsername= igUsername
+
+      // if (req.body.contractUserType == "Seller") {
+      //   proposal.sellerStripeAccountId = req.user.stripeAccountId
+      // }
+
+      let tagIDs = [];
+      if (req.body.tags.length > 0) {
+        let tagsArr = req.body.tags.split(',');
+        tagsArr.forEach(item => {
+          tagIDs.push({ text: item });
+        });
+
+        proposal.tag = tagIDs;
+      }
+      console.log('proposaleditOffer: ' + proposal)
+      console.log('made it to editOffer right before save')
+      proposal.save()
+        .then(proposal => {
+          res.redirect(`/proposals/createSubmission/${proposal.id}`);
+        });
+    });
+});
+
+
 //edit exchange form customer
 router.get('/createSubmission/:id', (req, res) => {
 
