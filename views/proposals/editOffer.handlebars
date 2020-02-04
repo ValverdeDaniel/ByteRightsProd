@@ -9,9 +9,9 @@
     </div>
   </div>
   <div class="row">
-    <div class="col m6 s12">
-      <form class="proposal_add-wrapper" action="/proposals/{{proposal.id}}?_method=PUT" method="post"
-        id="editproposal" onsubmit="return checkForm(this);">
+    <div class="col m12 s12">
+      <form class="proposal_add-wrapper" action="/proposals/editOffer/{{proposal.id}}?_method=PUT" method="post"
+        id="editOffer">
           <input type="hidden" name="_method" value="PUT">
           <div class="col m6 s12">
               <p>Start by pasting the URL for the Instagram image you wish to use when you announce your offer. It should look something like
@@ -67,12 +67,14 @@
           </div>
           <p>Below you can greet your customer and inform them what is going on in this page</p>
           <div class="input-field col s12">
-            <textarea id="welcomeMessage" name="welcomeMessage" class="materialize-textarea" value="{{proposal.welcomeMessage}}"></textarea>
+            <input type="text" name="welcomeMessage" value="{{proposal.welcomeMessage}}">
+            {{!-- <textarea id="welcomeMessage" name="welcomeMessage" class="materialize-textarea" value="{{proposal.welcomeMessage}}"></textarea> --}}
             <label for="welcomeMessage">Welcome Message</label>
           </div>
           <p>Below you can give your customer any insights on how they will be reedeming this offer</p>
           <div class="input-field col s12">
-            <textarea id="redemptionInstructions" name="redemptionInstructions" class="materialize-textarea" value="{{proposal.redemptionInstructions}}"></textarea>
+            <input type="text" name="redemptionInstructions" value="{{proposal.redemptionInstructions}}">
+            {{!-- <textarea id="redemptionInstructions" name="redemptionInstructions" class="materialize-textarea" value="{{proposal.redemptionInstructions}}"></textarea> --}}
             <label for="redemptionInstructions">Redemption Instructions</label>
           </div>
           <label>Tags</label>
@@ -100,7 +102,7 @@
             <label for="offerMessage">Textarea</label>
           </div> --}}
           {{!-- text area end input field --}}
-          <input type="button" value="Save" class="btn primary" onclick="$('#editproposal').submit()">
+          <input type="button" value="Save" class="btn primary" onclick="$('#editOffer').submit()">
           <button data-target="deleteModal" class="btn red modal-trigger">Delete</button>
       </form>
       {{!-- delete button --}}
