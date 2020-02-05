@@ -34,10 +34,13 @@
 
               {{else}}
               <p>{{proposal.welcomeMessage}}</p>
+              <br>
               {{/ifEqualsElse}}
               {{#if user}}
+              <p class="proposal-label">Paste the URL to your instagram post below
+              <td class="left-align" width="10%" style="padding:0px 0px 0px 0px;"><button data-target="helpModal" class="btn-floating grey modal-trigger">?</button></td> </p>
               <form class="proposal_add-wrapper" action="/proposals/createSubmission/new" method="post" id="newproposal">
-                  <p class="proposal-label">Paste the URL to your instagram post below</p>
+
                   <div class="input-field">
                     <input type="text" name="url">
                     <label for="url">Image Link</label>
@@ -175,6 +178,52 @@
   </div>
 </div>
 
+<!-- Modal Login Structure-->
+<div id="helpModal" class="modal">
+  <div class="modal-content">
+    {{!-- <div class="modal-header center-align">
+    <p>
+      Copying Instagram URL Helper
+    </p>
+    
+    </div> --}}
+    <div class="row">
+      <div class="slideshow-containerBR ">
+
+      <div class="mySlides fadeBR">
+        <div class="numbertext">1 / 2</div>
+        <p class="center-align">After posting on Instagram hit the three dots above your image.</p>
+        <div class="center-align">
+          <img  src="/images/CopyLink1.jpg" style="width:100%;max-width:315px;">
+        </div>  
+      </div>
+
+      <div class="mySlides fadeBR">
+        <div class="numbertextBR">2 / 2</div>
+        <p class="center-align">Select the copy link button to save the URL in your clipboard so you can paste it in the field below.</p>
+        <div class="center-align">
+          <img  src="/images/CopyLink2.jpg" style="width:100%;max-width:315px;">
+        </div>        
+      </div>
+
+
+      <a class="prevBR" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="nextBR" onclick="plusSlides(1)">&#10095;</a>
+
+      </div>
+      <br>
+
+      <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span> 
+        <span class="dot" onclick="currentSlide(2)"></span> 
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
 
 <script>
 //  modal logic materialize 
@@ -184,6 +233,33 @@
       var instances = M.Modal.init(elems);
     });
 
+//carousel javascript section
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" activeBR", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " activeBR";
+}
 </script>
 {{!-- 
 http://localhost:5000/proposals/createSubmission/5e34853aa5b91f9c142193a8 
