@@ -1,0 +1,139 @@
+<div class="proposal_wrapper--add">
+  <div class="row">
+    <div class="col s12">
+      <div class="proposal_topbar">
+        <div class="col m6 pull-m6 s12">
+          <h1 class="proposal_title">Edit Your Offer</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col m12 s12">
+      <form class="proposal_add-wrapper" action="/offers/editOffer/{{offer.id}}?_method=PUT" method="post"
+        id="editOffer">
+          <input type="hidden" name="_method" value="PUT">
+          <div class="col m6 s12">
+              <p>Start by pasting the URL for the Instagram image you wish to use when you announce your offer. It should look something like
+              https://www.instagram.com/p/<strong>(the unique ID/URL of the photo)</strong>/</p>
+            <div class="input-field">
+              <input type="text" name="offerLink" value="{{offer.offerLink}}">
+              <label for="offerLink">Instagram Announcement Link</label>
+            </div>
+
+          <p>Describe how and where you plan to use the photo.</p>
+          <div class="input-field">
+            <input type="text" name="usage" value="{{offer.usage}}" placeholder="i.e. Instagram, Website, Print, etc.">
+          </div>
+          {{!-- <div class="input-field">
+            <select name="status">
+              {{#select offer.status}}
+                <option value="public" selected>Public</option>
+                <option value="private">Private</option>
+                <option value="unpublished">Unpublished</option>
+              {{/select}}
+            </select>
+            <label for="status">Status</label>
+          </div>   --}}
+          <p>
+            <p>Will the creator be mentioned when the photo is used?</p>
+            <p>
+          <label>Credit</label>
+          <div class="switch">
+            <label>
+            No
+            <input type="checkbox" name="credit" id="credit" {{#if offer.credit}} checked="checked" {{/if}}>
+            <span class="lever"></span>
+            Yes
+            </label>
+          </div>
+          </p>
+          </p>
+          <p>
+            <p>Do you want to accept images as they come in or allow as many submissions for your offer</p>
+            <label>approval Needed</label>
+            <div class="switch">
+              <label>
+              No
+              <input type="checkbox" name="approvalNeeded" id="approvalNeeded" {{#if offer.approvalNeeded}} checked="checked" {{/if}}>
+              <span class="lever"></span>
+              Yes
+              </label>
+            </div>
+          </p>
+          <p>You may offer any form of compensation. ex. 1 ice-cream with 2 toppings</p>
+          <div class="input-field">
+            <input type="text" name="compensation" value="{{offer.compensation}}">
+          </div>
+          <p>Below you can greet your customer and inform them what is going on in this page</p>
+          <div class="input-field">
+            <input type="text" name="welcomeMessage" value="{{offer.welcomeMessage}}">
+            {{!-- <textarea id="welcomeMessage" name="welcomeMessage" class="materialize-textarea" value="{{offer.welcomeMessage}}"></textarea> --}}
+            <label for="welcomeMessage">Welcome Message</label>
+          </div>
+          <p>Below you can give your customer any insights on how they will be reedeming this offer</p>
+          <div class="input-field">
+            <input type="text" name="redemptionInstructions" value="{{offer.redemptionInstructions}}">
+            {{!-- <textarea id="redemptionInstructions" name="redemptionInstructions" class="materialize-textarea" value="{{offer.redemptionInstructions}}"></textarea> --}}
+            <label for="redemptionInstructions">Redemption Instructions</label>
+          </div>
+          <label>Tags</label>
+          <div class="input-field">
+            <input type="text" data-role="materialtags" name="tags" value="{{tag}}" id="tags">
+            {{!-- <label for="tags">Tags</label> --}}
+            <div id="suggesstion-box" style="border: 1px solid black;
+                    padding: 9px 10px 4px;
+                    margin-bottom: 15px;
+                    display:none"><span id="suggesstion-inner"></span></div>
+            {{#if tags}}
+            Recent tags: <br />
+            {{/if}}
+            {{#each tags}}
+            {{#if this}}
+            <div class="chip recenttags" for="tags" style="cursor: pointer">
+              {{this}}
+            </div>
+            {{/if}}
+            {{/each}}
+          </div>
+          {{!-- text area input-field --}}
+          {{!-- <div class="input-field col s12">
+            <textarea id="textarea1" class="materialize-textarea"></textarea>
+            <label for="offerMessage">Textarea</label>
+          </div> --}}
+          {{!-- text area end input field --}}
+          <input type="button" value="Save" class="btn primary" onclick="$('#editOffer').submit()">
+          <button data-target="deleteModal" class="btn red modal-trigger">Delete</button>
+      </form>
+      {{!-- delete button --}}
+    </div>
+  </div>
+</div>
+
+<div id="deleteModal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+    <p>Are you sure you want to delete this offer? The trash goblins will never give it back!</p>
+    <div class="modal-footer">
+      <form action="/offers/{{offer.id}}?_method=DELETE" method="post" id="delete-form">
+        <input type="hidden" name="_method" value ="DELETE">
+        <button type="submit" class="btn red"><i class="fa fa-remove"></i>Delete</button>
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+      </form>
+      {{!-- <form class="offer_add-wrapper" method="post" action="/offers/voteUser/{{offer.id}}">
+        <div>
+          <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+      </form> --}}
+    </div>
+  </div>
+
+<script>
+//  modal logic materialize 
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
+      var instances = M.Modal.init(elems);
+    });
+
+</script>

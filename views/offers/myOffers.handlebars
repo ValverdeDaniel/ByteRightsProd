@@ -3,14 +3,14 @@
     <div class="col"> 
       <div class="row proposal_topbar">
         <div class="col m2 s12">
-          <h1 class="proposal_title">Submissions </h1>
+          <h1 class="proposal_title">Offers </h1>
         </div>
         <div class="col m8 s12" style="display: grid">
           <ul class="br_tabs tabs hide-on-small-only "> 
-            <li class="tab col m2 s12"><a class="toggleRowClick active" href="#all">Submissions</a></li>
-            <li class="tab col m3 s12"><a class="toggleRowClick" href="#accepted">Accepted</a></li>
-            <li class="tab col m2 s12"><a class="toggleRowClick" href="#declined">Declined</a></li>
-            <li class="tab col m2 s12"><a href="/proposals/myOffers">Offers</a></li>
+            <li class="tab col m2 s12"><a class="toggleRowClick active" href="#all">Offers</a></li>
+            {{!-- <li class="tab col m3 s12"><a class="toggleRowClick" href="#accepted">Accepted</a></li>
+            <li class="tab col m2 s12"><a class="toggleRowClick" href="#declined">Declined</a></li> --}}
+            <li class="tab col m2 s12"><a href="/offers/mySubmissions">Submissions</a></li>
           </ul>
           <!-- Dropdown Trigger -->
           <div class="hide-on-med-and-up" style="display: grid;">
@@ -18,10 +18,10 @@
 
             <!-- Dropdown Structure -->
             <ul id='dropdown1' class='dropdown-content'>
-              <li><a class="toggleRowClick active" id="mobileAll" href="#all">Submissions</a></li>
-              <li><a class="toggleRowClick" id="mobileAccepted" href="#accepted">Accepted</a></li>
-              <li><a class="toggleRowClick" id="mobileDeclined" href="#declined">Declined</a></li>
-              <li class="tab col m2 s12"><a href="/proposals/myOffers">Offers</a></li>
+              <li><a class="toggleRowClick active" id="mobileAll" href="#all">Offers</a></li>
+              {{!-- <li><a class="toggleRowClick" id="mobileAccepted" href="#accepted">Accepted</a></li>
+              <li><a class="toggleRowClick" id="mobileDeclined" href="#declined">Declined</a></li> --}}
+              <li class="tab col m2 s12"><a href="/offers/mySubmissions">Submissions</a></li>
             </ul>
           </div>
         </div>  
@@ -34,7 +34,7 @@
       {{!-- <div class="row">
         <div class="col m12 s12 gridonmobile" style="padding-bottom: 10px;">
           <div id='card' class="card" style="height: fit-content;margin: 0px !important">
-            <select id="filterproposals" multiple class="select1 browser-default">
+            <select id="filteroffers" multiple class="select1 browser-default">
               {{#each tags}}
               <option value="{{this}}">{{this}}</option>
               {{/each}}
@@ -51,9 +51,9 @@
               <div class="col m1 s12">
                 <p>Prize</p>
               </div>
-              <div class="col m2 s12">
+              {{!-- <div class="col m2 s12">
                 <p>Status</p>
-              </div>
+              </div> --}}
               <div class="col m2 s12">
                 <p>Last Comment</p>
               </div>
@@ -75,14 +75,14 @@
       </div>
       <span id="proposalTable">
         <div class="proposal-row row" id="accepted">
-          {{#each proposals}}
+          {{#each offers}}
             {{#ifEquals votes.[0].voteBody "Accept"}}
               <div class="col s12">
                 <div class="">
                   <div class="proposal_item">
                     <div class="col m1 s12">
-                      {{#if url}}
-                      <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
+                      {{#if offerLink}}
+                      <img src="{{offerLink}}media/?size=l" class="proposal_image" width="100%" alt="" />
                       {{else}}
                       <img src="{{user.image}}" width="100%" class="proposal_image">
                       {{/if}}
@@ -91,12 +91,12 @@
                       <p class="proposal-label hide-on-med-and-up">Prize</p>
                       <p>{{compensation}}</p>
                     </div>
-                    <div class="col m2 s12">
+                    {{!-- <div class="col m2 s12">
                       <p class="proposal-label hide-on-med-and-up">Status</p>
                       <p>
                         {{status}}
                       </p>
-                    </div>
+                    </div> --}}
                     <div class="col m2 s12">
                       <p class="proposal-label hide-on-med-and-up">Last Comment</p>
                       <p>
@@ -126,11 +126,15 @@
                     <div class="col m2 s12">
                       <div class="row">
                         <div class="col m-auto s4">
-                          <a class="proposal-btn btn grey" href="/proposals/showSubmission/{{id}}"><i class="fa fa-eye"></i></a>
+                          <a class="proposal-btn btn grey" href="/offers/createSubmission/{{id}}"><i class="fa fa-eye"></i></a>
+                        </div>
+                        <div class="col m-auto s4">
+                          <a class="proposal-btn btn left-align" href="/offers/editOffer/{{id}}"><i
+                              class="fa fa-pencil"></i></a>
                         </div>
 
                         {{!-- <div class="col m-auto s4">
-                        <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
+                        <form action="/offers/{{id}}?_method=DELETE" method="post" id="delete-form">
                           <input type="hidden" name="_method" value="DELETE">
                           <button type="submit" class="proposal-btn btn red"><i class="fa fa-remove"></i></button>
                         </form>
@@ -144,14 +148,14 @@
           {{/each }} 
         </div> 
         <div class="proposal-row row" id="declined">
-          {{#each proposals}}
+          {{#each offers}}
             {{#ifEquals votes.[0].voteBody "Decline"}}
               <div class="col s12">
                 <div class="">
                   <div class="proposal_item">
                     <div class="col m1 s12">
-                      {{#if url}}
-                      <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
+                      {{#if offerLink}}
+                      <img src="{{offerLink}}media/?size=l" class="proposal_image" width="100%" alt="" />
                       {{else}}
                       <img src="{{user.image}}" width="100%" class="proposal_image">
                       {{/if}}
@@ -160,12 +164,12 @@
                       <p class="proposal-label hide-on-med-and-up">Prize</p>
                       <p>{{compensation}}</p>
                     </div>
-                    <div class="col m2 s12">
+                    {{!-- <div class="col m2 s12">
                       <p class="proposal-label hide-on-med-and-up">Status</p>
                       <p>
                         {{status}}
                       </p>
-                    </div>
+                    </div> --}}
                     <div class="col m2 s12">
                       <p class="proposal-label hide-on-med-and-up">Last Comment</p>
                       <p>
@@ -195,8 +199,12 @@
                     <div class="col m2 s12">
                       <div class="row">
                         <div class="col m-auto s4">
-                          <a class="proposal-btn btn grey" href="/proposals/showSubmission/{{id}}"><i class="fa fa-eye"></i></a>
+                          <a class="proposal-btn btn grey" href="/offers/createSubmission/{{id}}"><i class="fa fa-eye"></i></a>
                         </div>
+                        <div class="col m-auto s4">
+                          <a class="proposal-btn btn left-align" href="/offers/editOffer/{{id}}"><i
+                              class="fa fa-pencil"></i></a>
+                        </div>                        
 
                         {{!-- <div class="col m-auto s4">
                         <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
@@ -213,14 +221,14 @@
           {{/each }} 
         </div> 
         <div class="proposal-row active row" id="all">
-          {{#each proposals}} 
+          {{#each offers}} 
             <div class="col s12">
               <div class="">
                 <div class="proposal_item">
 
                   <div class="col m1 s12">
-                    {{#if url}}
-                    <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
+                    {{#if offerLink}}
+                    <img src="{{offerLink}}media/?size=l" class="proposal_image" width="100%" alt="" />
                     {{else}}
                     <img src="{{user.image}}" width="100%" class="proposal_image">
                     {{/if}}
@@ -229,12 +237,12 @@
                     <p class="proposal-label hide-on-med-and-up">Prize</p>
                     <p>{{compensation}}</p>
                   </div>
-                  <div class="col m2 s12">
+                  {{!-- <div class="col m2 s12">
                     <p class="proposal-label hide-on-med-and-up">Status</p>
                     <p>
                       {{status}}
                     </p>
-                  </div>
+                  </div> --}}
                   <div class="col m2 s12">
                     <p class="proposal-label hide-on-med-and-up">Last Comment</p>
                     <p>
@@ -264,7 +272,11 @@
                   <div class="col m2 s12">
                     <div class="row">
                       <div class="col m-auto s4">
-                        <a class="proposal-btn btn grey" href="/proposals/showSubmission/{{id}}"><i class="fa fa-eye"></i></a>
+                        <a class="proposal-btn btn grey" href="/offers/createSubmission/{{id}}"><i class="fa fa-eye"></i></a>
+                      </div>
+                      <div class="col m-auto s4">
+                        <a class="proposal-btn btn left-align" href="/offers/editOffer/{{id}}"><i
+                            class="fa fa-pencil"></i></a>
                       </div>
 
                       {{!-- <div class="col m-auto s4">
@@ -282,7 +294,7 @@
             
             <div>
               <div class="center-align" style="padding:20px;">
-                  <h5>You don't have any proposals yet! To get started follow these steps:</h5>
+                  <h5>You don't have any offers yet! To get started follow these steps:</h5>
               </div>
               <div style="padding:5px 10%;">
                   <div class= "center-align" style="padding:15px;background-color:#B6E9FF;border-radius:5px;box-shadow:2px 2px 5px grey;">
@@ -291,7 +303,7 @@
                           <td width="15%" class="center-align" style="color:white;text-shadow:2px 2px 2px grey;"><i class="far fa-copy fa-3x"></i></td>
                           <td width="55%" style="padding:10px;">
                               <div style="padding:10px;background-color:rgb(255, 255, 255);border-radius:5px;box-shadow:2px 2px 5px grey;">
-                                  Copy the link to a photo you would like to create a proposal for.
+                                  Copy the link to a photo you would like to create a offer for.
                               </div>
                           </td>
                       </tr>
@@ -299,7 +311,7 @@
                           <td width="15%" class="center-align" style="color:white;text-shadow:2px 2px 2px grey;"><i class="far fa-list-alt fa-3x"></i></td>
                           <td width="55%" style="padding:10px;">
                               <div style="padding:10px;background-color:rgb(255, 255, 255);border-radius:5px;box-shadow:2px 2px 5px grey;">
-                                  Create a proposal to license the picture by pasting the link and answering a few questions.
+                                  Create a offer to license the picture by pasting the link and answering a few questions.
                               </div>
                           </td>
                       </tr>
@@ -307,7 +319,7 @@
                           <td width="15%" class="center-align" style="color:white;text-shadow:2px 2px 2px grey;"><i class="far fa-paper-plane fa-3x"></i></td>
                           <td width="55%" style="padding:10px;">
                               <div style="padding:10px;background-color:rgb(255, 255, 255);border-radius:5px;box-shadow:2px 2px 5px grey;">
-                                  Share the proposal with the buyer or seller with a simple link.
+                                  Share the offer with the buyer or seller with a simple link.
                               </div>
                           </td>
                       </tr>
@@ -315,7 +327,7 @@
                           <td width="15%" class="center-align" style="color:white;text-shadow:2px 2px 2px grey;"><i class="fas fa-envelope-open-text fa-3x"></i></td>
                           <td width="55%" style="padding:10px;">
                               <div style="padding:10px;background-color:rgb(255, 255, 255);border-radius:5px;box-shadow:2px 2px 5px grey;">
-                                  Recipient opens the link and reviews the terms of the proposal.
+                                  Recipient opens the link and reviews the terms of the offer.
                               </div>
                           </td>
                       </tr>
