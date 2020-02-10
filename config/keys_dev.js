@@ -1,5 +1,6 @@
 module.exports = {
   mongoURI: 'mongodb://danny:danny123@ds253537.mlab.com:53537/brtest',
+  //mongoURI: 'mongodb://danny123:danny123@ds037358.mlab.com:37358/brproddbm',
   googleClientID: '682997216522-arpf59hvmhjpcbgnv11lnshfa5mrtmma.apps.googleusercontent.com',
   googleClientSecret: 'cVLowijK8LQIviV5qkKzbx3P',
   facebookClientID: '1664378730362805',
