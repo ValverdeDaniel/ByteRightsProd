@@ -112,7 +112,7 @@ router.post('/addOffer/new', ensureAuthenticated, (req, res) => {
   new Offer(newOffer)
     .save()
     .then(offer => {
-      res.redirect(`/proposals/createSubmission/${offer.id}`);
+      res.redirect(`/offers/createSubmission/${offer.id}`);
     })
 
   })()
@@ -122,14 +122,14 @@ router.post('/addOffer/new', ensureAuthenticated, (req, res) => {
 
 //edit proposal form
 router.get('/editOffer/:id', ensureAuthenticated, (req, res) => {
-  Proposal.find({ user: req.user.id }, { tag: true })
+  Offer.find({ user: req.user.id }, { tag: true })
     .then(p => {
       console.log(p);
       let tags = [];
       if (p.length > 0) {
-        p.forEach(proposal => {
-          if (proposal.tag.length > 0) {
-            proposal.tag.forEach(item => {
+        p.forEach(offer => {
+          if (offer.tag.length > 0) {
+            offer.tag.forEach(item => {
               tags.push(item.text.toLowerCase());
             })
           }
@@ -153,23 +153,23 @@ router.get('/editOffer/:id', ensureAuthenticated, (req, res) => {
         count++;
       }
 
-      Proposal.findOne({
+      Offer.findOne({
         _id: req.params.id
       })
-        .then(proposal => {
+        .then(offer => {
           let tag = "";
-          if (proposal.tag.length > 0) {
-            proposal.tag.forEach(item => {
+          if (offer.tag.length > 0) {
+            offer.tag.forEach(item => {
               // console.log(item.text);
               tag = tag + item.text.toLowerCase() + ',';
             })
             tag = tag.slice(0, -1);
           }
-          if (proposal.user != req.user.id) {
-            res.redirect('/proposals/my')
+          if (offer.user != req.user.id) {
+            res.redirect('/offers/my')
           } else {
-            res.render('proposals/editOffer', {
-              proposal: proposal,
+            res.render('offers/editOffer', {
+              offer: offer,
               tag: tag,
               tags: t
             });
@@ -181,10 +181,10 @@ router.get('/editOffer/:id', ensureAuthenticated, (req, res) => {
 
 //edit form process
 router.put('/editOffer/:id', (req, res) => {
-  Proposal.findOne({
+  Offer.findOne({
     _id: req.params.id
   })
-    .then(proposal => {
+    .then(offer => {
       let approvalNeeded;
       if (req.body.approvalNeeded) {
         approvalNeeded = true;
@@ -203,21 +203,21 @@ router.put('/editOffer/:id', (req, res) => {
       offerLink = offerLink.substring(0, n != -1 ? n : offerLink.length);
 
       //new values
-      proposal.offerLink= offerLink;
-      proposal.compensation= req.body.compensation;
-      proposal.usage= req.body.usage;
-      proposal.credit= credit;
-      proposal.approvalNeeded= approvalNeeded;
-      proposal.welcomeMessage= req.body.welcomeMessage;
-      proposal.redemptionInstructions= req.body.redemptionInstructions;
-      proposal.proposalType= "Offer";
+      offer.offerLink= offerLink;
+      offer.compensation= req.body.compensation;
+      offer.usage= req.body.usage;
+      offer.credit= credit;
+      offer.approvalNeeded= approvalNeeded;
+      offer.welcomeMessage= req.body.welcomeMessage;
+      offer.redemptionInstructions= req.body.redemptionInstructions;
+      offer.offerType= "Offer";
       //approvalNeeded= approvalNeeded
       //status= req.body.status;
       //allowComments= allowComments;
       //igUsername= igUsername
 
       // if (req.body.contractUserType == "Seller") {
-      //   proposal.sellerStripeAccountId = req.user.stripeAccountId
+      //   offer.sellerStripeAccountId = req.user.stripeAccountId
       // }
 
       let tagIDs = [];
@@ -227,13 +227,13 @@ router.put('/editOffer/:id', (req, res) => {
           tagIDs.push({ text: item });
         });
 
-        proposal.tag = tagIDs;
+        offer.tag = tagIDs;
       }
-      console.log('proposaleditOffer: ' + proposal)
+      console.log('offereditOffer: ' + offer)
       console.log('made it to editOffer right before save')
-      proposal.save()
-        .then(proposal => {
-          res.redirect(`/proposals/createSubmission/${proposal.id}`);
+      offer.save()
+        .then(offer => {
+          res.redirect(`/offers/createSubmission/${offer.id}`);
         });
     });
 });
@@ -243,21 +243,21 @@ router.put('/editOffer/:id', (req, res) => {
 router.get('/createSubmission/:id', (req, res) => {
 
       let tag
-      Proposal.findOne({
+      Offer.findOne({
         _id: req.params.id
       })
-        .then(proposal => {
+        .then(offer => {
           console.log('/createSubmission route we made it !')
-          // if (proposal.user != req.user.id) {
-          //   res.redirect('/proposals/my')
+          // if (offer.user != req.user.id) {
+          //   res.redirect('/offers/my')
           // } else {
-          Proposal.findOne({
+          Offer.findOne({
             _id: req.params.id
           })
-            .then(proposal => {
+            .then(offer => {
               let tag = "";
-              if (proposal.tag.length > 0) {
-                proposal.tag.forEach(item => {
+              if (offer.tag.length > 0) {
+                offer.tag.forEach(item => {
                   // console.log(item.text);
                   tag = tag + item.text.toLowerCase() + ',';
                 })
@@ -266,19 +266,19 @@ router.get('/createSubmission/:id', (req, res) => {
 
             });
             console.log('approvalneeded1')
-            console.log('proposal' + proposal)
+            console.log('offer' + offer)
             try{
 
-              if (proposal.approvalNeeded == true) {
+              if (offer.approvalNeeded == true) {
                 var status = 'Waiting for Approval'
                 console.log('approvalNeeded')
               } else {
                 var status = 'Approved'
                 console.log('Approved')
               }
-              req.session.proposal = proposal;
+              req.session.offer = offer;
               req.session.status = status
-              var approvalNeeded = proposal.approvalNeeded
+              var approvalNeeded = offer.approvalNeeded
               req.session.approvalNeeded = approvalNeeded
               console.log('1' + status)
               console.log('1' + approvalNeeded)
@@ -286,8 +286,8 @@ router.get('/createSubmission/:id', (req, res) => {
 
 
 
-            res.render('proposals/createSubmission', {
-              proposal: proposal,
+            res.render('offers/createSubmission', {
+              offer: offer,
               tag: tag,
               status: status,
               approvalNeeded: approvalNeeded
@@ -302,23 +302,22 @@ router.get('/createSubmission/:id', (req, res) => {
 
 //edit exchange form customer
 router.get('/createSubmissionGClient/:id', ensureLoggedIn('/auth/google'), (req, res) => {
-
   let tag
-  Proposal.findOne({
+  Offer.findOne({
     _id: req.params.id
   })
-    .then(proposal => {
+    .then(offer => {
       console.log('/createSubmission route we made it !')
-      // if (proposal.user != req.user.id) {
-      //   res.redirect('/proposals/my')
+      // if (offer.user != req.user.id) {
+      //   res.redirect('/offers/my')
       // } else {
-      Proposal.findOne({
+      Offer.findOne({
         _id: req.params.id
       })
-        .then(proposal => {
+        .then(offer => {
           let tag = "";
-          if (proposal.tag.length > 0) {
-            proposal.tag.forEach(item => {
+          if (offer.tag.length > 0) {
+            offer.tag.forEach(item => {
               // console.log(item.text);
               tag = tag + item.text.toLowerCase() + ',';
             })
@@ -327,19 +326,19 @@ router.get('/createSubmissionGClient/:id', ensureLoggedIn('/auth/google'), (req,
 
         });
         console.log('approvalneeded1')
-        console.log('proposal' + proposal)
+        console.log('offer' + offer)
         try{
 
-          if (proposal.approvalNeeded == true) {
+          if (offer.approvalNeeded == true) {
             var status = 'Waiting for Approval'
             console.log('approvalNeeded')
           } else {
             var status = 'Approved'
             console.log('Approved')
           }
-          req.session.proposal = proposal;
+          req.session.offer = offer;
           req.session.status = status
-          var approvalNeeded = proposal.approvalNeeded
+          var approvalNeeded = offer.approvalNeeded
           req.session.approvalNeeded = approvalNeeded
           console.log('1' + status)
           console.log('1' + approvalNeeded)
@@ -347,8 +346,8 @@ router.get('/createSubmissionGClient/:id', ensureLoggedIn('/auth/google'), (req,
 
 
 
-        res.render('proposals/createSubmission', {
-          proposal: proposal,
+        res.render('offers/createSubmission', {
+          offer: offer,
           tag: tag,
           status: status,
           approvalNeeded: approvalNeeded
@@ -358,27 +357,27 @@ router.get('/createSubmissionGClient/:id', ensureLoggedIn('/auth/google'), (req,
         console.log('something went wrong section of /createSubmission')
       }
     });
+
 });
 
 //edit exchange form customer
 router.get('/createSubmissionFBClient/:id', ensureLoggedIn('/auth/facebook'), (req, res) => {
-
   let tag
-  Proposal.findOne({
+  Offer.findOne({
     _id: req.params.id
   })
-    .then(proposal => {
+    .then(offer => {
       console.log('/createSubmission route we made it !')
-      // if (proposal.user != req.user.id) {
-      //   res.redirect('/proposals/my')
+      // if (offer.user != req.user.id) {
+      //   res.redirect('/offers/my')
       // } else {
-      Proposal.findOne({
+      Offer.findOne({
         _id: req.params.id
       })
-        .then(proposal => {
+        .then(offer => {
           let tag = "";
-          if (proposal.tag.length > 0) {
-            proposal.tag.forEach(item => {
+          if (offer.tag.length > 0) {
+            offer.tag.forEach(item => {
               // console.log(item.text);
               tag = tag + item.text.toLowerCase() + ',';
             })
@@ -387,19 +386,19 @@ router.get('/createSubmissionFBClient/:id', ensureLoggedIn('/auth/facebook'), (r
 
         });
         console.log('approvalneeded1')
-        console.log('proposal' + proposal)
+        console.log('offer' + offer)
         try{
 
-          if (proposal.approvalNeeded == true) {
+          if (offer.approvalNeeded == true) {
             var status = 'Waiting for Approval'
             console.log('approvalNeeded')
           } else {
             var status = 'Approved'
             console.log('Approved')
           }
-          req.session.proposal = proposal;
+          req.session.offer = offer;
           req.session.status = status
-          var approvalNeeded = proposal.approvalNeeded
+          var approvalNeeded = offer.approvalNeeded
           req.session.approvalNeeded = approvalNeeded
           console.log('1' + status)
           console.log('1' + approvalNeeded)
@@ -407,8 +406,8 @@ router.get('/createSubmissionFBClient/:id', ensureLoggedIn('/auth/facebook'), (r
 
 
 
-        res.render('proposals/createSubmission', {
-          proposal: proposal,
+        res.render('offers/createSubmission', {
+          offer: offer,
           tag: tag,
           status: status,
           approvalNeeded: approvalNeeded
@@ -728,6 +727,50 @@ router.post('/commentSubmission/:id', (req, res) => {
           res.redirect(`/proposals/showSubmission/${proposal.id}`);
         })
     });
+});
+
+
+router.post('/tags', ensureAuthenticated, (req, res) => {
+  Proposal.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(proposal => {
+          if (proposal.tag.length > 0) {
+            proposal.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      var PATTERN = new RegExp(req.body.keyword, 'i');
+      console.log(PATTERN);
+      var filtered = result.filter(function (str) { return PATTERN.test(str); });
+      res.json((req.body.keyword == "" || req.body.keyword == null) ? [] : filtered);
+    })
+});
+
+//display terms per proposal
+router.get('/terms/:id', (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .populate('user')
+    .populate('votes.voteUser')
+    .populate('comments.commentUser')
+    .then(proposal => {
+      res.render('proposals/terms', {
+        proposal: proposal
+      });
+    })
 });
 
 module.exports = router;
