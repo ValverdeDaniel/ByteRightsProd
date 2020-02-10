@@ -460,7 +460,7 @@ router.post('/createSubmission/new', (req, res) => {
     console.log('status' + status)
     console.log('exchange4' + approvalNeeded)
 
-    let newProposal = {
+    let newOffer = {
       url: url,
       compensation: req.body.compensation,
       usage: req.body.usage,
@@ -468,20 +468,20 @@ router.post('/createSubmission/new', (req, res) => {
       user: req.user.id,
       igUsername: igUsername,
       ogOwner: req.body.ogOwner,
-      ogProposalId: req.body.ogProposalId,
+      ogOfferId: req.body.ogOfferId,
       redemptionInstructions: req.body.redemptionInstructions,
       status: status,
       approvalNeeded: approvalNeeded,
-      proposalType: "Submission"
+      offerType: "Submission"
     }
     console.log('exchange5')
 
-    new Proposal(newProposal)
+    new Offer(newOffer)
       .save()
-      .then(proposal => {
+      .then(offer => {
         console.log('exchange6')
 
-        res.redirect(`/proposals/showSubmission/${proposal.id}`);
+        res.redirect(`/offers/showSubmission/${offer.id}`);
       })
   
 
@@ -492,21 +492,21 @@ router.post('/createSubmission/new', (req, res) => {
 router.get('/showSubmission/:id', async (req, res) => {
 
   let tag
-  Proposal.findOne({
+  Offer.findOne({
     _id: req.params.id
   })
-    .then(proposal => {
+    .then(offer => {
       console.log('/createSubmission route we made it !')
-      // if (proposal.user != req.user.id) {
-      //   res.redirect('/proposals/my')
+      // if (offer.user != req.user.id) {
+      //   res.redirect('/offers/my')
       // } else {
-      Proposal.findOne({
+      Offer.findOne({
         _id: req.params.id
       })
-        .then(proposal => {
+        .then(offer => {
           let tag = "";
-          if (proposal.tag.length > 0) {
-            proposal.tag.forEach(item => {
+          if (offer.tag.length > 0) {
+            offer.tag.forEach(item => {
               // console.log(item.text);
               tag = tag + item.text.toLowerCase() + ',';
             })
@@ -514,8 +514,8 @@ router.get('/showSubmission/:id', async (req, res) => {
           }
 
         });
-        res.render('proposals/showSubmission', {
-          proposal: proposal,
+        res.render('offers/showSubmission', {
+          offer: offer,
           tag: tag
         });
       // }
@@ -525,14 +525,14 @@ router.get('/showSubmission/:id', async (req, res) => {
 
 //logged in Users proposals
 router.get('/mySubmissions', ensureAuthenticated, (req, res) => {
-  Proposal.find({ user: req.user.id }, { tag: true })
+  Offer.find({ user: req.user.id }, { tag: true })
     .then(p => {
       console.log(p);
       let tags = [];
       if (p.length > 0) {
-        p.forEach(proposal => {
-          if (proposal.tag.length > 0) {
-            proposal.tag.forEach(item => {
+        p.forEach(offer => {
+          if (offer.tag.length > 0) {
+            offer.tag.forEach(item => {
               tags.push(item.text.toLowerCase());
             })
           }
@@ -552,22 +552,22 @@ router.get('/mySubmissions', ensureAuthenticated, (req, res) => {
       console.log(result);
 
       if (tags.length > 0) {
-        Proposal.find({$or: [{ user: req.user.id}, {ogOwner: req.user.id}], proposalType: "Submission" })
+        Offer.find({$or: [{ user: req.user.id}, {ogOwner: req.user.id}], offerType: "Submission" })
           .populate('user')
           .sort({ date: -1 })
-          .then(proposals => {
-            res.render('proposals/mySubmissions', {
-              proposals: proposals,
+          .then(offers => {
+            res.render('offers/mySubmissions', {
+              offers: offers,
               tags: result
             });
           });
       } else {
-        Proposal.find({$or: [{ user: req.user.id}, {ogOwner: req.user.id}], proposalType: "Submission" })
+        Offer.find({$or: [{ user: req.user.id}, {ogOwner: req.user.id}], offerType: "Submission" })
           .populate('user')
           .sort({ date: -1 })
-          .then(proposals => {
-            res.render('proposals/mySubmissions', {
-              proposals: proposals,
+          .then(offers => {
+            res.render('offers/mySubmissions', {
+              offers: offers,
               tags: []
             });
           });
@@ -577,14 +577,14 @@ router.get('/mySubmissions', ensureAuthenticated, (req, res) => {
 
 //logged in Users proposals
 router.get('/myOffers', ensureAuthenticated, (req, res) => {
-  Proposal.find({ user: req.user.id }, { tag: true })
+  Offer.find({ user: req.user.id }, { tag: true })
     .then(p => {
       console.log(p);
       let tags = [];
       if (p.length > 0) {
-        p.forEach(proposal => {
-          if (proposal.tag.length > 0) {
-            proposal.tag.forEach(item => {
+        p.forEach(offer => {
+          if (offer.tag.length > 0) {
+            offer.tag.forEach(item => {
               tags.push(item.text.toLowerCase());
             })
           }
@@ -604,22 +604,22 @@ router.get('/myOffers', ensureAuthenticated, (req, res) => {
       console.log(result);
 
       if (tags.length > 0) {
-        Proposal.find({ user: req.user.id, proposalType: "Offer"})
+        Offer.find({ user: req.user.id, offerType: "Offer"})
           .populate('user')
           .sort({ date: -1 })
-          .then(proposals => {
-            res.render('proposals/myOffers', {
-              proposals: proposals,
+          .then(offers => {
+            res.render('offers/myOffers', {
+              offers: offers,
               tags: result
             });
           });
       } else {
-        Proposal.find({ user: req.user.id, proposalType: "Offer"})
+        Offer.find({ user: req.user.id, offerType: "Offer"})
           .populate('user')
           .sort({ date: -1 })
-          .then(proposals => {
-            res.render('proposals/myOffers', {
-              proposals: proposals,
+          .then(offers => {
+            res.render('offers/myOffers', {
+              offers: offers,
               tags: []
             });
           });
@@ -629,10 +629,10 @@ router.get('/myOffers', ensureAuthenticated, (req, res) => {
 
 //add redeem submission button route
 router.post('/redeemSubmission/:id', (req, res) => {
-  Proposal.findOne({
+  Offer.findOne({
     _id: req.params.id
   })
-    .then(proposal => {
+    .then(offer => {
       // const newVote = {
       //   voteBody: req.body.voteBody,
       //   voteUser: req.user.id
@@ -645,7 +645,7 @@ router.post('/redeemSubmission/:id', (req, res) => {
      
 
 
-      proposal.status = "Redeemed";
+      offer.status = "Redeemed";
       // voteBody= req.body.voteBody,
       // voteUser= req.user.id,
       // touchedBy= req.user.id
@@ -654,22 +654,22 @@ router.post('/redeemSubmission/:id', (req, res) => {
       // console.log('touchedByUser1: '+touchedBy)
       //push to votes array
       //unshift adds it to the beginning
-      // proposal.votes.unshift(newVote);
-      // proposal.touchedBy.unshift(newTouch);
+      // offer.votes.unshift(newVote);
+      // offer.touchedBy.unshift(newTouch);
 
-      proposal.save()
-        .then(proposal => {
-          res.redirect(`/proposals/showSubmission/${proposal.id}`);
+      offer.save()
+        .then(offer => {
+          res.redirect(`/offers/showSubmission/${offer.id}`);
         })
     });
 });
 
 //add redeem submission button route
 router.post('/approveSubmission/:id', (req, res) => {
-  Proposal.findOne({
+  Offer.findOne({
     _id: req.params.id
   })
-    .then(proposal => {
+    .then(offer => {
       // const newVote = {
       //   voteBody: req.body.voteBody,
       //   voteUser: req.user.id
@@ -682,7 +682,7 @@ router.post('/approveSubmission/:id', (req, res) => {
      
 
 
-      proposal.status = "Approved";
+      offer.status = "Approved";
       // voteBody= req.body.voteBody,
       // voteUser= req.user.id,
       // touchedBy= req.user.id
@@ -691,12 +691,12 @@ router.post('/approveSubmission/:id', (req, res) => {
       // console.log('touchedByUser1: '+touchedBy)
       //push to votes array
       //unshift adds it to the beginning
-      // proposal.votes.unshift(newVote);
-      // proposal.touchedBy.unshift(newTouch);
+      // offer.votes.unshift(newVote);
+      // offer.touchedBy.unshift(newTouch);
 
-      proposal.save()
-        .then(proposal => {
-          res.redirect(`/proposals/showSubmission/${proposal.id}`);
+      offer.save()
+        .then(offer => {
+          res.redirect(`/offers/showSubmission/${offer.id}`);
         })
     });
 });
@@ -704,10 +704,10 @@ router.post('/approveSubmission/:id', (req, res) => {
 
 //add comment
 router.post('/commentSubmission/:id', (req, res) => {
-  Proposal.findOne({
+  Offer.findOne({
     _id: req.params.id
   })
-    .then(proposal => {
+    .then(offer => {
       const newComment = {
         commentBody: req.body.commentBody,
         commentUser: req.user.id,
@@ -719,25 +719,25 @@ router.post('/commentSubmission/:id', (req, res) => {
 
       //push to comments array
       //unshift adds it to the beginning
-      proposal.comments.unshift(newComment);
-      //proposal.touchedBy.unshift(newTouch);
+      offer.comments.unshift(newComment);
+      //offer.touchedBy.unshift(newTouch);
 
-      proposal.save()
-        .then(proposal => {
-          res.redirect(`/proposals/showSubmission/${proposal.id}`);
+      offer.save()
+        .then(offer => {
+          res.redirect(`/offers/showSubmission/${offer.id}`);
         })
     });
 });
 
 
 router.post('/tags', ensureAuthenticated, (req, res) => {
-  Proposal.find({ user: req.user.id }, { tag: true })
-    .then(p => {
+  Offer.find({ user: req.user.id }, { tag: true })
+    .then(o => {
       let tags = [];
-      if (p.length > 0) {
-        p.forEach(proposal => {
-          if (proposal.tag.length > 0) {
-            proposal.tag.forEach(item => {
+      if (o.length > 0) {
+        o.forEach(offer => {
+          if (offer.tag.length > 0) {
+            offer.tag.forEach(item => {
               tags.push(item.text.toLowerCase());
             })
           }
@@ -760,15 +760,15 @@ router.post('/tags', ensureAuthenticated, (req, res) => {
 
 //display terms per proposal
 router.get('/terms/:id', (req, res) => {
-  Proposal.findOne({
+  Offer.findOne({
     _id: req.params.id
   })
     .populate('user')
     .populate('votes.voteUser')
     .populate('comments.commentUser')
-    .then(proposal => {
-      res.render('proposals/terms', {
-        proposal: proposal
+    .then(offer => {
+      res.render('offers/terms', {
+        offer: offer
       });
     })
 });
