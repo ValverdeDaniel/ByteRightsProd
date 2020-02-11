@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 //create Schema
-const ProposalSchema = new Schema({
+const OfferSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'users'
@@ -11,11 +11,11 @@ const ProposalSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users',
   },
-  ogProposalId: {
+  ogOfferId: {
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
-  proposalType: {
+  offerType: {
     type: String
   },
   url: {
@@ -27,16 +27,8 @@ const ProposalSchema = new Schema({
   contractUserType: {
     type: String,
   },
-  recipient: {
-    type: String
-  },
   compensation: {
     type: String
-  },
-  price: {
-    type: Number,
-    //this defaults to null maybe in future we actually default to null?
-    default: ""
   },
   usage: {
     type: String
@@ -48,14 +40,6 @@ const ProposalSchema = new Schema({
   status: {
     type: String,
     default: 'Created'
-  },
-  sellerStripeAccountId: {
-    type: String,
-    default: ""
-  },
-  paidStatus: {
-    type: String,
-    default: ""
   },
   allowComments: {
     type: Boolean,
@@ -74,13 +58,6 @@ const ProposalSchema = new Schema({
     tagDate: {
       type: Date,
       default: Date.now
-    }
-  }],
-  touchedBy:[{
-    touchedByUser: {
-      type: Schema.Types.ObjectId,
-      ref: 'users',
-      unique: true
     }
   }],
   comments: [{
@@ -139,4 +116,4 @@ const ProposalSchema = new Schema({
 });
 
 //create collection and add schema
-mongoose.model('proposals', ProposalSchema, 'proposals');
+mongoose.model('offers', OfferSchema, 'offers');

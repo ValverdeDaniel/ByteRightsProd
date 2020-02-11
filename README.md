@@ -7,4 +7,17 @@ just trying to get you up and running so currently the keys are public and all y
 
 live site https://desolate-sierra-72554.herokuapp.com/
 
-receivedView1
+gitpushtest2
+
+git branch --set-upstream-to origin/master 2stripeTest 
+
+git pull
+
+git add .
+
+git commit -m "some message"
+
+git push origin instaScraper
+
+hp test2
+

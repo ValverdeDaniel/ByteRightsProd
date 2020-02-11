@@ -9,6 +9,22 @@ router.get('/', ensureGuest, (req, res) => {
   res.render('index/welcome');
 });
 
+router.get('/businesses', (req, res) => {
+  res.render('index/businesses');
+});
+
+router.get('/creatives', (req, res) => {
+  res.render('index/creatives');
+});
+
+router.get('/howitworks', (req, res) => {
+  res.render('index/howitworks');
+});
+
+router.get('/pricing', (req, res) => {
+  res.render('index/pricing');
+});
+
 // router.get('/dashboard', ensureAuthenticated, (req, res) => {
 //   user.findOne({id:req.user.id})
 //     res.render('index/dashboard');

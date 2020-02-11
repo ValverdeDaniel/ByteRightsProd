@@ -14,14 +14,14 @@
   overflow-y: auto;
   min-height: 100%;
   height: auto;
-  width: 125px;
+  width: 100%;
   background-color: #000C4A;
   padding: 25px 0;
 }
 @media only screen and (max-width: 600px) {
   .nav-horizontal {
     width: 100%;
-    padding: 25px 0 15px;
+    padding: 25px 0 25px;
   }
 }
 .nav-horizontal ul li div {
@@ -68,6 +68,7 @@ main {
 }
 
 .nav_wrapper .group {
+  height: 48px;
   width: 100%;
 }
 
@@ -114,6 +115,11 @@ footer {
   width: 100%;
   height: calc(100vh - 90px);
 }
+.home_welcome .creative_home_wrapper {
+  max-width: 100%;
+  width: 100%;
+  height: calc(100vh - 90px);
+}
 .home_welcome main {
   width: 100%;
 }
@@ -141,6 +147,25 @@ footer {
 .home .row {
   margin-bottom: 0;
 }
+.creative_home_wrapper{
+  display: flex;
+  flex-direction: column;
+  background-image: url("/images/Creatives_Photography.png");
+  height: 100%;
+}
+.creative_home_container {
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 1140px;
+  margin: auto;
+}
+.creative_home .row {
+  margin-bottom: 0;
+}
 .home_content {
   display: flex;
   flex-direction: column;
@@ -149,6 +174,12 @@ footer {
   text-align: center;
   padding: 40px 20px;
   width: 75%;
+  margin: 0 auto;
+}
+.home_content-3col-center {
+  text-align: center;
+  /* padding: 40px 20px;
+  width: 75%; */
   margin: 0 auto;
 }
 @media only screen and (max-width: 600px) {
@@ -169,7 +200,7 @@ footer {
 }
 .home_content-wrapper {
   max-width: 1140px;
-  margin: 35px auto;
+  margin: 35px 15%;
 }
 .home_content-wrapper h3 {
   font-size: 26px;
@@ -180,6 +211,102 @@ footer {
 }
 @media only screen and (max-width: 600px) {
   .home_copy {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    margin: 0 auto;
+  }
+}
+
+.landing_welcome {
+  flex-direction: column;
+}
+.landing_welcome .nav-horizontal {
+  width: 100%;
+}
+.landing_welcome .landing_wrapper {
+  max-width: 100%;
+  width: 100%;
+  height: calc(100vh - 90px);
+}
+.landing_welcome main {
+  width: 100%;
+}
+.landing_welcome .nav_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.landing_wrapper {
+  display: flex;
+  flex-direction: column;
+  background-image: url("/images/UGC_Collage_2.png");
+  height: 100%;
+}
+.landing_container {
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 1140px;
+  margin: auto;
+}
+.landing .row {
+  margin-bottom: 0;
+}
+.landing_content {
+  display: flex;
+  flex-direction: column;
+}
+.landing_content-header {
+  text-align: center;
+  padding: 40px 20px;
+  width: 75%;
+  margin: 0 auto;
+}
+.landing_content-3col-center {
+  text-align: center;
+  /* padding: 40px 20px;
+  width: 75%; */
+  margin: 0 auto;
+}
+.landing_content-2col-center {
+  text-align: center;
+  /* padding: 40px 20px;
+  width: 75%; */
+  margin: 0 auto;
+}
+@media only screen and (max-width: 600px) {
+  .landing_content-header {
+    width: 100%;
+  }
+}
+.landing_content-header h2 {
+  font-size: 31px;
+  line-height: 33px;
+  font-weight: 600;
+  margin: 0;
+  padding-bottom: 15px;
+}
+.landing_content-header p {
+  margin: 0;
+  /* padding-bottom: 15px; */
+}
+.landing_content-wrapper {
+  max-width: 1140px;
+  margin: 35px auto;
+}
+.landing_content-wrapper h3 {
+  font-size: 26px;
+  line-height: 28px;
+  font-weight: 600;
+  margin: 0;
+  padding-bottom: 15px;
+}
+@media only screen and (max-width: 600px) {
+  .landing_copy {
     width: 100%;
     text-align: center;
     padding: 20px;
@@ -333,6 +460,12 @@ footer {
   }
 }
 
+@media only screen and (min-width: 768px) {
+  .pull-right-lg {
+    float: right;
+  }
+}
+
 .group:before,
 .group:after {
   content: "";
@@ -364,6 +497,23 @@ footer {
 .page-footer {
   margin: 0;
   padding: 0;
+}
+
+.brPink {
+  background-color: #FD8EF9;
+}
+
+.brPink:hover {
+  background-color:  rgb(241, 0, 233);
+}
+
+.brBlue {
+  background-color: rgb(3, 172, 245) ;
+  /* color:black; */
+}
+
+.brBlue:hover {
+  background-color: #B6E9FF;
 }
 
 /*# sourceMappingURL=style.css.map */

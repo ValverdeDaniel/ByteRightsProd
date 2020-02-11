@@ -3,42 +3,31 @@
     <div class="col s12">
       <div class="proposal_topbar">
         <div class="col m6 pull-m6 s12">
-          <h1 class="proposal_title">Edit Proposal</h1>
+          <h1 class="proposal_title">Edit Your Offer</h1>
         </div>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col m6 s12">
-      <form class="proposal_add-wrapper" action="/proposals/{{proposal.id}}?_method=PUT" method="post"
-        id="editproposal" onsubmit="return checkForm(this);">
+    <div class="col m12 s12">
+      <form class="proposal_add-wrapper" action="/offers/editOffer/{{offer.id}}?_method=PUT" method="post"
+        id="editOffer">
           <input type="hidden" name="_method" value="PUT">
-          <label>Image Link</label>
-          <div class="input-field">
-            <input type="text" name="url" value="{{proposal.url}}" required>
-            
-          </div>
+          <div class="col m6 s12">
+              <p>Start by pasting the URL for the Instagram image you wish to use when you announce your offer. It should look something like
+              https://www.instagram.com/p/<strong>(the unique ID/URL of the photo)</strong>/</p>
+            <div class="input-field">
+              <input type="text" name="offerLink" value="{{offer.offerLink}}">
+              <label for="offerLink">Instagram Announcement Link</label>
+            </div>
 
-          <div class="input-field">
-            <select class="ignore-select" name="contractUserType">
-              <option value="Seller">Seller</option>
-              <option value="Buyer">Buyer</option>
-            </select>
-            <label for="contractUserType">Contract User Type</label>
-          </div> 
-          
-          <label>Recipient Name</label>
-          <div class="input-field">
-            <input type="text" name="recipient" value="{{proposal.recipient}}" required>
-            
-          </div>
           <p>Describe how and where you plan to use the photo.</p>
           <div class="input-field">
-            <input type="text" name="usage" value="{{proposal.usage}}" placeholder="i.e. Instagram, Website, Print, etc.">
+            <input type="text" name="usage" value="{{offer.usage}}" placeholder="i.e. Instagram, Website, Print, etc.">
           </div>
           {{!-- <div class="input-field">
             <select name="status">
-              {{#select proposal.status}}
+              {{#select offer.status}}
                 <option value="public" selected>Public</option>
                 <option value="private">Private</option>
                 <option value="unpublished">Unpublished</option>
@@ -53,7 +42,7 @@
           <div class="switch">
             <label>
             No
-            <input type="checkbox" name="credit" id="credit" checked="checked">
+            <input type="checkbox" name="credit" id="credit" {{#if offer.credit}} checked="checked" {{/if}}>
             <span class="lever"></span>
             Yes
             </label>
@@ -61,33 +50,32 @@
           </p>
           </p>
           <p>
-          <label>Comments</label>
-          <div class="switch">
-            <label>
-            Off
-            <input type="checkbox" name="allowComments" id="allowComments" {{#if proposal.allowComments}} checked="checked" {{/if}}>
-            <span class="lever"></span>
-            On
-            </label>
-          </div>
-          </p>
-          {{!-- <div class="input-field">
-            <p>
-              <label for="allowComments">
-                <input type="checkbox" name="allowComments" class="filled-in" id="allowComments"
-                  {{#if proposal.allowComments}} checked="checked" {{/if}} />
-                <span>Allow Comments</span>
+            <p>Do you want to accept images as they come in or allow as many submissions for your offer</p>
+            <label>approval Needed</label>
+            <div class="switch">
+              <label>
+              No
+              <input type="checkbox" name="approvalNeeded" id="approvalNeeded" {{#if offer.approvalNeeded}} checked="checked" {{/if}}>
+              <span class="lever"></span>
+              Yes
               </label>
-            </p>
-          </div> --}}
-          <p>How would you like the photo to be compensated?</p>
+            </div>
+          </p>
+          <p>You may offer any form of compensation. ex. 1 ice-cream with 2 toppings</p>
           <div class="input-field">
-            <input type="text" name="compensation" value="{{proposal.compensation}}">
+            <input type="text" name="compensation" value="{{offer.compensation}}">
           </div>
-          <p>If cash, how much?</p>
+          <p>Below you can greet your customer and inform them what is going on in this page</p>
           <div class="input-field">
-            <input type="text" name="price" value="{{proposal.price}}" id="priceNumb" onkeyup="priceValidation()">
-            <p id="priceValidationMsg" style="color:red;"></p>
+            <input type="text" name="welcomeMessage" value="{{offer.welcomeMessage}}">
+            {{!-- <textarea id="welcomeMessage" name="welcomeMessage" class="materialize-textarea" value="{{offer.welcomeMessage}}"></textarea> --}}
+            <label for="welcomeMessage">Welcome Message</label>
+          </div>
+          <p>Below you can give your customer any insights on how they will be reedeming this offer</p>
+          <div class="input-field">
+            <input type="text" name="redemptionInstructions" value="{{offer.redemptionInstructions}}">
+            {{!-- <textarea id="redemptionInstructions" name="redemptionInstructions" class="materialize-textarea" value="{{offer.redemptionInstructions}}"></textarea> --}}
+            <label for="redemptionInstructions">Redemption Instructions</label>
           </div>
           <label>Tags</label>
           <div class="input-field">
@@ -114,7 +102,7 @@
             <label for="offerMessage">Textarea</label>
           </div> --}}
           {{!-- text area end input field --}}
-          <input type="button" value="Save" class="btn primary" onclick="$('#editproposal').submit()">
+          <input type="button" value="Save" class="btn primary" onclick="$('#editOffer').submit()">
           <button data-target="deleteModal" class="btn red modal-trigger">Delete</button>
       </form>
       {{!-- delete button --}}
@@ -124,14 +112,14 @@
 
 <div id="deleteModal" class="modal modal-fixed-footer">
     <div class="modal-content">
-    <p>Are you sure you want to delete this proposal? The trash goblins will never give it back!</p>
+    <p>Are you sure you want to delete this offer? The trash goblins will never give it back!</p>
     <div class="modal-footer">
-      <form action="/proposals/{{proposal.id}}?_method=DELETE" method="post" id="delete-form">
+      <form action="/offers/{{offer.id}}?_method=DELETE" method="post" id="delete-form">
         <input type="hidden" name="_method" value ="DELETE">
         <button type="submit" class="btn red"><i class="fa fa-remove"></i>Delete</button>
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
       </form>
-      {{!-- <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
+      {{!-- <form class="offer_add-wrapper" method="post" action="/offers/voteUser/{{offer.id}}">
         <div>
           <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1">
           <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
@@ -148,34 +136,4 @@
       var instances = M.Modal.init(elems);
     });
 
-  function priceValidation() {
-  var x, text;
-
-  // Get the value of the input field with id="numb"
-  x = document.getElementById("priceNumb").value;
-
-  // If x is Not a Number or less than one or greater than 10
-  if (x == null || x == "" || x > 2.99) {
-    console.log('we gucci')
-    text = "";
-  } else {
-    console.log('thou shall not pass')
-    text = "Price field must be either blank, or greater than $2.99"
-  }
-  
-  
-  document.getElementById("priceValidationMsg").innerHTML = text;
-}
-
-function checkForm() {
-  pNumb = document.getElementById("priceNumb");
-
-  if(pNumb.value > 2.99 || pNumb.value == null || pNumb.value == "") {
-    pNumb.focus();
-    return true;
-  }
-  
-  return false; 
-
-}
 </script>

@@ -1,0 +1,166 @@
+<div class="home_wrapper"> 
+  <div class="home_container">
+    <div class="row"> 
+      <div class="col s12">
+        <h1 class="proposal_title">Real People, Real Content, Real Licenses</h1> 
+      </div>
+      <div class="col s12">
+        <p class="lead">Leverage your Instagram feed as an endless supply of user-generated content for all your marketing and social media needs.</p>
+      </div>
+      <div class="col s12">
+        {{#if user}} 
+        {{else}} 
+          <button data-target="modalLogin" class="btn brPink modal-trigger">Join Beta</button>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div> 
+<div class="landing_content">
+  {{!-- <div class="grey-1"> --}}
+    <div class="row"> 
+      <div class="col m12 s12">
+        <div class="landing_content-header">
+          <h2>Social Media Marketing Shouldn’t Be Difficult.</h2>
+          <p>Whether your business is large or small, your customers can be your best influencers and sources of organic content. All you have to do is ask.</p>
+        </div>
+      </div>
+    </div>
+  {{!-- </div> --}}
+  <div class="landing_content-wrapper">
+    <div class="row"> 
+      <div class="col m4 s12">
+        <div class="landing_content-3col-center">
+  
+          <i class="fas fa-fist-raised fa-7x iconHome3ColBRPink"></i>
+          <br>
+          <h3>Motivate</h3>
+          <p>With every sale, service, or visit, ask your customers to share their experience on Instagram for a chance to be featured on your channels.</p>
+        </div>
+      </div>
+      <div class="col m4 s12">
+        <div class="landing_content-3col-center">
+          <i class="fas fa-envelope-open-text fa-7x iconHome3ColBRBlue"></i>
+          <h3>Request</h3>
+          <p>Keep an eye on the pictures your brand gets tagged in, and when you see a photo you like, ask the creator for permission to use it in exchange for products, credits, cash, etc.</p>
+        </div>
+      </div>
+      <div class="col m4 s12">
+        <div class="landing_content-3col-center">
+          <i class="fab fa-instagram fa-7x iconHome3ColBRPink"></i>
+          <h3>Post</h3>
+          <p>Give your loyal customer the thrill of getting reposted by a brand they love, and share organic content that is more personal.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row"> 
+    <div class="col m12 s12">
+      <div class="landing_content-header">
+        <h2>User-Generated Content Wins</h2>
+        <p>Studies show that people are much more likely to engage with user-generated content based advertisements than traditionally staged ads. A vast majority of consumers say that they will search for existing customer feedback and engagement with your brand before making a purchasing desicion. Add this strategy to your toolbelt and see the results immediately.</p>
+      </div>
+    </div>
+  </div>
+  {{!-- <div class="landing_content-wrapper"> --}}
+  <div style="background-color: #000C4A; color: white;"> 
+    <div class="col s12">  
+      <div class="home_content-header">
+        <h2>Free-to-Use</h2>
+        <p>Because we don't want to get in the way of collaboration</p>
+      </div>
+    </div>
+  </div>
+  {{!-- </div> --}}
+  
+  <div class="landing_content-wrapper">
+    <div class="row"> 
+      <div class="col m6 s12">
+        <div class="landing_copy">
+          <h3>Not a Lawyer? No Problem.</h3>
+          <p>Our Licensing Engine will help you and your collaborator create a free licensing contract in under 30 seconds. Your contract can contain options like: types of usage, number of prints, exclusivity, credit, compensation, and duration. If you need something more custom, reach out to our team and we would be glad to hear from you and see how we can help.</p>
+        </div>
+      </div>
+      <div class="col m6 s12 center-align">
+        <i class="fas fa-file-signature fa-7x" style="color:#B6E9FF;text-shadow:2px 2px 2px grey;"></i>
+      </div>
+    </div>
+  </div>
+  <div class="landing_content-wrapper">
+    <div class="row"> 
+      <div class="col m6 s12 center-align">
+        <i class="far fa-handshake fa-7x" style="color:#B6E9FF;text-shadow:2px 2px 2px grey;"></i>
+      </div>
+      <div class="col m6 s12">
+        <div class="landing_copy">
+          <h3>No More Trust Issues</h3>
+          <p>Ever been burned by a deal gone sour because of low-res files? We only release payments once we’ve validated that the photographer has uploaded a highenough resolution version of the photo(s) in question and that you’ve approved. Gone are the days of awkward, “No, you first” conversations.</p>
+        </div>
+      </div>
+    </div>  
+  </div>  
+  <div class="landing_content-wrapper">
+    <div class="row"> 
+      <div class="col m6 s12 ">
+        <div class="landing_copy">
+          <h3>Credit Your Creatives</h3>
+          <p>Professional photographers and influencers are using Instagram as their portfolio and it’s easy to find user-generated content that your business can use to its benefit. Offering a creative as little as $5 increases your UGC conversion rate by at least 45%. We’ve made it easy to compensate your collaborators with cash, product, or services in exchange for their content, creativity and influence.</p>
+        </div>
+      </div>
+      <div class="col m6 s12 center-align">
+        <i class="fas fa-dollar-sign fa-7x" style="color:#B6E9FF;text-shadow:2px 2px 2px grey;"></i>
+      </div>
+    </div>
+  </div>
+  <div class="row"> 
+    <div class="col s12">
+      {{#if user}} 
+      {{else}} 
+        <button data-target="modalLogin" class="btn brPink waves-pink modal-trigger">Join Beta</button>
+      - OR - 
+      {{/if}} <a class="btn brBlue" href="/howitworks">Learn More</a>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Login Structure-->
+<div id="modalLogin" class="modal">
+  <div class="modal-content">
+    {{!-- <div class="modal-header">
+      <nav class="nav-horizontal">
+        <div class="row">
+          <div class="col s12">
+            <div class="nav_wrapper" width= "100%" style="height: 48px;">
+              <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div> --}}
+    <div class= "center-align">
+    <h4>Please Login</h4>
+
+      <a class = "btn red darken-1" href="/auth/google">
+        <i class="fab fa-google left"></i>Login with Google
+      </a>
+      <br>
+      <br>
+      <a class = "btn blue darken-1 row center-align" href="/auth/facebook">
+        <i class="fab fa-facebook-f left"></i>Login with Facebook
+      </a>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
+<script>
+  //modal logic materialize
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
+    var instances = M.Modal.init(elems);
+  });
+
+</script>

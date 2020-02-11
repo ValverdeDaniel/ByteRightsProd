@@ -1,0 +1,270 @@
+<div class="proposal_wrapper--add">
+  <div class="row no-margin--bottom">
+    <div class="proposal_topbar">
+      <table style="border:0px;">
+        <tr style="border-bottom:0px;">
+          <td width="90%" style="padding: 0px 0px 0px 10px;"><h1 class="proposal_title">{{proposal.user.companyName}} Instagram Giveaway</h1></td>
+          {{!-- <td class="left-align" width="10%" style="padding:0px 15px 0px 0px;"><button data-target="helpModal" class="btn-floating grey modal-trigger">?</button></td> --}}
+        </tr>
+      </table>
+    </div>
+      {{!-- <div class="row" style="margin-bottom: 10px">
+        <div class="col s12">
+          From: <b>{{proposal.user.firstName}} {{proposal.user.lastName}}</b> at <a href="{{proposal.user.website}}" target="_blank">{{proposal.user.companyName}}</a> | Status: <b>{{proposal.status}}</b>
+        </div>
+      </div> --}}
+
+  </div>
+  <div class="row no-margin--bottom">
+    <div class="proposal_show-content alternate">
+      <div class="col m6 s12">
+        {{!-- <div class="card">
+          <div class="card-content">
+            <p>hey there if you would like to share this offer with people send the link below!!</p>
+            <p><a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/createSubmission/{{proposal.id}}</a></p>
+          </div>
+        </div> --}}
+
+        <div class="card horizontal">
+          <div class="card-stacked">
+            <div class="card-content">
+              <span class="card-title">Show Us What You Got</span>
+
+              {{#ifEqualsElse proposal.welcomeMessage ""}}
+
+              {{else}}
+              <p>{{proposal.welcomeMessage}}</p>
+              <br>
+              {{/ifEqualsElse}}
+              {{#if user}}
+              <p class="proposal-label">Paste the URL to your instagram post below
+              <td class="left-align" width="10%" style="padding:0px 0px 0px 0px;"><button data-target="helpModal" class="btn-floating grey modal-trigger">?</button></td> </p>
+              <form class="proposal_add-wrapper" action="/proposals/createSubmission/new" method="post" id="newproposal">
+
+                  <div class="input-field">
+                    <input type="text" name="url">
+                    <label for="url">Image Link</label>
+                  </div>
+
+                  <div class="input-field">
+                    <input type="text" name="ogOwner" value="{{proposal.user}}" hidden>
+                    
+                  </div>
+                  <div class="input-field">
+                    <input type="text" name="ogProposalId" value="{{proposal._id}}" hidden>
+                    
+                  </div>
+
+                  <div class="input-field">
+                    <input type="text" name="usage" value="{{proposal.usage}}" placeholder="i.e. Instagram, Website, Print, etc." hidden>
+                  </div>
+
+                  <div class="input-field">
+                    <input type="text" name="credit" id="credit" value={{proposal.credit}} hidden>
+                  </div>
+
+                  {{!-- <div class="input-field">
+                    <p>Tags</p>
+                    <input type="text" data-role="materialtags" name="tags" value="{{tag}}" id="tags">
+                  </div> --}}
+
+                  <input type="text" name="redemptionInstructions" value="{{proposal.redemptionInstructions}}" hidden>
+
+                  <div class="input-field">
+                    <input type="text" name="compensation" value="{{proposal.compensation}}" hidden>
+                  </div>
+                  <input type="button" value="Submit" class="btn primary" onclick="$('#newproposal').submit()">
+                  <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
+
+              </form>
+              {{else}}
+              {{!-- else for if the user is not logged in then they see this --}}
+              <br>
+              <p><strong>If you would like to submit your photo please just login and then paste your link :)</strong></p>
+              <br>
+              <button data-target="modalLogin" class="btn blue modal-trigger">Login</button>
+
+              {{!-- end if user statement for form --}}
+              {{/if}}
+
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">What You Need to Know</span>
+            <p>This is an agreement for the right to the referenced image. Here are the important details:</p><br>
+            <p class="proposal-label">You will be compensated with</p>
+              <p>{{proposal.compensation}}</p>
+            <p class="proposal-label">Below is how we plan to use this photo.</p>
+              <p>{{proposal.usage}}</p>
+            <p class="proposal-label">Will the creator be mentioned when this photo is used</p>
+              {{#if proposal.credit}}
+              <p>Yes</p>
+              {{else}}
+              <p>No</p>
+              {{/if}}
+          </div>
+        </div>
+        {{#ifEqualsElse proposal.redemptionInstructions ""}}
+
+        {{else}}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Redemption Instructions</span>            <p>{{proposal.redemptionInstructions}}</p>
+          </div>
+        </div>
+        {{/ifEqualsElse}}
+        <div class="card">
+          <div class="card-content">
+            <p>If you would like to share this offer with people send the link below!! Put it in your Bio, get it tatted on your back; share it wherever you like! You can always just send it in a text ;)</p>
+            <p><a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/createSubmission/{{proposal.id}}</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col m6 s12">
+        {{!-- the div below this is carries the embed code for the instagram post --}}
+        <div class="card">
+          <div class="card-image">
+            <a href="{{proposal.offerLink}}media/?size=l"><img src="{{proposal.offerLink}}media/?size=l" alt="" /></a>
+          </div>
+          {{!-- <div class="card-content">
+            <p>
+              {{#each proposal.tag}}
+              <div class="chip">
+                {{this.text}}
+              </div>
+              {{/each}}
+            </p>
+          </div> --}}
+        </div>
+        <a href="{{proposal.url}}">{{proposal.url}}</a>
+      </div>
+    </div>
+</div>
+
+<!-- Modal Login Structure-->
+<div id="modalLogin" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <nav class="nav-horizontal">
+        <div class="row">
+          <div class="col s12">
+            <div class="nav_wrapper" width= "100%" style="height: 48px;">
+              <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class= "center-align">
+    <h4>Please Login</h4>
+
+      <a class = "btn red darken-1" href="/proposals/createSubmissionGClient/{{proposal.id}}">
+        <i class="fab fa-google left"></i>Login with Google
+      </a>
+      <br>
+      <br>
+      <a class = "btn blue darken-1 row center-align" href="/proposals/createSubmissionFBClient/{{proposal.id}}">
+        <i class="fab fa-facebook-f left"></i>Login with Facebook
+      </a>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
+<!-- Modal Login Structure-->
+<div id="helpModal" class="modal">
+  <div class="modal-content">
+    {{!-- <div class="modal-header center-align">
+    <p>
+      Copying Instagram URL Helper
+    </p>
+    
+    </div> --}}
+    <div class="row">
+      <div class="slideshow-containerBR ">
+
+      <div class="mySlides fadeBR">
+        <div class="numbertext">1 / 2</div>
+        <p class="center-align">After posting on Instagram hit the three dots above your image.</p>
+        <div class="center-align">
+          <img  src="/images/CopyLink1.jpg" style="width:100%;max-width:315px;">
+        </div>  
+      </div>
+
+      <div class="mySlides fadeBR">
+        <div class="numbertextBR">2 / 2</div>
+        <p class="center-align">Select the copy link button to save the URL in your clipboard so you can paste it in the field below.</p>
+        <div class="center-align">
+          <img  src="/images/CopyLink2.jpg" style="width:100%;max-width:315px;">
+        </div>        
+      </div>
+
+
+      <a class="prevBR" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="nextBR" onclick="plusSlides(1)">&#10095;</a>
+
+      </div>
+      <br>
+
+      <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span> 
+        <span class="dot" onclick="currentSlide(2)"></span> 
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
+
+<script>
+//  modal logic materialize 
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
+      var instances = M.Modal.init(elems);
+    });
+
+//carousel javascript section
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" activeBR", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " activeBR";
+}
+</script>
+{{!-- 
+http://localhost:5000/proposals/createSubmission/5e34853aa5b91f9c142193a8 
+--}}
+
+{{!--
+ http://localhost:5000/proposals/createSubmission/5e3589c4bb23e83a60a40d2a 
+ --}}

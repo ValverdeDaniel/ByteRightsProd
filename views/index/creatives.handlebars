@@ -1,0 +1,172 @@
+<div class="creative_home_wrapper"> 
+  <div class="creative_home_container">
+    <div class="row"> 
+      <div class="col s12">
+        <h1 class="proposal_title">Monetize Your Instagram Portfolio</h1> 
+      </div>
+      <div class="col s12">
+        <p class="lead">Grow your brand and create your own creative marketplace by offering licensing rights to your followers.</p>
+
+      </div>
+      <div class="col s12">
+        {{#if user}} 
+        {{else}} 
+          <button data-target="modalLogin" class="btn brPink modal-trigger">Join Beta</button>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div> 
+<div class="landing_content">
+  {{!-- <div class="grey-1"> --}}
+    <div class="row"> 
+      <div class="col m12 s12">
+        <div class="landing_content-header">
+          <h2>Everyone is a Creative, and Businesses need us</h2>
+          <p>We’re all creatives and influencers in the world of social media. Businesses want to tap into our talent and networks.</p>
+        </div>
+      </div>
+    </div>
+  {{!-- </div> --}}
+  <div class="landing_content-wrapper">
+    <div class="row"> 
+      <div class="col m4 s12">
+        <div class="landing_content-3col-center">
+          <i class="fas fa-camera-retro fa-7x iconHome3ColBRBlue"></i>
+          <h3>Capture a Photo</h3>
+          <p>You have a unique ability to capture the world around you. Use it! You never know what a business might find valuable.</p>
+        </div>
+      </div>
+      <div class="col m4 s12">
+        <div class="landing_content-3col-center">
+          <i class="fab fa-instagram fa-7x iconHome3ColBRPink"></i>
+          <h3>Post</h3>
+          <p>Tag the brands you capture to see if they want to collaborate.</p>
+        </div>
+      </div>
+      <div class="col m4 s12">
+        <div class="landing_content-3col-center">
+          <i class="fas fa-hand-holding-usd fa-7x iconHome3ColBRBlue"></i>
+          <h3>Sell</h3>
+          <p>Byte Rights makes it easy for businesses to compensate you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row"> 
+    <div class="col m12 s12">
+      <div class="landing_content-header">
+        <h2>User-Generated Content Wins</h2>
+        <p>Studies show that people are much more likely to engage with user-generated content based advertisements than traditionally staged ads. This means businesses win big when we give them our customer images. Now we as creatives can win too.
+      </div>
+    </div>
+  </div>
+  <div style="background-color: #000C4A; color: white;"> 
+    <div class="col s12">  
+      <div class="home_content-header">
+        <h2>Free-to-Use</h2>
+        <p>Because we don't want to get in the way of collaboration</p>
+      </div>
+    </div>
+  </div>
+  <div class="landing_content-wrapper">
+    <div class="row">
+      <div class="col s12">
+        <div class="landing_copy">
+          <h3>Businesses should ask for Permission, Not Forgiveness</h3>
+          <p>Our societies are addicted to media platforms like Instagram and Youtube, and the need to create content for these platforms is relentless. In the frenzy to capture impressions, influence consumers, and go viral, people forget that there are rules to follow and creatives’ intellectual property rights are being violated every second. We’re making the process of getting rights to use images as easy as possible so that businesses will do the right thing more often.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="landing_content-wrapper">
+    <div class="row">
+      <div class="col m6 s12">
+        <div class="landing_copy">
+          <h3>Not a Lawyer? No Problem.</h3>
+          <p>Our Licensing Engine will help you create a licensing contract that specifies exactly what rights your providing. Terms like types of usage, number of prints, exclusivity, credit, compensation, and duration can all be added and specified on your license.</p>
+        </div>
+      </div>
+      <div class="col m6 s12 center-align">
+        <i class="fas fa-file-signature fa-7x" style="color:#B6E9FF;text-shadow:2px 2px 2px grey;"></i>
+      </div>
+    </div>
+  </div>
+  <div class="landing_content-wrapper">
+    <div class="row"> 
+      <div class="col m6 s12 center-align">
+        <i class="far fa-handshake fa-7x" style="color:#B6E9FF;text-shadow:2px 2px 2px grey;"></i>
+      </div>
+      <div class="col m6 s12">
+        <div class="landing_copy">
+          <h3>No More Trust Issues</h3>
+          <p>Ever been burned by a deal gone sour because of bounced checks after you’ve delivered work? We only release files for download once we’ve successfully charged the buyer. Gone are the days of awkward, “No, you first” conversations.</p>
+        </div>
+      </div>
+    </div>  
+  </div>  
+  <div class="landing_content-wrapper">
+    <div class="row"> 
+      <div class="col m6 s12">
+        <div class="landing_copy">
+          <h3>No, you don't work for "Exposure"</h3>
+          <p>Requiring photo credit is default if the buyer hasn’t paid for the right not to. We understand what goes into your craft, and we’re helping educate your buyers to understand it too. Whether it’s $5 or $5000, Byte Rights makes it clear and simple to get what you’re due.</p>
+        </div>
+      </div>
+      <div class="col m6 s12 center-align">
+        <i class="fas fa-dollar-sign fa-7x" style="color:#B6E9FF;text-shadow:2px 2px 2px grey;"></i>
+      </div>
+    </div>
+  </div>
+  <div class="row"> 
+    <div class="col s12">
+      {{#if user}} 
+      {{else}} 
+        <button data-target="modalLogin" class="btn brPink waves-pink modal-trigger">Join Beta</button>
+      - OR - 
+      {{/if}} <a class="btn brBlue" href="/howitworks">Learn More</a>
+    </div>
+  </div>    
+  
+</div>
+<!-- Modal Login Structure-->
+<div id="modalLogin" class="modal">
+  <div class="modal-content">
+    {{!-- <div class="modal-header">
+      <nav class="nav-horizontal">
+        <div class="row">
+          <div class="col s12">
+            <div class="nav_wrapper" width= "100%" style="height: 48px;">
+              <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div> --}}
+    <div class= "center-align">
+    <h4>Please Login</h4>
+
+      <a class = "btn red darken-1" href="/auth/google">
+        <i class="fab fa-google left"></i>Login with Google
+      </a>
+      <br>
+      <br>
+      <a class = "btn blue darken-1 row center-align" href="/auth/facebook">
+        <i class="fab fa-facebook-f left"></i>Login with Facebook
+      </a>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
+<script>
+  //modal logic materialize
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
+    var instances = M.Modal.init(elems);
+  });
+
+</script>

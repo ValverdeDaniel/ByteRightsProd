@@ -3,33 +3,19 @@
     <div class="col s12">
       <div class="proposal_topbar">
         <div class="col m6 pull-m6 s12">
-          <h1 class="proposal_title">Create New Proposal</h1>
+          <h1 class="proposal_title">Create New Offer</h1>
           <!-- <p>This is a sample offer message: Hi, my name is {{user.firstName}} {{user.lastName}}. I’m reaching out because we love this photo you posted! We’d be willing to compensate you with --amount/description will go here-- {{req.body.compensation}} for the rights to use it in our future campaigns. If you’re interested, follow this link to see the full details of our offer: <a href="#" class="word-break" target="_blank">byterights.com/proposals/show/uniqueProposalIdentifier</a></p> -->
         </div>
       </div>
     </div>
     <div class="col s12">
-      <form class="proposal_add-wrapper" action="/proposals" method="post" id="newproposal" onsubmit='return checkForm(this);'>
+      <form class="proposal_add-wrapper" action="/proposals/addOffer/new" method="post" id="newproposal" >
         <div class="col m6 s12">
-          <p>Start by pasting the URL for the Instagram image you wish to request rights for. It should be
-            https://www.instagram.com/p/<strong>(unique ID of the photo)</strong>/</p>
+          <p>Start by pasting the URL for the Instagram image you wish to use when you announce your offer. It should look something like
+            https://www.instagram.com/p/<strong>(the unique ID/URL of the photo)</strong>/</p>
           <div class="input-field">
-            <input type="text" name="url">
-            <label for="url">Instagram Image Link</label>
-          </div>
-        {{!-- adding a dropdown for seller/buyer --}}
-          <p>Who are you?</p>
-          <div class="input-field">
-            <select class="ignore-select" name="contractUserType">
-              <option value="Seller">Seller</option>
-              <option value="Buyer">Buyer</option>
-            </select>
-          </div> 
-
-          <p>Next, write the name or username of the recipient you'll be sending the request to.</p>
-          <div class="input-field">
-            <input type="text" name="recipient">
-            <label for="recipient">Recipient Name</label>
+            <input type="text" name="offerLink">
+            <label for="offerLink">Instagram Announcement Link</label>
           </div>
           <p>Describe how and where you plan to use the photo.</p>
           <div class="input-field">
@@ -39,15 +25,6 @@
             </select> --}}
             <input type="text" name="usage" value="Instagram Repost" placeholder="i.e. Instagram, Website, Print, etc.">
           </div>
-
-          {{!-- <div class="input-field">
-              <select name="status">
-                <option value="public" selected>Public</option>
-                <option value="private">Private</option>
-                <option value="unpublished">Unpublished</option>
-              </select>
-              <label for="status">Status</label>
-            </div>  --}}
           <p>
             <p>Specify whether or not you will credit the creator when using the requested photo. (We recommend you do unless you're offering sufficient compensation.)</p>
             <p>
@@ -63,31 +40,33 @@
           </p>
           </p>
           <p>
-            <p>Decide whether or not you'd like to allow the recipient to send you messages about the proposal.</p>
-            <p>
-          <label>Comments</label>
-          <div class="switch">
-            <label>
-            Off
-            <input type="checkbox" name="allowComments" id="allowComments" checked="checked">
-            <span class="lever"></span>
-            On
-            </label>
-          </div>
+            <p>Do you want to accept images as they come in or allow as many submissions for your offer</p>
+            <label>approval Needed</label>
+            <div class="switch">
+              <label>
+              No
+              <input type="checkbox" name="approvalNeeded" id="approvalNeeded" checked="checked">
+              <span class="lever"></span>
+              Yes
+              </label>
+            </div>
           </p>
-          </p>
-          <p>You may offer any form of compensation. If left blank, we won't mention it in your proposal.</p>
+          <p>You may offer any form of compensation. ex. 1 ice-cream with 2 toppings</p>
           <div class="input-field">
             <input type="text" name="compensation">
             <label for="compensation">Type of compensation</label>
           </div>
-          <p>If the seller will be receiving monetary compensation this field requires that you input a number</p>
+          <p>Below you can greet your customer and inform them what is going on in this page</p>
           <div class="input-field">
-            <input type="number" name="price" id="priceNumb" onkeyup="priceValidation()">
-            <label for="price">Price</label>
-            <p id="priceValidationMsg" style="color:red;"></p>
+            <textarea id="welcomeMessage" name="welcomeMessage" class="materialize-textarea"></textarea>
+            <label for="welcomeMessage">Welcome Message</label>
           </div>
-          <p>Lastly, to help keep your proposals organized, add any relevant tags.</p>
+          <p>Below you can give your customer any insights on how they will be reedeming this offer</p>
+          <div class="input-field">
+            <textarea id="redemptionInstructions" name="redemptionInstructions" class="materialize-textarea"></textarea>
+            <label for="redemptionInstructions">Redemption Instructions</label>
+          </div>
+          <p>Lastly, to help keep your offers organized, add any relevant tags.</p>
           <label>Tags</label>
           <div class="input-field">
             <input type="text" class="tags tagskeyup" data-role="materialtags" name="tags" id="tags">
@@ -121,37 +100,6 @@
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems, options);
   });
-
-  function priceValidation() {
-  var x, text;
-
-  // Get the value of the input field with id="numb"
-  x = document.getElementById("priceNumb").value;
-
-  // If x is Not a Number or less than one or greater than 10
-  if (x == null || x == "" || x > 2.99) {
-    console.log('we gucci')
-    text = "";
-  } else {
-    console.log('thou shall not pass')
-    text = "Price field must be either blank, or greater than $2.99"
-  }
-  
-  
-  document.getElementById("priceValidationMsg").innerHTML = text;
-}
-
-function checkForm() {
-  pNumb = document.getElementById("priceNumb");
-
-  if(pNumb.value > 2.99 || pNumb.value == null || pNumb.value == "") {
-    pNumb.focus();
-    return true;
-  }
-  
-  return false; 
-
-}
 
 
 </script>

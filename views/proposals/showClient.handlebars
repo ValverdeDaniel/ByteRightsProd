@@ -1,15 +1,27 @@
-
 <div class="proposal_wrapper--add">
   <div class="row no-margin--bottom">
     <div class="proposal_topbar">
-      <div class="col s12">
-        <h1 class="proposal_title">{{proposal.user.firstName}} {{proposal.user.lastName}}</h1>
-          Company: <a href="{{proposal.user.website}}" target="_blank">{{proposal.user.companyName}}</a>
+      <table style="border:0px;">
+        <tr style="border-bottom:0px;">
+          <td width="90%" style="padding: 0px 0px 0px 10px;"><h1 class="proposal_title">Proposal for {{proposal.recipient}}</h1></td>
+          <td class="left-align" width="10%" style="padding:0px 15px 0px 0px;"><button data-target="helpModal" class="btn-floating grey modal-trigger">?</button></td>
+        </tr>
+      </table>
+      {{!-- <div class="col xs11">
+        <h1 class="proposal_title">Proposal for {{proposal.recipient}}</h1>
+      </div>
+      <div class="col xs1 right-align">
+        <button data-target="helpModal" class="btn-floating grey modal-trigger">?</button>
+      </div> --}}
+    </div>
+      <div class="row" style="margin-bottom: 10px">
+        <div class="col s12">
+          From: <b>{{proposal.user.firstName}} {{proposal.user.lastName}}</b> at <a href="{{proposal.user.website}}" target="_blank">{{proposal.user.companyName}}</a> | Status: <b>{{proposal.status}}</b>
+        </div>
       </div>
       {{!-- <div class="col s12">
         <p>Proposal #: {{proposal.id}}</p>
       </div> --}}
-    </div>
   </div>
   <div class="row no-margin--bottom">
     <div class="proposal_show-content alternate">
@@ -21,6 +33,7 @@
           <div class="card-stacked">
             <div class="card-content">
               <span class="card-title">What You Need to Know</span>
+              <p>This is a proposal for the right to the referenced image. Here are the important details:</p><br>
               <p class="proposal-label">Where will it be used?</p>
               <p>{{proposal.usage}}</p>
 
@@ -30,162 +43,562 @@
               {{else}}
               <p>No</p>
               {{/if}}
-              {{#ifCompensationEqBlank proposal.compensation}}
+              {{!-- add logic ifEqualsElse --}}
+              {{!-- {{#ifEqualsElse proposal.compensation "Cash"}} --}}
+              {{#ifNotEqualsElse proposal.price null}}
+                <p class="proposal-label">How will you be compensated?</p>
+                <p>${{proposal.price}}</p>
+                <p>{{proposal.compensation}}</p>
               {{else}}
-              <p class="proposal-label">How will you be compensated?</p>
-              <p>{{proposal.compensation}}</p>
-              {{/ifCompensationEqBlank}}
-              <br/>
-              {{!-- start ifLoggedUserEqProposalUser --}}
-              {{#ifLoggedUserEqProposalUser user.id proposal.user.id}}
-              <SPAN class="copyText">
-                {{#ifCompensationEqBlank proposal.compensation}}
-                {{#ifCompanyNameEqBlank user.companyName}}
-                {{!-- message ifCompensationEqBlank and if CompanyNameEqBlank --}}
-                <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
-                  Would you allow us to use it sometime in the future? To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
-                    target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-                {{!-- else for ifCompanyNameEqBlank --}}
+                {{#ifEqualsElse proposal.compensation ""}}
                 {{else}}
-                {{!-- message if compensationEqBlank but CompanyName does not Equal Blank --}}
-                <p>Hi, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
-                  posted! Would you allow us to use it sometime in the future? To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
-                    target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-                {{/ifCompanyNameEqBlank}}
-                {{!-- else for ifCompanesationEqBlank --}}
-                {{else}}
-                {{#ifCompanyNameEqBlank user.companyName}}
-                {{!-- message if compensation not equal blank and company name equals blank --}}
-                <p>Hi, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
-                  Would you allow us to use it sometime in the future? In exchange we would be willing to compensate you
-                  with {{proposal.compensation}}. To accept, follow the link.
-                  <a class="word-break" href="{{proposal.id}}"
-                    target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-                {{!-- else for second ifCompensationEqBlank --}}
-                {{else}}
-                {{!-- message if compensation not equal blank and company name does not equal blank --}}
-                <p>Hi, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
-                  posted! Would you allow us to use it sometime in the future? In exchange we would be willing to
-                  compensate you with {{proposal.compensation}}. To accept, follow the link. <a class="word-break" href="{{proposal.id}}"
-                    target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
-                {{/ifCompanyNameEqBlank}}
-                {{!-- message for proposalCreator to send if they are compensating --}}
-
-                {{/ifCompensationEqBlank}}
-              </SPAN>
-              <button
-                class="btn white darekn-1 waves-effect">{{{editIcon proposal.user.id user.id proposal.id false}}}</button>
-              <button class="copyBtn btn grey lighten-1 waves-effect"><i class="fa fa-clipboard"></i></button>
-              <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
-                <div>
-                    <!-- Modal Trigger -->
-                  <button data-target="acceptModal" class="btn green lighten-1 modal-trigger">Accept</button>
-                  <input name="voteBody" type="submit" value="Decline" class="btn red lighten-1">
-                  <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
-                </div>
-              </form>
-              {{!-- else ifLoggedUserEqProposalUser --}}
-              {{else}}
-              {{#if user}}
-              {{#ifCompensationEqBlank proposal.compensation}}
-              {{!-- message for client before logging in if compensation = blank --}}
-              <p>To give us permission to use your photo, simply press "Accept".</p>
-              {{!-- else for ifCompensationEqBlank --}}
-              {{else}}
-              {{!-- message for client before logging in if compensation is not = blank --}}
-              <p>We'd like to compensate you with {{proposal.compensation}} for your photo. If you agree, simply press
-                "Accept".</p>
-              {{/ifCompensationEqBlank}}
-              <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
-                <div>
-                  <!-- Modal Trigger -->
-                  <button data-target="acceptModal" class="btn green lighten-1 modal-trigger">Accept</button>
-                  <input name="voteBody" type="submit" value="Decline" class="btn red lighten-1">
-                  <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
-                </div>
-              </form>
-              {{!-- else for if user --}}
-              {{else}}
-              {{#ifCompensationEqBlank proposal.compensation}}
-              {{!-- message for client before logging in if compensation = blank --}}
-              <p>For us to use your photo, simply login. (this informs us of
-                who has responded). Then, press "Accept".</p>
-              {{!-- else for ifCompensationEqBlank --}}
-              {{else}}
-              {{!-- message for client before logging in if compensation is not = blank --}}
-              <p>We'd like to compensate you with {{proposal.compensation}} for your photo. Simply login (this informs us of who has responded). Then, press "Accept".</p>
-              {{/ifCompensationEqBlank}}
-                <h6>To respond:</h6>
-                <!-- Modal Trigger -->
-                <button data-target="modalLogin" class="btn blue darken-2 modal-trigger">Login</button>
-              <div>
+                  <p class="proposal-label">How will you be compensated?</p>
+                  <p>{{proposal.compensation}}</p>
+                {{/ifEqualsElse}}
+              {{/ifNotEqualsElse}}
+                <br>
+                {{{editIcon proposal.user.id user.id proposal.id false}}}
                 <a href="/proposals/terms/{{proposal.id}}" target="_blank">Terms and Conditions</a>
-              </div>
-              {{!-- end if user --}}
-              {{/if}}
-              {{/ifLoggedUserEqProposalUser}}
+        
+                  {{!-- begin signup/link stripeAccount Logic --}}
+                  {{#if user}}
+                    {{#ifEquals proposal.status "Created"}}
+                      {{#ifEqualsElse proposal.contractUserType "Seller"}}
+                        {{#ifEqualsElse user.id proposal.user.id}}
+                          {{#ifEqualsElse user.stripeAccountId ""}}
+                            <p>If You would like to get paid for this proposal you have to sign up with Stripe, it will only take 2 minutes we promise.</p>
+                            <div>
+                              <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+                            </div>
+                          {{!-- else for user.stripeAccountId = "" --}}
+                          {{else}}
+                            {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                              <p>Our Records say you have already signed up with Stripe, the last thing you need to do before the buyer can pay you is link your Stripe Account to this proposal. The next time around we will automatically do this for you.</p>
+                              <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                                <button type="submit" name="sellerStripeAccountId" class="btn waves-effect waves-light" value="{{req.user.stripeAccountId}}">Link Your Stripe Account
+                                  <i class="material-icons right">send</i>
+                                </button>
+                              </form>
+
+                            {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                            {{else}}
+                              <p>You have successfully linked your stripe seller account</p>
+                              
+                            {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                            {{/ifEqualsElse}}                      
+                          {{!-- end ifEqualsElse user.stripeAccountId = "" --}}
+                          {{/ifEqualsElse}}
+
+                        {{!-- else for ifEqualsElse user.id proposal.user.id... buyer is looking at proposal --}}
+                        {{else}}
+                          {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                            <p>Waiting for seller to link their stripe Account</p>
+
+                          {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                          {{else}}
+                            <p>Seller has linked their stripe account to the proposal</p>
+                            
+                          {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                          {{/ifEqualsElse}}
+                        {{/ifEqualsElse}}
+                      {{!-- else for proposal.contractUserType = "Seller" so proposal was made by buyer --}}
+                      {{else}}
+                        {{!-- proposal made by buyer and buyer is currently interacting --}}
+                        {{#ifEqualsElse user.id proposal.user.id}}
+                          {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                            <p>Waiting for seller to link their stripe Account</p>
+
+                          {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                          {{else}}
+                            <p>Seller has linked their stripe account to the proposal</p>
+                            
+                          {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                          {{/ifEqualsElse}}
+                        {{!-- else for user.id = proposal.user.id, proposal made by buyer and seller is currently interacting --}}
+                        {{else}}
+                          {{#ifEqualsElse user.stripeAccountId ""}}
+                            <p>If You would like to get paid for this proposal you have to sign up with Stripe, it will only take 2 minutes we promise.</p>
+                            <div>
+                              <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+                            </div>
+                          {{!-- else for user.stripeAccountId = "" --}}
+                          {{else}}
+                            {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                              <p>Our Records say you have already signed up with Stripe, the last thing you need to do before the buyer can pay you is link your Stripe Account to this proposal. The next time around we will automatically do this for you.</p>
+                              <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                                <button type="submit" name="sellerStripeAccountId" class="btn waves-effect waves-light" value="{{req.user.stripeAccountId}}">Link Your Stripe Account
+                                  <i class="material-icons right">send</i>
+                                </button>
+                              </form>
+
+                            {{!--else for #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                            {{else}}
+                              <p>You have successfully linked your stripe seller account</p>
+                              
+                            {{!--end #ifEqualsElse proposal.sellerStripeAccountId = ""  --}}
+                            {{/ifEqualsElse}}                      
+                          {{!-- end ifEqualsElse user.stripeAccountId = "" --}}
+                          {{/ifEqualsElse}}
+                        {{!-- end if equals else user.id = proposal.user.id --}}
+                        {{/ifEqualsElse}}
+                      {{!--end ifEqualsElse proposal.contractUserType "Seller"  --}}
+                      {{/ifEqualsElse}}
+
+                    {{/ifEquals}}
+                  {{!-- end if user --}}
+                  {{/if}}
+
             </div>
-            {{!-- <div class="card-action">
-              <p>compensation: {{{proposal.compensation}}}</p>
-              <span>{{formatDate proposal.date 'MMMM Do YYYY'}}</span>
-            </div> --}}
           </div>
         </div>
+
+        {{#ifEqualsElse proposal.status "Created"}}
+        {{!-- if logged user is == proposal User --}}
+          {{#ifEqualsElse user.id proposal.user.id}}
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Share Your Proposal</span>
+                <p>You've succesfully created your proposal! Now share it with your recipient by copying the message below and pasting it into your preferred contact method whether that's Instagram Direct Messenger or Email.</p><br>
+                {{#ifEqualsElse proposal.contractUserType "Seller"}}
+                  <div style="padding:5px; background-color:lightgrey;">
+                  <SPAN class="copyText" style="background-color:lightgrey;">
+                    {{!-- {{#ifEqualsElse proposal.compensation "Cash"}} --}}
+                    {{#ifNotEqualsElse proposal.price null}}
+                      {{#ifEqualsElse user.companyName ""}}
+                        {{!-- message if compensation not equal blank and company name equals blank --}}
+                        <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I'd like to offer you the rights to use this great photo in exchange for: ${{proposal.price}} {{proposal.compensation}}.
+                          To accept and download the image, follow the link-
+                        <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                        {{!-- else for user.companyName "" --}}
+                      {{else}}
+                        {{!-- message if compensation not equal blank and company name does not equal blank --}}
+                        <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}}  from {{proposal.user.companyName}}. I'd like to offer you the rights to use this great photo in exchange for: ${{proposal.price}} {{proposal.compensation}}.
+                          To accept and download the image, follow the link- <a class="word-break" href="{{proposal.id}}"
+                            target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                        {{!-- end ifEqualsElse user.companyName "" --}}
+                      {{/ifEqualsElse}}
+                    {{else}}
+                      {{#ifEqualsElse proposal.compensation ""}}
+                        {{#ifEqualsElse user.companyName ""}}
+                          {{!-- message ifCompensationEqBlank and if CompanyNameEqBlank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I'd like to offer you the rights to use this great photo that you might find useful. To accept and download the image, follow the link- <a class="word-break" href="{{proposal.id}}"
+                              target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- else for ifEqualsElse user.companyName "" --}}
+                        {{else}}
+                          {{!-- message if compensationEqBlank but CompanyName does not Equal Blank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. I'd like to offer you the rights to use this great photo that you might find useful. To accept and download the image, follow the link- <a class="word-break" href="{{proposal.id}}"
+                              target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- end ifEqualsElse user.companyName "" --}}
+                        {{/ifEqualsElse}}
+                      {{else}}
+                        {{#ifEqualsElse user.companyName ""}}
+                          {{!-- message if compensation not equal blank and company name equals blank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. I'd like to offer you the rights to use this great photo in exchange for: {{proposal.compensation}}.
+                            To accept and download the image, follow the link-
+                          <a class="word-break" href="{{proposal.id}}" target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- else for user.companyName "" --}}
+                        {{else}}
+                          {{!-- message if compensation not equal blank and company name does not equal blank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}}  from {{proposal.user.companyName}}. I'd like to offer you the rights to use this great photo in exchange for: {{proposal.compensation}}.
+                            To accept and download the image, follow the link- <a class="word-break" href="{{proposal.id}}"
+                              target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- end ifEqualsElse user.companyName "" --}}
+                        {{/ifEqualsElse}}
+                      {{/ifEqualsElse}}
+                    {{/ifNotEqualsElse}}
+                  </SPAN>
+                  </div>
+
+                {{!-- if buyer created the proposal --}}
+                {{!-- else for ifEqualsElse proposal.contractUserType "Seller" --}}
+                {{else}}
+                  <div style="padding:5px; background-color:lightgrey;">
+                  <SPAN class="copyText">
+                    {{!-- {{#ifEqualsElse proposal.compensation "Cash"}} --}}
+                    {{#ifNotEqualsElse proposal.price null}}
+                      {{#ifEqualsElse user.companyName ""}}
+                        {{!-- message if compensation not equal blank and company name equals blank --}}
+                        <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
+                        Would you allow us to use it sometime in the future? In exchange we would be willing to compensate you
+                        with: ${{proposal.price}} {{proposal.compensation}}. To accept, follow the link- 
+                        <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                        {{!-- else for user.companyName "" --}}
+                      {{else}}
+                        {{!-- message if compensation not equal blank and company name does not equal blank --}}
+                        <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
+                        posted! Would you allow us to use it sometime in the future? In exchange we would be willing to
+                        compensate you with: ${{proposal.price}} {{proposal.compensation}}. To accept, follow the link- <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                        {{!-- end ifEqualsElse user.companyName "" --}}
+                      {{/ifEqualsElse}}
+                    {{else}}
+                      {{#ifEqualsElse proposal.compensation ""}}
+                        {{#ifEqualsElse user.companyName ""}}
+                          {{!-- message ifCompensationEqBlank and if CompanyNameEqBlank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
+                        Would you allow us to use it sometime in the future? To accept, follow the link- <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- else for ifEqualsElse user.companyName "" --}}
+                        {{else}}
+                          {{!-- message if compensationEqBlank but CompanyName does not Equal Blank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
+                        posted! Would you allow us to use it sometime in the future? To accept, follow the link- <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- end ifEqualsElse user.companyName "" --}}
+                        {{/ifEqualsElse}}
+                      {{else}}
+                        {{#ifEqualsElse user.companyName ""}}
+                          {{!-- message if compensation not equal blank and company name equals blank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} {{proposal.user.lastName}}. We love this photo you posted!
+                        Would you allow us to use it sometime in the future? In exchange we would be willing to compensate you
+                        with: {{proposal.compensation}}. To accept, follow the link- 
+                        <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- else for user.companyName "" --}}
+                        {{else}}
+                          {{!-- message if compensation not equal blank and company name does not equal blank --}}
+                          <p>Hi {{proposal.recipient}}, my name is {{proposal.user.firstName}} from {{proposal.user.companyName}}. We love this photo you
+                        posted! Would you allow us to use it sometime in the future? In exchange we would be willing to
+                        compensate you with: {{proposal.compensation}}. To accept, follow the link- <a class="word-break" href="{{proposal.id}}"
+                          target="_blank">byterights.com/proposals/show/{{proposal.id}}</a></p>
+                          {{!-- end ifEqualsElse user.companyName "" --}}
+                        {{/ifEqualsElse}}
+                      {{/ifEqualsElse}}
+                    {{/ifNotEqualsElse}}
+                  </div>
+                  </SPAN>
+
+                {{!-- end ifEqualsElse proposal.contractUerType "Seller" --}}
+                {{/ifEqualsElse}}
+                <br>
+                <div>
+                  <button class="copyBtn btn grey waves-effect"><i class="fa fa-clipboard"></i></button>
+                </div>
+              </div>
+            </div>
+          {{!-- else for ifEqualsElse user.id proposal.user.id --}}
+          {{else}}
+
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Look Good To You?</span>
+                {{#if user}}
+                  <button data-target="acceptModal" class="btn green modal-trigger">Accept</button>
+                {{else}}
+                  <button data-target="modalLogin" class="btn blue modal-trigger">Login</button>
+                {{/if}}
+              </div>
+            </div>
+          {{/ifEqualsElse}}
+        {{!-- else for ifEqualsElse proposal.status "created" --}}
+        {{else}}
         <div class="card">
           <div class="card-content">
             <span class="card-title">Contract Status</span>
-            {{#each proposal.votes}}
-            <br>
-            <div class="chip">
-              {{!-- <img src="{{voteUser.image}}"> --}}
-              <p>{{voteUser.firstName}} {{voteUser.lastName}}</p>
-              <p>{{voteEmail}}</p>
-            </div>
-            <p style="font-size:20px;">{{voteBody}}</p>
-            <small>Posted: {{formatDate voteDate 'MMMM Do YYYY, h:mm'}} </small>
-            <br>
-            {{/each}}
+              {{#each proposal.votes}}
+              <div class="chip">
+                {{!-- <img src="{{voteUser.image}}"> --}}
+                <p>{{voteUser.firstName}} {{voteUser.lastName}}</p>
+                <p>{{voteEmail}}</p>
+              </div>
+              <p style="font-size:20px;color:hotpink;"><b>{{voteBody}}</b></p>
+              <small>Posted: {{formatDate voteDate 'MMMM Do YYYY, h:mm'}} </small>
+              <br>
+              {{/each}}
           </div>
         </div>
+        {{#ifNotEquals proposal.price null}}
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Payment</span>
+                <div>
+                  {{#ifEqualsElse proposal.contractUserType "Seller"}}
+                    {{#ifEqualsElse user.id proposal.user.id}}
+                      {{!-- seller created proposal and seller is looking at proposal --}}
+                      <table style="font-size:18px;">
+                        <tr style="border:0px;">
+                          <td style="padding:5px 5px;">
+                            Price:
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{proposal.price}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:5px 5px;">
+                            Application Fee (20%):
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{sellerFee}}
+                          </td>
+                        </tr>
+                        <tr style="border:0px;">
+                          <th>
+                            Total:
+                          </th>
+                          <th>
+                            ${{price}}
+                          </th>
+                        </tr>
+                      </table>
+                    {{!-- else for ifEqualsElse user.id proposal.user.id --}}
+                    {{else}}
+                    {{!-- seller made the proposal and buyer is looking at it --}}
+                      <table style="font-size:18px;">
+                        <tr style="border:0px;">
+                          <td style="padding:5px 5px;">
+                            Price:
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{proposal.price}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:5px 5px;">
+                            Application Fee (20%):
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{buyerFee}}
+                          </td>
+                        </tr>
+                        <tr style="border:0px;">
+                          <th>
+                            Total:
+                          </th>
+                          <th>
+                            ${{totalPrice}}
+                          </th>
+                        </tr>
+                      </table>
+                    {{!-- end ifEqualsElse user.id proposal.user.id --}}
+                    {{/ifEqualsElse}}
+                  {{!-- else for ifEqualsElse proposal.contractUserType "Seller" --}}
+                  {{else}}
+                    {{!-- buyer created the proposal --}}
+                    {{#ifEqualsElse user.id proposal.user.id}}
+                    {{!-- buyer created proposal and is looking at it --}}
+                      <table style="font-size:18px;">
+                        <tr style="border:0px;">
+                          <td style="padding:5px 5px;">
+                            Price:
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{proposal.price}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:5px 5px;">
+                            Application Fee (20%):
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{buyerFee}}
+                          </td>
+                        </tr>
+                        <tr style="border:0px;">
+                          <th>
+                            Total:
+                          </th>
+                          <th>
+                            ${{totalPrice}}
+                          </th>
+                        </tr>
+                      </table>
+                    {{else}}
+                    {{!-- buyer created the proposal and seller is looking at it  --}}
+                      <table style="font-size:18px;">
+                        <tr style="border:0px;">
+                          <td style="padding:5px 5px;">
+                            Price:
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{proposal.price}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:5px 5px;">
+                            Application Fee (20%):
+                          </td>
+                          <td style="padding:5px 5px;">
+                            ${{sellerFee}}
+                          </td>
+                        </tr>
+                        <tr style="border:0px;">
+                          <th>
+                            Total:
+                          </th>
+                          <th>
+                            ${{price}}
+                          </th>
+                        </tr>
+                      </table>
+                    {{/ifEqualsElse}}
+                  {{!-- end ifEqualsElse proposal.contractUserType "Seller" --}}
+                  {{/ifEqualsElse}}
+                
+                    
+                  
+                    
+                </div>
+                <br>
+                {{#ifEqualsElse proposal.status "Paid" }}
+                  <p>Status: <b>This proposal has been paid for</b></p>
+                {{else}}
+                  {{#if user}}
+                    {{#ifEqualsElse proposal.sellerStripeAccountId ""}}
+                      {{#ifEqualsElse proposal.contractUserType "Seller"}}
+                        {{#ifEqualsElse user.id proposal.user.id}}
+                          {{#ifEqualsElse user.stripeAccountId ""}}
+                            <div>
+                              <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+                            </div>
+                          {{!-- else for ifequalsElse user.stripeAccountId "" --}}
+                          {{else}}
+                              <p>Our Records say you have already signed up with Stripe, the last thing you need to do before the buyer can pay you is link your Stripe Account to this proposal. The next time around we will automatically do this for you.</p>
+                              <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                                <button type="submit" name="sellerStripeAccountId" class="btn waves-effect waves-light" value="{{req.user.stripeAccountId}}">Link Your Stripe Account
+                                  <i class="material-icons right">send</i>
+                                </button>
+                              </form>
+                          {{!-- end if equals else for user.stripeAccountId = "" --}}
+                          {{/ifEqualsElse}}
 
-        {{#if proposal.allowComments}}
+                        {{!-- else for ifEqualsElse user.id proposal.user.id --}}
+                        {{else}}
+                          <p>Status: <b>Waiting for seller to sign up with Stripe</b></p>
+                        {{!-- end ifEqualsElse user.id proposal.user.id --}}
+                        {{/ifEqualsElse}}
+                      {{!-- else for ifEqualsElse proposal.contractUserType "Seller" --}}
+                      {{!-- this means the buyer created the proposal --}}
+                      {{else}}
+                        {{#ifEqualsElse user.id proposal.user.id}}
+                            <p>Status: <b>Waiting for seller to sign up with Stripe</b></p>
+                          {{!-- else for ifEqualsElse user.id proposal.user.id --}}
+                          {{else}}
+                            {{#ifEqualsElse user.stripeAccountId ""}}
+                              <div>
+                                <a class="btn blue" href="/stripe/authorize">Sign Up With Stripe</a>
+                              </div>
+                            {{!-- else for ifequalsElse user.stripeAccountId "" --}}
+                            {{else}}
+                                <p>Our Records say you have already signed up with Stripe, the last thing you need to do before the buyer can pay you is link your Stripe Account to this proposal. The next time around we will automatically do this for you.</p>
+                                <form class="proposal_add-wrapper" action="/proposals/sellerStripeAccountId/{{proposal.id}}?_method=PUT" method="post">
+                                  <button type="submit" name="sellerStripeAccountId" class="btn waves-effect waves-light" value="{{req.user.stripeAccountId}}">Link Your Stripe Account
+                                    <i class="material-icons right">send</i>
+                                  </button>
+                                </form>
+                            {{!-- end if equals else for user.stripeAccountId = "" --}}
+                            {{/ifEqualsElse}}
+
+                          {{!-- end ifEqualsElse user.id proposal.user.id --}}
+                          {{/ifEqualsElse}}
+                        {{!-- end ifEqualsElse proposal.contractUserType "Seller" --}}
+                        {{/ifEqualsElse}}
+
+                    {{!-- else for ifEqualsElse proposal.sellerStripeAccountId "" --}}
+                    {{else}}
+                    {{#ifEqualsElse proposal.contractUserType "Seller"}}
+                      {{#ifEqualsElse user.id proposal.user.id}}
+                        <p>Status: <b>Waiting to get Paid</b></p>
+                      {{!--seller created proposal and buyer is currently accessing proposal --}}
+                      {{!-- else for ifEqualsElse user.id proposal.user.id --}}
+                      {{else}}
+                        <div>
+                          <div class="row">
+                            <form action="/stripe/charge" method="post" id="payment-form">
+                              <div class="form-row" style="padding:12px">
+                                <label for="card-element">
+                                  Credit or debit card
+                                </label>
+                                <div id="card-element">
+                                  <!-- A Stripe Element will be inserted here. -->
+                                </div>
+                                <!-- Used to display form errors. -->
+                                <div id="card-errors" role="alert"></div>
+                                <button class= "StripeButton">Submit Payment</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+
+                      {{/ifEqualsElse}}
+                    {{!--  this is if proposalcontractUserType = buyer within the section for ifEqualsElse proposal.contractUserType "Seller" --}}
+                    {{else}}
+                      {{!-- buyer created proposal and is currently viewing proposal --}}
+                      {{#ifEqualsElse user.id proposal.user.id}}
+                        <div>
+                          <div class="row">
+                            <form action="/stripe/charge" method="post" id="payment-form">
+                              <div class="form-row" style="padding:12px">
+                                <label for="card-element">
+                                  Credit or debit card
+                                </label>
+                                <div id="card-element">
+                                  <!-- A Stripe Element will be inserted here. -->
+                                </div>
+                                <!-- Used to display form errors. -->
+                                <div id="card-errors" role="alert"></div>
+                                <button class= "StripeButton">Submit Payment</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      {{else}}
+                      <p>Status: <b>Waiting to get Paid</b></p>
+
+                      {{/ifEqualsElse}}
+
+                    {{!-- end ifEqualsElse proposal.contractUserType "Seller" --}}
+                    {{/ifEqualsElse}}
+
+                    {{!-- end ifEqualsElse proposal.sellerStripeAccountId  --}}
+                    {{/ifEqualsElse}}
+                  {{/if}}
+                {{!-- end ifEqualsElse proposal.status "Paid" --}}
+                {{/ifEqualsElse}}
+            </div>
+          </div>
+        {{/ifNotEquals}}
+        {{!-- end ifEqualsElse proposal.status "Created" --}}
+        {{/ifEqualsElse}}
+
         <div class="card">
           <div class="card-content">
             <span class="card-title">Comments</span>
-            {{#if user}}
-            <form method="post" action="/proposals/comment/{{proposal.id}}">
-              <div class="input-field">
-                <textarea name="commentBody" class="materialize-textarea"></textarea>
-                <label>Add Comment</label>
+              {{#if user}}
+                <form method="post" action="/proposals/comment/{{proposal.id}}">
+                  <div class="input-field">
+                    <textarea name="commentBody" class="materialize-textarea"></textarea>
+                    <label>Add Comment</label>
+                  </div>
+                  <input type="submit" value="Submit" class="btn blue">
+                </form>
+              {{else}}
+                <p>Please login if you would like to leave a comment or
+                  accept the offer.
+                </p>
+              {{/if}}
+              {{!-- {{else}}
+              <p>Please <a href="/auth/google">login</a> if you would like to accept/decline the offer.</p> --}}
+              {{!-- </div> --}}
+              {{#if proposal.comments}}
+              <div class="card-content">
+                {{#each proposal.comments}}
+                <br>
+                <div class="chip">
+                  <img src="{{commentUser.image}}">
+                  <a href="/proposals/user/{{commentUser.id}}">{{commentUser.firstName}} {{commentUser.lastName}}</a>
+                </div>
+                <p>{{commentBody}}</p>
+                <small>Posted: {{formatDate commentDate 'MMMM Do YYYY, h:mm'}} </small>
+                <br>
+                {{/each}}
               </div>
-              <input type="submit" value="Submit" class="btn">
-            </form>
-            {{else}}
-            <p>Please <a href="/proposals/showClient/{{proposal.id}}">login</a> if you would like to leave a comment or
-              accept/decline the offer.
-            </p>
-            {{/if}}
-            {{!-- {{else}}
-            <p>Please <a href="/auth/google">login</a> if you would like to accept/decline the offer.</p> --}}
+              {{/if}}
           </div>
-          {{#if proposal.comments}}
-          <div class="card-content">
-            {{#each proposal.comments}}
-            <br>
-            <div class="chip">
-              <img src="{{commentUser.image}}">
-              <a href="/proposals/user/{{commentUser.id}}">{{commentUser.firstName}} {{commentUser.lastName}}</a>
-            </div>
-            <p>{{commentBody}}</p>
-            <small>Posted: {{formatDate commentDate 'MMMM Do YYYY, h:mm'}} </small>
-            <br>
-            {{/each}}
-          </div>
-          {{/if}}
         </div>
-        {{/if}}
-
       </div>
+
       <div class="col m6 s12">
         {{!-- the div below this is carries the embed code for the instagram post --}}
         <div class="card">
@@ -214,7 +627,7 @@
           <span class="card-title">{{proposal.user.firstName}} {{proposal.user.lastName}}</span>
           <img src="{{proposal.user.image}}" class="circle responsive-img">
         </div>
-        <div class="card-action"> 
+        <div class="card-action">
           <a href="/proposals/user/{{proposal.user.id}}">More From {{proposal.user.firstName}}</a>
         </div>
       </div>
@@ -222,17 +635,84 @@
 
 </div>
 </div>
-<br>
-<br>
-
-  <!-- Modal Login Structure-->
+<!-- Modal Help Structure-->
+<div id="helpModal" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <div class="modal-header center-align">
+      <h5>How Proposals Work</h5>
+    </div>
+    <div class= "center-align" style="background-color:#B6E9FF;">
+      {{#ifEqualsElse proposal.contractUserType "Seller"}}
+        {{!-- <img width="100%"src="/images/SellerProposal_Help.png"/> --}}
+        <table>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">1</td>
+            <td width="85%">Share the proposal with the potential buyer of your photo with a simple link, or use the “Copy” button to use our pre-generated message to reach out.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">2</td>
+            <td width="85%">Your recipient then reviews the terms of the licensing proposal and can message you with requests to edit certain conditions.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">3</td>
+            <td width="85%">The recipient then accepts the terms of the licensing agreement, and then triggers the payment process if you have specified cash compensation for the photo.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">4</td>
+            <td width="85%">If you have not done so, you’ll be asked to set up your Stripe seller account so that you can receive your payment.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">5</td>
+            <td width="85%">The Buyer may then complete their payment for the photo and funds will be transferred to your account which you can see on the Dashboard page.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">6</td>
+            <td width="85%">You may then cash out your balance using the regular payout method, or instantly.</td>
+          </tr>
+        </table>
+      {{else}}
+        {{!-- <img width="100%"src="/images/BuyerProposal_Help.png"/> --}}
+        <table>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">1</td>
+            <td width="85%">Share the proposal with the owner of the photo with a simple link, or use the “Copy” button to use our pre-generated message to reach out.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">2</td>
+            <td width="85%">Your recipient then reviews the terms of the licensing proposal and can message you with requests to edit certain conditions.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">3</td>
+            <td width="85%">The recipient then accepts the terms of the licensing agreement, and then triggers the payment process if you have offered cash compensation for the photo.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">4</td>
+            <td width="85%">The owner must set up their account in order to receive the funds related to your purchase.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">5</td>
+            <td width="85%">You may then make your payment using a credit or debit card and the funds will be added to the seller’s balance.</td>
+          </tr>
+          <tr style="border-bottom:0px;">
+            <td width="15%" class="center-align">6</td>
+            <td width="85%">You can download your newly licensed image by right-clicking on it or long-pressing it if on mobile.</td>
+          </tr>
+        </table>      
+      {{/ifEqualsElse}}
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div><a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a></div>
+  </div>
+</div>
+<!-- Modal Login Structure-->
 <div id="modalLogin" class="modal">
   <div class="modal-content">
     <div class="modal-header">
       <nav class="nav-horizontal">
-        <div class="row"> 
+        <div class="row">
           <div class="col s12">
-            <div class="nav_wrapper" width= "100%">
+            <div class="nav_wrapper" width= "100%" style="height: 48px;">
               <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
             </div>
           </div>
@@ -243,12 +723,12 @@
     <h4>Please Login</h4>
 
       <a class = "btn red darken-1" href="/proposals/showClient/{{proposal.id}}">
-        <i class="fa fa-google left"></i>Login with Google
+        <i class="fab fa-google left"></i>Login with Google
       </a>
       <br>
       <br>
       <a class = "btn blue darken-1 row center-align" href="/proposals/showFBClient/{{proposal.id}}">
-        <i class="fa fa-facebook left"></i>Login with Facebook
+        <i class="fab fa-facebook-f left"></i>Login with Facebook
       </a>
     </div>
   </div>
@@ -261,7 +741,7 @@
   <!-- Modal Structure -->
   <div id="acceptModal" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <div style="padding: 25px;">
+      <div>
       {{!-- beginning of contract --}}
           <div align="center">
         <table border="0" cellspacing="4" cellpadding="0" width="635">
@@ -289,7 +769,7 @@
     </p>
     <div>
         <div align="center" >
-        <a href="{{proposal.url}}media/?size=m"><img src="{{proposal.url}}media/?size=m" alt=""/></a>
+        <a href="{{proposal.url}}media/?size=m"><img width="100%" src="{{proposal.url}}media/?size=m" alt=""/></a>
         </div>
     </div>
     <p>
@@ -324,7 +804,7 @@
                 (A). No Unlawful Use. Client will not use the Photos in any unlawful manner, such as pornography or defamation.
             </li>
             <li>
-                (B). No Standalone File Use. Client will not use the Photos in any way that allows a standalone file or content file to be downloaded, extracted, or redistributed by others.  
+                (B). No Standalone File Use. Client will not use the Photos in any way that allows a standalone file or content file to be downloaded, extracted, or redistributed by others.
             </li>
             <li>
                 (C). No Use in Trademark or Logo. Client will not use the Photos in any trademark, logo or other mark.
@@ -455,9 +935,9 @@
 </div>
     </div>
     <div class="modal-footer">
-      <form class="proposal_add-wrapper" method="post" action="/proposals/voteUser/{{proposal.id}}">
+      <form class="proposal_add-wrapper" style="margin-top: 0px;" method="post" action="/proposals/voteUser/{{proposal.id}}">
         <div>
-          <input name="voteBody" type="submit" value="Accept" class="btn green lighten-1">
+          <input name="voteBody" type="submit" value="Accept" class="btn green">
           <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
         </div>
       </form>
@@ -465,8 +945,9 @@
     </div>
   </div>
 
+
 <script>
-//modal logic materialize 
+//modal logic materialize
   document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.modal');
     //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
@@ -501,4 +982,5 @@
       console.log('Oops, unable to copy');
     }
   });
+
 </script>

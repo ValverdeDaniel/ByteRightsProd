@@ -7,21 +7,28 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 
 
 //load Models
 require('./models/User');
 require('./models/Proposal');
+require('./models/Offer');
+require('./models/StripeTransaction')
 
 //passport config
 require('./config/passport')(passport);
+
+//const sessionStore = new MongoStore({ url: keys.mongoURI, autoReconnect: true });
 
 //load routes
 const index = require('./routes/index');
 const auth = require('./routes/auth');
 const dashboard = require('./routes/dashboard');
 const proposals = require('./routes/proposals');
+const offers = require('./routes/offers');
+const stripe = require('./routes/stripe');
 
 //load keys file
 const keys = require('./config/keys');
@@ -36,7 +43,12 @@ const {
   ifLoggedUserEqProposalUser,
   ifCompensationEqBlank,
   ifCompanyNameEqBlank,
-  ifEquals
+  ifStripeAccountIdEqBlank,
+  ifEquals,
+  ifEqualsElse,
+  ifNotEquals,
+  ifNotEqualsElse,
+  ifProposalContractUserTypeEQSeller
 } = require('./helpers/hbs');
 
 //map global promises
@@ -44,7 +56,9 @@ mongoose.Promise = global.Promise;
 
 //mongoose connect
 mongoose.connect(keys.mongoURI, {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true 
 })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
@@ -54,6 +68,14 @@ const app = express();
 //body Parser middleware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+//session middleware
+app.use(session({
+  secret: 'sessionTesting',
+  resave: true,
+  saveUninitialized: true,
+  store: new MongoStore({ url: keys.mongoURI, autoReconnect: true })
+}));
 
 //method override middleware
 app.use(methodOverride('_method'));
@@ -69,7 +91,12 @@ app.engine('handlebars', exphbs({
     ifLoggedUserEqProposalUser: ifLoggedUserEqProposalUser,
     ifCompensationEqBlank: ifCompensationEqBlank,
     ifCompanyNameEqBlank: ifCompanyNameEqBlank,
-    ifEquals: ifEquals
+    ifStripeAccountIdEqBlank: ifStripeAccountIdEqBlank,
+    ifEquals: ifEquals,
+    ifEqualsElse: ifEqualsElse,
+    ifNotEquals: ifNotEquals,
+    ifNotEqualsElse: ifNotEqualsElse,
+    ifProposalContractUserTypeEQSeller: ifProposalContractUserTypeEQSeller
   },
   defaultLayout: 'main'
 }));
@@ -101,6 +128,8 @@ app.use('/', index);
 app.use('/auth', auth)
 app.use('/dashboard', dashboard)
 app.use('/proposals', proposals)
+app.use('/offers', offers)
+app.use('/stripe', stripe)
 
 const port = process.env.PORT || 5000;
 

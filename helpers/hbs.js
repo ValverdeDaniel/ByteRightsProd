@@ -26,7 +26,7 @@ module.exports = {
       if(floating){
         return `<a href="/proposals/edit/${proposalId}" class="btn-floating halfway-fab red"><i class="fa fa-pencil"></i></a>`;
       } else {
-        return `<a href="/proposals/edit/${proposalId}"><i class="fa fa-pencil"></i></a>`;
+        return `<a class="btn grey waves-effect" href="/proposals/edit/${proposalId}"><i class="fa fa-pencil"></i></a>`;
       }
     } else {
       return '';
@@ -54,7 +54,38 @@ module.exports = {
       return opts.inverse(this);
     }
   },
+  ifStripeAccountIdEqBlank: function(userStripeAccountId, opts) {
+    if(userStripeAccountId == "") {
+      return opts.fn(this);
+    } else {
+      return opts.inverse(this);
+    }
+  },
   ifEquals: function(arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-  }  
+  },
+  ifEqualsElse: function(a, b, opts) {
+    if(a == b) {
+      return opts.fn(this)
+    } else {
+      return opts.inverse(this)
+    }
+  },
+  ifNotEquals: function(arg1, arg2, options) {
+    return (arg1 != arg2) ? options.fn(this) : options.inverse(this);
+  },
+  ifNotEqualsElse: function(a, b, opts) {
+    if(a != b) {
+      return opts.fn(this)
+    } else {
+      return opts.inverse(this)
+    }
+  },
+  ifProposalContractUserTypeEQSeller: function(proposalContractUserType, opts){
+    if(proposalContractUserType == "Seller") {
+      return opts.fn(this);
+    } else {
+      return opts.inverse(this);
+    }
+  },
 }

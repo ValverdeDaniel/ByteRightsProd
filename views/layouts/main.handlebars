@@ -2,6 +2,26 @@
 <html lang="en">
 
 <head>
+  {{!-- <!-- Global site tag (gtag.js) - Google Analytics- PRODUCTION -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133185934-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-133185934-1');
+  </script> --}}
+  <!-- Global site tag (gtag.js) - Google Analytics- DEVELOPMENT -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133185934-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-133185934-3');
+</script>
+
+  <script src="https://kit.fontawesome.com/57d77cde66.js" crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {{!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> --}}
@@ -12,15 +32,19 @@
 
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  {{!-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> --}}
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/mdStyles.css">
   <link rel="stylesheet" href="/css/select2-materialize.css">
   <link rel="stylesheet" href="/css/materialize-tags.js">
+  <link rel="stylesheet" href="/css/stripe.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   {{!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" /> --}}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.10.6/jquery.typeahead.min.css">
   
+  
+
 
   <script>
     window['_fs_debug'] = false;
@@ -73,6 +97,12 @@
       padding-top: 10px;
     }
 
+    .ignore-select-wrapper {
+      display: block;
+    }
+    .ignore-select {
+      display: none;
+    }
     
   </style>
 
@@ -102,10 +132,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/1.7.2/moment.min.js"></script>
   <script src="/js/materialize-tags.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.10.6/jquery.typeahead.min.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src = "/js/payment.js"></script>
   {{!-- <script src="/js/select2-materialize.js"></script> --}}
 
 
-  <script>
+  <script> 
     $(document).ready(function () {
       $('.select1').select2({
         closeOnSelect: false,
@@ -278,6 +310,18 @@
       $($activeTab).addClass('active'); 
     });
 
+    $(document).ready(function () {
+      $( ".ignore-select" ).parent().addClass( "ignore-select-wrapper" ); 
+   });
+  </script>
+  <script>
+    function initFreshChat() {
+      window.fcWidget.init({
+        token: "7f5b1517-35fd-4962-9143-13e62aebf8ca",
+        host: "https://wchat.freshchat.com"
+      });
+    }
+    function initialize(i,t){var e;i.getElementById(t)?initFreshChat():((e=i.createElement("script")).id=t,e.async=!0,e.src="https://wchat.freshchat.com/js/widget.js",e.onload=initFreshChat,i.head.appendChild(e))}function initiateCall(){initialize(document,"freshchat-js-sdk")}window.addEventListener?window.addEventListener("load",initiateCall,!1):window.attachEvent("load",initiateCall,!1);
   </script>
 
 </body>

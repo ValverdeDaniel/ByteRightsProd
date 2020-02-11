@@ -1,0 +1,228 @@
+<div class="proposal_wrapper--add">
+  <div class="row no-margin--bottom">
+    <div class="proposal_topbar">
+      <table style="border:0px;">
+        <tr style="border-bottom:0px;">
+          <td width="90%" style="padding: 0px 0px 0px 10px;"><h1 class="proposal_title">Instagram Submission</h1></td>
+          {{!-- <td class="left-align" width="10%" style="padding:0px 15px 0px 0px;"><button data-target="helpModal" class="btn-floating grey modal-trigger">?</button></td> --}}
+        </tr>
+      </table>
+    </div>
+      <div class="row" style="margin-bottom: 10px">
+        <div class="col s12">
+          From: <b>{{offer.igUsername}}</b> | Status: <b style="color:hotpink;">{{offer.status}}</b>
+        </div>
+      </div>
+  </div>
+  <div class="row no-margin--bottom">
+    <div class="proposal_show-content alternate">
+      <div class="col m6 s12">
+        {{!-- <div class="card">
+          <div class="card-content">
+            <p>hey there if you would like to share this offer with people send the link below!!</p>
+            <p><a class="word-break" href="{{offer.id}}" target="_blank">byterights.com/offers/createSubmission/{{offer.id}}</a></p>
+          </div>
+        </div> --}}
+
+        <div class="card horizontal">
+          <div class="card-stacked">
+            <div class="card-content">
+              <span class="card-title">You did it! Thanks for participating!</span>
+              <p>When you log back into ByteRights we will have your Submission waiting for you</p>
+              {{#ifEqualsElse offer.redemptionInstructions ""}}
+
+              {{else}}
+              <br>
+                <span class="card-title">Redemption Instructions</span>
+                <p>{{offer.redemptionInstructions}}</p>
+              {{/ifEqualsElse}}
+
+              {{#if user}}
+                {{#ifEqualsElse offer.ogOwner user.id}}
+                  {{#ifEqualsElse offer.status "Waiting for Approval" }}
+
+                    <form class="proposal_add-wrapper" style="margin-top: 0px;" method="post" action="/offers/approveSubmission/{{offer.id}}">
+                      <div>
+                        <input name="Approve" type="submit" value="Approve" class="btn green">
+                      </div>
+                    </form>
+                  {{else}}
+
+                  {{/ifEqualsElse}}
+                {{else}}
+
+                {{/ifEqualsElse}}
+
+                {{#ifEqualsElse offer.status "Approved"}}
+                  {{!-- add if offer.status = approved display redeem --}}
+                  <br>
+                  <button data-target="redeemModal" class="btn green modal-trigger">Redeem</button>
+                {{else}}
+
+                {{/ifEqualsElse}}
+              {{else}}
+                <button data-target="modalLogin" class="btn blue modal-trigger">Login</button>
+              {{/if}}
+              <br>
+              <a href="/offers/terms/{{offer.id}}" target="_blank">Terms and Conditions</a>
+
+              
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Tell Your Friends!</span>
+            <p>If you would like to share this offer with people send the link below!! Put it in your Bio, get it tatted on your back; share it wherever you like! You can always just send it in a text ;)</p>
+            <p><a class="word-break" href="../createSubmission/{{offer.ogOfferId}}" target="_blank">byterights.com/offers/createSubmission/{{offer.ogOfferId}}</a></p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">What You Need to Know</span>
+            <p>This is an agreement for the right to the referenced image. Here are the important details:</p><br>
+            <p class="proposal-label">You will be compensated with</p>
+              <p>{{offer.compensation}}</p>
+            <p class="proposal-label">Below is how we plan to use this photo.</p>
+              <p>{{offer.usage}}</p>
+            <p class="proposal-label">Will the creator be mentioned when this photo is used</p>
+              {{#if offer.credit}}
+              <p>Yes</p>
+              {{else}}
+              <p>No</p>
+              {{/if}}
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Comments</span>
+              {{#if user}}
+                <form method="post" action="/offers/commentSubmission/{{offer.id}}">
+                  <div class="input-field">
+                    <textarea name="commentBody" class="materialize-textarea"></textarea>
+                    <label>Add Comment</label>
+                  </div>
+                  <input type="submit" value="Submit" class="btn blue">
+                </form>
+              {{else}}
+                <p>Please login if you would like to leave a comment or
+                  accept the offer.
+                </p>
+              {{/if}}
+              {{!-- {{else}}
+              <p>Please <a href="/auth/google">login</a> if you would like to accept/decline the offer.</p> --}}
+              {{!-- </div> --}}
+              {{#if offer.comments}}
+              <div class="card-content">
+                {{#each offer.comments}}
+                <br>
+                {{!-- <div class="chip">
+                  <img src="{{commentUser.image}}">
+                  <a href="/offers/user/{{commentUser.id}}">{{commentUser.firstName}} {{commentUser.lastName}}</a>
+                </div> --}}
+                <p>{{commentBody}}</p>
+                <small>Posted: {{formatDate commentDate 'MMMM Do YYYY, h:mm'}} </small>
+                <br>
+                {{/each}}
+              </div>
+              {{/if}}
+          </div>
+        </div>
+      </div>
+
+      <div class="col m6 s12">
+        {{!-- the div below this is carries the embed code for the instagram post --}}
+        <div class="card">
+          <div class="card-image">
+            <a href="{{offer.url}}media/?size=l"><img src="{{offer.url}}media/?size=l" alt="" /></a>
+          </div>
+          {{!-- <div class="card-content">
+            <p>
+              {{#each offer.tag}}
+              <div class="chip">
+                {{this.text}}
+              </div>
+              {{/each}}
+            </p>
+          </div> --}}
+        </div>
+        <a href="{{offer.url}}">{{offer.url}}</a>
+      </div>
+    </div>
+</div>
+
+<!-- Modal Login Structure-->
+<div id="modalLogin" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <nav class="nav-horizontal">
+        <div class="row">
+          <div class="col s12">
+            <div class="nav_wrapper" width= "100%" style="height: 48px;">
+              <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class= "center-align">
+    <h4>Please Login</h4>
+
+      <a class = "btn red darken-1" href="/offers/createSubmissionGClient/{{offer.id}}">
+        <i class="fab fa-google left"></i>Login with Google
+      </a>
+      <br>
+      <br>
+      <a class = "btn blue darken-1 row center-align" href="/offers/createSubmissionFBClient/{{offer.id}}">
+        <i class="fab fa-facebook-f left"></i>Login with Facebook
+      </a>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
+<!-- Modal Login Structure-->
+<div id="redeemModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <nav class="nav-horizontal">
+        <div class="row">
+          <div class="col s12">
+            <div class="nav_wrapper" width= "100%" style="height: 48px;">
+              <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class= "center-align">
+    <h6>Be sure you want to redeem this giveaway, once it has been redeemed it can't be redeemed again</h6>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+      <form class="proposal_add-wrapper" style="margin-top: 0px;" method="post" action="/offers/redeemSubmission/{{offer.id}}">
+        <div>
+          <input name="Redeem" type="submit" value="Redeem" class="btn green">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+      </form>
+  </div>
+</div>
+
+
+<script>
+//  modal logic materialize 
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
+      var instances = M.Modal.init(elems);
+    });
+
+</script>
+{{!-- 
+http://localhost:5000/offers/createSubmission/5e34853aa5b91f9c142193a8 
+--}}
+
