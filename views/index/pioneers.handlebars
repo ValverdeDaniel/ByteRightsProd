@@ -1,0 +1,105 @@
+<div class="landing_content">
+  {{!-- <div class="grey-1"> --}}
+    <div class="row"> 
+      <div class="col m12 s12">
+        <div class="landing_content-header">
+          <h2>Join our Pioneer Program</h2>
+          <p>Get free access to Byte Rights, early feature releases, and a seat at the table to discuss new features you'd like to see added to the platform.</p>
+        </div>
+      </div>
+    </div>
+  {{!-- </div> --}}
+  <div class="landing_content-wrapper">
+    <div class="row"> 
+      <div class="col m4 s12">
+        <div class="landing_content-3col-center">
+          <i class="fas fa-calendar-alt fa-7x iconHome3ColBRBlue"></i>
+          <h3>12 Months</h3>
+          <p>You'll have free access to the platform and all its current and future features for 12 months from joining.</p>
+        </div>
+      </div>
+      <div class="col m4 s12">
+        <div class="landing_content-3col-center">
+          <i class="far fa-comments fa-7x iconHome3ColBRPink"></i>
+          <h3>Personalized Training</h3>
+          <p>We'll discuss your business and marketing needs and help envision how our tool can help. We'll then show you how to create your first proposal or giveaway.</p>
+        </div>
+      </div>
+      <div class="col m4 s12">
+        <div class="landing_content-3col-center">
+          <i class="fas fa-code fa-7x iconHome3ColBRBlue"></i>
+          <h3>Built for You</h3>
+          <p>As early adopters, your feedback will dictate what features we prioritize and we'll let you know in advance what we'll release every month.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="background-color: #000C4A; color: white;"> 
+    <div class="col s12">  
+      <div class="home_content-header">
+        <div class="typeform-widget" data-url="https://byterights.typeform.com/to/YAoBax" data-transparency="100" data-hide-headers=true data-hide-footer=true style="width: 100%; height: 500px;"></div> <script> (function() { var qs,js,q,s,d=document, gi=d.getElementById, ce=d.createElement, gt=d.getElementsByTagName, id="typef_orm", b="https://embed.typeform.com/"; if(!gi.call(d,id)) { js=ce.call(d,"script"); js.id=id; js.src=b+"embed.js"; q=gt.call(d,"script")[0]; q.parentNode.insertBefore(js,q) } })() </script> <div style="font-family: Sans-Serif;font-size: 12px;color: #999;opacity: 0.5; padding-top: 5px;"> powered by <a href="https://admin.typeform.com/signup?utm_campaign=YAoBax&utm_source=typeform.com-01D8JX699K59PQM52FWP02BBKV-free&utm_medium=typeform&utm_content=typeform-embedded-poweredbytypeform&utm_term=EN" style="color: #999" target="_blank">Typeform</a> </div>
+      </div>
+    </div>
+  </div>
+  {{!-- <div class="landing_content-wrapper">
+    <div class="row">
+      <div class="col s12">
+        <div class="landing_copy">
+          <h3>Businesses should ask for Permission, Not Forgiveness</h3>
+          <p>Our societies are addicted to media platforms like Instagram and Youtube, and the need to create content for these platforms is relentless. In the frenzy to capture impressions, influence consumers, and go viral, people forget that there are rules to follow and creatives’ intellectual property rights are being violated every second. We’re making the process of getting rights to use images as easy as possible so that businesses will do the right thing more often.</p>
+        </div>
+      </div>
+    </div>
+  </div>--}}
+  {{!-- <div class="row"> 
+    <div class="col s12">
+      {{#if user}} 
+      {{else}} 
+        <button data-target="modalLogin" class="btn brPink waves-pink modal-trigger">Join Beta</button>
+      - OR - 
+      {{/if}} <a class="btn brBlue" href="/howitworks">Learn More</a>
+    </div>
+  </div>     --}}
+  
+</div>
+<!-- Modal Login Structure-->
+<div id="modalLogin" class="modal">
+  <div class="modal-content">
+    {{!-- <div class="modal-header">
+      <nav class="nav-horizontal">
+        <div class="row">
+          <div class="col s12">
+            <div class="nav_wrapper" width= "100%" style="height: 48px;">
+              <img src="/images/ByteRights_BETA_Logo.png" width="74" height="45"/>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div> --}}
+    <div class= "center-align">
+    <h4>Please Login</h4>
+
+      <a class = "btn red darken-1" href="/auth/google">
+        <i class="fab fa-google left"></i>Login with Google
+      </a>
+      <br>
+      <br>
+      <a class = "btn blue darken-1 row center-align" href="/auth/facebook">
+        <i class="fab fa-facebook-f left"></i>Login with Facebook
+      </a>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
+<script>
+  //modal logic materialize
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    //instances below used to have (elems, options) for whatever reason it didn't like options?? log said options was undefined.
+    var instances = M.Modal.init(elems);
+  });
+
+</script>

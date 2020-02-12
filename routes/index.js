@@ -25,6 +25,10 @@ router.get('/pricing', (req, res) => {
   res.render('index/pricing');
 });
 
+router.get('/pioneers', (req, res) => {
+  res.render('index/pioneers');
+});
+
 // router.get('/dashboard', ensureAuthenticated, (req, res) => {
 //   user.findOne({id:req.user.id})
 //     res.render('index/dashboard');
