@@ -556,7 +556,9 @@ router.get('/mySubmissions', ensureAuthenticated, (req, res) => {
       console.log(result);
 
       if (tags.length > 0) {
-        Offer.find({$or: [{ user: req.user.id}, {ogOwner: req.user.id}], offerType: "Submission" })
+        // Offer.find({$or: [{ user: req.user.id}, {ogOwner: req.user.id}], offerType: "Submission" })
+        Offer.find({ user: req.user.id, offerType: "Submission" })
+
           .populate('user')
           .sort({ date: -1 })
           .then(offers => {
@@ -566,7 +568,8 @@ router.get('/mySubmissions', ensureAuthenticated, (req, res) => {
             });
           });
       } else {
-        Offer.find({$or: [{ user: req.user.id}, {ogOwner: req.user.id}], offerType: "Submission" })
+        // Offer.find({$or: [{ user: req.user.id}, {ogOwner: req.user.id}], offerType: "Submission" })
+        Offer.find({ user: req.user.id, offerType: "Submission" })
           .populate('user')
           .sort({ date: -1 })
           .then(offers => {
@@ -578,6 +581,111 @@ router.get('/mySubmissions', ensureAuthenticated, (req, res) => {
       }
     })
 });
+
+//received submissions from my offer
+router.get('/receivedSubmissions', ensureAuthenticated, (req, res) => {
+  Offer.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(offer => {
+          if (offer.tag.length > 0) {
+            offer.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+
+      console.log(tags);
+
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      console.log(result);
+
+      if (tags.length > 0) {
+        Offer.find({ogOwner: req.user.id, offerType: "Submission", archived: false })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(offers => {
+            res.render('offers/receivedSubmissions', {
+              offers: offers,
+              tags: result
+            });
+          });
+      } else {
+        Offer.find({ogOwner: req.user.id, offerType: "Submission", archived: false })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(offers => {
+            res.render('offers/receivedSubmissions', {
+              offers: offers,
+              tags: []
+            });
+          });
+      }
+    })
+});
+
+//received submissions from my offer
+router.get('/archivedSubmissions', ensureAuthenticated, (req, res) => {
+  Offer.find({ user: req.user.id }, { tag: true })
+    .then(p => {
+      console.log(p);
+      let tags = [];
+      if (p.length > 0) {
+        p.forEach(offer => {
+          if (offer.tag.length > 0) {
+            offer.tag.forEach(item => {
+              tags.push(item.text.toLowerCase());
+            })
+          }
+        })
+      }
+
+      console.log(tags);
+
+      let result = [];
+      let map = new Map();
+      for (let item of tags) {
+        if (!map.has(item)) {
+          map.set(item, true);    // set any value to Map
+          result.push(item.toLowerCase());
+        }
+      }
+      console.log(result);
+
+      if (tags.length > 0) {
+        Offer.find({ogOwner: req.user.id, offerType: "Submission", archived: true })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(offers => {
+            res.render('offers/archivedSubmissions', {
+              offers: offers,
+              tags: result
+            });
+          });
+      } else {
+        Offer.find({ogOwner: req.user.id, offerType: "Submission", archived: true })
+          .populate('user')
+          .sort({ date: -1 })
+          .then(offers => {
+            res.render('offers/archivedSubmissions', {
+              offers: offers,
+              tags: []
+            });
+          });
+      }
+    })
+});
+
 
 //logged in Users proposals
 router.get('/myOffers', ensureAuthenticated, (req, res) => {
@@ -705,6 +813,23 @@ router.post('/approveSubmission/:id', (req, res) => {
     });
 });
 
+//add redeem submission button route
+router.post('/approveBulkSubmission/:id', (req, res) => {
+  Offer.findOne({
+    _id: req.params.id
+  })
+    .then(offer => {
+      console.log('In approvedBulkSubmission');
+     
+      offer.status = "Approved";
+
+      offer.save()
+        .then(offer => {
+          res.redirect('/offers/receivedSubmissions');
+        })
+    });
+});
+
 
 //add comment
 router.post('/commentSubmission/:id', (req, res) => {
@@ -732,6 +857,71 @@ router.post('/commentSubmission/:id', (req, res) => {
         })
     });
 });
+
+//delete Proposal
+router.delete('/:id', (req, res) => {
+  Proposal.remove({ _id: req.params.id })
+    .then(() => {
+      res.redirect('/proposals/my');
+    })
+});
+
+
+//edit proposal to add sellerStripeAccountId process
+router.put('/sellerStripeAccountId/:id', (req, res) => {
+  Proposal.findOne({
+    _id: req.params.id
+  })
+    .then(proposal => {
+
+      //new values
+      proposal.sellerStripeAccountId = req.user.stripeAccountId;
+
+      proposal.save()
+        .then(proposal => {
+          res.redirect(`/proposals/show/${proposal.id}`);
+        });
+    });
+});
+
+//add archive submission button route
+router.post('/archiveSubmission/:id', (req, res) => {
+  Offer.findOne({
+    _id: req.params.id
+  })
+    .then(offer => {
+
+      console.log('In archiveSubmission');
+
+      offer.archived = true;
+      
+      console.log('about to update archived to true')
+      offer.save()
+        .then(() => {
+          res.redirect('/offers/receivedSubmissions');
+        })
+    });
+});
+
+//add archive submission button route
+router.post('/unarchiveSubmission/:id', (req, res) => {
+  Offer.findOne({
+    _id: req.params.id
+  })
+    .then(offer => {
+
+      console.log('In unarchiveSubmission');
+
+      offer.archived = false;
+      
+      console.log('about to update archived to false')
+      offer.save()
+        .then(() => {
+          res.redirect('/offers/archivedSubmissions');
+        })
+    });
+});
+
 
 
 router.post('/tags', ensureAuthenticated, (req, res) => {

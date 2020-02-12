@@ -41,6 +41,10 @@ const OfferSchema = new Schema({
     type: String,
     default: 'Created'
   },
+  archived: {
+    type: Boolean,
+    default: false
+  },
   allowComments: {
     type: Boolean,
     default: true

@@ -2,17 +2,17 @@
   <div class="row">
     <div class="col"> 
       <div class="row proposal_topbar">
-        <div class="col m2 s12">
-          <h1 class="proposal_title">Offers </h1>
+        <div class="col m4 s12">
+          <h1 class="proposal_title">Archived Submissions </h1>
         </div>
         <div class="col m8 s12" style="display: grid">
           <ul class="br_tabs tabs hide-on-small-only "> 
-            <li class="tab col m2 s12"><a href="/offers/mySubmissions">Submissions</a></li>
+            <li class="tab col m3 s12"><a href="/offers/mySubmissions">Submissions</a></li>
             <li class="tab col m3 s12"><a  href="/offers/receivedSubmissions">Received</a></li>
-            <li class="tab col m3 s12"><a  href="/offers/archivedSubmissions">Archived</a></li>
+            <li class="tab col m3 s12"><a class="toggleRowClick active" href="/offers/archivedSubmissions">Archived</a></li>
             {{!-- <li class="tab col m3 s12"><a class="toggleRowClick" href="#accepted">Accepted</a></li>
             <li class="tab col m2 s12"><a class="toggleRowClick" href="#declined">Declined</a></li> --}}
-            <li class="tab col m2 s12"><a class="toggleRowClick active" href="/offers/myOffers">Offers</a></li>
+            <li class="tab col m3 s12"><a href="/offers/myOffers">Offers</a></li>
           </ul>
           <!-- Dropdown Trigger -->
           <div class="hide-on-med-and-up" style="display: grid;">
@@ -22,10 +22,10 @@
             <ul id='dropdown1' class='dropdown-content'>
             <li class="tab col m2 s12"><a href="/offers/mySubmissions">Submissions</a></li>
             <li class="tab col m3 s12"><a  href="/offers/receivedSubmissions">Received</a></li>
-            <li class="tab col m3 s12"><a  href="/offers/archivedSubmissions">Archived</a></li>
+            <li class="tab col m3 s12"><a class="toggleRowClick active" href="/offers/archivedSubmissions">Archived</a></li>
             {{!-- <li class="tab col m3 s12"><a class="toggleRowClick" href="#accepted">Accepted</a></li>
             <li class="tab col m2 s12"><a class="toggleRowClick" href="#declined">Declined</a></li> --}}
-            <li class="tab col m2 s12"><a class="toggleRowClick active" href="/offers/myOffers">Offers</a></li>
+            <li class="tab col m2 s12"><a href="/offers/myOffers">Offers</a></li>
             </ul>
           </div>
         </div>  
@@ -55,9 +55,12 @@
               <div class="col m1 s12">
                 <p>Prize</p>
               </div>
-              {{!-- <div class="col m2 s12">
+              <div class="col m2 s12">
+                <p>IG Username</p>
+              </div>
+              <div class="col m2 s12">
                 <p>Status</p>
-              </div> --}}
+              </div>
               <div class="col m2 s12">
                 <p>Last Comment</p>
               </div>
@@ -70,7 +73,7 @@
               {{!-- <div class="col m2 s12">
                 Tags
               </div> --}}
-              <div class="col m2 s12">
+              <div class="col m4 s12">
                 Actions
               </div>
             </div>
@@ -85,8 +88,8 @@
                 <div class="">
                   <div class="proposal_item">
                     <div class="col m1 s12">
-                      {{#if offerLink}}
-                      <img src="{{offerLink}}media/?size=l" class="proposal_image" width="100%" alt="" />
+                      {{#if url}}
+                      <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
                       {{else}}
                       <img src="{{user.image}}" width="100%" class="proposal_image">
                       {{/if}}
@@ -95,12 +98,18 @@
                       <p class="proposal-label hide-on-med-and-up">Prize</p>
                       <p>{{compensation}}</p>
                     </div>
-                    {{!-- <div class="col m2 s12">
+                    <div class="col m2 s12">
+                      <p class="proposal-label hide-on-med-and-up">IG Username</p>
+                      <p>
+                        {{igUsername}}
+                      </p>
+                    </div>                    
+                    <div class="col m2 s12">
                       <p class="proposal-label hide-on-med-and-up">Status</p>
                       <p>
                         {{status}}
                       </p>
-                    </div> --}}
+                    </div>
                     <div class="col m2 s12">
                       <p class="proposal-label hide-on-med-and-up">Last Comment</p>
                       <p>
@@ -127,16 +136,19 @@
                         {{/each}}
                       </p>
                     </div> --}}
-                    <div class="col m2 s12">
+                    <div class="col m4 s12">
                       <div class="row">
                         <div class="col m-auto s4">
-                          <a class="proposal-btn btn grey" href="/offers/createSubmission/{{id}}"><i class="fa fa-eye"></i></a>
+                          <a class="proposal-btn btn grey" href="/offers/showSubmission/{{id}}"><i class="fa fa-eye"></i></a>
                         </div>
                         <div class="col m-auto s4">
-                          <a class="proposal-btn btn brPink left-align" href="/offers/editOffer/{{id}}"><i
-                              class="fa fa-pencil"></i></a>
+                          <form  method="post" action="/offers/unarchiveSubmission/{{id}}">
+                            <div>
+                              <input name="unArchive" type="submit" value="unArchive" class="btn brBlue">
+                            </div>
+                          </form>
                         </div>
-
+                        
                         {{!-- <div class="col m-auto s4">
                         <form action="/offers/{{id}}?_method=DELETE" method="post" id="delete-form">
                           <input type="hidden" name="_method" value="DELETE">
@@ -158,8 +170,8 @@
                 <div class="">
                   <div class="proposal_item">
                     <div class="col m1 s12">
-                      {{#if offerLink}}
-                      <img src="{{offerLink}}media/?size=l" class="proposal_image" width="100%" alt="" />
+                      {{#if url}}
+                      <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
                       {{else}}
                       <img src="{{user.image}}" width="100%" class="proposal_image">
                       {{/if}}
@@ -168,12 +180,18 @@
                       <p class="proposal-label hide-on-med-and-up">Prize</p>
                       <p>{{compensation}}</p>
                     </div>
-                    {{!-- <div class="col m2 s12">
+                    <div class="col m2 s12">
+                      <p class="proposal-label hide-on-med-and-up">IG Username</p>
+                      <p>
+                        {{igUsername}}
+                      </p>
+                    </div>                    
+                    <div class="col m2 s12">
                       <p class="proposal-label hide-on-med-and-up">Status</p>
                       <p>
                         {{status}}
                       </p>
-                    </div> --}}
+                    </div>
                     <div class="col m2 s12">
                       <p class="proposal-label hide-on-med-and-up">Last Comment</p>
                       <p>
@@ -200,18 +218,20 @@
                         {{/each}}
                       </p>
                     </div> --}}
-                    <div class="col m2 s12">
+                    <div class="col m4 s12">
                       <div class="row">
                         <div class="col m-auto s4">
-                          <a class="proposal-btn btn grey" href="/offers/createSubmission/{{id}}"><i class="fa fa-eye"></i></a>
+                          <a class="proposal-btn btn grey" href="/offers/showSubmission/{{id}}"><i class="fa fa-eye"></i></a>
                         </div>
                         <div class="col m-auto s4">
-                          <a class="proposal-btn btn brPink left-align" href="/offers/editOffer/{{id}}"><i
-                              class="fa fa-pencil"></i></a>
-                        </div>                        
-
+                          <form  method="post" action="/offers/unarchiveSubmission/{{id}}">
+                            <div>
+                              <input name="unArchive" type="submit" value="unArchive" class="btn brBlue">
+                            </div>
+                          </form>
+                        </div>
                         {{!-- <div class="col m-auto s4">
-                        <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
+                        <form action="/offers/{{id}}?_method=DELETE" method="post" id="delete-form">
                           <input type="hidden" name="_method" value="DELETE">
                           <button type="submit" class="proposal-btn btn red"><i class="fa fa-remove"></i></button>
                         </form>
@@ -231,8 +251,8 @@
                 <div class="proposal_item">
 
                   <div class="col m1 s12">
-                    {{#if offerLink}}
-                    <img src="{{offerLink}}media/?size=l" class="proposal_image" width="100%" alt="" />
+                    {{#if url}}
+                    <img src="{{url}}media/?size=l" class="proposal_image" width="100%" alt="" />
                     {{else}}
                     <img src="{{user.image}}" width="100%" class="proposal_image">
                     {{/if}}
@@ -241,12 +261,18 @@
                     <p class="proposal-label hide-on-med-and-up">Prize</p>
                     <p>{{compensation}}</p>
                   </div>
-                  {{!-- <div class="col m2 s12">
+                  <div class="col m2 s12">
+                    <p class="proposal-label hide-on-med-and-up">IG Username</p>
+                    <p>
+                      {{igUsername}}
+                    </p>
+                  </div>                  
+                  <div class="col m2 s12">
                     <p class="proposal-label hide-on-med-and-up">Status</p>
                     <p>
                       {{status}}
                     </p>
-                  </div> --}}
+                  </div>
                   <div class="col m2 s12">
                     <p class="proposal-label hide-on-med-and-up">Last Comment</p>
                     <p>
@@ -273,18 +299,22 @@
                       {{/each}}
                     </p>
                   </div> --}}
-                  <div class="col m2 s12">
+                  <div class="col m4 s12">
                     <div class="row">
                       <div class="col m-auto s4">
-                        <a class="proposal-btn btn grey" href="/offers/createSubmission/{{id}}"><i class="fa fa-eye"></i></a>
+                        <a class="proposal-btn btn grey" href="/offers/showSubmission/{{id}}"><i class="fa fa-eye"></i></a>
                       </div>
                       <div class="col m-auto s4">
-                        <a class="proposal-btn btn brPink left-align" href="/offers/editOffer/{{id}}"><i
-                            class="fa fa-pencil"></i></a>
+                        <form  method="post" action="/offers/unarchiveSubmission/{{id}}">
+                          <div>
+                            <input name="unArchive" type="submit" value="unArchive" class="btn brBlue">
+                          </div>
+                        </form>
                       </div>
+                      
 
                       {{!-- <div class="col m-auto s4">
-                      <form action="/proposals/{{id}}?_method=DELETE" method="post" id="delete-form">
+                      <form action="/offers/{{id}}?_method=DELETE" method="post" id="delete-form">
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="proposal-btn btn red"><i class="fa fa-remove"></i></button>
                       </form>
@@ -307,7 +337,7 @@
                           <td width="15%" class="center-align" style="color:white;text-shadow:2px 2px 2px grey;"><i class="far fa-copy fa-3x"></i></td>
                           <td width="55%" style="padding:10px;">
                               <div style="padding:10px;background-color:rgb(255, 255, 255);border-radius:5px;box-shadow:2px 2px 5px grey;">
-                                  Copy the link to a photo you would like to create a offer for.
+                                  Copy the link to a photo you would like to create an offer for.
                               </div>
                           </td>
                       </tr>
@@ -315,7 +345,7 @@
                           <td width="15%" class="center-align" style="color:white;text-shadow:2px 2px 2px grey;"><i class="far fa-list-alt fa-3x"></i></td>
                           <td width="55%" style="padding:10px;">
                               <div style="padding:10px;background-color:rgb(255, 255, 255);border-radius:5px;box-shadow:2px 2px 5px grey;">
-                                  Create a offer to license the picture by pasting the link and answering a few questions.
+                                  Create an offer to license the picture by pasting the link and answering a few questions.
                               </div>
                           </td>
                       </tr>
@@ -331,7 +361,7 @@
                           <td width="15%" class="center-align" style="color:white;text-shadow:2px 2px 2px grey;"><i class="fas fa-envelope-open-text fa-3x"></i></td>
                           <td width="55%" style="padding:10px;">
                               <div style="padding:10px;background-color:rgb(255, 255, 255);border-radius:5px;box-shadow:2px 2px 5px grey;">
-                                  Recipient opens the link and reviews the terms of the offer.
+                                  Recipient opens the link and reviews the terms of the proposal.
                               </div>
                           </td>
                       </tr>
