@@ -495,6 +495,10 @@ router.get('/showSubmission/:id', async (req, res) => {
   Offer.findOne({
     _id: req.params.id
   })
+    .populate('user')
+    .populate('votes.voteUser')
+    .populate('comments.commentUser')
+    .populate('touchedBy.touchedByUser')
     .then(offer => {
       console.log('/createSubmission route we made it !')
       // if (offer.user != req.user.id) {

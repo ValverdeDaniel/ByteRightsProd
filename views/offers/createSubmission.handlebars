@@ -63,9 +63,16 @@
                     <input type="text" name="credit" id="credit" value={{offer.credit}} hidden>
                   </div>
 
-                  {{!-- <div class="input-field">
+                  {{!-- <p>
+
+                  </p>
+
+                  <div class="input-field">
                     <p>Tags</p>
-                    <input type="text" data-role="materialtags" name="tags" value="{{tag}}" id="tags">
+                    <input type="text" name="tags" 
+                    value="{{#each offer.tag}}
+                               {{this.text}}
+                            {{/each}}" id="tags">
                   </div> --}}
 
                   <input type="text" name="redemptionInstructions" value="{{offer.redemptionInstructions}}" hidden>
