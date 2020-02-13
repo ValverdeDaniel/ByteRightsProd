@@ -142,13 +142,16 @@
                         <div class="col m-auto s4">
                           <a class="proposal-btn btn grey" href="/offers/showSubmission/{{id}}"><i class="fa fa-eye"></i></a>
                         </div>
-                        <div class="col m-auto s4">
-                        <form  method="post" action="/offers/approveBulkSubmission/{{id}}">
-                            <div>
-                              <input name="Approve" type="submit" value="Approve" class="btn brBlue">
-                            </div>
-                          </form>
-                        </div>
+                        {{#ifEqualsElse status "Waiting for Approval" }}
+                          <div class="col m-auto s4">
+                          <form  method="post" action="/offers/approveBulkSubmission/{{id}}">
+                              <div>
+                                <input name="Approve" type="submit" value="Approve" class="btn brBlue">
+                              </div>
+                            </form>
+                          </div>
+                        {{else}}
+                        {{/ifEqualsElse}}
                         <div class="col m-auto s4">
                           <form  method="post" action="/offers/archiveSubmission/{{id}}">
                             <div>
@@ -231,13 +234,16 @@
                         <div class="col m-auto s4">
                           <a class="proposal-btn btn grey" href="/offers/showSubmission/{{id}}"><i class="fa fa-eye"></i></a>
                         </div>
-                        <div class="col m-auto s4">
-                        <form  method="post" action="/offers/approveBulkSubmission/{{id}}">
-                            <div>
-                              <input name="Approve" type="submit" value="Approve" class="btn brBlue">
-                            </div>
-                          </form>
-                        </div>
+                        {{#ifEqualsElse status "Waiting for Approval" }}
+                          <div class="col m-auto s4">
+                          <form  method="post" action="/offers/approveBulkSubmission/{{id}}">
+                              <div>
+                                <input name="Approve" type="submit" value="Approve" class="btn brBlue">
+                              </div>
+                            </form>
+                          </div>
+                        {{else}}
+                        {{/ifEqualsElse}}
                         <div class="col m-auto s4">
                           <form  method="post" action="/offers/archiveSubmission/{{id}}">
                             <div>
@@ -319,13 +325,16 @@
                       <div class="col m-auto s4">
                         <a class="proposal-btn btn grey" href="/offers/showSubmission/{{id}}"><i class="fa fa-eye"></i></a>
                       </div>
-                      <div class="col m-auto s4">
-                        <form  method="post" action="/offers/approveBulkSubmission/{{id}}">
-                          <div>
-                            <input name="Approve" type="submit" value="Approve" class="btn brBlue">
+                        {{#ifEqualsElse status "Waiting for Approval" }}
+                          <div class="col m-auto s4">
+                          <form  method="post" action="/offers/approveBulkSubmission/{{id}}">
+                              <div>
+                                <input name="Approve" type="submit" value="Approve" class="btn brBlue">
+                              </div>
+                            </form>
                           </div>
-                        </form>
-                      </div>
+                        {{else}}
+                        {{/ifEqualsElse}}
                       <div class="col m-auto s4">
                         <form  method="post" action="/offers/archiveSubmission/{{id}}">
                           <div>
