@@ -9,8 +9,8 @@ router.get('/', ensureGuest, (req, res) => {
   res.render('index/welcome');
 });
 
-router.get('/businesses', (req, res) => {
-  res.render('index/businesses');
+router.get('/features', (req, res) => {
+  res.render('index/features');
 });
 
 router.get('/creatives', (req, res) => {
