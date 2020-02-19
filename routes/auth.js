@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const axios = require('axios');
+const Instagram = require('node-instagram').default;
+
 
 router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
@@ -30,6 +32,45 @@ router.get('/facebook', passport.authenticate('facebook', {scope: ['public_profi
 router.get('/facebook/callback', 
   passport.authenticate('facebook', { successReturnToOrRedirect: '/proposals/my', failureRedirect: '/' })
 );
+
+
+// Create a new instance.
+const instagram = new Instagram({
+  clientId: 'your-client-id',
+  clientSecret: 'your-client-secret',
+  accessToken: 'user-access-token',
+});
+
+// Your redirect url where you will handle the code param
+const redirectUri = 'http://localhost:3000/auth/instagram/callback';
+ 
+// First redirect user to instagram oauth
+app.get('/auth/instagram', (req, res) => {
+  res.redirect(
+    instagram.getAuthorizationUrl(
+      redirectUri,
+      {
+        // an array of scopes
+        scope: ['basic', 'likes'],
+      },
+      // an optional state
+      //(state: 'your state')
+    )
+  );
+});
+ 
+// Handle auth code and get access_token for user
+app.get('/auth/instagram/callback', async (req, res) => {
+  try {
+    // The code from the request, here req.query.code for express
+    const code = req.query.code;
+    const data = await instagram.authorizeUser(code, redirectUri);
+    // data.access_token contain the user access_token
+    res.json(data);
+  } catch (err) {
+    res.json(err);
+  }
+});
 
 //passport-instagram routes
 //within the google passport.authenticate after instagram, they have scope {"profile", "email"}
