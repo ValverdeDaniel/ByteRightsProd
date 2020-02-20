@@ -858,31 +858,14 @@ router.post('/commentSubmission/:id', (req, res) => {
     });
 });
 
-//delete Proposal
+//delete Offer
 router.delete('/:id', (req, res) => {
-  Proposal.remove({ _id: req.params.id })
+  Offer.remove({ _id: req.params.id })
     .then(() => {
-      res.redirect('/proposals/my');
+      res.redirect('/offers/myOffers');
     })
 });
 
-
-//edit proposal to add sellerStripeAccountId process
-router.put('/sellerStripeAccountId/:id', (req, res) => {
-  Proposal.findOne({
-    _id: req.params.id
-  })
-    .then(proposal => {
-
-      //new values
-      proposal.sellerStripeAccountId = req.user.stripeAccountId;
-
-      proposal.save()
-        .then(proposal => {
-          res.redirect(`/proposals/show/${proposal.id}`);
-        });
-    });
-});
 
 //add archive submission button route
 router.post('/archiveSubmission/:id', (req, res) => {
