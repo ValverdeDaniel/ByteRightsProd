@@ -1,5 +1,5 @@
 # BRv2
-Me and my buddy spent 8 months building this. It was a site with hopes of making licensing creative work easier to process and store. The other goal was to help micro influencers receive compensation for posting about businesses. Covid killed this project but we learned a lot and it was fun to build.
+Me and my buddy spent 8 months building this. The goal of the first product was of making licensing creative work easier to process, store, share and have a legal contract behind. The other goal was to help micro influencers receive compensation for posting about businesses. Covid killed this project but we learned a lot and it was fun to build.
 
 don't forget to npm install all of the dependencies
 
