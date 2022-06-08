@@ -1,4 +1,4 @@
-# BRv2
+# ByteRights Production Environment post ending operations
 Me and my buddy spent 8 months building this. The goal of the first product was to making licensing creative work easier to process, store, share and have a legal contract behind. The other goal was to help micro influencers receive compensation for posting about businesses. Sadly project ended in March of 2020 but we learned a lot and it was fun to build.
 
 
