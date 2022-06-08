@@ -8,7 +8,7 @@ to run locally use command node app.js
 just trying to get you up and running so currently the keys are public and all you should need to do to get it running is npm install :)
 
 
-live site https://desolate-sierra-72554.herokuapp.com/
+live site https://byterights.herokuapp.com/
 
 instructions for those trying to join development:
 gitpushtest2
